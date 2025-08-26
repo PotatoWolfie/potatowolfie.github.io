@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Wiki</title>
+    <link rel="icon" type="image/x-icon" href="web_wiki_favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        @font-face {
+    	font-family: 'Minecraft Ten';
+    	src: url('assets/web/fonts/minecraft.woff2') format('woff2'),
+         url('assets/web/fonts/minecraft.woff') format('woff');
+    	font-weight: normal;
+    	font-style: normal;
+    	font-display: swap;
+	}
+    </style>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        body {
+            font-family: 'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-image: url('assets/web/wiki/background.png');
+            background-color: #2d2d2d;
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: top left;
+            color: #e6e6e6;
+            line-height: 1.4;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+.search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+	position: relative;
+        }
+
+      .search-box {
+    width: 100%;
+    padding: 8px 12px;
+    background: #3a3a3a;
+    border: none; /* No border when unfocused */
+    color: #e6e6e6;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.search-box:focus {
+    outline: none; /* Remove Safari's ugly blue outline */
+    border: 2px solid #8b4513; /* Add your teal border when focused */
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #2e2e2e;
+    border: 2px solid #1a1a1a;
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 99999;
+    display: none;
+    box-shadow:
+        inset 2px 2px 0 #3a3a3a,
+        inset -2px -2px 0 #242424,
+        0 4px 8px rgba(0,0,0,0.3);
+    border-radius: 0 0 8px 8px;
+}
+
+.search-suggestion {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #3a3a3a;
+    color: #cccccc;
+    min-height: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.search-suggestion:hover {
+
+}
+
+.search-suggestion:hover .suggestion-title {
+    color: #8b4513;
+}
+
+.search-suggestion:last-child {
+    border-bottom: none;
+}
+
+.suggestion-category {
+    font-size: 12px;
+    color: #8b4513;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    font-weight: normal;
+}
+
+.suggestion-title {
+    font-size: 14px;
+    margin-top: 2px;
+    font-family: 'Nunito', sans-serif;
+    color: #cccccc;
+    transition: color 0.2s ease;
+}
+
+.search-suggestions::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-suggestions::-webkit-scrollbar-track {
+    background: #242424;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb {
+    background: #4f5a75;
+    border-radius: 4px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb:hover {
+    background: #5a6580;
+}
+
+.search-suggestions {
+    scrollbar-width: thin;
+    scrollbar-color: #4f5a75 #242424;
+}
+
+@media (max-width: 768px) {
+    .search-box {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
+        .header {
+    background: rgba(45, 45, 45, 0.9);
+    border-bottom: 3px solid #4a4a4a;
+    padding: 15px 0;
+    backdrop-filter: blur(10px);
+    position: relative; /* Add this */
+    z-index: 100; /* Add this - lower than search suggestions */
+}
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-tabs {
+            background: rgba(51, 51, 51, 0.9);
+            border-bottom: 2px solid #4a4a4a;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 20px;
+        }
+
+        .nav-tab {
+    padding: 8px 70px;
+    background: #8b4513;
+    border: 2px solid #654321;
+    border-bottom: none;
+    margin-right: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+     font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    font-weight: 6000;
+    text-shadow: 2px 2px 0px rgba(101,67,33,0.8);
+    box-shadow:
+        inset 2px 2px 0 #a0522d,
+        inset -2px -2px 0 #7e3f0f;
+}
+
+        .main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 20px;
+    padding: 20px;
+    min-height: calc(100vh - 170px);
+}
+
+        .content {
+            background: #262626;
+            border: none;
+            border-radius: 0;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #8b4513;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 15px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .featured-section {
+            margin-bottom: 35px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .featured-card {
+            border-radius: 0;
+            aspect-ratio: 4/3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+            background: #666;
+        }
+
+        .featured-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 8px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            position: relative;
+            z-index: 2;
+            padding: 0 25px;
+        }
+
+        .card-content {
+            color: #e6e6e6;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            position: relative;
+            z-index: 2;
+            padding: 0 25px 25px 25px;
+            line-height: 1.6;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+            width: 100%;
+            justify-items: center;
+        }
+
+        .category-item {
+            cursor: pointer;
+            aspect-ratio: 1;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            user-select: none;
+        }
+
+        .category-image-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin-top: -20px;
+        }
+
+        .category-top-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .category-left-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .category-right-outline {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .category-top-highlight {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            height: 8px;
+            background: #33353c;
+            z-index: 4;
+        }
+
+        .category-image-section {
+            flex: 2;
+            position: relative;
+            background: #3e414a;
+            z-index: 3;
+            transition: transform 0.15s ease;
+            overflow: hidden;
+            margin: 4px;
+            margin-bottom: 0;
+        }
+
+        .category-image-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: #565960;
+        }
+
+        .category-item img {
+    width: 80px;
+    height: 80px;
+    image-rendering: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    object-fit: contain;
+    object-position: center;
+}
+
+        .category-button-section {
+            flex: 0.6;
+            background: #48494a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                inset 2px 2px 0 #6c6d6d,
+                inset -2px -2px 0 #5b5c5c;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.15s ease;
+            margin: 0 4px;
+            border-top: 4px solid #1e1e1e;
+        }
+
+        .category-dark-strip {
+            flex: 0.2;
+            background: #3b3c3c;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            margin: 0 4px;
+            margin-top: 0;
+        }
+
+        .category-bottom-outline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .category-shadow {
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: #1a1a1a;
+            z-index: 1;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .category-name {
+            font-size: 12px;
+            color: #ffffff;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            position: relative;
+            z-index: 2;
+            white-space: nowrap;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+			text-decoration: none !important;
+    color: inherit !important;
+        }
+
+        .category-item.pressed .category-image-section {
+            transform: scaleY(1.065);
+            transform-origin: top;
+        }
+
+        .category-item.pressed .category-button-section {
+            transform: translateY(6px);
+        }
+
+        .category-item.pressed .category-dark-strip {
+            transform: translateY(6px);
+            opacity: 0;
+        }
+
+        .category-item.pressed .category-shadow {
+            transform: translateY(6px);
+            opacity: 0;
+        }
+
+        .category-item:hover .category-image-section {
+            background: #4b4e56;
+        }
+
+        .category-item:hover .category-top-highlight {
+            background: #39424a;
+        }
+
+        .category-item:hover .category-image-section::after {
+            background: #565960;
+        }
+
+        .category-item:hover .category-button-section {
+            background: #414242;
+        }
+
+        .category-item:hover .category-dark-strip {
+            background: #323333;
+        }
+
+        .latest-versions {
+    margin-top: 35px;
+    background: #2e2e2e;
+    border: 2px solid #1a1a1a;
+    position: relative;
+	min-height: 60px;
+	 border-bottom: 0px solid #242424;
+    transition: all 0.3s ease;
+	 user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+}
+
+.latest-versions a,
+.latest-versions .version-item-name {
+    user-select: text;
+}
+
+.latest-versions::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    box-shadow:
+        inset 2px 2px 0 #3a3a3a,
+        inset -2px -2px 0 #242424;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+        .versions-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: -2;
+    cursor: pointer;
+    position: relative;
+    height: auto;
+    overflow: visible;
+    background: transparent;
+    padding: 20px;
+    padding-bottom: 20px;
+}
+
+.latest-versions.expanded {
+    border: 2px solid #1a1a1a;
+}
+
+        .versions-header {
+    border-bottom: 2px solid #1a1a1a;
+}
+
+        .versions-header-text {
+    position: relative;
+    z-index: 2;
+    font-size: 18px;
+    color: #8b4513;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    font-weight: normal;
+    text-shadow: none;
+    margin-bottom: 8px;
+}
+
+.versions-header-text,
+.versions-header-arrow {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+}
+
+        .versions-grid {
+    position: relative;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: #2e2e2e;
+    border-left: 0px solid #1a1a1a;
+    border-right: 0px solid #1a1a1a;
+    border-bottom: 0px solid #1a1a1a;;
+    border-top: none;
+    transform: translateY(0);
+}
+
+.versions-grid-border {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #1a1a1a;
+    z-index: 5;
+    transform: translateY(-1px);
+    transition: transform 0.3s ease;
+}
+
+.versions-inset-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow:
+        inset 2px 2px 0 #3a3a3a,
+        inset -2px -2px 0 #242424;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.versions-grid::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    box-shadow:
+        inset 2px 2px 0 #3a3a3a,
+        inset -2px -2px 0 #242424;
+    pointer-events: none;
+}
+
+.versions-grid.open {
+    max-height: none;
+}
+
+        .versions-content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    min-height: 200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    align-items: center;
+    background: #2e2e2e;
+    border: 0px solid #1a1a1a;
+}
+
+.versions-content::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    box-shadow:
+        inset 2px 2px 0 #3a3a3a,
+        inset -2px -2px 0 #242424;
+    pointer-events: none;
+}
+
+        .version-item {
+    cursor: pointer;
+    aspect-ratio: 1;
+    width: 250px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    user-select: none;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+version-item-image-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin-top: -10px;
+}
+.version-item-top-outline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #1e1e1e;
+    z-index: 5;
+}
+
+.version-item-left-outline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    bottom: 0;
+    background: #1e1e1e;
+    z-index: 5;
+}
+
+.version-item-right-outline {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    bottom: 0;
+    background: #1e1e1e;
+    z-index: 5;
+}
+
+.version-item-top-highlight {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    height: 8px;
+    background: #33353c;
+    z-index: 4;
+}
+
+.version-item-image-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin-top: -20px;
+}
+
+.version-item-image-section {
+    flex: 2;
+    position: relative;
+    background: #3e414a;
+    z-index: 3;
+    transition: transform 0.15s ease;
+    overflow: hidden;
+    margin: 4px;
+    margin-bottom: 0;
+    display: block;
+}
+
+.version-item-image-section {
+    flex: 2;
+    position: relative;
+    background: #3e414a;
+    z-index: 3;
+    transition: transform 0.15s ease;
+    overflow: hidden;
+    margin: 4px;
+    margin-bottom: 0;
+    display: block;
+}
+
+.version-item-button-section {
+    flex: 0.6;
+    background: #48494a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        inset 2px 2px 0 #6c6d6d,
+        inset -2px -2px 0 #5b5c5c;
+    overflow: hidden;
+    z-index: 2;
+    transition: transform 0.15s ease;
+    margin: 0 4px;
+    border-top: 4px solid #1e1e1e;
+}
+
+.version-item-dark-strip {
+    flex: 0.2;
+    background: #3b3c3c;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    margin: 0 4px;
+    margin-top: 0;
+}
+
+.version-item-bottom-outline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #1e1e1e;
+    z-index: 5;
+}
+
+.version-item-shadow {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: #1a1a1a;
+    z-index: 1;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.version-item:hover {
+}
+
+.version-item.pressed .version-item-image-section {
+    transform: scaleY(1.058);
+    transform-origin: top;
+}
+
+.version-item.pressed .version-item-button-section {
+    transform: translateY(6px);
+}
+
+.version-item.pressed .version-item-dark-strip {
+    transform: translateY(6px);
+    opacity: 0;
+}
+
+.version-item.pressed .version-item-shadow {
+    transform: translateY(6px);
+    opacity: 0;
+}
+
+.version-item:hover .version-item-image-section {
+    background: #4b4e56;
+}
+
+.version-item:hover .version-item-top-highlight {
+    background: #39424a;
+}
+
+.version-item:hover .version-item-image-section::after {
+    background: #565960;
+}
+
+.version-item:hover .version-item-button-section {
+    background: #414242;
+}
+
+	    .version-item-image-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: #565960;
+}
+
+.version-item:hover .version-item-dark-strip {
+    background: #323333;
+}
+
+        .version-item img {
+    width: 75px;
+    height: 75px;
+    image-rendering: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    object-fit: contain;
+    object-position: center;
+    position: relative;
+    z-index: 11;
+}
+
+	    .version-item-image-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.version-item-name {
+    font-size: 12px;
+    color: #ffffff;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    font-weight: normal;
+    position: relative;
+    z-index: 2;
+    white-space: nowrap;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+}
+
+.versions-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 20px;
+    position: relative;
+}
+
+.versions-header-arrow {
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease;
+    transform: rotate(0deg);
+}
+
+.versions-header-arrow.rotated {
+    transform: rotate(180deg);
+}
+
+.versions-header-arrow.spinback-clockwise {
+    transform: rotate(360deg);
+}
+
+.versions-header-arrow.spinback-counter {
+    transform: rotate(-360deg);
+}
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-section {
+            background: #262626;
+            border: none;
+            border-radius: 0;
+            padding: 20px;
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            color: #8b4513;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #4a4a4a;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-list li {
+            padding: 10px 0;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            line-height: 1.6;
+        }
+
+        .sidebar-list a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .sidebar-list a:hover {
+            color: #8b4513;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #8b4513, #622b0a);
+            border-radius: 0;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: normal;
+            display: block;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .creators-section {
+            position: relative;
+            overflow: hidden;
+            background: #262626;
+        }
+
+        .creators-section img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .creators-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #262626;
+            z-index: 1;
+        }
+
+        .creators-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .creator {
+            margin-bottom: 25px;
+        }
+
+        .creator:last-child {
+            margin-bottom: 0;
+        }
+
+        .creator-name {
+            font-size: 14px;
+            color: #8b4513;
+            margin-bottom: 12px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .creator-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .creator-link {
+            background: rgba(26, 26, 26, 0.6);
+            color: #8b4513;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 0;
+            font-size: 12px;
+            border: none;
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 500;
+        }
+
+        .creator-link:hover {
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .about-section {
+            margin-top: 35px;
+        }
+
+        .about-section h2 {
+            color: #8b4513;
+            margin-bottom: 20px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            font-size: 17px;
+        }
+
+        .about-section p {
+            color: #cccccc;
+            line-height: 1.6;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #8b4513;
+            margin-bottom: 20px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            font-size: 16px;
+        }
+
+        @media (max-width: 1400px) {
+    .main-container {
+        max-width: 95vw;
+        grid-template-columns: 1fr 350px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .main-container {
+        max-width: 95vw;
+        grid-template-columns: 1fr 300px;
+        gap: 15px;
+    }
+
+    .nav-tab {
+        padding: 8px 40px;
+        font-size: 12px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .category-item {
+        width: 140px;
+        height: 140px;
+    }
+
+    .category-item img {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+.category-grid a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+@media (max-width: 992px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 0 15px;
+    }
+
+    .search-container {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .nav-content {
+        justify-content: center;
+    }
+
+    .nav-tab {
+        padding: 8px 30px;
+        font-size: 11px;
+    }
+
+    .main-container {
+        grid-template-columns: 1fr 280px;
+        gap: 15px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .category-item {
+        width: 130px;
+        height: 130px;
+    }
+
+    .category-item img {
+        width: 65px;
+        height: 65px;
+    }
+
+    .versions-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .version-item {
+        width: 200px;
+        height: 130px;
+    }
+
+    .version-item img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        padding: 0 10px;
+        gap: 10px;
+    }
+
+    .logo {
+        height: 50px;
+    }
+
+    .nav-content {
+        flex-direction: column;
+        gap: 5px;
+        padding: 0 10px;
+    }
+
+    .nav-tab {
+        padding: 10px 20px;
+        font-size: 10px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 2px;
+    }
+
+    .main-container {
+        grid-template-columns: 1fr;
+        max-width: 95vw;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .sidebar-section {
+        border-left: none;
+        padding: 20px;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .featured-card {
+        min-height: 250px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        justify-items: center;
+    }
+
+    .category-item {
+        width: 160px;
+        height: 160px;
+    }
+
+    .category-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .category-name {
+        font-size: 14px;
+    }
+
+    .versions-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        justify-items: center;
+    }
+
+    .version-item {
+        width: 280px;
+        height: 180px;
+    }
+
+    .version-item img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .version-item-name {
+        font-size: 14px;
+    }
+
+    .latest-versions {
+        margin-top: 25px;
+    }
+
+    .versions-header {
+        padding: 15px;
+    }
+
+    .versions-header-text {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-content {
+        padding: 0 5px;
+    }
+
+    .main-container {
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .nav-tab {
+        padding: 8px 15px;
+        font-size: 9px;
+    }
+
+    .category-grid {
+        gap: 12px;
+    }
+
+    .category-item {
+        width: 140px;
+        height: 140px;
+    }
+
+    .category-item img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .category-name {
+        font-size: 9px;
+    }
+
+	.category-item {
+    text-decoration: none;
+    color: inherit;
+}
+.category-item .category-name {
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.category-grid a .category-name {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+    .version-item {
+        width: 250px;
+        height: 160px;
+    }
+
+    .version-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .featured-card {
+        min-height: 200px;
+    }
+
+    .card-title {
+        font-size: 16px;
+    }
+
+    .card-content {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    flex: unset;
+    width: 100%;
+    max-width: none;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+}
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://earth-and-water.github.io">
+                <img src="assets/web/wiki/web_wiki.png" alt="Web Wiki">
+            </a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search Web Wiki" id="searchInput" autocomplete="off">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+</div>
+
+<div class="nav-tabs">
+    <div class="nav-content">
+        <div class="nav-tab">Web</div>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content">
+        <h1 class="page-title">Welcome to The Web Wiki!</h1>
+
+        <div class="featured-section">
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <img src="assets/web/wiki/news/news1.png" alt="News">
+                    <div class="card-title">Webs</div>
+                    <div class="card-content">
+                        Spiders, when fighting, can shoot webs at you. When these webs land on you, they prevent you from moving for two seconds, before releasing you. In this time, all spiders in the area come and feast on you. This applies to any other creature that happens to get in a web.
+                    </div>
+                </div>
+
+                <div class="featured-card">
+                    <img src="assets/web/wiki/news/news2.png" alt="News">
+                    <div class="card-title">Spiderlings</div>
+                    <div class="card-content">
+                        Baby spiders, also known as spiderlings, are the children of spiders, of course. They come from Spider Eggs, found in caves. Usually generating in clusters. They act how the vanilla spiders would work, they "learn" how to shoot webs when they become an adult.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Mod Categories</h2>
+        <div class="category-grid">
+            <a href="mobs.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="assets/web/wiki/buttons/mobs_button.png" alt="Mobs">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Mobs</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+            <a href="blocks.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="assets/web/wiki/buttons/blocks_button.png" alt="Blocks">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Blocks</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+            <a href="biomes.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="assets/web/wiki/buttons/biomes_button.png" alt="Biomes">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Biomes</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+
+            <a href="history.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="assets/web/wiki/buttons/history_button.png" alt="History">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">History</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+        </div>
+
+        <div class="latest-versions">
+            <div class="versions-header" onclick="toggleVersions()">
+                <div class="versions-inset-shadow"></div>
+                <div class="versions-header-text">Latest Versions</div>
+                <div class="versions-header-arrow">
+                    <img src="assets/wiki/buttons/dropdown_arrow.png" alt="Dropdown Arrow">
+                </div>
+            </div>
+            <div class="versions-grid" id="versions-grid">
+                <div class="versions-content">
+                    <a href="https://modrinth.com/mod/webs" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="assets/wiki/buttons/modrinth_button.png" alt="Modrinth">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Modrinth</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+
+                    <a href="https://www.curseforge.com/minecraft/mc-mods/web" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="assets/wiki/buttons/curseforge_button.png" alt="Curseforge">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Curseforge</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+
+                    <a href="https://www.planetminecraft.com" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="assets/wiki/buttons/planet_minecraft_button.png" alt="Planet Minecraft">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Planet Minecraft</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <div class="about-section">
+                <div class="wiki-boxes">
+                    <div class="wiki-box">
+                        <h2>about the Mod</h2>
+                        <p>
+                            <strong>Web</strong> is a mod that expands on spiders by giving them new behaviors and animations. Spiders can now shoot webs to trap players, and baby spiders will hatch from eggs found in Spider Egg Clusters underground. Their attacks and style are inspired by the way <em>Minecraft Dungeons</em> implemented spiders
+                        </p>
+                        <p>
+                            In addition to their new mechanics, spiders can be found near <strong>Spider Eggs</strong> in caves . These eggs will eventually break on their own, releasing spiderlings that are smaller and faster, but have less health.
+                        </p>
+                        <div class="wiki-button">
+                            <div class="wiki-button-left-outline"></div>
+                            <div class="wiki-button-right-outline"></div>
+                            <div class="wiki-button-section">
+                                <div class="wiki-button-name">Get E&W</div>
+                            </div>
+                            <div class="wiki-button-dark-strip"></div>
+                            <div class="wiki-button-bottom-outline"></div>
+                            <div class="wiki-button-shadow"></div>
+                        </div>
+                    </div>
+
+                    <div class="wiki-box">
+                        <h2>Featured article</h2>
+                        <p>
+                            The <strong>Spider Web</strong> is a block that can be used as an item. When placed on the ground, you can create a spider web similar to what a spider shoots at you. Except this one has cobweb physics. If you hang the spider web from a ceiling, you can get hanging webs, which you can climb. If you throw the spider web, you can throw it exactly how a spider shoots one. You can shoot it at mobs or players to get them stuck for two seconds. Spiders in the nearby area will also take note and attack.
+                        </p>
+                        <div class="wiki-button">
+                            <div class="wiki-button-left-outline"></div>
+                            <div class="wiki-button-right-outline"></div>
+                            <div class="wiki-button-section">
+                                <div class="wiki-button-name">Read More</div>
+                            </div>
+                            <div class="wiki-button-dark-strip"></div>
+                            <div class="wiki-button-bottom-outline"></div>
+                            <div class="wiki-button-shadow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+
+                .wiki-boxes {
+                    display: flex;
+                    gap: 20px;
+                    margin-top: 20px;
+                }
+
+                .wiki-box {
+                    flex: 1;
+                    background: #2e2e2e;
+                    border: 2px solid #1a1a1a;
+                    padding: 20px;
+                    padding-bottom: 80px;
+                    position: relative;
+                }
+
+                .wiki-box::before {
+                    content: '';
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    right: 0px;
+                    bottom: 0px;
+                    box-shadow:
+                        inset 2px 2px 0 #3a3a3a,
+                        inset -2px -2px 0 #242424;
+                    pointer-events: none;
+                }
+
+                .wiki-button {
+                    cursor: pointer;
+                    width: calc(100% - 40px);
+                    height: 45px;
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    bottom: 20px;
+                    left: 20px;
+                    right: 20px;
+                    overflow: hidden;
+                    border: none;
+                    user-select: none;
+                }
+
+                .wiki-button-left-outline {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 2px;
+                    bottom: 0;
+                    background: #1e1e1e;
+                    z-index: 5;
+                    transition: transform 0.15s ease;
+                }
+
+                .wiki-button-right-outline {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 2px;
+                    bottom: 0;
+                    background: #1e1e1e;
+                    z-index: 5;
+                    transition: transform 0.15s ease;
+                }
+
+                .wiki-button-section {
+                    flex: 1;
+                    background: #48494a;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow:
+                        inset 1px 1px 0 #6c6d6d,
+                        inset -1px -1px 0 #5b5c5c;
+                    overflow: hidden;
+                    z-index: 2;
+                    transition: transform 0.15s ease;
+                    margin: 0 2px;
+                    margin-bottom: 0;
+                    border-top: 2px solid #1e1e1e;
+                }
+
+                .wiki-button-dark-strip {
+                    height: 8px;
+                    background: #3b3c3c;
+                    position: relative;
+                    z-index: 2;
+                    transition: transform 0.15s ease, opacity 0.15s ease;
+                    margin: 0 2px;
+                    margin-top: 0;
+                }
+
+                .wiki-button-bottom-outline {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: #1e1e1e;
+                    z-index: 5;
+                }
+
+                .wiki-button-shadow {
+                    position: absolute;
+                    bottom: -3px;
+                    left: 0;
+                    right: 0;
+                    height: 3px;
+                    background: #1a1a1a;
+                    z-index: 1;
+                    transition: transform 0.15s ease, opacity 0.15s ease;
+                }
+
+                .wiki-button-name {
+                    font-size: 15px;
+                    color: #ffffff;
+                    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+                    font-weight: normal;
+                    position: relative;
+                    z-index: 2;
+                    white-space: nowrap;
+                    text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+                }
+
+                .wiki-button.pressed .wiki-button-section {
+                    transform: translateY(6px);
+                }
+
+                .wiki-button.pressed .wiki-button-left-outline {
+                    transform: translateY(6px);
+                }
+
+                .wiki-button.pressed .wiki-button-right-outline {
+                    transform: translateY(6px);
+                }
+
+                .wiki-button.pressed .wiki-button-dark-strip {
+                    transform: translateY(3px);
+                    opacity: 0;
+                }
+
+                .wiki-button.pressed .wiki-button-shadow {
+                    transform: translateY(3px);
+                    opacity: 0;
+                }
+
+                .wiki-button:hover .wiki-button-section {
+                    background: #414242;
+                }
+
+                .wiki-button:hover .wiki-button-dark-strip {
+                    background: #323333;
+                }
+
+                @media (max-width: 768px) {
+                    .wiki-boxes {
+                        flex-direction: column;
+                        gap: 15px;
+                    }
+
+                    .wiki-button {
+                        width: 160px;
+                        height: 40px;
+                    }
+
+                    .wiki-button-name {
+                        font-size: 15px;
+                    }
+                }
+            </style>
+
+            <script>
+                document.querySelectorAll('.wiki-button').forEach(button => {
+                    button.addEventListener('mousedown', function() {
+                        this.classList.add('pressed');
+                    });
+
+                    button.addEventListener('mouseup', function() {
+                        this.classList.remove('pressed');
+                    });
+
+                    button.addEventListener('mouseleave', function() {
+                        this.classList.remove('pressed');
+                    });
+
+                    button.addEventListener('click', function() {
+                        const buttonText = this.querySelector('.wiki-button-name').textContent;
+                        if (buttonText === 'Get E&W') {
+                            window.open('https://modrinth.com', '_blank');
+                        } else if (buttonText === 'Read More') {
+                            alert('Opening featured article...');
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.version-item').forEach(item => {
+                    item.addEventListener('mousedown', function() {
+                        this.classList.add('pressed');
+                    });
+
+                    item.addEventListener('mouseup', function() {
+                        this.classList.remove('pressed');
+                    });
+
+                    item.addEventListener('mouseleave', function() {
+                        this.classList.remove('pressed');
+                    });
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-section stats">
+            <div class="stat-number">9</div>
+            <div class="stat-label">Articles</div>
+            <div style="margin: 15px 0;">•</div>
+            <div class="stat-number">111</div>
+            <div class="stat-label">Files</div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Did you know...</div>
+            <ul class="sidebar-list">
+                <li>...that the motivation for completing Web was the idea of arachnophobes playing it?</li>
+                <li>...Spiderlings originally weren't going to be added because of a coding issue?</li>
+                <li>...the countdown of Spider Eggs hatching only goes down when a player is within 50 blocks of it?</li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section creators-section">
+            <div class="creators-content">
+                <div class="sidebar-title">Creators</div>
+
+                <div class="creator">
+                    <div class="creator-name">PotatoWolfie</div>
+                    <div class="creator-links">
+                        <a href="https://www.youtube.com/@PotatoWolfie" class="creator-link" target="_blank">YouTube</a>
+                        <a href="https://www.twitch.tv/potatowolfie64" class="creator-link" target="_blank">Twitch</a>
+                        <a href="https://www.planetminecraft.com/member/potatowolfie/" class="creator-link" target="_blank">Planet Minecraft</a>
+                        <a href="https://www.curseforge.com/members/potatowolfie/projects" class="creator-link" target="_blank">CurseForge</a>
+                        <a href="https://modrinth.com/user/PotatoWolfie" class="creator-link" target="_blank">Modrinth</a>
+                        <a href="https://github.com/PotatoWolfie" class="creator-link" target="_blank">Github</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-section minecraft">
+            <div class="sidebar-title">Legal Notice</div>
+            <ul class="sidebar-list">
+                <li>Web is an unofficial Minecraft mod and is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft in any way. Minecraft is a sandbox video game developed by Mojang Studios that allows players to explore, build, and survive in a block-based world.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    let targetRotation = 0;
+    let currentRotation = 0;
+    let isArrowAnimating = false;
+    let isDropdownAnimating = false;
+
+    let searchData = {};
+    let allSearchItems = [];
+
+    async function loadSearchData() {
+        try {
+            const response = await fetch('search-data.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            searchData = await response.json();
+            allSearchItems = Object.values(searchData).flat();
+            console.log('Search data loaded successfully');
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            searchData = {};
+            allSearchItems = [];
+        }
+    }
+
+    function initializeSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+
+        if (!searchInput || !searchSuggestions) {
+            console.error('Search elements not found');
+            return;
+        }
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+
+            if (query.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = allSearchItems.filter(item =>
+                item.title.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            ).slice(0, 8);
+
+            if (matches.length > 0) {
+                searchSuggestions.innerHTML = matches.map(item => `
+                    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                        <div class="suggestion-category">${item.category}</div>
+                        <div class="suggestion-title">${item.title}</div>
+                    </div>
+                `).join('');
+                searchSuggestions.style.display = 'block';
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase().trim();
+                const firstMatch = allSearchItems.find(item =>
+                    item.title.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query)
+                );
+                if (firstMatch) {
+                    navigateToPage(firstMatch.page);
+                }
+            }
+        });
+    }
+
+    function navigateToPage(page) {
+        window.location.href = page;
+    }
+
+    function updateArrow() {
+        if (currentRotation === targetRotation || isArrowAnimating) return;
+
+        const arrow = document.querySelector('.versions-header-arrow');
+        isArrowAnimating = true;
+
+        let nextRotation = currentRotation + 180;
+
+        arrow.style.transform = `rotate(${nextRotation}deg)`;
+
+        arrow.addEventListener('transitionend', function handler(e) {
+            if (e.propertyName !== 'transform') return;
+
+            arrow.removeEventListener('transitionend', handler);
+
+            currentRotation = nextRotation;
+
+            if (currentRotation >= 360) {
+                arrow.style.transition = 'none';
+                currentRotation -= 360;
+                targetRotation -= 360;
+                arrow.style.transform = `rotate(${currentRotation}deg)`;
+
+                void arrow.offsetWidth;
+                arrow.style.transition = 'transform 0.4s ease';
+            }
+
+            isArrowAnimating = false;
+
+            setTimeout(updateArrow, 10);
+        });
+    }
+
+    function toggleVersions() {
+        const grid = document.getElementById('versions-grid');
+        const container = document.querySelector('.latest-versions');
+
+        if (isDropdownAnimating) return;
+
+        isDropdownAnimating = true;
+
+        if (grid.classList.contains('open')) {
+            const fullHeight = grid.scrollHeight + 'px';
+            grid.style.maxHeight = fullHeight;
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = '0px';
+            });
+        } else {
+            grid.classList.add('open');
+            grid.style.maxHeight = '0px';
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = grid.scrollHeight + 'px';
+            });
+        }
+
+        grid.addEventListener('transitionend', function handler() {
+            grid.removeEventListener('transitionend', handler);
+
+            if (grid.style.maxHeight === '0px') {
+                grid.classList.remove('open');
+            }
+
+            isDropdownAnimating = false;
+        });
+
+        container.classList.toggle('expanded');
+
+        targetRotation += 180;
+        if (!isArrowAnimating) {
+            updateArrow();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            item.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+        });
+    });
+
+    document.querySelectorAll('.wiki-button').forEach(button => {
+        button.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        button.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('click', function() {
+            const buttonText = this.querySelector('.wiki-button-name').textContent;
+            if (buttonText === 'Get E&W') {
+                window.open('https://modrinth.com', '_blank');
+            } else if (buttonText === 'Read More') {
+                alert('Opening featured article...');
+            }
+        });
+    });
+
+    document.querySelectorAll('.version-item').forEach(item => {
+        item.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        item.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        item.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        await loadSearchData();
+        initializeSearch();
+    });
+</script>
+</body>
+</html>
