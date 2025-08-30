@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Spider Egg</title>
+    <title>Spider Web</title>
     <link rel="icon" type="image/x-icon" href="../web_wiki_favicon.ico" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet"/>
@@ -394,6 +394,46 @@
                 inset -2px -2px 0 #242424;
         }
 
+        .variant-tabs {
+            display: flex;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .variant-tab {
+            flex: 1;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: none;
+            color: #cccccc;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Nunito', sans-serif;
+            border-right: 1px solid #1a1a1a;
+            transition: all 0.2s ease;
+        }
+
+        .variant-tab:last-child {
+            border-right: none;
+        }
+
+        .variant-tab.active {
+            background: #8b4513;
+            color: #ffffff;
+        }
+
+        .variant-tab:hover:not(.active) {
+            background: #4a4a4a;
+        }
+
+        .variant-image {
+            display: none;
+        }
+
+        .variant-image.active {
+            display: block;
+        }
+
         .info-box img {
             width: 100%;
             image-rendering: pixelated;
@@ -745,16 +785,22 @@
             <div class="toc">
                 <h2>Contents</h2>
                 <ul>
-                    <li><a href="#spider-egg">Spider Egg</a></li>
+                    <li><a href="#spider-web">Spider Web</a></li>
                     <li><a href="#obtaining">Obtaining</a></li>
                     <li><a href="#usage">Usage</a></li>
-                    <li><a href="#behavior">Behavior</a></li>
+                    <li><a href="#placement">Placement</a></li>
                     <li><a href="#history">History</a></li>
                 </ul>
             </div>
 
             <div class="info-box">
-                <img src="../assets/blocks/spider_egg_infobox.png" alt="Spider Egg" />
+                <div class="variant-tabs">
+                    <button class="variant-tab active" onclick="switchVariant(1)">Ground</button>
+                    <button class="variant-tab" onclick="switchVariant(2)">Hanging</button>
+                </div>
+
+                <img src="../assets/blocks/spider_web_ground.png" alt="Spider Web Ground" class="variant-image active" id="variant1" />
+                <img src="../assets/blocks/spider_web_hanging.png" alt="Spider Web Hanging" class="variant-image" id="variant2" />
 
                 <div class="info-row">
                     <span class="info-label">Rarity tier</span>
@@ -773,12 +819,16 @@
 
                 <div class="info-row">
                     <span class="info-label">Tool</span>
-                    <span class="info-value">Any tool</span>
+                    <span class="info-value">
+                        <a href="https://minecraft.wiki/w/Shears" target="_blank">
+                            <img src="assets/sprites/Invicon_Shears.png" alt="Shears to Pick it up" />
+                        </a>
+                    </span>
                 </div>
 
                 <div class="info-row">
                     <span class="info-label">Hardness</span>
-                    <span class="info-value">0.5</span>
+                    <span class="info-value">4</span>
                 </div>
 
                 <div class="info-row">
@@ -792,65 +842,68 @@
                 </div>
 
                 <div class="info-row">
+                    <span class="info-label">Waterloggable</span>
+                    <span class="info-value">No</span>
+                </div>
+
+                <div class="info-row">
                     <span class="info-label">Flammable</span>
                     <span class="info-value">No</span>
                 </div>
 
                 <div class="info-row">
                     <span class="info-label">Map color</span>
-                    <span class="info-value">YELLOW</span>
+                    <span class="info-value">WHITE_GRAY</span>
                 </div>
             </div>
         </div>
 
         <div class="content">
-            <h1 id="spider-egg" class="page-title">Spider Egg</h1>
+            <h1 id="spider-web" class="page-title">Spider Web</h1>
 
-            <p><strong>Spider Eggs</strong> are blocks that can be found in <a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a>. These mysterious eggs will hatch into <a href="https://potatowolfie.github.io/Web/mobs/spiderlings.html">Spiderlings</a> after a period of time, making them both a decorative block and a source of baby spiders.</p>
+            <p><strong>Spider Web</strong> is a unique block that can be placed in multiple configurations and serves both defensive and utility purposes. When used as an item, it can be thrown as a projectile or placed directly. Spider Webs slow down entities that move through them and can be placed on various surfaces in different orientations.</p>
 
             <div class="content-section">
                 <h2 id="obtaining" class="main-header">Obtaining</h2>
 
+                <div class="mini-header">Breaking</div>
+                <p>Spider Webs can be obtained by breaking them with <a href="https://minecraft.wiki/w/shears">Shears</a> or tools enchanted with <a href="https://minecraft.wiki/w/Silk_Touch">Silk Touch</a>. Without these tools, they drop 2 <a href="https://minecraft.wiki/w/String">String</a> instead.</p>
+
                 <div class="mini-header">Natural Generation</div>
-                <p>Spider Eggs generate naturally in caves underground, specifically in:</p>
+                <p>Spider Webs generate naturally in caves underground, specifically in:</p>
                 <div class="feature-list">
                     <ul>
-                        <li><a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a> surrounded by <a href="spider_moss.html">Spider Moss</a></li>
+                        <li>30% chance to spawn in <a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a></li>
                     </ul>
                 </div>
-
-                <div class="mini-header">Breaking</div>
-                <p>If a Spider Egg is broken before it hatches, it will drop 2-3 <a href="https://potatowolfie.github.io/Web/blocks/spider_egg_shell.html">spider egg shells</a>. However, if you use a pickaxe with the silk touch enchantment, it will drop itself. You can not place it to grow a baby spider though, it will sit there like a decoration.</p>
             </div>
 
             <div class="content-section">
                 <h2 id="usage" class="main-header">Usage</h2>
 
-                <div class="mini-header">Mob Spawning</div>
-                <p>When left undisturbed in their natural environment, Spider Eggs will eventually hatch into Spiderlings, providing a source of baby spiders.</p>
+                <div class="mini-header">Item Usage</div>
+                <p>When held as an item, Spider Webs have two distinct usage modes:</p>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>Direct Placement:</strong> Right-clicking on a nearby surface will attempt to place the web block directly</li>
+                        <li><strong>Projectile Mode:</strong> Right-clicking when no valid placement surface is within reach, or when targeting empty space, throws the web as a projectile</li>
+                    </ul>
+                </div>
 
-                <div class="mini-header">Protector Spiders</div>
-                <p>Some Spider Eggs have a "Protector Spider" tag to it. This tag makes it so spiders will spawn near it and "protect" the eggs. The spiders usually stay near the eggs, unless they get targeted on something, like an enemy.</p>
+                <div class="mini-header">Movement Hindrance</div>
+                <p>Ground-type Spider Webs significantly slow down entities that walk through them. The slowdown effect is enhanced for entities with the <a href="https://minecraft.wiki/w/Weaving">Weaving</a> status effect.</p>
             </div>
 
             <div class="content-section">
-                <h2 id="behavior" class="main-header">Behavior</h2>
+                <h2 id="placement" class="main-header">Placement</h2>
 
-                Spider Eggs have a unique hatching mechanic:
-                <div class="feature-list">
-                    <ul>
+                <p>Spider Webs can be placed in several different configurations depending on the placement context:</p>
 
-                        <li><strong>Hatching Time:</strong> Spider Eggs hatch after 18-24 minutes of being loaded</li>
-                        <li><strong>Environmental Requirements:</strong> Eggs must be in a loaded chunk to progress their hatching timer</li>
-                        <li><strong>Hatching Result:</strong> When ready, the egg breaks and spawns a Spiderling</li>
-                    </ul>
-                </div>
-                <div class="mini-header">Placement Conditions</div>
-                <p>Spider Eggs can be placed on any solid block and will maintain their hatching behavior regardless of light level or surrounding blocks.</p>
+                <div class="mini-header">Ground Webs</div>
+                <p>When placed on top of solid blocks or on horizontal surfaces, Spider Webs form ground-type configurations that create movement-slowing areas.</p>
 
-                <div class="mini-header">Burn the Nest Advancement</div>
-                <p>If you use a <a href="https://minecraft.wiki/w/Flint_and_Steel">Flint and Steel</a> on a spider egg, it will burn the spider inside and give you the <strong>Burn the Nest</strong> advancement. You can then pick up the egg with silk touch and place it as a decoration.</p>
-
+                <div class="mini-header">Hanging Webs</div>
+                <p>When placed hanging from ceilings or other solid blocks, Spider Webs form vertical chains that can extend downward. You can climb these webs like ladders.</p>
             </div>
 
             <div class="content-section">
@@ -862,7 +915,7 @@
                         <div class="timeline-content">
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
-                                Added Spider Eggs
+                                Added Spider Web
                             </div>
                         </div>
                     </div>
@@ -953,6 +1006,16 @@
             page = '../' + page;
         }
         window.location.href = page;
+    }
+
+    function switchVariant(variantNumber) {
+        // Remove active class from all tabs and images
+        document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.variant-image').forEach(img => img.classList.remove('active'));
+
+        // Add active class to selected tab and image
+        document.querySelectorAll('.variant-tab')[variantNumber - 1].classList.add('active');
+        document.getElementById('variant' + variantNumber).classList.add('active');
     }
 
     document.addEventListener('DOMContentLoaded', async function() {

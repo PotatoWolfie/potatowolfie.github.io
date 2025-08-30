@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Spider Egg</title>
+    <title>Spider Egg Shells</title>
     <link rel="icon" type="image/x-icon" href="../web_wiki_favicon.ico" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet"/>
@@ -394,6 +394,46 @@
                 inset -2px -2px 0 #242424;
         }
 
+        .variant-tabs {
+            display: flex;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .variant-tab {
+            flex: 1;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: none;
+            color: #cccccc;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Nunito', sans-serif;
+            border-right: 1px solid #1a1a1a;
+            transition: all 0.2s ease;
+        }
+
+        .variant-tab:last-child {
+            border-right: none;
+        }
+
+        .variant-tab.active {
+            background: #8b4513;
+            color: #ffffff;
+        }
+
+        .variant-tab:hover:not(.active) {
+            background: #4a4a4a;
+        }
+
+        .variant-image {
+            display: none;
+        }
+
+        .variant-image.active {
+            display: block;
+        }
+
         .info-box img {
             width: 100%;
             image-rendering: pixelated;
@@ -745,16 +785,22 @@
             <div class="toc">
                 <h2>Contents</h2>
                 <ul>
-                    <li><a href="#spider-egg">Spider Egg</a></li>
+                    <li><a href="#spider-egg-shells">Spider Egg Shells</a></li>
                     <li><a href="#obtaining">Obtaining</a></li>
                     <li><a href="#usage">Usage</a></li>
-                    <li><a href="#behavior">Behavior</a></li>
+                    <li><a href="#placement">Placement</a></li>
                     <li><a href="#history">History</a></li>
                 </ul>
             </div>
 
             <div class="info-box">
-                <img src="../assets/blocks/spider_egg_infobox.png" alt="Spider Egg" />
+                <div class="variant-tabs">
+                    <button class="variant-tab active" onclick="switchVariant(1)">Variant 1</button>
+                    <button class="variant-tab" onclick="switchVariant(2)">Variant 2</button>
+                </div>
+
+                <img src="../assets/blocks/spider_egg_shells_variant1.png" alt="Spider Egg Shells Variant 1" class="variant-image active" id="variant1" />
+                <img src="../assets/blocks/spider_egg_shells_variant2.png" alt="Spider Egg Shells Variant 2" class="variant-image" id="variant2" />
 
                 <div class="info-row">
                     <span class="info-label">Rarity tier</span>
@@ -773,12 +819,12 @@
 
                 <div class="info-row">
                     <span class="info-label">Tool</span>
-                    <span class="info-value">Any tool</span>
+                    <span class="info-value">Any</span>
                 </div>
 
                 <div class="info-row">
                     <span class="info-label">Hardness</span>
-                    <span class="info-value">0.5</span>
+                    <span class="info-value">0</span>
                 </div>
 
                 <div class="info-row">
@@ -788,6 +834,11 @@
 
                 <div class="info-row">
                     <span class="info-label">Transparent</span>
+                    <span class="info-value">Yes</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Waterloggable</span>
                     <span class="info-value">No</span>
                 </div>
 
@@ -804,53 +855,50 @@
         </div>
 
         <div class="content">
-            <h1 id="spider-egg" class="page-title">Spider Egg</h1>
+            <h1 id="spider-egg-shells" class="page-title">Spider Egg Shells</h1>
 
-            <p><strong>Spider Eggs</strong> are blocks that can be found in <a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a>. These mysterious eggs will hatch into <a href="https://potatowolfie.github.io/Web/mobs/spiderlings.html">Spiderlings</a> after a period of time, making them both a decorative block and a source of baby spiders.</p>
+            <p><strong>Spider Egg Shells</strong> are decorative blocks that can be obtained by breaking <a href="spider_egg.html">Spider Eggs</a> before they hatch. These fragile shell fragments can be placed on various surfaces similar to <a href="https://minecraft.wiki/w/Glow_lichen">Glow Lichen</a>, making them useful for cave decoration and atmospheric detailing.</p>
 
             <div class="content-section">
                 <h2 id="obtaining" class="main-header">Obtaining</h2>
 
+                <div class="mini-header">Breaking Spider Eggs</div>
+                <p>Spider Egg Shells are obtained by breaking Spider Eggs before they hatch. Each broken Spider Egg drops 2-3 Spider Egg Shells.</p>
+
                 <div class="mini-header">Natural Generation</div>
                 <p>Spider Eggs generate naturally in caves underground, specifically in:</p>
                 <div class="feature-list">
-                    <ul>
-                        <li><a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a> surrounded by <a href="spider_moss.html">Spider Moss</a></li>
-                    </ul>
-                </div>
-
-                <div class="mini-header">Breaking</div>
-                <p>If a Spider Egg is broken before it hatches, it will drop 2-3 <a href="https://potatowolfie.github.io/Web/blocks/spider_egg_shell.html">spider egg shells</a>. However, if you use a pickaxe with the silk touch enchantment, it will drop itself. You can not place it to grow a baby spider though, it will sit there like a decoration.</p>
+                <ul>
+                    <li>Placed on the walls of <a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a></li>
+                </ul>
+            </div>
             </div>
 
             <div class="content-section">
                 <h2 id="usage" class="main-header">Usage</h2>
 
-                <div class="mini-header">Mob Spawning</div>
-                <p>When left undisturbed in their natural environment, Spider Eggs will eventually hatch into Spiderlings, providing a source of baby spiders.</p>
+                <div class="mini-header">Decoration</div>
+                <p>Spider Egg Shells serve purely as decorative blocks, adding atmospheric detail to caves, dungeons, or spider-themed builds. They have no functional properties beyond their visual appearance.</p>
 
-                <div class="mini-header">Protector Spiders</div>
-                <p>Some Spider Eggs have a "Protector Spider" tag to it. This tag makes it so spiders will spawn near it and "protect" the eggs. The spiders usually stay near the eggs, unless they get targeted on something, like an enemy.</p>
+                <div class="mini-header">Texture Variants</div>
+                <p>When placed, Spider Egg Shells have a chance to display one of two different textures, providing visual variety and making <a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a> appear more natural and organic.</p>
             </div>
 
             <div class="content-section">
-                <h2 id="behavior" class="main-header">Behavior</h2>
+                <h2 id="placement" class="main-header">Placement</h2>
 
-                Spider Eggs have a unique hatching mechanic:
+                <p>Spider Egg Shells can be placed on multiple surfaces, similar to Glow Lichen:</p>
                 <div class="feature-list">
                     <ul>
-
-                        <li><strong>Hatching Time:</strong> Spider Eggs hatch after 18-24 minutes of being loaded</li>
-                        <li><strong>Environmental Requirements:</strong> Eggs must be in a loaded chunk to progress their hatching timer</li>
-                        <li><strong>Hatching Result:</strong> When ready, the egg breaks and spawns a Spiderling</li>
+                        <li><strong>Floors:</strong> Can be placed on top of solid blocks</li>
+                        <li><strong>Walls:</strong> Can be attached to the sides of solid blocks</li>
+                        <li><strong>Ceilings:</strong> Can be placed on the underside of solid blocks</li>
+                        <li><strong>Multiple Faces:</strong> Can be placed on multiple faces of the same block simultaneously</li>
                     </ul>
                 </div>
-                <div class="mini-header">Placement Conditions</div>
-                <p>Spider Eggs can be placed on any solid block and will maintain their hatching behavior regardless of light level or surrounding blocks.</p>
 
-                <div class="mini-header">Burn the Nest Advancement</div>
-                <p>If you use a <a href="https://minecraft.wiki/w/Flint_and_Steel">Flint and Steel</a> on a spider egg, it will burn the spider inside and give you the <strong>Burn the Nest</strong> advancement. You can then pick up the egg with silk touch and place it as a decoration.</p>
-
+                <div class="mini-header">Placement Requirements</div>
+                <p>Spider Egg Shells require at least one adjacent solid block face to attach to. They cannot float freely in air and will break if their supporting block is removed.</p>
             </div>
 
             <div class="content-section">
@@ -862,7 +910,7 @@
                         <div class="timeline-content">
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
-                                Added Spider Eggs
+                                Added Spider Egg Shells
                             </div>
                         </div>
                     </div>
@@ -953,6 +1001,16 @@
             page = '../' + page;
         }
         window.location.href = page;
+    }
+
+    function switchVariant(variantNumber) {
+        // Remove active class from all tabs and images
+        document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.variant-image').forEach(img => img.classList.remove('active'));
+
+        // Add active class to selected tab and image
+        document.querySelectorAll('.variant-tab')[variantNumber - 1].classList.add('active');
+        document.getElementById('variant' + variantNumber).classList.add('active');
     }
 
     document.addEventListener('DOMContentLoaded', async function() {

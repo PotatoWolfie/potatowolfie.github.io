@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Spider Egg</title>
+    <title>Cave Spider</title>
     <link rel="icon" type="image/x-icon" href="../web_wiki_favicon.ico" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet"/>
@@ -173,21 +173,6 @@
                 inset -2px -2px 0 #242424;
         }
 
-        @media (max-width: 768px) {
-            .search-suggestions {
-                max-height: 250px;
-                left: -2px;
-                right: -2px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .search-suggestions {
-                max-height: 200px;
-                border-radius: 0 0 4px 4px;
-            }
-        }
-
         .search-suggestion {
             padding: 10px 12px;
             cursor: pointer;
@@ -199,42 +184,8 @@
             justify-content: center;
         }
 
-        @media (max-width: 480px) {
-            .search-suggestion {
-                padding: 12px 15px;
-                min-height: 50px;
-            }
-        }
-
         .search-suggestion:hover {
             background: #4f5a75;
-        }
-
-        @media (hover: none) {
-            .search-suggestion:hover {
-                background: transparent;
-            }
-            .search-suggestion:active {
-                background: #4f5a75;
-            }
-            .search-suggestion:active .suggestion-title {
-                color: #8b4513;
-            }
-        }
-
-        .search-suggestion:hover .suggestion-title {
-            color: #8b4513;
-        }
-
-        .search-suggestion:last-child {
-            border-bottom: none;
-        }
-
-        .suggestion-category {
-            font-size: 12px;
-            color: #8b4513;
-            font-family: 'Minecraft Ten', 'Inter', sans-serif;
-            font-weight: normal;
         }
 
         .suggestion-title {
@@ -242,38 +193,6 @@
             margin-top: 2px;
             font-family: 'Nunito', sans-serif;
             color: #cccccc;
-        }
-
-        @media (max-width: 480px) {
-            .suggestion-category {
-                font-size: 11px;
-            }
-            .suggestion-title {
-                font-size: 15px;
-                margin-top: 3px;
-            }
-        }
-
-        .search-suggestions::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .search-suggestions::-webkit-scrollbar-track {
-            background: #242424;
-        }
-
-        .search-suggestions::-webkit-scrollbar-thumb {
-            background: #4f5a75;
-            border-radius: 4px;
-        }
-
-        .search-suggestions::-webkit-scrollbar-thumb:hover {
-            background: #5a6580;
-        }
-
-        .search-suggestions {
-            scrollbar-width: thin;
-            scrollbar-color: #4f5a75 #242424;
         }
 
         .main-container {
@@ -374,15 +293,6 @@
             background: rgba(139, 69, 19, 0.1);
         }
 
-        @media (hover: none) {
-            .toc a:hover {
-                background: transparent;
-            }
-            .toc a:active {
-                background: rgba(139, 69, 19, 0.1);
-            }
-        }
-
         .info-box {
             background: #2e2e2e;
             border: 2px solid #1a1a1a;
@@ -439,8 +349,8 @@
         }
 
         .info-value img {
-            width: 16px;
-            height: 16px;
+            width: auto;
+            height: 10px;
             margin: 0;
             border: none;
         }
@@ -476,7 +386,6 @@
             .page-title {
                 font-size: 1.5rem;
                 margin-bottom: 20px;
-                border-bottom: 2px solid #4a4a4a;
             }
         }
 
@@ -484,7 +393,6 @@
             .page-title {
                 font-size: 1.3rem;
                 margin-bottom: 15px;
-                border-bottom: 2px solid #4a4a4a;
             }
         }
 
@@ -678,6 +586,44 @@
             margin-top: 0;
         }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        .stat-card {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #8b4513;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            color: #cccccc;
+            font-weight: 700;
+        }
+
         p {
             margin: 0 0 15px 0;
             word-wrap: break-word;
@@ -702,26 +648,6 @@
         .main-header {
             font-family: 'Minecraft Ten', 'Inter', sans-serif !important;
         }
-
-        @media print {
-            .header,
-            .search-container {
-                display: none;
-            }
-
-            .main-container {
-                margin: 0;
-                padding: 20px;
-                box-shadow: none;
-                background: white;
-                color: black;
-            }
-
-            .toc {
-                position: static;
-                page-break-inside: avoid;
-            }
-        }
     </style>
 </head>
 <body>
@@ -745,112 +671,68 @@
             <div class="toc">
                 <h2>Contents</h2>
                 <ul>
-                    <li><a href="#spider-egg">Spider Egg</a></li>
-                    <li><a href="#obtaining">Obtaining</a></li>
-                    <li><a href="#usage">Usage</a></li>
+                    <li><a href="#cave-spider">Cave Spider</a></li>
+                    <li><a href="#spawning">Spawning</a></li>
                     <li><a href="#behavior">Behavior</a></li>
+                    <li><a href="#combat">Combat</a></li>
+                    <li><a href="#animations">Animations</a></li>
                     <li><a href="#history">History</a></li>
                 </ul>
             </div>
 
             <div class="info-box">
-                <img src="../assets/blocks/spider_egg_infobox.png" alt="Spider Egg" />
+
+                <img src="cave_spider_idle.gif" alt="Cave Spider Idle" />
 
                 <div class="info-row">
-                    <span class="info-label">Rarity tier</span>
-                    <span class="info-value">Common</span>
+                    <span class="info-label">Health points</span>
+                    <span class="info-value">12 <img src="assets/sprites/Heart.png" alt="Heart"> × 6</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Renewable</span>
-                    <span class="info-value">No</span>
+                    <span class="info-label">Behavior</span>
+                    <span class="info-value">Neutral (Light ≥9)<br>Hostile (Light ≤8)</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Stackable</span>
-                    <span class="info-value">Yes (64)</span>
+                    <span class="info-label">Hitbox size</span>
+                    <span class="info-value">Height: 0.5<br>Width: 0.7</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Tool</span>
-                    <span class="info-value">Any tool</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Hardness</span>
-                    <span class="info-value">0.5</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Luminous</span>
-                    <span class="info-value">No</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Transparent</span>
-                    <span class="info-value">No</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Flammable</span>
-                    <span class="info-value">No</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Map color</span>
-                    <span class="info-value">YELLOW</span>
+                    <span class="info-label">Speed</span>
+                    <span class="info-value">0.3</span>
                 </div>
             </div>
         </div>
 
         <div class="content">
-            <h1 id="spider-egg" class="page-title">Spider Egg</h1>
+            <h1 id="cave-spider" class="page-title">Cave Spider</h1>
 
-            <p><strong>Spider Eggs</strong> are blocks that can be found in <a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a>. These mysterious eggs will hatch into <a href="https://potatowolfie.github.io/Web/mobs/spiderlings.html">Spiderlings</a> after a period of time, making them both a decorative block and a source of baby spiders.</p>
+            <p><i>This article is about the changes made to the cave spider in this mod. For the vanilla cave spider, see <a href="https://minecraft.wiki/w/Cave_Spider">Cave Spider</a>.</i></p>
+
+            <p><strong>Cave Spiders</strong> are smaller, poisonous variants of spiders that spawn naturally in <a href="https://minecraft.wiki/w/Mineshaft">mineshafts</a> from <a href="https://minecraft.wiki/w/Monster_Spawner">monster spawners</a>. They behave identically to vanilla cave spiders but feature new idle and walking animations.</p>
 
             <div class="content-section">
-                <h2 id="obtaining" class="main-header">Obtaining</h2>
+                <h2 id="spawning" class="main-header">Spawning</h2>
 
-                <div class="mini-header">Natural Generation</div>
-                <p>Spider Eggs generate naturally in caves underground, specifically in:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li><a href="https://potatowolfie.github.io/Web/features/spider_egg_cluster.html">Spider Egg Clusters</a> surrounded by <a href="spider_moss.html">Spider Moss</a></li>
-                    </ul>
-                </div>
+                <div class="mini-header">Monster Spawners</div>
+                <p>Cave spiders spawn from monster spawners found in <a href="https://minecraft.wiki/w/Mineshaft">mineshafts</a>. These spawners are surrounded by cobwebs and can be found in most <a href="https://minecraft.wiki/w/Mineshaft">mineshaft</a> structures.</p>
 
-                <div class="mini-header">Breaking</div>
-                <p>If a Spider Egg is broken before it hatches, it will drop 2-3 <a href="https://potatowolfie.github.io/Web/blocks/spider_egg_shell.html">spider egg shells</a>. However, if you use a pickaxe with the silk touch enchantment, it will drop itself. You can not place it to grow a baby spider though, it will sit there like a decoration.</p>
+                <div class="mini-header">Trial Spawners</div>
+                <p>Cave spiders have a 25% chance to spawn in <a href="https://minecraft.wiki/w/Trial_Spawner">trial spawners</a> in <a href="https://minecraft.wiki/w/Trial_Chambers">trial chambers</a>.</p>
             </div>
 
             <div class="content-section">
-                <h2 id="usage" class="main-header">Usage</h2>
+                <h2 id="animations" class="main-header">Animations</h2>
 
-                <div class="mini-header">Mob Spawning</div>
-                <p>When left undisturbed in their natural environment, Spider Eggs will eventually hatch into Spiderlings, providing a source of baby spiders.</p>
+                <p>Cave spiders now have animations that bring more life to their movements:</p>
 
-                <div class="mini-header">Protector Spiders</div>
-                <p>Some Spider Eggs have a "Protector Spider" tag to it. This tag makes it so spiders will spawn near it and "protect" the eggs. The spiders usually stay near the eggs, unless they get targeted on something, like an enemy.</p>
-            </div>
+                <div class="mini-header">Idle Animation</div>
+                <p>The default animation when the spider is idling has slow body movements to make the spider feel more lively.</p>
 
-            <div class="content-section">
-                <h2 id="behavior" class="main-header">Behavior</h2>
-
-                Spider Eggs have a unique hatching mechanic:
-                <div class="feature-list">
-                    <ul>
-
-                        <li><strong>Hatching Time:</strong> Spider Eggs hatch after 18-24 minutes of being loaded</li>
-                        <li><strong>Environmental Requirements:</strong> Eggs must be in a loaded chunk to progress their hatching timer</li>
-                        <li><strong>Hatching Result:</strong> When ready, the egg breaks and spawns a Spiderling</li>
-                    </ul>
-                </div>
-                <div class="mini-header">Placement Conditions</div>
-                <p>Spider Eggs can be placed on any solid block and will maintain their hatching behavior regardless of light level or surrounding blocks.</p>
-
-                <div class="mini-header">Burn the Nest Advancement</div>
-                <p>If you use a <a href="https://minecraft.wiki/w/Flint_and_Steel">Flint and Steel</a> on a spider egg, it will burn the spider inside and give you the <strong>Burn the Nest</strong> advancement. You can then pick up the egg with silk touch and place it as a decoration.</p>
-
+                <div class="mini-header">Walking Animation</div>
+                <p>Leg movement stays the same, while the body does a little more movement.</p>
             </div>
 
             <div class="content-section">
@@ -862,12 +744,13 @@
                         <div class="timeline-content">
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
-                                Added Spider Eggs
+                                Added New Cave Spider Animations
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -917,7 +800,6 @@
             if (matches.length > 0) {
                 searchSuggestions.innerHTML = matches.map(item => `
                     <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-                        <div class="suggestion-category">${item.category}</div>
                         <div class="suggestion-title">${item.title}</div>
                     </div>
                 `).join('');
@@ -948,7 +830,6 @@
     }
 
     function navigateToPage(page) {
-        // Adjust relative paths for subdirectory
         if (!page.startsWith('http') && !page.startsWith('../')) {
             page = '../' + page;
         }
