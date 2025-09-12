@@ -19,7 +19,7 @@
 	<meta name="twitter:description" content="The Web Wiki is the Wiki for the Minecraft mod, Web! All information you could possibly need is probably here!">
 	<meta name="twitter:image" content="https://potatowolfie.github.io/assets/web/wiki/web_wiki.png">
     <title>Web Wiki</title>
-    <link rel="icon" type="image/x-icon" href="web_wiki_favicon.ico">
+    <link rel="icon" type="image/x-icon" href="goggles.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -232,6 +232,15 @@
     box-shadow:
         inset 2px 2px 0 #a0522d,
         inset -2px -2px 0 #7e3f0f;
+        text-decoration: none;
+}
+
+.nav-tab:hover {
+    background: #7e3f0f;
+}
+
+.nav-tab.active {
+    background: #7e3f0f;
 }
 
         .main-container {
@@ -1441,7 +1450,9 @@ a {
 
 <div class="nav-tabs">
     <div class="nav-content">
-        <div class="nav-tab">Web</div>
+        <a href="index.html" class="nav-tab">Home</a>
+        <a href="web.html" class="nav-tab active">Web</a>
+        <a href="universe76.html" class="nav-tab">Universe 76</a>
     </div>
 </div>
 
