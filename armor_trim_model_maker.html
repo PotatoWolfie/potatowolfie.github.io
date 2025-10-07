@@ -2546,20 +2546,16 @@ function updateProgress(percentage, text) {
     const selectFolder = zip.folder('VanillaItems');
     const mainModFolder = zip.folder(`${modId}-CustomLayeredItem`);
 
-    // Separate vanilla and modded armors
     const vanillaArmors = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
     const selectedVanillaArmors = allSelectedArmors.filter(armor => vanillaArmors.includes(armor));
 
-    // Calculate total operations
     const totalVanillaOps = selectedVanillaArmors.length * ARMOR_SLOTS.length;
     const totalMainModOps = allSelectedArmors.length * ARMOR_SLOTS.length * customMaterials.length;
     const totalAdditionalOps = additionalMods.reduce((sum, mod) => {
         if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return sum;
 
-        // Count select models for other mod's armors
         let modOps = mod.armorTypes.length * ARMOR_SLOTS.length;
 
-        // Count trim models if they have custom materials
         if (mod.customMaterials && mod.customMaterials.length > 0) {
             modOps += mod.armorTypes.length * ARMOR_SLOTS.length * mod.customMaterials.length;
         }
@@ -2572,7 +2568,6 @@ function updateProgress(percentage, text) {
     updateProgress(20, 'Generating vanilla armor models...');
     await new Promise(resolve => setTimeout(resolve, 50));
 
-    // Generate select models for vanilla armors
     selectedVanillaArmors.forEach(armorType => {
         ARMOR_SLOTS.forEach(slot => {
             const model = createSelectModel(armorType, slot, modId, customMaterials);
@@ -2595,7 +2590,6 @@ function updateProgress(percentage, text) {
     updateProgress(vanillaProgress + 5, 'Generating custom trim models...');
     await new Promise(resolve => setTimeout(resolve, 50));
 
-    // Generate trim models for all selected armors in main mod
     allSelectedArmors.forEach(armorType => {
         ARMOR_SLOTS.forEach(slot => {
             customMaterials.forEach(material => {
@@ -2617,7 +2611,6 @@ function updateProgress(percentage, text) {
     updateProgress(mainModProgress, `Generated ${completedOperations}/${totalOperations} files...`);
     await new Promise(resolve => setTimeout(resolve, 50));
 
-    // Generate files for additional mods
     if (additionalMods.length > 0) {
         updateProgress(mainModProgress + 5, 'Generating additional mod models...');
         await new Promise(resolve => setTimeout(resolve, 50));
@@ -2625,7 +2618,6 @@ function updateProgress(percentage, text) {
         additionalMods.forEach(mod => {
             if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return;
 
-            // Generate select models (item replacements) for the other mod
             const modItemsFolder = zip.folder(`${mod.modId}-ItemModels`);
 
             mod.armorTypes.forEach(armorType => {
@@ -2643,7 +2635,6 @@ function updateProgress(percentage, text) {
                 });
             });
 
-            // If the mod has custom materials, generate trim models for those too
             if (mod.customMaterials && mod.customMaterials.length > 0) {
                 const modTrimFolder = zip.folder(`${mod.modId}-CustomLayeredItem`);
 
@@ -2678,7 +2669,6 @@ function updateProgress(percentage, text) {
 
     document.getElementById('fileSize').textContent = `${sizeKB} KB`;
 
-    // Build directory info with explanations
     let directoryHTML = '';
 
     if (selectedVanillaArmors.length > 0) {
