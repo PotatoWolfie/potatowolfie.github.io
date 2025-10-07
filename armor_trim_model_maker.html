@@ -1,0 +1,2963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://potatowolfie.github.io">
+    <meta property="og:title" content="Armor Trim Item Model Generator">
+    <meta property="og:description" content="Making armor trims appear on items done easier.">
+    <meta property="og:image" content="https://potatowolfie.github.io/assets/home/logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="PotatoWolfie">
+    <meta name="theme-color" content="#3453df">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://potatowolfie.github.io">
+    <meta name="twitter:title" content="Armor Trim Item Model Generator">
+    <meta property="og:description" content="Making armor trims appear on items done easier.">
+    <meta name="twitter:image" content="https://potatowolfie.github.io/assets/home/logo.png">
+    <title>Armor Trim Item Model Generator</title>
+    <link rel="icon" type="image/x-icon" href="goggles.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                 url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-image: url('assets/home/background.png');
+            background-color: #2d2d2d;
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: top left;
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #262626;
+            border: none;
+            padding: 30px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #3453df;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 15px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            pointer-events: none;
+        }
+
+        .section-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section h2 {
+            color: #3453df;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .input-wrapper {
+    position: relative;
+}
+
+a {
+    color: #3453df;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #5a73ff;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #3453df;
+}
+
+a:active {
+    color: #2a42bf;
+}
+
+.validation-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    display: none;
+    z-index: 10;
+}
+
+.validation-icon.show {
+    display: block;
+    animation: shake 0.3s ease;
+}
+
+.validation-icon img {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0) saturate(100%) invert(30%) sepia(95%) saturate(2500%) hue-rotate(345deg);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    25% { transform: translateY(-50%) translateX(-5px); }
+    75% { transform: translateY(-50%) translateX(5px); }
+}
+
+input.invalid {
+    border-color: #8b3a3a !important;
+    animation: pulse-red 0.5s ease;
+}
+
+@keyframes pulse-red {
+    0%, 100% { border-color: #8b3a3a; }
+    50% { border-color: #b35f5f; }
+}
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            background: #3a3a3a;
+            border: 2px solid #1a1a1a;
+            color: #e6e6e6;
+            font-size: 14px;
+            box-shadow: inset 2px 2px 0 #2a2a2a, inset -2px -2px 0 #4a4a4a;
+            text-transform: lowercase;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3453df;
+        }
+
+        input[type="text"]::placeholder {
+            text-transform: none;
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            min-height: 40px;
+            padding: 10px;
+            background: #3a3a3a;
+            border: 2px solid #1a1a1a;
+            box-shadow: inset 2px 2px 0 #2a2a2a, inset -2px -2px 0 #4a4a4a;
+        }
+
+        .chip {
+            background: #48494a;
+            color: white;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            box-shadow: inset 1px 1px 0 #6c6d6d, inset -1px -1px 0 #2a2a2a;
+        }
+
+        .chip button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chip button:hover {
+            color: #ff6b6b;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #cccccc;
+            user-select: none;
+        }
+
+        input[type="checkbox"] {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url('assets/buttons/checkbox.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
+
+        input[type="checkbox"]:checked {
+            background-image: url('assets/buttons/checkboxchecked.png');
+        }
+
+        .mod-entry {
+            background: #3a3a3a;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid #1a1a1a;
+            box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #2a2a2a;
+            position: relative;
+        }
+
+        .drag-handle img {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    pointer-events: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.drag-handle {
+    width: 32px;
+    height: 32px;
+    cursor: grab;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .drag-handle img {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+        }
+
+        .mod-entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .mod-entry-title {
+            display: flex;
+            align-items: center;
+        }
+
+        .minecraft-button {
+            cursor: pointer;
+            height: 45px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            user-select: none;
+            background: none;
+            padding: 0;
+            min-width: 250px;
+        }
+
+        .minecraft-button-left-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .minecraft-button-right-outline {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .minecraft-button-section {
+            flex: 1;
+            background: #48494a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 1px 1px 0 #6c6d6d, inset -1px -1px 0 #5b5c5c;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.15s ease;
+            margin: 0 2px;
+            margin-bottom: 0;
+            border-top: 2px solid #1e1e1e;
+        }
+
+        .minecraft-button-dark-strip {
+            height: 8px;
+            background: #3b3c3c;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            margin: 0 2px;
+            margin-top: 0;
+        }
+
+        .minecraft-button-bottom-outline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .minecraft-button-shadow {
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #1a1a1a;
+            z-index: 1;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .minecraft-button-name {
+            font-size: 15px;
+            color: #ffffff;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            position: relative;
+            z-index: 2;
+            white-space: nowrap;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+        }
+
+        .minecraft-button.pressed .minecraft-button-section {
+            transform: translateY(6px);
+        }
+
+        .minecraft-button.pressed .minecraft-button-left-outline,
+        .minecraft-button.pressed .minecraft-button-right-outline {
+            transform: translateY(6px);
+        }
+
+        .minecraft-button.pressed .minecraft-button-dark-strip,
+        .minecraft-button.pressed .minecraft-button-shadow {
+            transform: translateY(3px);
+            opacity: 0;
+        }
+
+        .minecraft-button:hover .minecraft-button-section {
+            background: #414242;
+        }
+
+        .minecraft-button:hover .minecraft-button-dark-strip {
+            background: #323333;
+        }
+
+        .minecraft-button.small {
+            height: 35px;
+            display: inline-flex;
+            min-width: 120px;
+        }
+
+        .minecraft-button.small .minecraft-button-name {
+            font-size: 13px;
+        }
+
+        .minecraft-button.danger .minecraft-button-section {
+            background: #8b3a3a;
+            box-shadow: inset 1px 1px 0 #b35f5f, inset -1px -1px 0 #a04e4e;
+        }
+
+        .minecraft-button.danger:hover .minecraft-button-section {
+            background: #a04444;
+        }
+
+        .minecraft-button.danger .minecraft-button-dark-strip {
+            background: #6b2525;
+        }
+
+        .minecraft-button.success .minecraft-button-section {
+            background: #3a8b4a;
+            box-shadow: inset 1px 1px 0 #58c169, inset -1px -1px 0 #4fb35f;
+        }
+
+        .minecraft-button.success:hover .minecraft-button-section {
+            background: #2d6b3a;
+        }
+
+        .minecraft-button.success .minecraft-button-dark-strip {
+            background: #2a6b35;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .download-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            position: relative;
+            display: none;
+        }
+
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            pointer-events: none;
+        }
+
+        .download-section.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .download-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .download-info {
+            color: #cccccc;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .summary-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: #3a3a3a;
+    padding: 15px 25px;
+    border: 2px solid #1a1a1a;
+    box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #2a2a2a;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 28px;
+    color: #3453df;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #a0a0a0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+        .file-size {
+            color: #3453df;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .directory-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #1a1a1a;
+            color: #a0a0a0;
+            font-size: 13px;
+            line-height: 1.6;
+            border-left: 3px solid #3453df;
+        }
+
+        .directory-info strong {
+            color: #3453df;
+        }
+
+        .preview-dropdown {
+            margin-top: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            position: relative;
+            min-height: 60px;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .preview-dropdown::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            cursor: pointer;
+            position: relative;
+            background: transparent;
+        }
+
+        .preview-dropdown.expanded .preview-header {
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .preview-header-text {
+            position: relative;
+            z-index: 2;
+            font-size: 18px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .preview-header-arrow {
+            width: 15px;
+            height: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s ease;
+            transform: rotate(0deg);
+        }
+
+        .preview-header-arrow img {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+        }
+
+        .preview-grid {
+            position: relative;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #2e2e2e;
+        }
+
+        .preview-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            pointer-events: none;
+        }
+
+        .preview-grid.open {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .preview-content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: 2px solid #1a1a1a;
+            color: #e6e6e6;
+            font-size: 16px;
+            font-family: 'Nunito', sans-serif;
+            box-shadow: inset 2px 2px 0 #2a2a2a, inset -2px -2px 0 #4a4a4a;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border: 2px solid #3453df;
+        }
+
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border: 2px solid #1a1a1a;
+            background: #3a3a3a;
+            color: #cccccc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #2a2a2a;
+        }
+
+        .file-item:hover {
+            background: #424242;
+            border-color: #3453df;
+        }
+
+        .file-item:hover .file-name {
+            color: #3453df;
+        }
+
+        .file-category {
+            font-size: 12px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .file-name {
+            font-size: 14px;
+            margin-top: 2px;
+            font-family: 'Nunito', sans-serif;
+            color: #cccccc;
+            transition: color 0.2s ease;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424, 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            color: #3453df;
+            font-size: 18px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .modal-close img {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-body pre {
+            background: #1a1a1a;
+            padding: 15px;
+            overflow-x: auto;
+            color: #e6e6e6;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #0a0a0a;
+            box-shadow: inset 1px 1px 0 #2a2a2a;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: center;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 0;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+        }
+
+        .toast {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 15px 20px;
+            min-width: 250px;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424, 0 4px 8px rgba(0,0,0,0.3);
+            animation: slideInRight 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 0;
+        }
+
+        .toast.success {
+            border-left: 4px solid #3a8b4a;
+        }
+
+        .toast.error {
+            border-left: 4px solid #8b3a3a;
+        }
+
+        .toast.info {
+            border-left: 4px solid #3453df;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast.success .toast-icon {
+            color: #3a8b4a;
+        }
+
+        .toast.error .toast-icon {
+            color: #8b3a3a;
+        }
+
+        .toast.info .toast-icon {
+            color: #3453df;
+        }
+
+        .toast-message {
+            color: #e6e6e6;
+            font-size: 14px;
+        }
+
+        .progress-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-overlay.show {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+}
+
+.progress-box {
+    background: #2e2e2e;
+    border: 2px solid #1a1a1a;
+    padding: 30px 40px;
+    min-width: 350px;
+    box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424, 0 4px 20px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.progress-title {
+    color: #3453df;
+    font-size: 20px;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    margin-bottom: 20px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 30px;
+    background: #1a1a1a;
+    border: 2px solid #0a0a0a;
+    box-shadow: inset 1px 1px 0 #2a2a2a;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #3453df;
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: inset 1px 1px 0 #5a73ff;
+    position: relative;
+}
+
+.progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.1) 10px,
+        rgba(255, 255, 255, 0.1) 20px
+    );
+    animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 0; }
+}
+
+.progress-text {
+    color: #e6e6e6;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.progress-percentage {
+    color: #3453df;
+    font-size: 24px;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+}
+
+        .bulk-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .mod-bulk-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.mod-individual-bulk-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    border-top: 1px solid #1a1a1a;
+}
+
+        .undo-redo-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.minecraft-button.undo-redo {
+    height: 35px;
+    min-width: 100px;
+}
+
+.minecraft-button.undo-redo:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.minecraft-button.undo-redo:disabled .minecraft-button-section {
+    background: #2a2a2a;
+}
+
+.minecraft-button.undo-redo:disabled:hover .minecraft-button-section {
+    background: #2a2a2a;
+}
+
+        .minecraft-button.bulk {
+    height: 40px;
+    min-width: 200px;
+}
+
+.minecraft-button.bulk .minecraft-button-name {
+    font-size: 14px;
+}
+
+        .minecraft-button.thick {
+            height: 50px;
+        }
+
+        .minecraft-button.thick .minecraft-button-name {
+            font-size: 16px;
+        }
+
+        .help-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: none;
+            user-select: none;
+            background: none;
+            padding: 0;
+            z-index: 100;
+        }
+
+        .help-button-left-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .help-button-right-outline {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .help-button-section {
+            flex: 1;
+            background: #48494a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 1px 1px 0 #6c6d6d, inset -1px -1px 0 #5b5c5c;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.15s ease;
+            margin: 0 2px;
+            margin-bottom: 0;
+            border-top: 2px solid #1e1e1e;
+        }
+
+        .help-button-dark-strip {
+            height: 8px;
+            background: #3b3c3c;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            margin: 0 2px;
+            margin-top: 0;
+        }
+
+        .help-button-bottom-outline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .help-button-shadow {
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #1a1a1a;
+            z-index: 1;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .help-button-text {
+            color: white;
+            font-size: 32px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        .help-button.pressed .help-button-section {
+            transform: translateY(6px);
+        }
+
+        .help-button.pressed .help-button-left-outline,
+        .help-button.pressed .help-button-right-outline {
+            transform: translateY(6px);
+        }
+
+        .help-button.pressed .help-button-dark-strip,
+        .help-button.pressed .help-button-shadow {
+            transform: translateY(3px);
+            opacity: 0;
+        }
+
+        .help-button:hover .help-button-section {
+            background: #414242;
+        }
+
+        .help-button:hover .help-button-dark-strip {
+            background: #323333;
+        }
+
+        .help-modal {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424, 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .help-modal-header {
+            padding: 20px;
+            border-bottom: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .help-modal-title {
+            color: #3453df;
+            font-size: 22px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .help-modal-body {
+            padding: 25px;
+            overflow-y: auto;
+            flex: 1;
+            font-family: 'Nunito', sans-serif;
+            line-height: 1.8;
+            font-size: 15px;
+            color: #e6e6e6;
+        }
+
+        .help-modal-body h3 {
+            color: #3453df;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .help-modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .help-modal-body p {
+            margin-bottom: 15px;
+        }
+
+        .help-modal-body ol, .help-modal-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .help-modal-body li {
+            margin-bottom: 8px;
+        }
+
+        .help-modal-body strong {
+            color: #3453df;
+        }
+
+        .help-modal-body code {
+            background: #1a1a1a;
+            padding: 2px 6px;
+            color: #3453df;
+            font-family: 'Courier New', monospace;
+        }
+
+        .header {
+            background: rgba(45, 45, 45, 0.9);
+            border-bottom: 3px solid #4a4a4a;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 100;
+            margin-bottom: 20px;
+        }
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .main-wrapper {
+            padding: 20px;
+        }
+
+        .preview-grid::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .preview-grid::-webkit-scrollbar-track {
+            background: #242424;
+        }
+
+        .preview-grid::-webkit-scrollbar-thumb {
+            background: #4f5a75;
+            border-radius: 4px;
+        }
+
+        .preview-grid::-webkit-scrollbar-thumb:hover {
+            background: #5a6580;
+        }
+
+        @media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+
+    .button-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .minecraft-button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .help-button {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .help-button-text {
+        font-size: 28px;
+    }
+
+    .modal {
+        width: 95%;
+    }
+
+    .help-modal {
+        width: 95%;
+    }
+
+    .bulk-actions,
+    .mod-bulk-actions,
+    .mod-individual-bulk-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .minecraft-button.bulk {
+        width: 100%;
+        max-width: none;
+    }
+
+    .undo-redo-controls {
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    .minecraft-button.undo-redo {
+        min-width: 80px;
+    }
+
+    .summary-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stat-item {
+        width: 100%;
+    }
+
+    .toast-container {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .toast {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .progress-box {
+        min-width: auto;
+        width: 90%;
+        padding: 20px 25px;
+    }
+
+    .mod-entry-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .mod-entry-title {
+        width: 100%;
+    }
+
+    .minecraft-button.small.danger {
+        width: 100%;
+        max-width: none;
+    }
+
+    .undo-redo-controls {
+        flex-direction: row;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .minecraft-button.undo-redo {
+        min-width: 80px;
+        flex: 1;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+
+    .modal-footer .minecraft-button {
+        width: 100%;
+        max-width: none;
+    }
+
+    .section-content > div[style*="display: flex"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .section-content > div[style*="display: flex"] .undo-redo-controls {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io">
+                <img src="assets/home/logo.png" alt="PotatoWolfie">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="container">
+        <h1 class="page-title">Trimmed armor Item Model Generator</h1>
+
+        <div class="section">
+            <div class="section-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin-bottom: 0;">Main Mod Configuration</h2>
+                    <div class="undo-redo-controls" style="margin-bottom: 0;">
+                        <button class="minecraft-button undo-redo small" id="undoBtn" onclick="undo()" disabled>
+                            <div class="minecraft-button-left-outline"></div>
+                            <div class="minecraft-button-right-outline"></div>
+                            <div class="minecraft-button-section">
+                                <div class="minecraft-button-name">↶ Undo</div>
+                            </div>
+                            <div class="minecraft-button-dark-strip"></div>
+                            <div class="minecraft-button-bottom-outline"></div>
+                            <div class="minecraft-button-shadow"></div>
+                        </button>
+                        <button class="minecraft-button undo-redo small" id="redoBtn" onclick="redo()" disabled>
+                            <div class="minecraft-button-left-outline"></div>
+                            <div class="minecraft-button-right-outline"></div>
+                            <div class="minecraft-button-section">
+                                <div class="minecraft-button-name">↷ Redo</div>
+                            </div>
+                            <div class="minecraft-button-dark-strip"></div>
+                            <div class="minecraft-button-bottom-outline"></div>
+                            <div class="minecraft-button-shadow"></div>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="modId">Mod ID:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="modId" value="" placeholder="your-mod-id" autocomplete="off">
+                        <div class="validation-icon" id="modIdWarning">⚠</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="customMaterialInput">Custom Materials:</label>
+                    <input type="text" id="customMaterialInput" placeholder="Enter material name and press Enter" autocomplete="off">
+                    <div class="chip-container" id="customMaterials"></div>
+                </div>
+                <div class="form-group">
+                    <label for="customArmorInput">Custom Armor Types:</label>
+                    <input type="text" id="customArmorInput" placeholder="Enter armor type and press Enter" autocomplete="off">
+                    <div class="chip-container" id="customArmors"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-content">
+                <h2>Armor Types</h2>
+                <div class="bulk-actions">
+                    <button class="minecraft-button bulk" onclick="bulkSelectArmor(true)">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Select All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button bulk" onclick="bulkSelectArmor(false)">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Deselect All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+                <div class="checkbox-group" id="armorTypes">
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="leather" checked> Leather
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="chainmail" checked> Chainmail
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="iron" checked> Iron
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="golden" checked> Golden
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="diamond" checked> Diamond
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="netherite" checked> Netherite
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="copper" checked> Copper
+                    </label>
+                </div>
+                <div id="modArmorTypesSection"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-content">
+                <h2>Additional Mods Support</h2>
+                <p style="margin-bottom: 15px; color: #a0a0a0; font-size: 14px;">Add other mods' armor types to generate trim models for them too.</p>
+
+                <div class="mod-bulk-actions" id="modBulkActions" style="display: none;">
+                    <button class="minecraft-button bulk" onclick="bulkSelectAllMods(true)">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Select All Armors</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button bulk" onclick="bulkSelectAllMods(false)">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Deselect All Armors</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button bulk danger" onclick="bulkRemoveAllMods()">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Remove All Mods</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+
+                <div id="additionalMods"></div>
+                <button class="minecraft-button small" onclick="addModEntry()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">+ Add Mod</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+        </div>
+
+        <div class="button-row">
+            <button class="minecraft-button" onclick="saveConfiguration()">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Save Configuration</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+            <button class="minecraft-button" onclick="document.getElementById('loadConfigInput').click()">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Load Configuration</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+            <input type="file" id="loadConfigInput" accept=".json" style="display: none;" onchange="loadConfiguration(event)">
+        </div>
+
+        <button class="minecraft-button success" onclick="generateModels()" style="margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; display: flex;">
+            <div class="minecraft-button-left-outline"></div>
+            <div class="minecraft-button-right-outline"></div>
+            <div class="minecraft-button-section">
+                <div class="minecraft-button-name">Generate Models</div>
+            </div>
+            <div class="minecraft-button-dark-strip"></div>
+            <div class="minecraft-button-bottom-outline"></div>
+            <div class="minecraft-button-shadow"></div>
+        </button>
+
+        <div class="download-section" id="downloadSection">
+            <div class="download-content">
+                <div class="download-info">Your models are ready!</div>
+                <div class="file-size" id="fileSize">0 KB</div>
+                <div class="summary-stats" id="summaryStats"></div>
+
+                <button class="minecraft-button success" onclick="downloadZip()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Download ZIP</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+
+                <div class="directory-info" id="directoryInfo"></div>
+
+                <div class="preview-dropdown" id="previewDropdown">
+                    <div class="preview-header" onclick="togglePreview()">
+                        <div class="preview-header-text">Preview Generated Files</div>
+                        <div class="preview-header-arrow" id="previewArrow">
+                            <img src="assets/wiki/buttons/dropdown_arrow.png" alt="Dropdown Arrow">
+                        </div>
+                    </div>
+                    <div class="preview-grid" id="previewGrid">
+                        <div class="preview-content">
+                            <div class="search-container">
+                                <input type="text" class="search-box" id="previewSearch" placeholder="Search files..." oninput="filterPreviewFiles()" autocomplete="off">
+                            </div>
+                            <div class="file-list" id="fileList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div class="modal-title" id="modalTitle">File Preview</div>
+            <button class="modal-close" onclick="closeModal()">
+                <img src="assets/buttons/exit.png" alt="Close">
+            </button>
+        </div>
+        <div class="modal-body">
+            <pre id="modalContent"></pre>
+        </div>
+        <div class="modal-footer">
+            <button class="minecraft-button thick success" onclick="copyToClipboard()">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Copy to Clipboard</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="help-button" onclick="showHelp()">
+    <div class="help-button-left-outline"></div>
+    <div class="help-button-right-outline"></div>
+    <div class="help-button-section">
+        <div class="help-button-text">?</div>
+    </div>
+    <div class="help-button-dark-strip"></div>
+    <div class="help-button-bottom-outline"></div>
+    <div class="help-button-shadow"></div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script>
+    const VANILLA_MATERIALS = [
+        ["minecraft", "quartz"], ["minecraft", "iron"], ["minecraft", "netherite"],
+        ["minecraft", "redstone"], ["minecraft", "copper"], ["minecraft", "gold"],
+        ["minecraft", "emerald"], ["minecraft", "diamond"], ["minecraft", "lapis"],
+        ["minecraft", "amethyst"], ["minecraft", "resin"]
+    ];
+
+    const ARMOR_SLOTS = ["helmet", "chestplate", "leggings", "boots"];
+
+    let customMaterials = [];
+    let customArmors = [];
+    let additionalMods = [];
+    let generatedZip = null;
+    let generatedFiles = {};
+    let previewRotation = 0;
+    let currentModalFile = '';
+    let undoStack = [];
+    let redoStack = [];
+    const MAX_UNDO_HISTORY = 20;
+
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+
+        const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+        toast.innerHTML = `
+            <div class="toast-icon">${icon}</div>
+            <div class="toast-message">${message}</div>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = 'slideInRight 0.3s ease reverse';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    document.getElementById('modId').addEventListener('input', function(e) {
+        this.value = this.value.toLowerCase();
+    });
+
+    document.getElementById('customMaterialInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const value = this.value.trim().toLowerCase();
+            if (value && !customMaterials.includes(value)) {
+                saveState();
+                customMaterials.push(value);
+                renderMaterials();
+                this.value = '';
+                showToast('Material added!', 'success');
+            }
+        }
+    });
+
+    document.getElementById('customMaterialInput').addEventListener('input', function(e) {
+        this.value = this.value.toLowerCase();
+    });
+
+    function removeMaterial(material) {
+    saveState();
+        customMaterials = customMaterials.filter(m => m !== material);
+        renderMaterials();
+        showToast('Material removed', 'info');
+    }
+
+    function renderMaterials() {
+        document.getElementById('customMaterials').innerHTML = customMaterials.map(m =>
+            `<div class="chip">${m} <button onclick="removeMaterial('${m}')">×</button></div>`
+        ).join('');
+    }
+
+    document.getElementById('customArmorInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const value = this.value.trim().toLowerCase();
+            if (value && !customArmors.includes(value)) {
+                saveState();
+                customArmors.push(value);
+                renderCustomArmors();
+                this.value = '';
+                showToast('Armor type added!', 'success');
+            }
+        }
+    });
+
+    document.getElementById('customArmorInput').addEventListener('input', function(e) {
+        this.value = this.value.toLowerCase();
+    });
+
+    function removeCustomArmor(armor) {
+    saveState();
+        customArmors = customArmors.filter(a => a !== armor);
+        additionalMods.forEach(mod => {
+            mod.armorTypes = mod.armorTypes.filter(a => a !== armor);
+        });
+        renderCustomArmors();
+        showToast('Armor type removed', 'info');
+    }
+
+    function renderCustomArmors() {
+        document.getElementById('customArmors').innerHTML = customArmors.map(a =>
+            `<div class="chip">${a} <button onclick="removeCustomArmor('${a}')">×</button></div>`
+        ).join('');
+        updateMainModArmorTypes();
+        if (additionalMods.length > 0) {
+            renderAdditionalMods();
+        }
+    }
+
+    function updateMainModArmorTypes() {
+        const modArmorTypes = getAllModArmorTypes();
+        const modArmorSection = document.getElementById('modArmorTypesSection');
+
+        if (modArmorTypes.length > 0) {
+            modArmorSection.innerHTML = `
+                <h3 style="color: #3453df; margin-top: 15px; margin-bottom: 10px; font-size: 16px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">Mod Armor Types</h3>
+                <div class="bulk-actions">
+                    <button class="minecraft-button bulk" onclick="bulkSelectModArmor(true)">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Select All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button bulk" onclick="bulkSelectModArmor(false)">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Deselect All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+                <div class="checkbox-group">
+                    ${modArmorTypes.map(armorType => `
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="${armorType}" checked>
+                            ${armorType.charAt(0).toUpperCase() + armorType.slice(1)}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            attachButtonAnimations();
+        } else {
+            modArmorSection.innerHTML = '';
+        }
+    }
+
+    function bulkSelectArmor(select) {
+        const checkboxes = document.querySelectorAll('#armorTypes input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = select);
+        showToast(select ? 'All vanilla armors selected' : 'All vanilla armors deselected', 'info');
+    }
+
+    function bulkSelectModArmor(select) {
+        const checkboxes = document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = select);
+        showToast(select ? 'All mod armors selected' : 'All mod armors deselected', 'info');
+    }
+
+    function addModEntry() {
+    const id = Date.now();
+    additionalMods.push({
+        id,
+        modId: '',
+        armorTypes: [],
+        customMaterials: [],
+        customArmorInputs: []
+    });
+    renderAdditionalMods();
+    showToast('Mod entry added', 'success');
+}
+
+    function removeModEntry(id) {
+    saveState();
+        additionalMods = additionalMods.filter(m => m.id !== id);
+        renderAdditionalMods();
+        showToast('Mod removed', 'info');
+    }
+
+    function updateModId(id, value) {
+        const mod = additionalMods.find(m => m.id === id);
+        if (mod) mod.modId = value;
+    }
+
+    function addMaterialToMod(id, e) {
+        if (e.key === 'Enter') {
+            const value = e.target.value.trim().toLowerCase();
+            const mod = additionalMods.find(m => m.id === id);
+            if (mod && value && !mod.customMaterials.includes(value)) {
+                mod.customMaterials.push(value);
+                renderAdditionalMods();
+                e.target.value = '';
+                showToast('Material added to mod', 'success');
+            }
+        }
+    }
+
+    function removeMaterialFromMod(modId, material) {
+        const mod = additionalMods.find(m => m.id === modId);
+        if (mod) {
+            mod.customMaterials = mod.customMaterials.filter(m => m !== material);
+            renderAdditionalMods();
+            showToast('Material removed from mod', 'info');
+        }
+    }
+
+    function addArmorToMod(id, e) {
+    if (e.key === 'Enter') {
+        const value = e.target.value.trim().toLowerCase();
+        const mod = additionalMods.find(m => m.id === id);
+        if (mod && value) {
+            if (!mod.customArmorInputs) mod.customArmorInputs = [];
+
+            if (!mod.customArmorInputs.includes(value)) {
+                saveState();
+                mod.customArmorInputs.push(value);
+                if (!mod.armorTypes.includes(value)) {
+                    mod.armorTypes.push(value);
+                }
+                renderAdditionalMods();
+                e.target.value = '';
+                showToast('Armor type added to mod', 'success');
+            }
+        }
+    }
+}
+
+    function removeArmorFromMod(modId, armor) {
+    const mod = additionalMods.find(m => m.id === modId);
+    if (mod) {
+        mod.armorTypes = mod.armorTypes.filter(a => a !== armor);
+        if (mod.customArmorInputs) {
+            mod.customArmorInputs = mod.customArmorInputs.filter(a => a !== armor);
+        }
+        renderAdditionalMods();
+        showToast('Armor type removed from mod', 'info');
+    }
+}
+
+    function toggleModArmor(modId, armorType, checked) {
+    const mod = additionalMods.find(m => m.id === modId);
+    if (mod) {
+        if (checked && !mod.armorTypes.includes(armorType)) {
+            mod.armorTypes.push(armorType);
+        } else if (!checked) {
+            mod.armorTypes = mod.armorTypes.filter(a => a !== armorType);
+        }
+    }
+}
+    function getAllModArmorTypes() {
+    const vanillaArmors = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
+    const modArmors = new Set();
+
+    customArmors.forEach(armor => {
+        if (!vanillaArmors.includes(armor)) modArmors.add(armor);
+    });
+
+    additionalMods.forEach(mod => {
+        (mod.armorTypes || []).forEach(armor => {
+            if (!vanillaArmors.includes(armor) &&
+                !(mod.customMaterials || []).includes(armor)) {
+                modArmors.add(armor);
+            }
+        });
+    });
+
+    return Array.from(modArmors);
+}
+
+
+
+
+
+    function bulkSelectAllMods(select) {
+    const allArmorTypes = [...getSelectedArmorTypes(), ...getAllModArmorTypes()];
+
+    additionalMods.forEach(mod => {
+        const customInputs = mod.customArmorInputs || [];
+        if (select) {
+            mod.armorTypes = [...new Set([...allArmorTypes, ...customInputs])];
+        } else {
+            mod.armorTypes = [...customInputs];
+        }
+    });
+
+    renderAdditionalMods();
+    showToast(select ? 'All armors selected for all mods' : 'All armors deselected for all mods', 'info');
+}
+
+function bulkAddMaterialToAllMods() {
+    const material = prompt('Enter material name to add to all mods:');
+    if (!material) return;
+
+    const materialLower = material.trim().toLowerCase();
+    let addedCount = 0;
+
+    additionalMods.forEach(mod => {
+        if (!mod.customMaterials) mod.customMaterials = [];
+        if (!mod.customMaterials.includes(materialLower)) {
+            mod.customMaterials.push(materialLower);
+            addedCount++;
+        }
+    });
+
+    if (addedCount > 0) {
+        saveState();
+        renderAdditionalMods();
+        showToast(`Added "${materialLower}" to ${addedCount} mod(s)`, 'success');
+    } else {
+        showToast('Material already exists in all mods', 'info');
+    }
+}
+
+function bulkRemoveAllMods() {
+    if (additionalMods.length === 0) return;
+
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay show';
+    modalOverlay.style.zIndex = '3000';
+
+    modalOverlay.innerHTML = `
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 550px;">
+            <div class="modal-header">
+                <div class="modal-title">Confirm Removal</div>
+                <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                    <img src="assets/buttons/exit.png" alt="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="margin: 0; font-size: 16px; line-height: 1.6;">
+                    Are you sure you want to remove all <strong style="color: #3453df;">${additionalMods.length}</strong> mod entries?
+                </p>
+                <p style="margin-top: 10px; color: #a0a0a0; font-size: 14px;">
+                    This action can be undone with the Undo button at the top.
+                </p>
+            </div>
+            <div class="modal-footer" style="gap: 10px; justify-content: center;">
+                <button class="minecraft-button" onclick="this.closest('.modal-overlay').remove()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Cancel</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+                <button class="minecraft-button danger" onclick="confirmBulkRemove(this)">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Remove All</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modalOverlay);
+    attachButtonAnimations();
+}
+
+function confirmBulkRemove(button) {
+    saveState();
+    additionalMods = [];
+    renderAdditionalMods();
+    showToast('All mods removed', 'info');
+    button.closest('.modal-overlay').remove();
+}
+
+function selectAllArmorsForMod(modId) {
+    const mod = additionalMods.find(m => m.id === modId);
+    if (!mod) return;
+
+    const allArmorTypes = [...getSelectedArmorTypes(), ...getAllModArmorTypes()];
+    const customInputs = mod.customArmorInputs || [];
+
+    mod.armorTypes = [...new Set([...allArmorTypes, ...customInputs])];
+    renderAdditionalMods();
+    showToast('All armors selected for this mod', 'info');
+}
+
+function deselectAllArmorsForMod(modId) {
+    const mod = additionalMods.find(m => m.id === modId);
+    if (!mod) return;
+
+    const customInputs = mod.customArmorInputs || [];
+    mod.armorTypes = [...customInputs];
+
+    renderAdditionalMods();
+    showToast('All armors deselected for this mod', 'info');
+}
+
+    function renderAdditionalMods() {
+    const bulkActionsDiv = document.getElementById('modBulkActions');
+    if (bulkActionsDiv) {
+        bulkActionsDiv.style.display = additionalMods.length > 0 ? 'flex' : 'none';
+    }
+
+    updateMainModArmorTypes();
+    const allArmorTypes = getSelectedArmorTypes();
+    const modArmorTypes = getAllModArmorTypes();
+
+    document.getElementById('additionalMods').innerHTML = additionalMods.map(mod => {
+        return `
+        <div class="mod-entry"
+             ontouchstart="handleTouchStart(event, ${mod.id})"
+             ontouchmove="handleTouchMove(event)"
+             ontouchend="handleTouchEnd(event, ${mod.id})">
+            <div class="mod-entry-header">
+                <div class="mod-entry-title">
+                    <div class="drag-handle" data-id="${mod.id}">
+                        <img src="assets/buttons/drag.png" alt="Drag">
+                    </div>
+                    <strong>Mod ${additionalMods.indexOf(mod) + 1}</strong>
+                </div>
+                <button class="minecraft-button small danger" onclick="removeModEntry(${mod.id})">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Remove</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label>Mod ID:</label>
+                <input type="text"
+                       value="${mod.modId}"
+                       oninput="this.value = this.value.toLowerCase(); updateModId(${mod.id}, this.value)"
+                       placeholder="other-mod-id"
+                       autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>Custom Materials for this mod:</label>
+                <input type="text"
+                       oninput="this.value = this.value.toLowerCase()"
+                       onkeypress="addMaterialToMod(${mod.id}, event)"
+                       placeholder="Enter material name and press Enter"
+                       autocomplete="off">
+                ${mod.customMaterials && mod.customMaterials.length > 0 ? `
+                    <div class="chip-container">
+                        ${mod.customMaterials.map(material =>
+                            `<div class="chip">${material}
+                                <button onclick="event.stopPropagation(); removeMaterialFromMod(${mod.id}, '${material}')">×</button>
+                             </div>`
+                        ).join('')}
+                    </div>
+                ` : ''}
+            </div>
+
+            <div class="form-group">
+                <label>Custom Armor Types for this mod:</label>
+                <input type="text"
+                       oninput="this.value = this.value.toLowerCase()"
+                       onkeypress="addArmorToMod(${mod.id}, event)"
+                       placeholder="Enter armor type and press Enter"
+                       autocomplete="off">
+                ${mod.customArmorInputs && mod.customArmorInputs.length > 0 ? `
+                    <div class="chip-container">
+                        ${mod.customArmorInputs.map(armor =>
+                            `<div class="chip">${armor}
+                                <button onclick="event.stopPropagation(); removeArmorFromMod(${mod.id}, '${armor}')">×</button>
+                             </div>`
+                        ).join('')}
+                    </div>
+                ` : ''}
+            </div>
+
+            <div class="form-group">
+                <label>Armor Types:</label>
+                <div class="mod-individual-bulk-actions">
+                    <button class="minecraft-button bulk" onclick="selectAllArmorsForMod(${mod.id})">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Select All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button bulk" onclick="deselectAllArmorsForMod(${mod.id})">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Deselect All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+
+                <div class="checkbox-group">
+                    ${allArmorTypes.map(armorType => `
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="${armorType}"
+                                   ${mod.armorTypes.includes(armorType) ? 'checked' : ''}
+                                   onchange="toggleModArmor(${mod.id}, '${armorType}', this.checked)">
+                            ${armorType.charAt(0).toUpperCase() + armorType.slice(1)}
+                        </label>
+                    `).join('')}
+                </div>
+
+                ${modArmorTypes.length > 0 ? `
+                    <h3 style="color: #3453df; margin-top: 15px; margin-bottom: 10px; font-size: 16px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+                        Mod Armor Types
+                    </h3>
+                    <div class="checkbox-group">
+                        ${modArmorTypes.map(armorType => `
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="${armorType}"
+                                       ${mod.armorTypes.includes(armorType) ? 'checked' : ''}
+                                       onchange="toggleModArmor(${mod.id}, '${armorType}', this.checked)">
+                                ${armorType.charAt(0).toUpperCase() + armorType.slice(1)}
+                            </label>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        </div>`;
+    }).join('');
+
+    attachButtonAnimations();
+}
+
+
+    function getSelectedArmorTypes() {
+        const checkboxes = document.querySelectorAll('#armorTypes input[type="checkbox"]:checked');
+        return Array.from(checkboxes).map(cb => cb.value);
+    }
+
+    function saveConfiguration() {
+        const config = {
+            modId: document.getElementById('modId').value,
+            customMaterials,
+            customArmors,
+            selectedVanillaArmors: getSelectedArmorTypes(),
+            selectedModArmors: Array.from(document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]:checked')).map(cb => cb.value),
+            additionalMods: additionalMods.map(mod => ({
+                modId: mod.modId,
+                armorTypes: mod.armorTypes,
+                customMaterials: mod.customMaterials
+            }))
+        };
+
+        const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+        saveAs(blob, 'armor_trim_config.json');
+        showToast('Configuration saved!', 'success');
+    }
+
+    function loadConfiguration(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const config = JSON.parse(e.target.result);
+
+                document.getElementById('modId').value = config.modId || '';
+                customMaterials = config.customMaterials || [];
+                customArmors = config.customArmors || [];
+                additionalMods = config.additionalMods?.map(mod => ({
+                    ...mod,
+                    id: Date.now() + Math.random()
+                })) || [];
+
+                renderMaterials();
+                renderCustomArmors();
+                renderAdditionalMods();
+
+                document.querySelectorAll('#armorTypes input[type="checkbox"]').forEach(cb => {
+                    cb.checked = config.selectedVanillaArmors?.includes(cb.value) || false;
+                });
+
+                setTimeout(() => {
+                    document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]').forEach(cb => {
+                        cb.checked = config.selectedModArmors?.includes(cb.value) || false;
+                    });
+                }, 100);
+
+                showToast('Configuration loaded!', 'success');
+            } catch (error) {
+                showToast('Error loading configuration', 'error');
+                console.error(error);
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    function createSelectModel(armorType, slot, modId, materials) {
+        const model = {
+            type: "minecraft:select",
+            cases: [],
+            fallback: {
+                type: "minecraft:model",
+                model: `minecraft:item/${armorType}_${slot}`
+            },
+            property: "minecraft:trim_material"
+        };
+
+        if (armorType === 'leather') {
+            model.fallback.tints = [{ type: "minecraft:dye", default: -6265536 }];
+        }
+
+        VANILLA_MATERIALS.forEach(([ns, mat]) => {
+            const caseObj = {
+                model: {
+                    type: "minecraft:model",
+                    model: `minecraft:item/${armorType}_${slot}_${mat}_trim`
+                },
+                when: `${ns}:${mat}`
+            };
+            if (armorType === 'leather') {
+                caseObj.model.tints = [{ type: "minecraft:dye", default: -6265536 }];
+            }
+            model.cases.push(caseObj);
+        });
+
+        materials.forEach(mat => {
+            const caseObj = {
+                model: {
+                    type: "minecraft:model",
+                    model: `${modId}:item/${armorType}_${slot}_${mat}_trim`
+                },
+                when: `${modId}:${mat}`
+            };
+            if (armorType === 'leather') {
+                caseObj.model.tints = [{ type: "minecraft:dye", default: -6265536 }];
+            }
+            model.cases.push(caseObj);
+        });
+
+        return { model };
+    }
+
+    function createTrimModel(armorType, slot, material) {
+        return {
+            parent: "minecraft:item/generated",
+            textures: {
+                layer0: `minecraft:item/${armorType}_${slot}`,
+                layer1: `minecraft:trims/items/${slot}_trim_${material}`
+            }
+        };
+    }
+
+    function validateInputs() {
+    let isValid = true;
+    const modIdInput = document.getElementById('modId');
+    const modIdWarning = document.getElementById('modIdWarning');
+
+    if (!modIdInput.value.trim()) {
+        modIdInput.classList.add('invalid');
+        modIdWarning.classList.add('show');
+        isValid = false;
+        showToast('Mod ID is required', 'error');
+    } else {
+        modIdInput.classList.remove('invalid');
+        modIdWarning.classList.remove('show');
+    }
+
+    const armorTypes = getSelectedArmorTypes();
+    if (armorTypes.length === 0) {
+        isValid = false;
+        showToast('Please select at least one armor type', 'error');
+    }
+
+    if (customMaterials.length === 0) {
+        isValid = false;
+        showToast('Please add at least one custom material', 'error');
+    }
+
+    return isValid;
+}
+
+function checkDuplicates() {
+    const modId = document.getElementById('modId').value.trim().toLowerCase();
+    if (!modId) return true;
+
+    const duplicateMods = additionalMods.filter(mod =>
+        mod.modId.toLowerCase() === modId
+    );
+
+    if (duplicateMods.length > 0) {
+        showToast(`Warning: Mod ID "${modId}" is duplicated in additional mods`, 'error');
+        return false;
+    }
+
+    const modIds = additionalMods.map(m => m.modId.toLowerCase()).filter(id => id);
+    const duplicates = modIds.filter((id, index) => modIds.indexOf(id) !== index);
+
+    if (duplicates.length > 0) {
+        showToast(`Warning: Duplicate mod IDs found: ${[...new Set(duplicates)].join(', ')}`, 'error');
+        return false;
+    }
+
+    return true;
+}
+
+function saveState() {
+    const state = {
+        customMaterials: [...customMaterials],
+        customArmors: [...customArmors],
+        additionalMods: JSON.parse(JSON.stringify(additionalMods))
+    };
+
+    undoStack.push(state);
+    if (undoStack.length > MAX_UNDO_HISTORY) {
+        undoStack.shift();
+    }
+
+    redoStack = [];
+    updateUndoRedoButtons();
+}
+
+function undo() {
+    if (undoStack.length === 0) return;
+
+    const currentState = {
+        customMaterials: [...customMaterials],
+        customArmors: [...customArmors],
+        additionalMods: JSON.parse(JSON.stringify(additionalMods))
+    };
+
+    redoStack.push(currentState);
+
+    const previousState = undoStack.pop();
+    customMaterials = previousState.customMaterials;
+    customArmors = previousState.customArmors;
+    additionalMods = previousState.additionalMods;
+
+    renderMaterials();
+    renderCustomArmors();
+    renderAdditionalMods();
+    updateUndoRedoButtons();
+    showToast('Undone', 'info');
+}
+
+function redo() {
+    if (redoStack.length === 0) return;
+
+    const currentState = {
+        customMaterials: [...customMaterials],
+        customArmors: [...customArmors],
+        additionalMods: JSON.parse(JSON.stringify(additionalMods))
+    };
+
+    undoStack.push(currentState);
+
+    const nextState = redoStack.pop();
+    customMaterials = nextState.customMaterials;
+    customArmors = nextState.customArmors;
+    additionalMods = nextState.additionalMods;
+
+    renderMaterials();
+    renderCustomArmors();
+    renderAdditionalMods();
+    updateUndoRedoButtons();
+    showToast('Redone', 'info');
+}
+
+function updateUndoRedoButtons() {
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
+
+    if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+    if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+}
+
+function showProgress() {
+    document.getElementById('progressOverlay').classList.add('show');
+    updateProgress(0, 'Starting generation...');
+}
+
+function hideProgress() {
+    setTimeout(() => {
+        document.getElementById('progressOverlay').classList.remove('show');
+    }, 500);
+}
+
+function updateProgress(percentage, text) {
+    document.getElementById('progressBarFill').style.width = percentage + '%';
+    document.getElementById('progressPercentage').textContent = Math.round(percentage) + '%';
+    document.getElementById('progressText').textContent = text;
+}
+
+    async function generateModels() {
+    if (!validateInputs()) {
+        return;
+    }
+
+    if (!checkDuplicates()) {
+        return;
+    }
+
+    showProgress();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    const modId = document.getElementById('modId').value;
+    const armorTypes = getSelectedArmorTypes();
+
+    updateProgress(10, 'Calculating files to generate...');
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    const zip = new JSZip();
+    generatedFiles = {};
+
+    const selectFolder = zip.folder('VanillaItems');
+    const mainModFolder = zip.folder(`${modId}-CustomLayeredItem`);
+
+    const totalVanillaOps = armorTypes.length * ARMOR_SLOTS.length;
+    const totalMainModOps = armorTypes.length * ARMOR_SLOTS.length * customMaterials.length;
+    const totalAdditionalOps = additionalMods.reduce((sum, mod) => {
+        if (mod.modId && mod.armorTypes.length > 0 && mod.customMaterials.length > 0) {
+            return sum + (mod.armorTypes.length * ARMOR_SLOTS.length * mod.customMaterials.length);
+        }
+        return sum;
+    }, 0);
+    const totalOperations = totalVanillaOps + totalMainModOps + totalAdditionalOps;
+    let completedOperations = 0;
+
+    updateProgress(20, 'Generating vanilla armor models...');
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    armorTypes.forEach(armorType => {
+        ARMOR_SLOTS.forEach(slot => {
+            const model = createSelectModel(armorType, slot, modId, customMaterials);
+            const content = JSON.stringify(model, null, 2);
+            const filename = `${armorType}_${slot}.json`;
+            selectFolder.file(filename, content);
+            generatedFiles[`VanillaItems/${filename}`] = {
+                category: 'VanillaItems',
+                name: filename,
+                content: content
+            };
+            completedOperations++;
+        });
+    });
+
+    const vanillaProgress = 20 + (completedOperations / totalOperations) * 60;
+    updateProgress(vanillaProgress, `Generated ${completedOperations}/${totalOperations} files...`);
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    updateProgress(vanillaProgress + 5, 'Generating custom trim models...');
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    armorTypes.forEach(armorType => {
+        ARMOR_SLOTS.forEach(slot => {
+            customMaterials.forEach(material => {
+                const model = createTrimModel(armorType, slot, material);
+                const content = JSON.stringify(model, null, 2);
+                const filename = `${armorType}_${slot}_${material}_trim.json`;
+                mainModFolder.file(filename, content);
+                generatedFiles[`${modId}-CustomLayeredItem/${filename}`] = {
+                    category: `${modId}-CustomLayeredItem`,
+                    name: filename,
+                    content: content
+                };
+                completedOperations++;
+            });
+        });
+    });
+
+    const mainModProgress = 20 + (completedOperations / totalOperations) * 60;
+    updateProgress(mainModProgress, `Generated ${completedOperations}/${totalOperations} files...`);
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    if (additionalMods.length > 0) {
+        updateProgress(mainModProgress + 5, 'Generating additional mod models...');
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        additionalMods.forEach(mod => {
+            if (mod.modId && mod.armorTypes.length > 0 && mod.customMaterials.length > 0) {
+                const modFolder = zip.folder(`${mod.modId}-CustomLayeredItem`);
+                mod.armorTypes.forEach(armorType => {
+                    ARMOR_SLOTS.forEach(slot => {
+                        mod.customMaterials.forEach(material => {
+                            const model = createTrimModel(armorType, slot, material);
+                            const content = JSON.stringify(model, null, 2);
+                            const filename = `${armorType}_${slot}_${material}_trim.json`;
+                            modFolder.file(filename, content);
+                            generatedFiles[`${mod.modId}-CustomLayeredItem/${filename}`] = {
+                                category: `${mod.modId}-CustomLayeredItem`,
+                                name: filename,
+                                content: content
+                            };
+                            completedOperations++;
+                        });
+                    });
+                });
+            }
+        });
+    }
+
+    updateProgress(85, 'Creating ZIP file...');
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    generatedZip = await zip.generateAsync({ type: 'blob' });
+    const sizeKB = (generatedZip.size / 1024).toFixed(2);
+
+    updateProgress(95, 'Finalizing...');
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    document.getElementById('fileSize').textContent = `${sizeKB} KB`;
+    document.getElementById('directoryInfo').innerHTML = `
+        <strong>VanillaItems:</strong><br>
+        Extract to: <code>resources/assets/minecraft/items/</code><br>
+        <em>These will REPLACE vanilla armor item models</em><br><br>
+        <strong>${modId}-CustomLayeredItem:</strong><br>
+        Extract to: <code>resources/assets/${modId}/models/item/</code><br><br>
+        ${additionalMods.filter(m => m.modId && m.armorTypes.length > 0).map(m => `
+            <strong>${m.modId}-CustomLayeredItem:</strong><br>
+            Extract to: <code>resources/assets/${m.modId}/models/item/</code><br><br>
+        `).join('')}
+    `;
+
+    renderPreviewFiles();
+    updateSummaryStats();
+    document.getElementById('downloadSection').classList.add('show');
+
+    updateProgress(100, 'Complete!');
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    hideProgress();
+
+    const folderCount = new Set(Object.values(generatedFiles).map(f => f.category)).size;
+    showToast(`Generated ${Object.keys(generatedFiles).length} files across ${folderCount} folders`, 'success');
+}
+
+    function downloadZip() {
+        if (generatedZip) {
+            saveAs(generatedZip, 'armor_models_complete.zip');
+            showToast('Download started!', 'success');
+        }
+    }
+
+    let previewTargetRotation = 0;
+    let previewCurrentRotation = 0;
+    let isPreviewArrowAnimating = false;
+    let isPreviewDropdownAnimating = false;
+
+    function updatePreviewArrow() {
+        if (previewCurrentRotation === previewTargetRotation || isPreviewArrowAnimating) return;
+
+        const arrow = document.getElementById('previewArrow');
+        isPreviewArrowAnimating = true;
+
+        let nextRotation = previewCurrentRotation + 180;
+        arrow.style.transform = `rotate(${nextRotation}deg)`;
+
+        arrow.addEventListener('transitionend', function handler(e) {
+            if (e.propertyName !== 'transform') return;
+
+            arrow.removeEventListener('transitionend', handler);
+            previewCurrentRotation = nextRotation;
+
+            if (previewCurrentRotation >= 360) {
+                arrow.style.transition = 'none';
+                previewCurrentRotation -= 360;
+                previewTargetRotation -= 360;
+                arrow.style.transform = `rotate(${previewCurrentRotation}deg)`;
+
+                void arrow.offsetWidth;
+                arrow.style.transition = 'transform 0.4s ease';
+            }
+
+            isPreviewArrowAnimating = false;
+            setTimeout(updatePreviewArrow, 10);
+        });
+    }
+
+    function togglePreview() {
+        const grid = document.getElementById('previewGrid');
+        const container = document.getElementById('previewDropdown');
+
+        if (isPreviewDropdownAnimating) return;
+
+        isPreviewDropdownAnimating = true;
+
+        if (grid.classList.contains('open')) {
+            const fullHeight = grid.scrollHeight + 'px';
+            grid.style.maxHeight = fullHeight;
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = '0px';
+            });
+        } else {
+            grid.classList.add('open');
+            grid.style.maxHeight = '0px';
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = grid.scrollHeight + 'px';
+            });
+        }
+
+        grid.addEventListener('transitionend', function handler() {
+            grid.removeEventListener('transitionend', handler);
+
+            if (grid.style.maxHeight === '0px') {
+                grid.classList.remove('open');
+            }
+
+            isPreviewDropdownAnimating = false;
+        });
+
+        container.classList.toggle('expanded');
+
+        previewTargetRotation += 180;
+        if (!isPreviewArrowAnimating) {
+            updatePreviewArrow();
+        }
+    }
+
+    function renderPreviewFiles() {
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = Object.entries(generatedFiles).map(([path, file]) => `
+            <div class="file-item" onclick="showFilePreview('${path}')">
+                <div class="file-category">${file.category}</div>
+                <div class="file-name">${file.name}</div>
+            </div>
+        `).join('');
+    }
+
+    function filterPreviewFiles() {
+        const searchTerm = document.getElementById('previewSearch').value.toLowerCase();
+        const fileItems = document.querySelectorAll('.file-item');
+
+        fileItems.forEach(item => {
+            const category = item.querySelector('.file-category').textContent.toLowerCase();
+            const name = item.querySelector('.file-name').textContent.toLowerCase();
+
+            if (category.includes(searchTerm) || name.includes(searchTerm)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    function showFilePreview(path) {
+        const file = generatedFiles[path];
+        if (!file) return;
+
+        currentModalFile = path;
+        document.getElementById('modalTitle').textContent = file.name;
+        document.getElementById('modalContent').textContent = file.content;
+        document.getElementById('modalOverlay').classList.add('show');
+    }
+
+    function closeModal(event) {
+        if (event && event.target !== event.currentTarget) return;
+        document.getElementById('modalOverlay').classList.remove('show');
+    }
+
+    function copyToClipboard() {
+        const content = document.getElementById('modalContent').textContent;
+        navigator.clipboard.writeText(content).then(() => {
+            showToast('Copied to clipboard!', 'success');
+        }).catch(err => {
+            showToast('Failed to copy', 'error');
+            console.error(err);
+        });
+    }
+
+    function showHelp() {
+        const helpHTML = `
+            <h3>What are Armor Trim Models?</h3>
+            <p>Armor trim item models are JSON files that define how custom trim materials appear on the armor items in Minecraft.
+            When you create a custom trim material, you need these models to make the trim visible on armor items.
+            Mojang made this more difficult to do, requiring 56 files per trim material. This tool is to be used while making a mod.</p>
+
+            <h3>How to Use This Generator:</h3>
+
+            <p><strong>1. Main Mod Configuration:</strong></p>
+            <ul>
+                <li>Enter your mod's ID (e.g., "my_mod")</li>
+                <li>Add custom materials (the trim materials you're creating)</li>
+                <li>Add custom armor types if your mod has unique armor</li>
+            </ul>
+
+            <p><strong>2. Select Armor Types:</strong></p>
+            <ul>
+                <li>Choose which vanilla armor types will support your trims</li>
+                <li>Use "Select All" / "Deselect All" for quick selection</li>
+            </ul>
+
+            <p><strong>3. Additional Mods (Optional):</strong></p>
+            <ul>
+                <li>Add other mods' armor to generate trim support for them</li>
+                <li>Drag to reorder using the handle on the left</li>
+            </ul>
+
+            <p><strong>4. Generate & Download:</strong></p>
+            <ul>
+                <li>Click "Generate Models" to create all files</li>
+                <li>Preview individual files by clicking them</li>
+                <li>Download the complete ZIP file</li>
+            </ul>
+
+            <p><strong>5. Save/Load Configuration:</strong></p>
+            <ul>
+                <li>Save your settings for later use</li>
+                <li>Load previously saved configurations</li>
+            </ul>
+
+            <h3>Installation:</h3>
+            <p><strong>VanillaItems</strong> folder goes in: <code>resources/assets/minecraft/items/</code></p>
+            <p><strong>YourMod-CustomLayeredItem</strong> goes in: <code>resources/assets/yourmod/models/item/</code></p>
+
+            <p><em>Note: The VanillaItems folder REPLACES vanilla armor models to add trim support.</em></p>
+
+            <h3>Have any issues?</h3>
+            <p>Make an issue ticket on my <a href="https://github.com/PotatoWolfie/potatowolfie.github.io/issues">Github</a>!</p>
+        `;
+
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay show';
+        modalOverlay.onclick = (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.remove();
+            }
+        };
+
+        modalOverlay.innerHTML = `
+            <div class="help-modal" onclick="event.stopPropagation()">
+                <div class="help-modal-header">
+                    <div class="help-modal-title">Help - Armor Trim Models</div>
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                        <img src="assets/buttons/exit.png" alt="Close">
+                    </button>
+                </div>
+                <div class="help-modal-body">
+                    ${helpHTML}
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+    }
+
+function updateSummaryStats() {
+    const totalFiles = Object.keys(generatedFiles).length;
+    const folders = new Set(Object.values(generatedFiles).map(f => f.category));
+    const folderCount = folders.size;
+
+    const vanillaArmors = getSelectedArmorTypes();
+    const modArmors = Array.from(
+        document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]:checked')
+    ).map(cb => cb.value);
+    const totalArmorTypes = vanillaArmors.length + modArmors.length;
+
+    document.getElementById('summaryStats').innerHTML = `
+        <div class="stat-item">
+            <span class="stat-number">${totalFiles}</span>
+            <span class="stat-label">Total Files</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">${folderCount}</span>
+            <span class="stat-label">Folders</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">${totalArmorTypes}</span>
+            <span class="stat-label">Armor Types</span>
+        </div>
+    `;
+}
+
+    function attachButtonAnimations() {
+        document.querySelectorAll('.minecraft-button, .help-button').forEach(button => {
+            button.removeEventListener('mousedown', handleButtonPress);
+            button.removeEventListener('mouseup', handleButtonRelease);
+            button.removeEventListener('mouseleave', handleButtonRelease);
+
+            button.addEventListener('mousedown', handleButtonPress);
+            button.addEventListener('mouseup', handleButtonRelease);
+            button.addEventListener('mouseleave', handleButtonRelease);
+        });
+    }
+
+    function handleButtonPress() {
+        this.classList.add('pressed');
+    }
+
+    function handleButtonRelease() {
+        this.classList.remove('pressed');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        renderAdditionalMods();
+        updateMainModArmorTypes();
+        attachButtonAnimations();
+    });
+
+    document.getElementById('modId').addEventListener('input', function() {
+    this.classList.remove('invalid');
+    document.getElementById('modIdWarning').classList.remove('show');
+});
+
+    document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        undo();
+    }
+
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && e.shiftKey) {
+        e.preventDefault();
+        redo();
+    }
+
+    if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
+        e.preventDefault();
+        redo();
+    }
+});
+</script>
+<div class="progress-overlay" id="progressOverlay">
+    <div class="progress-box">
+        <div class="progress-title">Generating Models...</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Preparing...</div>
+        <div class="progress-percentage" id="progressPercentage">0%</div>
+    </div>
+</div>
+</body>
+</html>
