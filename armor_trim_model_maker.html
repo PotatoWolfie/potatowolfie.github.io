@@ -2208,7 +2208,8 @@ function deselectAllArmorsForMod(modId) {
     }
 
     updateMainModArmorTypes();
-    const allArmorTypes = getSelectedArmorTypes();
+    const vanillaArmorTypes = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
+const allArmorTypes = vanillaArmorTypes;
     const modArmorTypes = getAllModArmorTypes();
 
     document.getElementById('additionalMods').innerHTML = additionalMods.map(mod => {
