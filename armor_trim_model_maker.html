@@ -264,6 +264,7 @@ input.invalid {
     border: none;
     box-shadow: none;
     background-color: transparent;
+    border-radius: 0;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
@@ -423,6 +424,8 @@ input[type="checkbox"]:checked {
             z-index: 2;
             white-space: nowrap;
             text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+            min-width: auto;
+            padding: 0 50px;
         }
 
         .minecraft-button.pressed .minecraft-button-section {
@@ -806,15 +809,15 @@ input[type="checkbox"]:checked {
     border: none;
     cursor: pointer;
     padding: 0;
-    width: 28px;   /* consistent sizing */
+    width: 28px;
     height: 28px;
-    flex-shrink: 0; /* prevent stretching */
-    margin-top: 12px;
+    flex-shrink: 0;
+    margin: 0;
 }
 
-        .modal-close img {
-    width: 150%;
-    height: 150%;
+.modal-close img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     display: block;
     pointer-events: none;
@@ -1814,7 +1817,7 @@ input[type="checkbox"]:checked {
     let undoStack = [];
     let redoStack = [];
     let generateAtlases = true;
-    let customArmorSlotNames = {};
+    let customArmorSlots = {};
     const MAX_UNDO_HISTORY = 20;
 
     function showToast(message, type = 'info') {
@@ -2449,14 +2452,17 @@ function deselectAllArmorsForMod(modId) {
     }
 
     function createTrimModel(armorType, slot, material) {
-        return {
-            parent: "minecraft:item/generated",
-            textures: {
-                layer0: `minecraft:item/${armorType}_${slot}`,
-                layer1: `minecraft:trims/items/${slot}_trim_${material}`
-            }
-        };
-    }
+    const textureOverride = getArmorSlotTexture(armorType, slot);
+    const texturePath = textureOverride !== slot ? textureOverride : `${armorType}_${slot}`;
+
+    return {
+        parent: "minecraft:item/generated",
+        textures: {
+            layer0: `minecraft:item/${texturePath}`,
+            layer1: `minecraft:trims/items/${slot}_trim_${material}`
+        }
+    };
+}
 
             function validateInputs() {
     let isValid = true;
@@ -2512,19 +2518,16 @@ function checkDuplicates() {
         warnings.push(`Duplicate mod IDs: ${[...new Set(duplicateModIds)].join(', ')}`);
     }
 
-    // Check for duplicate materials in main mod
     const materialDupes = customMaterials.filter((item, index) => customMaterials.indexOf(item) !== index);
     if (materialDupes.length > 0) {
         warnings.push(`Main mod has duplicate materials: ${[...new Set(materialDupes)].join(', ')}`);
     }
 
-    // Check for duplicate armors in main mod
     const armorDupes = customArmors.filter((item, index) => customArmors.indexOf(item) !== index);
     if (armorDupes.length > 0) {
         warnings.push(`Main mod has duplicate armor types: ${[...new Set(armorDupes)].join(', ')}`);
     }
 
-    // Check for duplicates in additional mods
     additionalMods.forEach((mod, idx) => {
         if (mod.customMaterials) {
             const modMatDupes = mod.customMaterials.filter((item, index) => mod.customMaterials.indexOf(item) !== index);
@@ -2703,7 +2706,6 @@ function updateProgress(percentage, text) {
 
     const duplicatesExist = !checkDuplicates();
     if (duplicatesExist) {
-        // Modal will handle proceeding
         return;
     }
 
@@ -2735,6 +2737,14 @@ async function generateModelsAfterValidation() {
 
     const totalVanillaOps = selectedVanillaArmors.length * ARMOR_SLOTS.length;
     const totalMainModOps = allSelectedArmors.length * ARMOR_SLOTS.length * customMaterials.length;
+
+    let totalVanillaCustomSlotOps = 0;
+    vanillaArmors.forEach(armorType => {
+        if (customArmorSlots[armorType] && customArmorSlots[armorType].customSlots) {
+            totalVanillaCustomSlotOps += customArmorSlots[armorType].customSlots.length * customMaterials.length;
+        }
+    });
+
     const totalAdditionalOps = additionalMods.reduce((sum, mod) => {
         if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return sum;
 
@@ -2746,7 +2756,8 @@ async function generateModelsAfterValidation() {
 
         return sum + modOps;
     }, 0);
-    const totalOperations = totalVanillaOps + totalMainModOps + totalAdditionalOps;
+
+    const totalOperations = totalVanillaOps + totalMainModOps + totalVanillaCustomSlotOps + totalAdditionalOps;
     let completedOperations = 0;
 
     updateProgress(20, 'Generating vanilla armor models...');
@@ -2776,7 +2787,7 @@ async function generateModelsAfterValidation() {
 
     allSelectedArmors.forEach(armorType => {
         const slotNames = getArmorSlotNames(armorType);
-        slotNames.forEach((slotName, index) => {
+        slotNames.forEach((slotName) => {
             customMaterials.forEach(material => {
                 const model = createTrimModel(armorType, slotName, material);
                 const content = JSON.stringify(model, null, 2);
@@ -2796,8 +2807,73 @@ async function generateModelsAfterValidation() {
     updateProgress(mainModProgress, `Generated ${completedOperations}/${totalOperations} files...`);
     await new Promise(resolve => setTimeout(resolve, 50));
 
+updateProgress(mainModProgress + 2, 'Checking for vanilla armor custom slots...');
+await new Promise(resolve => setTimeout(resolve, 50));
+
+const vanillaWithCustomSlots = vanillaArmors.filter(armorType => {
+    return customArmorSlots[armorType] &&
+           customArmorSlots[armorType].customSlots &&
+           customArmorSlots[armorType].customSlots.length > 0;
+});
+
+if (vanillaWithCustomSlots.length > 0) {
+    updateProgress(mainModProgress + 3, 'Generating vanilla armor custom slots...');
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    const slotsByModId = {};
+    vanillaWithCustomSlots.forEach(armorType => {
+        customArmorSlots[armorType].customSlots.forEach(slot => {
+            if (!slot.name) return;
+
+            const targetModId = slot.modId || modId;
+            if (!slotsByModId[targetModId]) {
+                slotsByModId[targetModId] = { trimModels: [], selectorModels: [] };
+            }
+            slotsByModId[targetModId].trimModels.push({ armorType, slot });
+            slotsByModId[targetModId].selectorModels.push({ armorType, slot });
+        });
+    });
+
+    Object.entries(slotsByModId).forEach(([targetModId, data]) => {
+        const vanillaCustomFolder = zip.folder(`${targetModId}-VanillaCustomSlots`);
+
+        data.trimModels.forEach(({ armorType, slot }) => {
+            customMaterials.forEach(material => {
+                const model = createTrimModel(armorType, slot.name, material);
+                const content = JSON.stringify(model, null, 2);
+                const filename = `${armorType}_${slot.name}_${material}_trim.json`;
+                vanillaCustomFolder.file(filename, content);
+                generatedFiles[`${targetModId}-VanillaCustomSlots/${filename}`] = {
+                    category: `${targetModId}-VanillaCustomSlots`,
+                    name: filename,
+                    content: content
+                };
+                completedOperations++;
+            });
+        });
+
+        const vanillaCustomItemsFolder = zip.folder(`${targetModId}-VanillaCustomSlots-Items`);
+
+        data.selectorModels.forEach(({ armorType, slot }) => {
+            const model = createCustomSlotSelectModel(armorType, slot.name, modId, customMaterials, targetModId);
+            const content = JSON.stringify(model, null, 2);
+            const filename = `${armorType}_${slot.name}.json`;
+            vanillaCustomItemsFolder.file(filename, content);
+            generatedFiles[`${targetModId}-VanillaCustomSlots-Items/${filename}`] = {
+                category: `${targetModId}-VanillaCustomSlots-Items`,
+                name: filename,
+                content: content
+            };
+        });
+    });
+}
+
+    const vanillaCustomProgress = 20 + (completedOperations / totalOperations) * 60;
+    updateProgress(vanillaCustomProgress, `Generated ${completedOperations}/${totalOperations} files...`);
+    await new Promise(resolve => setTimeout(resolve, 50));
+
     if (additionalMods.length > 0) {
-        updateProgress(mainModProgress + 5, 'Generating additional mod models...');
+        updateProgress(vanillaCustomProgress + 5, 'Generating additional mod models...');
         await new Promise(resolve => setTimeout(resolve, 50));
 
         additionalMods.forEach(mod => {
@@ -2845,14 +2921,12 @@ async function generateModelsAfterValidation() {
         });
     }
 
-    // Generate atlas files if checkbox is enabled
     if (generateAtlases) {
         updateProgress(88, 'Generating atlas files...');
         await new Promise(resolve => setTimeout(resolve, 50));
 
         const atlasFolder = zip.folder('Atlases');
 
-        // Generate blocks.json
         const blocksAtlas = createBlocksAtlas(modId);
         atlasFolder.file('blocks.json', JSON.stringify(blocksAtlas, null, 2));
         generatedFiles['Atlases/blocks.json'] = {
@@ -2861,7 +2935,6 @@ async function generateModelsAfterValidation() {
             content: JSON.stringify(blocksAtlas, null, 2)
         };
 
-        // Generate armor_trims.json
         const armorTrimsAtlas = createArmorTrimsAtlas(modId);
         atlasFolder.file('armor_trims.json', JSON.stringify(armorTrimsAtlas, null, 2));
         generatedFiles['Atlases/armor_trims.json'] = {
@@ -2897,6 +2970,36 @@ async function generateModelsAfterValidation() {
         <em>Purpose: Your custom trim material models for all selected armor types</em><br>
         Extract to: <code>resources/assets/${modId}/models/item/</code><br><br>
     `;
+
+if (vanillaWithCustomSlots.length > 0) {
+    const groupedByMod = {};
+    vanillaWithCustomSlots.forEach(armor => {
+        customArmorSlots[armor].customSlots.forEach(slot => {
+            const targetModId = slot.modId || modId;
+            if (!groupedByMod[targetModId]) {
+                groupedByMod[targetModId] = { armors: [], slots: [] };
+            }
+            if (!groupedByMod[targetModId].armors.includes(armor)) {
+                groupedByMod[targetModId].armors.push(armor);
+            }
+            if (slot.name && !groupedByMod[targetModId].slots.includes(slot.name)) {
+                groupedByMod[targetModId].slots.push(slot.name);
+            }
+        });
+    });
+
+    Object.entries(groupedByMod).forEach(([targetModId, data]) => {
+        directoryHTML += `
+            <strong>${targetModId}-VanillaCustomSlots/</strong><br>
+            <em>Purpose: Custom slot trim models for vanilla armors (${data.armors.join(', ')}) - Slots: ${data.slots.join(', ')}</em><br>
+            Extract to: <code>resources/assets/${targetModId}/models/item/</code><br><br>
+
+            <strong>${targetModId}-VanillaCustomSlots-Items/</strong><br>
+            <em>Purpose: Selector files that enable trim support for custom slots (${data.slots.join(', ')})</em><br>
+            Extract to: <code>resources/assets/${targetModId}/items/</code><br><br>
+        `;
+    });
+}
 
     if (generateAtlases) {
         directoryHTML += `
@@ -2940,10 +3043,20 @@ async function generateModelsAfterValidation() {
 }
 
 function getArmorSlotNames(armorType) {
-    if (customArmorSlotNames[armorType]) {
-        return customArmorSlotNames[armorType];
+    if (customArmorSlots[armorType] && customArmorSlots[armorType].customSlots) {
+        return [...ARMOR_SLOTS, ...customArmorSlots[armorType].customSlots.map(s => s.name)];
     }
-    return [...ARMOR_SLOTS]; // Default slots
+    return [...ARMOR_SLOTS];
+}
+
+function getArmorSlotTexture(armorType, slotName) {
+    if (customArmorSlots[armorType] && customArmorSlots[armorType].textureOverrides) {
+        const override = customArmorSlots[armorType].textureOverrides[slotName];
+        if (override) {
+            return override;
+        }
+    }
+    return slotName;
 }
 
 function showArmorSlotCustomizationModal() {
@@ -2952,64 +3065,155 @@ function showArmorSlotCustomizationModal() {
         ...Array.from(document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]:checked')).map(cb => cb.value)
     ];
 
+    const vanillaArmors = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
+
+    const mainModId = document.getElementById('modId').value.trim();
+    const availableModIds = [mainModId, ...additionalMods.map(m => m.modId).filter(id => id)];
+
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'modal-overlay show';
     modalOverlay.style.zIndex = '3000';
 
     let armorInputsHTML = allArmors.map(armor => {
-        const currentSlots = customArmorSlotNames[armor] || [...ARMOR_SLOTS];
+        const isVanilla = vanillaArmors.includes(armor);
+        const config = customArmorSlots[armor] || { textureOverrides: {}, customSlots: [], modId: mainModId };
+
         return `
-            <div style="margin-bottom: 20px; padding: 15px; background: #3a3a3a; border: 2px solid #1a1a1a;">
-                <h4 style="color: #3453df; margin-bottom: 10px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
-                    ${armor.charAt(0).toUpperCase() + armor.slice(1)}
-                </h4>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                    ${currentSlots.map((slot, idx) => `
-                        <div>
-                            <label style="font-size: 12px; color: #a0a0a0;">Slot ${idx + 1}:</label>
-                            <input type="text"
-                                   value="${slot}"
-                                   data-armor="${armor}"
-                                   data-slot="${idx}"
-                                   class="slot-name-input"
-                                   style="width: 100%; padding: 8px; background: #2a2a2a; border: 2px solid #1a1a1a; color: #e6e6e6; font-size: 14px; box-shadow: inset 1px 1px 0 #1a1a1a;">
+            <div style="margin-bottom: 25px; padding: 20px; background: #3a3a3a; border: 2px solid #1a1a1a;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h4 style="color: #3453df; margin: 0; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+                        ${armor.charAt(0).toUpperCase() + armor.slice(1)}
+                        ${isVanilla ? '<span style="font-size: 11px; color: #a0a0a0; font-family: Nunito, sans-serif; margin-left: 8px;">(Vanilla)</span>' : ''}
+                    </h4>
+                    <button class="minecraft-button small" onclick="event.stopPropagation(); addCustomSlot('${armor}')">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">+ Add Custom Slot</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+
+                <h5 style="color: #3453df; font-size: 13px; margin-bottom: 10px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+                    Texture Overrides (Basic Slots)
+                </h5>
+                <div style="display: grid; gap: 10px; margin-bottom: 15px;">
+                    ${ARMOR_SLOTS.map(slot => `
+                        <div style="background: #2a2a2a; padding: 10px; border: 1px solid #1a1a1a;">
+                            <div style="display: grid; grid-template-columns: 100px 1fr; gap: 10px; align-items: center;">
+                                <label style="font-size: 12px; color: #a0a0a0; margin: 0;">${slot.charAt(0).toUpperCase() + slot.slice(1)}:</label>
+                                <input type="text"
+                                       value="${config.textureOverrides[slot] || ''}"
+                                       data-armor="${armor}"
+                                       data-slot="${slot}"
+                                       class="slot-texture-override"
+                                       placeholder="${armor}_${slot}"
+                                       oninput="this.value = this.value.toLowerCase()"
+                                       style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px;">
+                            </div>
                         </div>
                     `).join('')}
                 </div>
+
+                ${config.customSlots.length > 0 ? `
+    <h5 style="color: #3453df; font-size: 13px; margin-bottom: 10px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+        Custom Slots
+    </h5>
+    <div style="display: grid; gap: 10px;">
+        ${config.customSlots.map((slot, idx) => `
+            <div style="background: #2a2a2a; padding: 10px; border: 1px solid #1a1a1a;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <label style="font-size: 12px; color: #3453df; font-weight: 600; margin: 0;">Custom Slot ${idx + 1}</label>
+                    <button onclick="event.stopPropagation(); removeCustomSlot('${armor}', ${idx})"
+                            style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 18px; padding: 0; width: 20px; height: 20px;">×</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                    <div>
+                        <label style="font-size: 11px; color: #a0a0a0; margin-bottom: 4px; display: block;">Slot Name:</label>
+                        <input type="text"
+                               value="${slot.name}"
+                               data-armor="${armor}"
+                               data-custom-slot="${idx}"
+                               class="custom-slot-name"
+                               placeholder="e.g., gauntlets"
+                               oninput="this.value = this.value.toLowerCase()"
+                               style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; color: #a0a0a0; margin-bottom: 4px; display: block;">Texture Override:</label>
+                        <input type="text"
+                               value="${slot.texture || ''}"
+                               data-armor="${armor}"
+                               data-custom-slot="${idx}"
+                               class="custom-slot-texture"
+                               placeholder="${armor}_${slot.name || 'slotname'}"
+                               oninput="this.value = this.value.toLowerCase()"
+                               style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px;">
+                    </div>
+                </div>
+                <div>
+                    <label style="font-size: 11px; color: #a0a0a0; margin-bottom: 4px; display: block;">Mod ID for this slot:</label>
+                    <select data-armor="${armor}" data-custom-slot="${idx}" class="custom-slot-mod-id"
+                            style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px; cursor: pointer;">
+                        ${availableModIds.map(modId => `
+                            <option value="${modId}" ${(slot.modId || mainModId) === modId ? 'selected' : ''}>${modId}</option>
+                        `).join('')}
+                    </select>
+                    <p style="font-size: 10px; color: #888; margin-top: 4px; line-height: 1.3;">
+                        Trim models for this slot will be generated in this mod's namespace
+                    </p>
+                </div>
+            </div>
+        `).join('')}
+    </div>
+` : ''}
             </div>
         `;
     }).join('');
 
     modalOverlay.innerHTML = `
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px; max-height: 80vh;">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px; max-height: 85vh;">
             <div class="modal-header">
-                <div class="modal-title">Customize Armor Slot Names</div>
+                <div class="modal-title">Customize Armor Slots</div>
                 <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
                     <img src="assets/buttons/exit.png" alt="Close">
                 </button>
             </div>
             <div class="modal-body" style="overflow-y: auto;">
-                <p style="margin: 0 0 20px 0; color: #cccccc; font-size: 14px;">
-                    Customize the slot names for each armor type. Default slots are: helmet, chestplate, leggings, boots.
-                </p>
-                ${armorInputsHTML}
+                <div style="margin: 0 0 20px 0; padding: 15px; background: #2a2a2a; border-left: 3px solid #3453df;">
+                    <p style="margin: 0 0 10px 0; color: #e6e6e6; font-size: 14px; line-height: 1.6;">
+                        <strong>Texture Override:</strong> Changes the texture path if the mod uses different naming (e.g., <code>steel_hat</code> instead of <code>steel_helmet</code>)
+                    </p>
+                    <p style="margin: 0 0 10px 0; color: #e6e6e6; font-size: 14px; line-height: 1.6;">
+                        <strong>Custom Slots:</strong> Add additional slots beyond the basic 4 (e.g., <code>gauntlets</code>, <code>cape</code>)
+                    </p>
+                    <p style="margin: 0; color: #e6e6e6; font-size: 14px; line-height: 1.6;">
+                        <strong>Vanilla Armor:</strong> When adding custom slots to vanilla armor, specify which mod namespace to use for the trim models
+                    </p>
+                </div>
+                <div style="max-height: 50vh; overflow-y: auto;">
+                    ${armorInputsHTML}
+                </div>
             </div>
             <div class="modal-footer" style="gap: 10px; justify-content: center;">
                 <button class="minecraft-button" onclick="resetSlotNamesToDefault(this)">
                     <div class="minecraft-button-left-outline"></div>
                     <div class="minecraft-button-right-outline"></div>
                     <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Reset to Defaults</div>
+                        <div class="minecraft-button-name">Reset All to Defaults</div>
                     </div>
                     <div class="minecraft-button-dark-strip"></div>
                     <div class="minecraft-button-bottom-outline"></div>
                     <div class="minecraft-button-shadow"></div>
                 </button>
-                <button class="minecraft-button success" onclick="saveCustomSlotNames(this)">
+                <button class="minecraft-button success" onclick="saveCustomSlotConfiguration(this)">
                     <div class="minecraft-button-left-outline"></div>
                     <div class="minecraft-button-right-outline"></div>
                     <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Save</div>
+                        <div class="minecraft-button-name">Save Changes</div>
                     </div>
                     <div class="minecraft-button-dark-strip"></div>
                     <div class="minecraft-button-bottom-outline"></div>
@@ -3023,32 +3227,324 @@ function showArmorSlotCustomizationModal() {
     attachButtonAnimations();
 }
 
-function saveCustomSlotNames(button) {
-    const inputs = document.querySelectorAll('.slot-name-input');
-    const tempSlotNames = {};
+function addCustomSlot(armor) {
+    if (!customArmorSlots[armor]) {
+        customArmorSlots[armor] = { textureOverrides: {}, customSlots: [] };
+    }
 
-    inputs.forEach(input => {
-        const armor = input.dataset.armor;
-        const slotIndex = parseInt(input.dataset.slot);
-        const value = input.value.trim().toLowerCase();
+    const mainModId = document.getElementById('modId').value.trim();
+    customArmorSlots[armor].customSlots.push({ name: '', texture: '', modId: mainModId });
 
-        if (!tempSlotNames[armor]) {
-            tempSlotNames[armor] = [];
+    const modalBody = document.querySelector('.modal-overlay .modal-body');
+    const scrollPosition = modalBody ? modalBody.scrollTop : 0;
+
+    updateModalContent();
+
+    setTimeout(() => {
+        const newModalBody = document.querySelector('.modal-overlay .modal-body');
+        if (newModalBody) {
+            newModalBody.scrollTop = scrollPosition;
         }
-        tempSlotNames[armor][slotIndex] = value || ARMOR_SLOTS[slotIndex];
-    });
+    }, 0);
 
-    customArmorSlotNames = tempSlotNames;
-    button.closest('.modal-overlay').remove();
-    showToast('Slot names saved!', 'success');
+    showToast('Custom slot added', 'info');
 }
 
 function resetSlotNamesToDefault(button) {
-    const inputs = document.querySelectorAll('.slot-name-input');
-    inputs.forEach(input => {
-        const slotIndex = parseInt(input.dataset.slot);
-        input.value = ARMOR_SLOTS[slotIndex];
+    customArmorSlots = {};
+
+    updateModalContent();
+
+    showToast('Reset to defaults', 'info');
+}
+
+function updateModalContent() {
+    const allArmors = [
+        ...getSelectedArmorTypes(),
+        ...Array.from(document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]:checked')).map(cb => cb.value)
+    ];
+
+    const vanillaArmors = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
+
+    const mainModId = document.getElementById('modId').value.trim();
+    const availableModIds = [mainModId, ...additionalMods.map(m => m.modId).filter(id => id)];
+
+    let armorInputsHTML = allArmors.map(armor => {
+        const isVanilla = vanillaArmors.includes(armor);
+        const config = customArmorSlots[armor] || { textureOverrides: {}, customSlots: [], modId: mainModId };
+
+        return `
+            <div style="margin-bottom: 25px; padding: 20px; background: #3a3a3a; border: 2px solid #1a1a1a;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h4 style="color: #3453df; margin: 0; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+                        ${armor.charAt(0).toUpperCase() + armor.slice(1)}
+                        ${isVanilla ? '<span style="font-size: 11px; color: #a0a0a0; font-family: Nunito, sans-serif; margin-left: 8px;">(Vanilla)</span>' : ''}
+                    </h4>
+                    <button class="minecraft-button small" onclick="event.stopPropagation(); addCustomSlot('${armor}')">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">+ Add Custom Slot</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+
+                <h5 style="color: #3453df; font-size: 13px; margin-bottom: 10px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+                    Texture Overrides (Basic Slots)
+                </h5>
+                <div style="display: grid; gap: 10px; margin-bottom: 15px;">
+                    ${ARMOR_SLOTS.map(slot => `
+                        <div style="background: #2a2a2a; padding: 10px; border: 1px solid #1a1a1a;">
+                            <div style="display: grid; grid-template-columns: 100px 1fr; gap: 10px; align-items: center;">
+                                <label style="font-size: 12px; color: #a0a0a0; margin: 0;">${slot.charAt(0).toUpperCase() + slot.slice(1)}:</label>
+                                <input type="text"
+                                       value="${config.textureOverrides[slot] || ''}"
+                                       data-armor="${armor}"
+                                       data-slot="${slot}"
+                                       class="slot-texture-override"
+                                       placeholder="${armor}_${slot}"
+                                       oninput="this.value = this.value.toLowerCase()"
+                                       style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px;">
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${config.customSlots.length > 0 ? `
+    <h5 style="color: #3453df; font-size: 13px; margin-bottom: 10px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+        Custom Slots
+    </h5>
+    <div style="display: grid; gap: 10px;">
+        ${config.customSlots.map((slot, idx) => `
+            <div style="background: #2a2a2a; padding: 10px; border: 1px solid #1a1a1a;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <label style="font-size: 12px; color: #3453df; font-weight: 600; margin: 0;">Custom Slot ${idx + 1}</label>
+                    <button onclick="event.stopPropagation(); removeCustomSlot('${armor}', ${idx})"
+                            style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 18px; padding: 0; width: 20px; height: 20px;">×</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                    <div>
+                        <label style="font-size: 11px; color: #a0a0a0; margin-bottom: 4px; display: block;">Slot Name:</label>
+                        <input type="text"
+                               value="${slot.name}"
+                               data-armor="${armor}"
+                               data-custom-slot="${idx}"
+                               class="custom-slot-name"
+                               placeholder="e.g., gauntlets"
+                               oninput="this.value = this.value.toLowerCase()"
+                               style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; color: #a0a0a0; margin-bottom: 4px; display: block;">Texture Override:</label>
+                        <input type="text"
+                               value="${slot.texture || ''}"
+                               data-armor="${armor}"
+                               data-custom-slot="${idx}"
+                               class="custom-slot-texture"
+                               placeholder="${armor}_${slot.name || 'slotname'}"
+                               oninput="this.value = this.value.toLowerCase()"
+                               style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px;">
+                    </div>
+                </div>
+                <div>
+                    <label style="font-size: 11px; color: #a0a0a0; margin-bottom: 4px; display: block;">Mod ID for this slot:</label>
+                    <select data-armor="${armor}" data-custom-slot="${idx}" class="custom-slot-mod-id"
+                            style="width: 100%; padding: 6px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 12px; cursor: pointer;">
+                        ${availableModIds.map(modId => `
+                            <option value="${modId}" ${(slot.modId || mainModId) === modId ? 'selected' : ''}>${modId}</option>
+                        `).join('')}
+                    </select>
+                    <p style="font-size: 10px; color: #888; margin-top: 4px; line-height: 1.3;">
+                        Trim models for this slot will be generated in this mod's namespace
+                    </p>
+                </div>
+            </div>
+        `).join('')}
+    </div>
+` : ''}
+            </div>
+        `;
+    }).join('');
+
+    const contentArea = document.querySelector('.modal-overlay .modal-body > div:last-child');
+    if (contentArea) {
+        contentArea.innerHTML = armorInputsHTML;
+        attachButtonAnimations();
+    }
+}
+
+function createCustomSlotSelectModel(armorType, slotName, modId, materials, ownerModId) {
+    const model = {
+        type: "minecraft:select",
+        cases: [],
+        fallback: {
+            type: "minecraft:model",
+            model: `${ownerModId}:item/${armorType}_${slotName}`
+        },
+        property: "minecraft:trim_material"
+    };
+
+    if (armorType === 'leather') {
+        model.fallback.tints = [{ type: "minecraft:dye", default: -6265536 }];
+    }
+
+    VANILLA_MATERIALS.forEach(([ns, mat]) => {
+        const caseObj = {
+            model: {
+                type: "minecraft:model",
+                model: `${ownerModId}:item/${armorType}_${slotName}_${mat}_trim`
+            },
+            when: `${ns}:${mat}`
+        };
+        if (armorType === 'leather') {
+            caseObj.model.tints = [{ type: "minecraft:dye", default: -6265536 }];
+        }
+        model.cases.push(caseObj);
     });
+
+    materials.forEach(mat => {
+        const caseObj = {
+            model: {
+                type: "minecraft:model",
+                model: `${ownerModId}:item/${armorType}_${slotName}_${mat}_trim`
+            },
+            when: `${modId}:${mat}`
+        };
+        if (armorType === 'leather') {
+            caseObj.model.tints = [{ type: "minecraft:dye", default: -6265536 }];
+        }
+        model.cases.push(caseObj);
+    });
+
+    return { model };
+}
+
+function saveCustomSlotConfiguration(button) {
+    const textureOverrides = document.querySelectorAll('.slot-texture-override');
+    const customSlotNames = document.querySelectorAll('.custom-slot-name');
+    const customSlotTextures = document.querySelectorAll('.custom-slot-texture');
+    const modIdSelects = document.querySelectorAll('.armor-mod-id-select');
+    const tempConfig = {};
+
+    textureOverrides.forEach(input => {
+        const armor = input.dataset.armor;
+        const slot = input.dataset.slot;
+        const value = input.value.trim().toLowerCase();
+
+        if (!tempConfig[armor]) {
+            tempConfig[armor] = { textureOverrides: {}, customSlots: [] };
+        }
+
+        if (value) {
+            tempConfig[armor].textureOverrides[slot] = value;
+        }
+    });
+
+    const customSlotModIds = document.querySelectorAll('.custom-slot-mod-id');
+customSlotNames.forEach((nameInput, i) => {
+    const textureInput = customSlotTextures[i];
+    const modIdSelect = customSlotModIds[i];
+    const armor = nameInput.dataset.armor;
+    const slotIndex = parseInt(nameInput.dataset.customSlot);
+    const slotName = nameInput.value.trim().toLowerCase();
+    const slotTexture = textureInput.value.trim().toLowerCase();
+    const slotModId = modIdSelect ? modIdSelect.value : document.getElementById('modId').value.trim();
+
+    if (!tempConfig[armor]) {
+        tempConfig[armor] = { textureOverrides: {}, customSlots: [] };
+    }
+
+    if (slotName) {
+        if (!tempConfig[armor].customSlots) {
+            tempConfig[armor].customSlots = [];
+        }
+        tempConfig[armor].customSlots[slotIndex] = {
+            name: slotName,
+            texture: slotTexture || null,
+            modId: slotModId
+        };
+    }
+});
+
+    customArmorSlots = tempConfig;
+    button.closest('.modal-overlay').remove();
+    showToast('Slot configuration saved!', 'success');
+}
+
+function removeCustomSlot(armor, slotIndex) {
+    if (!customArmorSlots[armor] || !customArmorSlots[armor].customSlots) return;
+
+    const modalBody = document.querySelector('.modal-overlay .modal-body');
+    const scrollPosition = modalBody ? modalBody.scrollTop : 0;
+
+    customArmorSlots[armor].customSlots.splice(slotIndex, 1);
+
+    if (customArmorSlots[armor].customSlots.length === 0) {
+        if (Object.keys(customArmorSlots[armor].textureOverrides || {}).length === 0) {
+            delete customArmorSlots[armor];
+        } else {
+            delete customArmorSlots[armor].customSlots;
+        }
+    }
+
+    updateModalContent();
+
+    setTimeout(() => {
+        const newModalBody = document.querySelector('.modal-overlay .modal-body');
+        if (newModalBody) {
+            newModalBody.scrollTop = scrollPosition;
+        }
+        attachButtonAnimations();
+    }, 10);
+
+    showToast('Custom slot removed', 'info');
+}
+
+function saveCustomSlotNames(button) {
+    const nameInputs = document.querySelectorAll('.slot-name-input');
+    const textureInputs = document.querySelectorAll('.slot-texture-input');
+    const tempSlots = {};
+
+    nameInputs.forEach((nameInput, i) => {
+        const textureInput = textureInputs[i];
+        const armor = nameInput.dataset.armor;
+        const slotIndex = parseInt(nameInput.dataset.slot);
+        const slotName = nameInput.value.trim().toLowerCase();
+        const slotTexture = textureInput.value.trim().toLowerCase();
+
+        if (!tempSlots[armor]) {
+            tempSlots[armor] = [];
+        }
+
+        tempSlots[armor][slotIndex] = {
+            name: slotName || ARMOR_SLOTS[Math.min(slotIndex, 3)],
+            texture: slotTexture || `${slotName || ARMOR_SLOTS[Math.min(slotIndex, 3)]}_trim`
+        };
+    });
+
+    customArmorSlots = tempSlots;
+    button.closest('.modal-overlay').remove();
+    showToast('Slot configuration saved!', 'success');
+}
+
+function resetSlotNamesToDefault(button) {
+    customArmorSlots = {};
+
+    const modalBody = document.querySelector('.modal-overlay .modal-body');
+    const scrollPosition = modalBody ? modalBody.scrollTop : 0;
+
+    updateModalContent();
+
+    setTimeout(() => {
+        const newModalBody = document.querySelector('.modal-overlay .modal-body');
+        if (newModalBody) {
+            newModalBody.scrollTop = scrollPosition;
+        }
+    }, 0);
+
     showToast('Reset to defaults', 'info');
 }
 
@@ -3114,7 +3610,6 @@ function createBlocksAtlas(modId) {
         ]
     };
 
-    // Add custom materials to permutations
     customMaterials.forEach(material => {
         atlas.sources[6].permutations[material] = `${modId}:trims/color_palettes/${material}`;
     });
@@ -3187,7 +3682,6 @@ function createArmorTrimsAtlas(modId) {
         ]
     };
 
-    // Add custom materials to permutations
     customMaterials.forEach(material => {
         atlas.sources[0].permutations[material] = `${modId}:trims/color_palettes/${material}`;
     });
@@ -3197,80 +3691,268 @@ function createArmorTrimsAtlas(modId) {
 
 function showHelp() {
     const helpHTML = `
-        <h3>What are Armor Trim Models?</h3>
-        <p>Armor trim item models are JSON files that define how custom trim materials appear on armor items in Minecraft.
-        When you create a custom trim material, you need these models to make the trim visible on armor items.
-        Mojang made this more difficult to do, requiring 56 files per trim material. This tool is to be used while making a mod.</p>
+    <h3>What are Armor Trim Models?</h3>
+    <p>Armor trim item models are JSON files that define how custom trim materials appear on armor items in Minecraft.
+    When you create a custom trim material, you need these models to make the trim visible on armor items.
+    Starting in Minecraft 1.21.2, Mojang changed the system to require <strong>56 separate JSON files per trim material</strong>
+    (14 armor pieces × 4 slots each). This tool automates that tedious process for you.</p>
 
-        <h3>How to Use This Generator:</h3>
+    <h3>How to Use This Generator:</h3>
 
-        <p><strong>1. Main Mod Configuration:</strong></p>
-        <ul>
-        <li>Enter your mod's ID (e.g., "my_mod")</li>
-            <li>Add custom materials (the trim materials you're creating)</li>
-            <li>Add custom armor types if your mod has unique armor</li>
+    <p><strong>1. Main Mod Configuration:</strong></p>
+    <ul>
+        <li><strong>Mod ID</strong> (Required): Enter your mod's unique identifier (e.g., "my_mod")</li>
+        <li><strong>Custom Materials</strong> (Required, at least one): Add the trim materials you're creating. Press Enter after typing each material name. Click × to remove.</li>
+        <li><strong>Custom Armor Types</strong> (Optional): Add non-vanilla armor types if your mod has unique armor pieces</li>
+        <li><strong>Undo/Redo</strong>: Use the ↶ Undo (Ctrl+Z) and ↷ Redo (Ctrl+Shift+Z or Ctrl+Y) buttons to revert changes. Supports up to 20 levels of history.</li>
+    </ul>
+
+    <p><strong>2. Select Armor Types:</strong></p>
+    <ul>
+        <li>Choose which <strong>vanilla armor types</strong> will support your custom trims (leather, chainmail, iron, golden, diamond, netherite, copper)</li>
+        <li>If you added custom armor types, they'll appear in the <strong>Mod Armor Types</strong> section below</li>
+        <li><strong>Important</strong>: You need at least one armor type selected (vanilla or mod)</li>
+        <li>Use <strong>"Select All" / "Deselect All"</strong> buttons for quick bulk selection</li>
+        <li>Each armor type generates models for all 4 slots: helmet, chestplate, leggings, boots</li>
+    </ul>
+
+    <p><strong>3. Additional Mods Support (Optional):</strong></p>
+    <ul>
+        <li>Add support for armor from <strong>other mods</strong> (e.g., adding your trims to Twilight Forest armor)</li>
+        <li>Click <strong>"+ Add Mod"</strong> to create a new mod entry</li>
+        <li>For each mod, you can:
+            <ul>
+                <li>Set the mod's ID</li>
+                <li>Add custom materials specific to that mod</li>
+                <li>Add custom armor types specific to that mod</li>
+                <li>Select which armor types from your main mod and others to support</li>
+            </ul>
+        </li>
+        <li><strong>Bulk actions</strong>:
+            <ul>
+                <li>"Select All Armors" - selects all available armor types for all mods</li>
+                <li>"Deselect All Armors" - deselects all armor types for all mods</li>
+                <li>"Remove All Mods" - removes all additional mod entries (with confirmation)</li>
+            </ul>
+        </li>
+        <li>Per-mod bulk actions: Each mod has its own "Select All" and "Deselect All" buttons</li>
+        <li>Remove individual mods with the "Remove" button</li>
+    </ul>
+
+    <p><strong>4. Customize Armor Slots (Advanced - Optional):</strong></p>
+    <div style="padding: 12px; background: #3a3a3a; border-left: 3px solid #ff6b6b; margin: 10px 0;">
+        <p style="margin: 0 0 8px 0; color: #ff6b6b; font-weight: 600;">⚠️ WARNING: This section can be confusing!</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.5;">
+            Only use this if you're working with mods that add custom armor slots (like gauntlets, capes, rings)
+            or if armor pieces have non-standard naming. <strong>Most users should skip this section.</strong>
+        </p>
+    </div>
+    <ul>
+        <li>Click <strong>"Customize Armor Slots"</strong> to modify slot configurations</li>
+        <li><strong>When to use this:</strong>
+            <ul>
+                <li>Another mod adds custom slots (e.g., "armor_plus" adds gauntlets)</li>
+                <li>You need to generate trim support for those custom slots</li>
+                <li>Armor pieces use non-standard texture names (e.g., "cap" instead of "helmet")</li>
+            </ul>
+        </li>
+        <li><strong>Texture Overrides (Basic Slots):</strong>
+            <ul>
+                <li>Changes the texture path if the mod uses different naming</li>
+                <li>Example: If a mod uses <code>steel_cap</code> instead of <code>steel_helmet</code>, override "helmet" → "cap"</li>
+                <li>Leave blank to use default naming</li>
+            </ul>
+        </li>
+        <li><strong>Custom Slots:</strong>
+            <ul>
+                <li>Add slots beyond the basic 4 (helmet, chestplate, leggings, boots)</li>
+                <li><strong>Slot Name:</strong> The name of the custom slot (e.g., "gauntlets", "cape", "ring")</li>
+                <li><strong>Texture Override:</strong> Custom texture path if needed (usually leave blank)</li>
+                <li><strong>Mod ID for this slot:</strong> <span style="color: #3453df; font-weight: 600;">CRITICAL!</span> Set this to the mod that <em>created</em> the slot
+                    <ul>
+                        <li>If "armor_plus" adds gauntlets, set Mod ID to "armor_plus"</li>
+                        <li>If "twilight_forest" adds a crown slot, set Mod ID to "twilight_forest"</li>
+                        <li>This determines where the trim models and selector files are generated</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><strong>Example Use Case:</strong>
+            <div style="background: #2a2a2a; padding: 10px; margin: 8px 0; border-left: 2px solid #3453df;">
+                <p style="margin: 0 0 5px 0; font-size: 13px;"><strong>Scenario:</strong> You have a mod "my_mod" with a "ruby" trim material.
+                Another mod "armor_plus" adds steel gauntlets. You want ruby trims on those gauntlets.</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px;"><strong>Setup:</strong></p>
+                <ul style="margin: 5px 0 0 20px; font-size: 13px;">
+                    <li>For steel armor, add custom slot: "gauntlets"</li>
+                    <li>Set Mod ID to: "armor_plus" (they own the gauntlets)</li>
+                    <li>Generator creates files in both <code>armor_plus-VanillaCustomSlots/</code> and <code>armor_plus-VanillaCustomSlots-Items/</code></li>
+                </ul>
+            </div>
+        </li>
+        <li><strong>File Previews:</strong> After generation, open the preview dropdown to see what each file does or looks like</li>
+        <li>Click "Reset All to Defaults" to restore standard configuration</li>
+    </ul>
+
+    <p><strong>5. Generate Atlas Files (Optional):</strong></p>
+    <ul>
+        <li>Check <strong>"Generate Atlas Files"</strong> to automatically create <code>blocks.json</code> and <code>armor_trims.json</code></li>
+        <li>These atlas files register your custom trim materials with Minecraft's texture system</li>
+        <li><code>blocks.json</code>: Registers trim textures for item models</li>
+        <li><code>armor_trims.json</code>: Registers trim textures for armor entities</li>
+        <li>Extract to: <code>resources/assets/minecraft/atlases/</code></li>
+        <li><strong>Important</strong>: Keep <code>"replace": false</code> in the atlas files to avoid overwriting vanilla trims!</li>
+    </ul>
+
+    <p><strong>6. Generate & Download:</strong></p>
+    <ul>
+        <li>Click <strong>"Generate Models"</strong> to create all files</li>
+        <li>The generator will validate your inputs and warn about duplicates</li>
+        <li>A progress bar shows generation status</li>
+        <li>Once complete, you'll see:
+            <ul>
+                <li>Total file size</li>
+                <li>Summary statistics (total files, folders, armor types)</li>
+                <li>Installation instructions for each folder</li>
+            </ul>
+        </li>
+        <li>Click <strong>"Preview Generated Files"</strong> to expand the file browser</li>
+        <li>Click any file to preview its contents in a modal</li>
+        <li><strong>Hover over files</strong> to see detailed explanations of what each file does</li>
+        <li>Use the search box to filter files by name or category</li>
+        <li>Click <strong>"Download ZIP"</strong> to download all files as a single archive</li>
+    </ul>
+
+    <p><strong>7. Save/Load Configuration:</strong></p>
+    <ul>
+        <li><strong>"Save Configuration"</strong>: Exports your settings as a JSON file for later use</li>
+        <li><strong>"Load Configuration"</strong>: Imports a previously saved configuration</li>
+        <li>Saved configurations include:
+            <ul>
+                <li>Mod ID</li>
+                <li>Custom materials and armor types</li>
+                <li>Selected armor types (vanilla and mod)</li>
+                <li>All additional mod entries and their settings</li>
+                <li>Custom slot configurations</li>
+            </ul>
+        </li>
+        <li>Perfect for working on multiple mods or sharing configurations with team members</li>
+    </ul>
+
+    <h3>Understanding Generated Files:</h3>
+
+    <p><strong>VanillaItems/</strong></p>
+    <ul>
+        <li>Replaces vanilla armor item models to add support for your custom trim materials</li>
+        <li>Contains one file per armor piece (e.g., <code>iron_helmet.json</code>)</li>
+        <li>Install to: <code>resources/assets/minecraft/items/</code></li>
+    </ul>
+
+    <p><strong>YourMod-CustomLayeredItem/</strong></p>
+    <ul>
+        <li>Your custom trim material models for all selected armor types</li>
+        <li>Contains files like <code>iron_helmet_ruby_trim.json</code></li>
+        <li>Install to: <code>resources/assets/yourmod/models/item/</code></li>
+    </ul>
+
+    <p><strong>OtherMod-VanillaCustomSlots/</strong> (if custom slots configured)</p>
+    <ul>
+        <li>Trim models for custom slots that another mod created</li>
+        <li>Example: <code>steel_gauntlets_ruby_trim.json</code></li>
+        <li>Install to: <code>resources/assets/othermod/models/item/</code></li>
+    </ul>
+
+    <p><strong>OtherMod-VanillaCustomSlots-Items/</strong> (if custom slots configured)</p>
+    <ul>
+        <li>Selector files that enable trim support for the custom slots</li>
+        <li>Example: <code>steel_gauntlets.json</code> (references all trim variations)</li>
+        <li>Install to: <code>resources/assets/othermod/items/</code></li>
+        <li><strong>Important:</strong> These go in the <code>items/</code> folder, not <code>models/item/</code>!</li>
+    </ul>
+
+    <p><strong>YourMod-ItemModels/</strong></p>
+    <ul>
+        <li>Generated when you add additional mods</li>
+        <li>Replaces that mod's armor item models to support your trim materials</li>
+        <li>Install to: <code>resources/assets/thatmod/items/</code></li>
+    </ul>
+
+    <p><strong>Atlases/</strong> (if enabled)</p>
+    <ul>
+        <li>Contains <code>blocks.json</code> and <code>armor_trims.json</code></li>
+        <li>Registers your custom trim materials with the game's texture system</li>
+        <li>Install to: <code>resources/assets/minecraft/atlases/</code></li>
+    </ul>
+
+    <h3>Tips & Best Practices:</h3>
+
+    <ul>
+        <li><strong>Duplicate warnings</strong>: If duplicates are found, you'll see a detailed warning but can choose to continue anyway</li>
+        <li><strong>File previews</strong>: Each file in the preview shows a helpful explanation of what it does - hover to see details!</li>
+        <li><strong>Custom Slots</strong>: Only use if you understand mod namespace ownership. When in doubt, ask the mod creator!</li>
+        <li><strong>Keyboard shortcuts</strong>:
+            <ul>
+                <li>Esc - Close menus</li>
+                <li>Ctrl+Z - Undo</li>
+                <li>Ctrl+Shift+Z or Ctrl+Y - Redo</li>
+            </ul>
+        </li>
+        <li><strong>Material naming</strong>: Use lowercase, simple names without special characters</li>
+        <li><strong>Testing</strong>: After extracting files, test in-game to ensure trims appear correctly</li>
+        <li><strong>Start simple</strong>: If you're new, start with just vanilla armor types and skip "Customize Armor Slots" entirely</li>
+    </ul>
+
+    <h3>The problem with this:</h3>
+
+    <ul>
+        <li>As mentioned before, <strong>some of these files can replace vanilla items.</strong>: This isn't a perfect solution to the problem, for other mods using the same technique will overlap each other, and this might break some mod's rendering of items on vanilla gear. When a good solution to this is found, the generator will be updated to have the best solution for item rendering.</li>
+    </ul>
+
+    <h3>Custom Slots Deep Dive:</h3>
+    <div style="background: #2a2a2a; padding: 15px; margin: 10px 0; border-left: 3px solid #3453df;">
+        <p style="margin: 0 0 10px 0; font-weight: 600;">Understanding Mod Ownership:</p>
+        <p style="margin: 0 0 8px 0; font-size: 13px; line-height: 1.6;">
+            When a mod adds a custom armor slot (like gauntlets), that mod "owns" the slot. All models related to that slot
+            must go in that mod's namespace, even if the trim materials come from your mod.
+        </p>
+        <p style="margin: 0 0 8px 0; font-size: 13px; line-height: 1.6;">
+            <strong>Example:</strong> Mod "armor_plus" adds gauntlets. Your mod "my_mod" adds ruby trims.
+        </p>
+        <ul style="margin: 5px 0 0 20px; font-size: 13px; line-height: 1.6;">
+            <li>Set Custom Slot Mod ID to: <code>armor_plus</code> (they own gauntlets)</li>
+            <li>Generator creates: <code>armor_plus-VanillaCustomSlots/steel_gauntlets_ruby_trim.json</code></li>
+            <li>Generator creates: <code>armor_plus-VanillaCustomSlots-Items/steel_gauntlets.json</code></li>
+            <li>Both files reference <code>my_mod:ruby</code> trim material, but live in <code>armor_plus</code> namespace</li>
         </ul>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.6;">
+            <strong>The selector file</strong> (in items/) tells Minecraft: "When this gauntlet has a ruby trim, use this model."<br>
+            <strong>The trim model</strong> (in models/item/) is the actual layered texture that gets displayed.
+        </p>
+    </div>
 
-        <p><strong>2. Select Armor Types:</strong></p>
-        <ul>
-            <li>Choose which vanilla armor types will support your trims</li>
-            <li>Select mod armor types if you've added custom ones</li>
-            <li>You need at least one armor type selected (vanilla or mod)</li>
-            <li>Use "Select All" / "Deselect All" for quick selection</li>
-        </ul>
+    <h3>Technical Details:</h3>
 
-        <p><strong>3. Additional Mods (Optional):</strong></p>
-        <ul>
-            <li>Add other mods' armor to generate trim support for them</li>
-            <li>Each mod can have its own materials and armor types</li>
-            <li>Drag to reorder using the handle on the left</li>
-            <li>Use bulk actions to select/deselect all armors across all mods</li>
-        </ul>
+    <ul>
+        <li>Generator creates <strong>selective model files</strong> using the <code>"minecraft:select"</code> type</li>
+        <li>Each armor piece checks the trim material and loads the appropriate texture</li>
+        <li>Vanilla trim materials (quartz, iron, netherite, etc.) are automatically included</li>
+        <li>Leather armor models include dye tint support for coloring</li>
+        <li>Files use Minecraft 1.21.2+ item model format</li>
+        <li>Custom slot selector files are generated in <code>items/</code></li>
+        <li>Trim models go in <code>models/item/</code> regardless of slot type</li>
+    </ul>
 
-        <p><strong>4. Custom Armor Slot Names (Optional):</strong></p>
-        <ul>
-            <li>Click "Customize Armor Slots" to change slot names</li>
-            <li>Default slots are: helmet, chestplate, leggings, boots</li>
-            <li>Useful if your armor has non-standard naming</li>
-            <li>Changes apply to all selected armor types</li>
-        </ul>
+    <h3>Need More Help?</h3>
+    <p>If you encounter issues or have suggestions:</p>
+    <ul>
+        <li>Create an issue on <a href="https://github.com/PotatoWolfie/potatowolfie.github.io/issues" target="_blank">GitHub</a></li>
+        <li>Provide details about your configuration and the issue</li>
+        <li>Include any error messages or unexpected behavior</li>
+        <li>If asking about custom slots, specify which mod owns the slot</li>
+    </ul>
 
-        <p><strong>5. Atlas Generation (Optional):</strong></p>
-        <ul>
-            <li>Check "Generate Atlas Files" to create blocks.json and armor_trims.json</li>
-            <li>These files register your custom trim materials with the game</li>
-            <li>Goes in: <code>resources/assets/minecraft/atlases/</code></li>
-            <li>Important: Keep "replace: false" in the files!</li>
-        </ul>
-
-        <p><strong>6. Generate & Download:</strong></p>
-        <ul>
-            <li>Click "Generate Models" to create all files</li>
-            <li>Preview individual files by clicking them</li>
-            <li>Download the complete ZIP file</li>
-        </ul>
-
-        <p><strong>7. Save/Load Configuration:</strong></p>
-        <ul>
-            <li>Save your settings for later use</li>
-            <li>Load previously saved configurations</li>
-            <li>Use Undo/Redo (Ctrl+Z / Ctrl+Shift+Z) to revert changes</li>
-        </ul>
-
-        <h3>Installation:</h3>
-        <p><strong>VanillaItems</strong> folder goes in: <code>resources/assets/minecraft/items/</code></p>
-        <p><strong>YourMod-CustomLayeredItem</strong> goes in: <code>resources/assets/yourmod/models/item/</code></p>
-        <p><strong>YourMod-ItemModels</strong> goes in: <code>resources/assets/yourmod/items/</code></p>
-        <p><strong>Atlases</strong> folder goes in: <code>resources/assets/minecraft/atlases/</code></p>
-
-        <p><em>Note: The VanillaItems folder REPLACES vanilla armor models to add trim support.</em></p>
-
-        <h3>Duplicate Warnings:</h3>
-        <p>The generator will warn you about duplicate materials or armor types. While you can continue anyway, duplicates may cause conflicts. Review warnings carefully before proceeding.</p>
-
-        <h3>Have any issues?</h3>
-        <p>Make an issue ticket on my <a href="https://github.com/PotatoWolfie/potatowolfie.github.io/issues">Github</a>!</p>
-    `;
+    <h3>Credits:</h3>
+    <p>Tool created by <strong>PotatoWolfie</strong>.</p>
+`;
 
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'modal-overlay show';
@@ -3283,7 +3965,7 @@ function showHelp() {
     modalOverlay.innerHTML = `
         <div class="help-modal" onclick="event.stopPropagation()">
             <div class="help-modal-header">
-                <div class="help-modal-title">Help - Armor Trim Models</div>
+                <div class="help-modal-title">Help - Armor Trim Item Model Generator</div>
                 <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
                     <img src="assets/buttons/exit.png" alt="Close">
                 </button>
@@ -3397,14 +4079,12 @@ function showHelp() {
 function getFileExplanation(path, file) {
     const filename = file.name.toLowerCase();
 
-    // Gather all materials (vanilla + custom + modded)
     const allMaterials = [
         ...VANILLA_MATERIALS.map(m => m[1]),
         ...(customMaterials || []),
         ...(additionalMods.flatMap(mod => mod.customMaterials || []))
     ];
 
-    // Atlas files
     if (filename === 'blocks.json') {
         return `Registers trim material textures for items (${allMaterials.join(', ')})`;
     }
@@ -3412,19 +4092,27 @@ function getFileExplanation(path, file) {
         return `Registers trim material textures for armor entities (${allMaterials.join(', ')})`;
     }
 
-    // Parse filename to extract parts
+if (file.category.includes('VanillaCustomSlots-Items')) {
+    const parts = filename.replace('.json', '').split('_');
+    const armorType = parts[0];
+    const slotName = parts.slice(1).join('_');
+    return `Selector: Enables trim material support for ${armorType} ${slotName} (adds ${allMaterials.join(', ')})`;
+}
+
     const parts = filename.replace('.json', '').split('_');
 
-    // Check if it's a trim file (has "trim" in name)
     if (filename.includes('_trim.json')) {
         const armorType = parts[0];
         const slotType = parts.slice(1, -2).join('_');
         const material = parts[parts.length - 2];
 
+        if (file.category.includes('VanillaCustomSlots')) {
+            return `Custom slot: Defines how ${material} trim appears on vanilla ${armorType} ${slotType}`;
+        }
+
         return `Defines how ${material} trim appears on ${armorType} ${slotType}`;
     }
 
-    // Check if it's a vanilla or modded item model
     if (file.category === 'VanillaItems' || file.category.includes('-ItemModels')) {
         const armorType = parts[0];
         const slotType = parts.slice(1).join('_');
@@ -3457,11 +4145,9 @@ function getFileExplanation(path, file) {
 
     currentModalFile = path;
 
-    // Set modal title and content
     document.getElementById('modalTitle').textContent = file.name;
     document.getElementById('modalContent').textContent = file.content;
 
-    // Show modal
     document.getElementById('modalOverlay').classList.add('show');
 }
 
@@ -3479,82 +4165,6 @@ function getFileExplanation(path, file) {
             showToast('Failed to copy', 'error');
             console.error(err);
         });
-    }
-
-    function showHelp() {
-        const helpHTML = `
-            <h3>What are Armor Trim Models?</h3>
-            <p>Armor trim item models are JSON files that define how custom trim materials appear on the armor items in Minecraft.
-            When you create a custom trim material, you need these models to make the trim visible on armor items.
-            Mojang made this more difficult to do, requiring 56 files per trim material. This tool is to be used while making a mod.</p>
-
-            <h3>How to Use This Generator:</h3>
-
-            <p><strong>1. Main Mod Configuration:</strong></p>
-            <ul>
-                <li>Enter your mod's ID (e.g., "my_mod")</li>
-                <li>Add custom materials (the trim materials you're creating)</li>
-                <li>Add custom armor types if your mod has unique armor</li>
-            </ul>
-
-            <p><strong>2. Select Armor Types:</strong></p>
-            <ul>
-                <li>Choose which vanilla armor types will support your trims</li>
-                <li>Use "Select All" / "Deselect All" for quick selection</li>
-            </ul>
-
-            <p><strong>3. Additional Mods (Optional):</strong></p>
-            <ul>
-                <li>Add other mods' armor to generate trim support for them</li>
-                <li>Drag to reorder using the handle on the left</li>
-            </ul>
-
-            <p><strong>4. Generate & Download:</strong></p>
-            <ul>
-                <li>Click "Generate Models" to create all files</li>
-                <li>Preview individual files by clicking them</li>
-                <li>Download the complete ZIP file</li>
-            </ul>
-
-            <p><strong>5. Save/Load Configuration:</strong></p>
-            <ul>
-                <li>Save your settings for later use</li>
-                <li>Load previously saved configurations</li>
-            </ul>
-
-            <h3>Installation:</h3>
-            <p><strong>VanillaItems</strong> folder goes in: <code>resources/assets/minecraft/items/</code></p>
-            <p><strong>YourMod-CustomLayeredItem</strong> goes in: <code>resources/assets/yourmod/models/item/</code></p>
-
-            <p><em>Note: The VanillaItems folder REPLACES vanilla armor models to add trim support.</em></p>
-
-            <h3>Have any issues?</h3>
-            <p>Make an issue ticket on my <a href="https://github.com/PotatoWolfie/potatowolfie.github.io/issues">Github</a>!</p>
-        `;
-
-        const modalOverlay = document.createElement('div');
-        modalOverlay.className = 'modal-overlay show';
-        modalOverlay.onclick = (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.remove();
-            }
-        };
-
-        modalOverlay.innerHTML = `
-            <div class="help-modal" onclick="event.stopPropagation()">
-                <div class="help-modal-header">
-                    <div class="help-modal-title">Help - Armor Trim Models</div>
-                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
-                        <img src="assets/buttons/exit.png" alt="Close">
-                    </button>
-                </div>
-                <div class="help-modal-body">
-                    ${helpHTML}
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(modalOverlay);
     }
 
 function updateSummaryStats() {
