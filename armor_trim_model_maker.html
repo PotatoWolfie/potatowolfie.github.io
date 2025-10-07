@@ -2532,6 +2532,10 @@ function updateProgress(percentage, text) {
 
     const modId = document.getElementById('modId').value;
     const armorTypes = getSelectedArmorTypes();
+    const modArmorTypes = Array.from(
+        document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]:checked')
+    ).map(cb => cb.value);
+    const allSelectedArmors = [...armorTypes, ...modArmorTypes];
 
     updateProgress(10, 'Calculating files to generate...');
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -2542,13 +2546,25 @@ function updateProgress(percentage, text) {
     const selectFolder = zip.folder('VanillaItems');
     const mainModFolder = zip.folder(`${modId}-CustomLayeredItem`);
 
-    const totalVanillaOps = armorTypes.length * ARMOR_SLOTS.length;
-    const totalMainModOps = armorTypes.length * ARMOR_SLOTS.length * customMaterials.length;
+    // Separate vanilla and modded armors
+    const vanillaArmors = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
+    const selectedVanillaArmors = allSelectedArmors.filter(armor => vanillaArmors.includes(armor));
+
+    // Calculate total operations
+    const totalVanillaOps = selectedVanillaArmors.length * ARMOR_SLOTS.length;
+    const totalMainModOps = allSelectedArmors.length * ARMOR_SLOTS.length * customMaterials.length;
     const totalAdditionalOps = additionalMods.reduce((sum, mod) => {
-        if (mod.modId && mod.armorTypes.length > 0 && mod.customMaterials.length > 0) {
-            return sum + (mod.armorTypes.length * ARMOR_SLOTS.length * mod.customMaterials.length);
+        if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return sum;
+
+        // Count select models for other mod's armors
+        let modOps = mod.armorTypes.length * ARMOR_SLOTS.length;
+
+        // Count trim models if they have custom materials
+        if (mod.customMaterials && mod.customMaterials.length > 0) {
+            modOps += mod.armorTypes.length * ARMOR_SLOTS.length * mod.customMaterials.length;
         }
-        return sum;
+
+        return sum + modOps;
     }, 0);
     const totalOperations = totalVanillaOps + totalMainModOps + totalAdditionalOps;
     let completedOperations = 0;
@@ -2556,7 +2572,8 @@ function updateProgress(percentage, text) {
     updateProgress(20, 'Generating vanilla armor models...');
     await new Promise(resolve => setTimeout(resolve, 50));
 
-    armorTypes.forEach(armorType => {
+    // Generate select models for vanilla armors
+    selectedVanillaArmors.forEach(armorType => {
         ARMOR_SLOTS.forEach(slot => {
             const model = createSelectModel(armorType, slot, modId, customMaterials);
             const content = JSON.stringify(model, null, 2);
@@ -2578,7 +2595,8 @@ function updateProgress(percentage, text) {
     updateProgress(vanillaProgress + 5, 'Generating custom trim models...');
     await new Promise(resolve => setTimeout(resolve, 50));
 
-    armorTypes.forEach(armorType => {
+    // Generate trim models for all selected armors in main mod
+    allSelectedArmors.forEach(armorType => {
         ARMOR_SLOTS.forEach(slot => {
             customMaterials.forEach(material => {
                 const model = createTrimModel(armorType, slot, material);
@@ -2599,20 +2617,43 @@ function updateProgress(percentage, text) {
     updateProgress(mainModProgress, `Generated ${completedOperations}/${totalOperations} files...`);
     await new Promise(resolve => setTimeout(resolve, 50));
 
+    // Generate files for additional mods
     if (additionalMods.length > 0) {
         updateProgress(mainModProgress + 5, 'Generating additional mod models...');
         await new Promise(resolve => setTimeout(resolve, 50));
 
         additionalMods.forEach(mod => {
-            if (mod.modId && mod.armorTypes.length > 0 && mod.customMaterials.length > 0) {
-                const modFolder = zip.folder(`${mod.modId}-CustomLayeredItem`);
+            if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return;
+
+            // Generate select models (item replacements) for the other mod
+            const modItemsFolder = zip.folder(`${mod.modId}-ItemModels`);
+
+            mod.armorTypes.forEach(armorType => {
+                ARMOR_SLOTS.forEach(slot => {
+                    const model = createSelectModel(armorType, slot, modId, customMaterials);
+                    const content = JSON.stringify(model, null, 2);
+                    const filename = `${armorType}_${slot}.json`;
+                    modItemsFolder.file(filename, content);
+                    generatedFiles[`${mod.modId}-ItemModels/${filename}`] = {
+                        category: `${mod.modId}-ItemModels`,
+                        name: filename,
+                        content: content
+                    };
+                    completedOperations++;
+                });
+            });
+
+            // If the mod has custom materials, generate trim models for those too
+            if (mod.customMaterials && mod.customMaterials.length > 0) {
+                const modTrimFolder = zip.folder(`${mod.modId}-CustomLayeredItem`);
+
                 mod.armorTypes.forEach(armorType => {
                     ARMOR_SLOTS.forEach(slot => {
                         mod.customMaterials.forEach(material => {
                             const model = createTrimModel(armorType, slot, material);
                             const content = JSON.stringify(model, null, 2);
                             const filename = `${armorType}_${slot}_${material}_trim.json`;
-                            modFolder.file(filename, content);
+                            modTrimFolder.file(filename, content);
                             generatedFiles[`${mod.modId}-CustomLayeredItem/${filename}`] = {
                                 category: `${mod.modId}-CustomLayeredItem`,
                                 name: filename,
@@ -2636,17 +2677,43 @@ function updateProgress(percentage, text) {
     await new Promise(resolve => setTimeout(resolve, 100));
 
     document.getElementById('fileSize').textContent = `${sizeKB} KB`;
-    document.getElementById('directoryInfo').innerHTML = `
-        <strong>VanillaItems:</strong><br>
-        Extract to: <code>resources/assets/minecraft/items/</code><br>
-        <em>These will REPLACE vanilla armor item models</em><br><br>
-        <strong>${modId}-CustomLayeredItem:</strong><br>
+
+    // Build directory info with explanations
+    let directoryHTML = '';
+
+    if (selectedVanillaArmors.length > 0) {
+        directoryHTML += `
+            <strong>VanillaItems/</strong><br>
+            <em>Purpose: Replaces vanilla armor item models to support your custom trim materials</em><br>
+            Extract to: <code>resources/assets/minecraft/items/</code><br><br>
+        `;
+    }
+
+    directoryHTML += `
+        <strong>${modId}-CustomLayeredItem/</strong><br>
+        <em>Purpose: Your custom trim material models for all selected armor types</em><br>
         Extract to: <code>resources/assets/${modId}/models/item/</code><br><br>
-        ${additionalMods.filter(m => m.modId && m.armorTypes.length > 0).map(m => `
-            <strong>${m.modId}-CustomLayeredItem:</strong><br>
-            Extract to: <code>resources/assets/${m.modId}/models/item/</code><br><br>
-        `).join('')}
     `;
+
+    additionalMods.forEach(mod => {
+        if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return;
+
+        directoryHTML += `
+            <strong>${mod.modId}-ItemModels/</strong><br>
+            <em>Purpose: Replaces ${mod.modId}'s armor item models to support your trim materials</em><br>
+            Extract to: <code>resources/assets/${mod.modId}/items/</code><br><br>
+        `;
+
+        if (mod.customMaterials && mod.customMaterials.length > 0) {
+            directoryHTML += `
+                <strong>${mod.modId}-CustomLayeredItem/</strong><br>
+                <em>Purpose: ${mod.modId}'s custom trim material models for their armor types</em><br>
+                Extract to: <code>resources/assets/${mod.modId}/models/item/</code><br><br>
+            `;
+        }
+    });
+
+    document.getElementById('directoryInfo').innerHTML = directoryHTML;
 
     renderPreviewFiles();
     updateSummaryStats();
