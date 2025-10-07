@@ -252,23 +252,27 @@ input.invalid {
         }
 
         input[type="checkbox"] {
-            cursor: pointer;
-            width: 16px;
-            height: 16px;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url('assets/buttons/checkbox.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            border: none;
-            box-shadow: none;
-            background-color: transparent;
-        }
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('assets/buttons/checkbox.png');
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
 
-        input[type="checkbox"]:checked {
-            background-image: url('assets/buttons/checkboxchecked.png');
-        }
+input[type="checkbox"]:checked {
+    background-image: url('assets/buttons/checkboxchecked.png');
+}
 
         .mod-entry {
             background: #3a3a3a;
@@ -707,17 +711,18 @@ input.invalid {
         }
 
         .file-item {
-            padding: 12px 16px;
-            cursor: pointer;
-            border: 2px solid #1a1a1a;
-            background: #3a3a3a;
-            color: #cccccc;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            transition: all 0.2s ease;
-            box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #2a2a2a;
-        }
+    padding: 12px 16px;
+    border: 2px solid #1a1a1a;
+    background: #3a3a3a;
+    color: #cccccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: all 0.2s ease;
+    box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #2a2a2a;
+    min-height: auto; /* allow flexible sizing */
+    overflow: visible; /* let content expand */
+}
 
         .file-item:hover {
             background: #424242;
@@ -779,12 +784,13 @@ input.invalid {
         }
 
         .modal-header {
-            padding: 20px;
-            border-bottom: 2px solid #1a1a1a;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-bottom: 1px solid #4a4a4a;
+    background-color: #343231;
+}
 
         .modal-title {
             color: #3453df;
@@ -793,19 +799,26 @@ input.invalid {
         }
 
         .modal-close {
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 28px;   /* consistent sizing */
+    height: 28px;
+    flex-shrink: 0; /* prevent stretching */
+    margin-top: 12px;
+}
 
         .modal-close img {
-            width: 100%;
-            height: 100%;
-            image-rendering: pixelated;
-        }
+    width: 150%;
+    height: 150%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+}
 
         .modal-body {
             padding: 20px;
@@ -1035,7 +1048,7 @@ input.invalid {
 
         .minecraft-button.bulk {
     height: 40px;
-    min-width: 200px;
+    min-width: 220px;
 }
 
 .minecraft-button.bulk .minecraft-button-name {
@@ -1298,6 +1311,17 @@ input.invalid {
             background: #5a6580;
         }
 
+        .file-explanation {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #999999;
+    font-style: italic;
+    line-height: 1.4;
+    white-space: normal;
+    word-break: break-word;
+}
+
+
         @media (max-width: 768px) {
     .container {
         padding: 20px;
@@ -1427,6 +1451,46 @@ input.invalid {
     .section-content > div[style*="display: flex"] .undo-redo-controls {
         width: 100%;
         margin-top: 10px;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .section h2 {
+        font-size: 16px;
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    .chip {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .help-button {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .help-button-text {
+        font-size: 24px;
+    }
+
+    .download-info {
+        font-size: 14px;
+    }
+
+    .stat-number {
+        font-size: 22px;
+    }
+
+    .stat-label {
+        font-size: 12px;
     }
 }
     </style>
@@ -1621,6 +1685,23 @@ input.invalid {
             <input type="file" id="loadConfigInput" accept=".json" style="display: none;" onchange="loadConfiguration(event)">
         </div>
 
+        <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; align-items: center;">
+            <label class="checkbox-label" style="margin: 0;">
+                <input type="checkbox" id="atlasCheckbox" onchange="generateAtlases = this.checked" checked>
+                Generate Atlas Files
+            </label>
+            <button class="minecraft-button" onclick="showArmorSlotCustomizationModal()">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Customize Armor Slots</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+        </div>
+
         <button class="minecraft-button success" onclick="generateModels()" style="margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; display: flex;">
             <div class="minecraft-button-left-outline"></div>
             <div class="minecraft-button-right-outline"></div>
@@ -1732,6 +1813,8 @@ input.invalid {
     let currentModalFile = '';
     let undoStack = [];
     let redoStack = [];
+    let generateAtlases = true;
+    let customArmorSlotNames = {};
     const MAX_UNDO_HISTORY = 20;
 
     function showToast(message, type = 'info') {
@@ -1970,6 +2053,7 @@ input.invalid {
         }
     }
 }
+
     function getAllModArmorTypes() {
     const vanillaArmors = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
     const modArmors = new Set();
@@ -1979,9 +2063,8 @@ input.invalid {
     });
 
     additionalMods.forEach(mod => {
-        (mod.armorTypes || []).forEach(armor => {
-            if (!vanillaArmors.includes(armor) &&
-                !(mod.customMaterials || []).includes(armor)) {
+        (mod.customArmorInputs || []).forEach(armor => {
+            if (!vanillaArmors.includes(armor)) {
                 modArmors.add(armor);
             }
         });
@@ -1990,17 +2073,14 @@ input.invalid {
     return Array.from(modArmors);
 }
 
-
-
-
-
     function bulkSelectAllMods(select) {
-    const allArmorTypes = [...getSelectedArmorTypes(), ...getAllModArmorTypes()];
+    const vanillaArmors = getSelectedArmorTypes();
+    const modArmors = getAllModArmorTypes();
 
     additionalMods.forEach(mod => {
         const customInputs = mod.customArmorInputs || [];
         if (select) {
-            mod.armorTypes = [...new Set([...allArmorTypes, ...customInputs])];
+            mod.armorTypes = [...new Set([...vanillaArmors, ...modArmors, ...customInputs])];
         } else {
             mod.armorTypes = [...customInputs];
         }
@@ -2098,10 +2178,11 @@ function selectAllArmorsForMod(modId) {
     const mod = additionalMods.find(m => m.id === modId);
     if (!mod) return;
 
-    const allArmorTypes = [...getSelectedArmorTypes(), ...getAllModArmorTypes()];
+    const vanillaArmors = getSelectedArmorTypes();
+    const modArmors = getAllModArmorTypes();
     const customInputs = mod.customArmorInputs || [];
 
-    mod.armorTypes = [...new Set([...allArmorTypes, ...customInputs])];
+    mod.armorTypes = [...new Set([...vanillaArmors, ...modArmors, ...customInputs])];
     renderAdditionalMods();
     showToast('All armors selected for this mod', 'info');
 }
@@ -2377,7 +2458,7 @@ function deselectAllArmorsForMod(modId) {
         };
     }
 
-    function validateInputs() {
+            function validateInputs() {
     let isValid = true;
     const modIdInput = document.getElementById('modId');
     const modIdWarning = document.getElementById('modIdWarning');
@@ -2392,10 +2473,14 @@ function deselectAllArmorsForMod(modId) {
         modIdWarning.classList.remove('show');
     }
 
-    const armorTypes = getSelectedArmorTypes();
-    if (armorTypes.length === 0) {
+    const vanillaArmorTypes = getSelectedArmorTypes();
+    const modArmorTypes = Array.from(
+        document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]:checked')
+    ).map(cb => cb.value);
+
+    if (vanillaArmorTypes.length === 0 && modArmorTypes.length === 0) {
         isValid = false;
-        showToast('Please select at least one armor type', 'error');
+        showToast('Please select at least one armor type (vanilla or mod)', 'error');
     }
 
     if (customMaterials.length === 0) {
@@ -2408,26 +2493,120 @@ function deselectAllArmorsForMod(modId) {
 
 function checkDuplicates() {
     const modId = document.getElementById('modId').value.trim().toLowerCase();
-    if (!modId) return true;
+    const warnings = [];
 
-    const duplicateMods = additionalMods.filter(mod =>
-        mod.modId.toLowerCase() === modId
-    );
+    if (modId) {
+        const duplicateMods = additionalMods.filter(mod =>
+            mod.modId.toLowerCase() === modId
+        );
 
-    if (duplicateMods.length > 0) {
-        showToast(`Warning: Mod ID "${modId}" is duplicated in additional mods`, 'error');
-        return false;
+        if (duplicateMods.length > 0) {
+            warnings.push(`Mod ID "${modId}" is duplicated in additional mods`);
+        }
     }
 
     const modIds = additionalMods.map(m => m.modId.toLowerCase()).filter(id => id);
-    const duplicates = modIds.filter((id, index) => modIds.indexOf(id) !== index);
+    const duplicateModIds = modIds.filter((id, index) => modIds.indexOf(id) !== index);
 
-    if (duplicates.length > 0) {
-        showToast(`Warning: Duplicate mod IDs found: ${[...new Set(duplicates)].join(', ')}`, 'error');
+    if (duplicateModIds.length > 0) {
+        warnings.push(`Duplicate mod IDs: ${[...new Set(duplicateModIds)].join(', ')}`);
+    }
+
+    // Check for duplicate materials in main mod
+    const materialDupes = customMaterials.filter((item, index) => customMaterials.indexOf(item) !== index);
+    if (materialDupes.length > 0) {
+        warnings.push(`Main mod has duplicate materials: ${[...new Set(materialDupes)].join(', ')}`);
+    }
+
+    // Check for duplicate armors in main mod
+    const armorDupes = customArmors.filter((item, index) => customArmors.indexOf(item) !== index);
+    if (armorDupes.length > 0) {
+        warnings.push(`Main mod has duplicate armor types: ${[...new Set(armorDupes)].join(', ')}`);
+    }
+
+    // Check for duplicates in additional mods
+    additionalMods.forEach((mod, idx) => {
+        if (mod.customMaterials) {
+            const modMatDupes = mod.customMaterials.filter((item, index) => mod.customMaterials.indexOf(item) !== index);
+            if (modMatDupes.length > 0) {
+                warnings.push(`Mod ${idx + 1} (${mod.modId || 'unnamed'}) has duplicate materials: ${[...new Set(modMatDupes)].join(', ')}`);
+            }
+        }
+
+        if (mod.customArmorInputs) {
+            const modArmorDupes = mod.customArmorInputs.filter((item, index) => mod.customArmorInputs.indexOf(item) !== index);
+            if (modArmorDupes.length > 0) {
+                warnings.push(`Mod ${idx + 1} (${mod.modId || 'unnamed'}) has duplicate armor types: ${[...new Set(modArmorDupes)].join(', ')}`);
+            }
+        }
+    });
+
+    if (warnings.length > 0) {
+        showDuplicateWarningModal(warnings);
         return false;
     }
 
     return true;
+}
+
+function showDuplicateWarningModal(warnings) {
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay show';
+    modalOverlay.style.zIndex = '3000';
+
+    const warningList = warnings.map(w => `<li>${w}</li>`).join('');
+
+    modalOverlay.innerHTML = `
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 600px;">
+            <div class="modal-header">
+                <div class="modal-title">⚠ Duplicate Items Detected</div>
+                <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                    <img src="assets/buttons/exit.png" alt="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="margin: 0 0 15px 0; font-size: 16px; line-height: 1.6;">
+                    The following duplicates were detected. This may cause issues with generation:
+                </p>
+                <ul style="margin: 0 0 15px 20px; color: #3453df; line-height: 1.8;">
+                    ${warningList}
+                </ul>
+                <p style="margin: 0; color: #a0a0a0; font-size: 14px;">
+                    Do you want to continue anyway?
+                </p>
+            </div>
+            <div class="modal-footer" style="gap: 10px; justify-content: center;">
+                <button class="minecraft-button" onclick="this.closest('.modal-overlay').remove()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Cancel</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+                <button class="minecraft-button success" onclick="proceedWithGeneration(this)">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Continue Anyway</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modalOverlay);
+    attachButtonAnimations();
+}
+
+function proceedWithGeneration(button) {
+    button.closest('.modal-overlay').remove();
+    generateModelsAfterValidation();
 }
 
 function saveState() {
@@ -2522,12 +2701,17 @@ function updateProgress(percentage, text) {
         return;
     }
 
-    if (!checkDuplicates()) {
+    const duplicatesExist = !checkDuplicates();
+    if (duplicatesExist) {
+        // Modal will handle proceeding
         return;
     }
 
-    showProgress();
+    await generateModelsAfterValidation();
+}
 
+async function generateModelsAfterValidation() {
+    showProgress();
     await new Promise(resolve => setTimeout(resolve, 100));
 
     const modId = document.getElementById('modId').value;
@@ -2591,11 +2775,12 @@ function updateProgress(percentage, text) {
     await new Promise(resolve => setTimeout(resolve, 50));
 
     allSelectedArmors.forEach(armorType => {
-        ARMOR_SLOTS.forEach(slot => {
+        const slotNames = getArmorSlotNames(armorType);
+        slotNames.forEach((slotName, index) => {
             customMaterials.forEach(material => {
-                const model = createTrimModel(armorType, slot, material);
+                const model = createTrimModel(armorType, slotName, material);
                 const content = JSON.stringify(model, null, 2);
-                const filename = `${armorType}_${slot}_${material}_trim.json`;
+                const filename = `${armorType}_${slotName}_${material}_trim.json`;
                 mainModFolder.file(filename, content);
                 generatedFiles[`${modId}-CustomLayeredItem/${filename}`] = {
                     category: `${modId}-CustomLayeredItem`,
@@ -2621,10 +2806,11 @@ function updateProgress(percentage, text) {
             const modItemsFolder = zip.folder(`${mod.modId}-ItemModels`);
 
             mod.armorTypes.forEach(armorType => {
-                ARMOR_SLOTS.forEach(slot => {
-                    const model = createSelectModel(armorType, slot, modId, customMaterials);
+                const slotNames = getArmorSlotNames(armorType);
+                slotNames.forEach(slotName => {
+                    const model = createSelectModel(armorType, slotName, modId, customMaterials);
                     const content = JSON.stringify(model, null, 2);
-                    const filename = `${armorType}_${slot}.json`;
+                    const filename = `${armorType}_${slotName}.json`;
                     modItemsFolder.file(filename, content);
                     generatedFiles[`${mod.modId}-ItemModels/${filename}`] = {
                         category: `${mod.modId}-ItemModels`,
@@ -2639,11 +2825,12 @@ function updateProgress(percentage, text) {
                 const modTrimFolder = zip.folder(`${mod.modId}-CustomLayeredItem`);
 
                 mod.armorTypes.forEach(armorType => {
-                    ARMOR_SLOTS.forEach(slot => {
+                    const slotNames = getArmorSlotNames(armorType);
+                    slotNames.forEach(slotName => {
                         mod.customMaterials.forEach(material => {
-                            const model = createTrimModel(armorType, slot, material);
+                            const model = createTrimModel(armorType, slotName, material);
                             const content = JSON.stringify(model, null, 2);
-                            const filename = `${armorType}_${slot}_${material}_trim.json`;
+                            const filename = `${armorType}_${slotName}_${material}_trim.json`;
                             modTrimFolder.file(filename, content);
                             generatedFiles[`${mod.modId}-CustomLayeredItem/${filename}`] = {
                                 category: `${mod.modId}-CustomLayeredItem`,
@@ -2658,7 +2845,33 @@ function updateProgress(percentage, text) {
         });
     }
 
-    updateProgress(85, 'Creating ZIP file...');
+    // Generate atlas files if checkbox is enabled
+    if (generateAtlases) {
+        updateProgress(88, 'Generating atlas files...');
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        const atlasFolder = zip.folder('Atlases');
+
+        // Generate blocks.json
+        const blocksAtlas = createBlocksAtlas(modId);
+        atlasFolder.file('blocks.json', JSON.stringify(blocksAtlas, null, 2));
+        generatedFiles['Atlases/blocks.json'] = {
+            category: 'Atlases',
+            name: 'blocks.json',
+            content: JSON.stringify(blocksAtlas, null, 2)
+        };
+
+        // Generate armor_trims.json
+        const armorTrimsAtlas = createArmorTrimsAtlas(modId);
+        atlasFolder.file('armor_trims.json', JSON.stringify(armorTrimsAtlas, null, 2));
+        generatedFiles['Atlases/armor_trims.json'] = {
+            category: 'Atlases',
+            name: 'armor_trims.json',
+            content: JSON.stringify(armorTrimsAtlas, null, 2)
+        };
+    }
+
+    updateProgress(90, 'Creating ZIP file...');
     await new Promise(resolve => setTimeout(resolve, 100));
 
     generatedZip = await zip.generateAsync({ type: 'blob' });
@@ -2684,6 +2897,14 @@ function updateProgress(percentage, text) {
         <em>Purpose: Your custom trim material models for all selected armor types</em><br>
         Extract to: <code>resources/assets/${modId}/models/item/</code><br><br>
     `;
+
+    if (generateAtlases) {
+        directoryHTML += `
+            <strong>Atlases/</strong><br>
+            <em>Purpose: Atlas definitions for custom trim materials</em><br>
+            Extract to: <code>resources/assets/minecraft/atlases/</code><br><br>
+        `;
+    }
 
     additionalMods.forEach(mod => {
         if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return;
@@ -2716,6 +2937,364 @@ function updateProgress(percentage, text) {
 
     const folderCount = new Set(Object.values(generatedFiles).map(f => f.category)).size;
     showToast(`Generated ${Object.keys(generatedFiles).length} files across ${folderCount} folders`, 'success');
+}
+
+function getArmorSlotNames(armorType) {
+    if (customArmorSlotNames[armorType]) {
+        return customArmorSlotNames[armorType];
+    }
+    return [...ARMOR_SLOTS]; // Default slots
+}
+
+function showArmorSlotCustomizationModal() {
+    const allArmors = [
+        ...getSelectedArmorTypes(),
+        ...Array.from(document.querySelectorAll('#modArmorTypesSection input[type="checkbox"]:checked')).map(cb => cb.value)
+    ];
+
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay show';
+    modalOverlay.style.zIndex = '3000';
+
+    let armorInputsHTML = allArmors.map(armor => {
+        const currentSlots = customArmorSlotNames[armor] || [...ARMOR_SLOTS];
+        return `
+            <div style="margin-bottom: 20px; padding: 15px; background: #3a3a3a; border: 2px solid #1a1a1a;">
+                <h4 style="color: #3453df; margin-bottom: 10px; font-family: 'Minecraft Ten', 'Inter', sans-serif;">
+                    ${armor.charAt(0).toUpperCase() + armor.slice(1)}
+                </h4>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                    ${currentSlots.map((slot, idx) => `
+                        <div>
+                            <label style="font-size: 12px; color: #a0a0a0;">Slot ${idx + 1}:</label>
+                            <input type="text"
+                                   value="${slot}"
+                                   data-armor="${armor}"
+                                   data-slot="${idx}"
+                                   class="slot-name-input"
+                                   style="width: 100%; padding: 8px; background: #2a2a2a; border: 2px solid #1a1a1a; color: #e6e6e6; font-size: 14px; box-shadow: inset 1px 1px 0 #1a1a1a;">
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    modalOverlay.innerHTML = `
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px; max-height: 80vh;">
+            <div class="modal-header">
+                <div class="modal-title">Customize Armor Slot Names</div>
+                <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                    <img src="assets/buttons/exit.png" alt="Close">
+                </button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto;">
+                <p style="margin: 0 0 20px 0; color: #cccccc; font-size: 14px;">
+                    Customize the slot names for each armor type. Default slots are: helmet, chestplate, leggings, boots.
+                </p>
+                ${armorInputsHTML}
+            </div>
+            <div class="modal-footer" style="gap: 10px; justify-content: center;">
+                <button class="minecraft-button" onclick="resetSlotNamesToDefault(this)">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Reset to Defaults</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+                <button class="minecraft-button success" onclick="saveCustomSlotNames(this)">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Save</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modalOverlay);
+    attachButtonAnimations();
+}
+
+function saveCustomSlotNames(button) {
+    const inputs = document.querySelectorAll('.slot-name-input');
+    const tempSlotNames = {};
+
+    inputs.forEach(input => {
+        const armor = input.dataset.armor;
+        const slotIndex = parseInt(input.dataset.slot);
+        const value = input.value.trim().toLowerCase();
+
+        if (!tempSlotNames[armor]) {
+            tempSlotNames[armor] = [];
+        }
+        tempSlotNames[armor][slotIndex] = value || ARMOR_SLOTS[slotIndex];
+    });
+
+    customArmorSlotNames = tempSlotNames;
+    button.closest('.modal-overlay').remove();
+    showToast('Slot names saved!', 'success');
+}
+
+function resetSlotNamesToDefault(button) {
+    const inputs = document.querySelectorAll('.slot-name-input');
+    inputs.forEach(input => {
+        const slotIndex = parseInt(input.dataset.slot);
+        input.value = ARMOR_SLOTS[slotIndex];
+    });
+    showToast('Reset to defaults', 'info');
+}
+
+function createBlocksAtlas(modId) {
+    const atlas = {
+        replace: false,
+        sources: [
+            {
+                type: "minecraft:directory",
+                prefix: "block/",
+                source: "block"
+            },
+            {
+                type: "minecraft:directory",
+                prefix: "item/",
+                source: "item"
+            },
+            {
+                type: "minecraft:directory",
+                prefix: "entity/conduit/",
+                source: "entity/conduit"
+            },
+            {
+                type: "minecraft:single",
+                resource: "minecraft:entity/bell/bell_body"
+            },
+            {
+                type: "minecraft:single",
+                resource: "minecraft:entity/decorated_pot/decorated_pot_side"
+            },
+            {
+                type: "minecraft:single",
+                resource: "minecraft:entity/enchanting_table_book"
+            },
+            {
+                type: "minecraft:paletted_permutations",
+                palette_key: "trims/color_palettes/trim_palette",
+                permutations: {
+                    amethyst: "minecraft:trims/color_palettes/amethyst",
+                    copper: "minecraft:trims/color_palettes/copper",
+                    copper_darker: "minecraft:trims/color_palettes/copper_darker",
+                    diamond: "minecraft:trims/color_palettes/diamond",
+                    diamond_darker: "minecraft:trims/color_palettes/diamond_darker",
+                    emerald: "minecraft:trims/color_palettes/emerald",
+                    gold: "minecraft:trims/color_palettes/gold",
+                    gold_darker: "minecraft:trims/color_palettes/gold_darker",
+                    iron: "minecraft:trims/color_palettes/iron",
+                    iron_darker: "minecraft:trims/color_palettes/iron_darker",
+                    lapis: "minecraft:trims/color_palettes/lapis",
+                    netherite: "minecraft:trims/color_palettes/netherite",
+                    netherite_darker: "minecraft:trims/color_palettes/netherite_darker",
+                    quartz: "minecraft:trims/color_palettes/quartz",
+                    redstone: "minecraft:trims/color_palettes/redstone",
+                    resin: "minecraft:trims/color_palettes/resin"
+                },
+                textures: [
+                    "minecraft:trims/items/helmet_trim",
+                    "minecraft:trims/items/chestplate_trim",
+                    "minecraft:trims/items/leggings_trim",
+                    "minecraft:trims/items/boots_trim"
+                ]
+            }
+        ]
+    };
+
+    // Add custom materials to permutations
+    customMaterials.forEach(material => {
+        atlas.sources[6].permutations[material] = `${modId}:trims/color_palettes/${material}`;
+    });
+
+    return atlas;
+}
+
+function createArmorTrimsAtlas(modId) {
+    const atlas = {
+        replace: false,
+        sources: [
+            {
+                type: "minecraft:paletted_permutations",
+                textures: [
+                    "trims/entity/humanoid/coast",
+                    "trims/entity/humanoid_leggings/coast",
+                    "trims/entity/humanoid/sentry",
+                    "trims/entity/humanoid_leggings/sentry",
+                    "trims/entity/humanoid/dune",
+                    "trims/entity/humanoid_leggings/dune",
+                    "trims/entity/humanoid/wild",
+                    "trims/entity/humanoid_leggings/wild",
+                    "trims/entity/humanoid/ward",
+                    "trims/entity/humanoid_leggings/ward",
+                    "trims/entity/humanoid/eye",
+                    "trims/entity/humanoid_leggings/eye",
+                    "trims/entity/humanoid/vex",
+                    "trims/entity/humanoid_leggings/vex",
+                    "trims/entity/humanoid/tide",
+                    "trims/entity/humanoid_leggings/tide",
+                    "trims/entity/humanoid/snout",
+                    "trims/entity/humanoid_leggings/snout",
+                    "trims/entity/humanoid/rib",
+                    "trims/entity/humanoid_leggings/rib",
+                    "trims/entity/humanoid/spire",
+                    "trims/entity/humanoid_leggings/spire",
+                    "trims/entity/humanoid/wayfinder",
+                    "trims/entity/humanoid_leggings/wayfinder",
+                    "trims/entity/humanoid/shaper",
+                    "trims/entity/humanoid_leggings/shaper",
+                    "trims/entity/humanoid/silence",
+                    "trims/entity/humanoid_leggings/silence",
+                    "trims/entity/humanoid/raiser",
+                    "trims/entity/humanoid_leggings/raiser",
+                    "trims/entity/humanoid/host",
+                    "trims/entity/humanoid_leggings/host",
+                    "trims/entity/humanoid/flow",
+                    "trims/entity/humanoid_leggings/flow",
+                    "trims/entity/humanoid/bolt",
+                    "trims/entity/humanoid_leggings/bolt"
+                ],
+                palette_key: "trims/color_palettes/trim_palette",
+                permutations: {
+                    quartz: "trims/color_palettes/quartz",
+                    iron: "trims/color_palettes/iron",
+                    gold: "trims/color_palettes/gold",
+                    diamond: "trims/color_palettes/diamond",
+                    netherite: "trims/color_palettes/netherite",
+                    redstone: "trims/color_palettes/redstone",
+                    copper: "trims/color_palettes/copper",
+                    emerald: "trims/color_palettes/emerald",
+                    lapis: "trims/color_palettes/lapis",
+                    amethyst: "trims/color_palettes/amethyst",
+                    iron_darker: "trims/color_palettes/iron_darker",
+                    gold_darker: "trims/color_palettes/gold_darker",
+                    diamond_darker: "trims/color_palettes/diamond_darker",
+                    netherite_darker: "trims/color_palettes/netherite_darker"
+                }
+            }
+        ]
+    };
+
+    // Add custom materials to permutations
+    customMaterials.forEach(material => {
+        atlas.sources[0].permutations[material] = `${modId}:trims/color_palettes/${material}`;
+    });
+
+    return atlas;
+}
+
+function showHelp() {
+    const helpHTML = `
+        <h3>What are Armor Trim Models?</h3>
+        <p>Armor trim item models are JSON files that define how custom trim materials appear on armor items in Minecraft.
+        When you create a custom trim material, you need these models to make the trim visible on armor items.
+        Mojang made this more difficult to do, requiring 56 files per trim material. This tool is to be used while making a mod.</p>
+
+        <h3>How to Use This Generator:</h3>
+
+        <p><strong>1. Main Mod Configuration:</strong></p>
+        <ul>
+        <li>Enter your mod's ID (e.g., "my_mod")</li>
+            <li>Add custom materials (the trim materials you're creating)</li>
+            <li>Add custom armor types if your mod has unique armor</li>
+        </ul>
+
+        <p><strong>2. Select Armor Types:</strong></p>
+        <ul>
+            <li>Choose which vanilla armor types will support your trims</li>
+            <li>Select mod armor types if you've added custom ones</li>
+            <li>You need at least one armor type selected (vanilla or mod)</li>
+            <li>Use "Select All" / "Deselect All" for quick selection</li>
+        </ul>
+
+        <p><strong>3. Additional Mods (Optional):</strong></p>
+        <ul>
+            <li>Add other mods' armor to generate trim support for them</li>
+            <li>Each mod can have its own materials and armor types</li>
+            <li>Drag to reorder using the handle on the left</li>
+            <li>Use bulk actions to select/deselect all armors across all mods</li>
+        </ul>
+
+        <p><strong>4. Custom Armor Slot Names (Optional):</strong></p>
+        <ul>
+            <li>Click "Customize Armor Slots" to change slot names</li>
+            <li>Default slots are: helmet, chestplate, leggings, boots</li>
+            <li>Useful if your armor has non-standard naming</li>
+            <li>Changes apply to all selected armor types</li>
+        </ul>
+
+        <p><strong>5. Atlas Generation (Optional):</strong></p>
+        <ul>
+            <li>Check "Generate Atlas Files" to create blocks.json and armor_trims.json</li>
+            <li>These files register your custom trim materials with the game</li>
+            <li>Goes in: <code>resources/assets/minecraft/atlases/</code></li>
+            <li>Important: Keep "replace: false" in the files!</li>
+        </ul>
+
+        <p><strong>6. Generate & Download:</strong></p>
+        <ul>
+            <li>Click "Generate Models" to create all files</li>
+            <li>Preview individual files by clicking them</li>
+            <li>Download the complete ZIP file</li>
+        </ul>
+
+        <p><strong>7. Save/Load Configuration:</strong></p>
+        <ul>
+            <li>Save your settings for later use</li>
+            <li>Load previously saved configurations</li>
+            <li>Use Undo/Redo (Ctrl+Z / Ctrl+Shift+Z) to revert changes</li>
+        </ul>
+
+        <h3>Installation:</h3>
+        <p><strong>VanillaItems</strong> folder goes in: <code>resources/assets/minecraft/items/</code></p>
+        <p><strong>YourMod-CustomLayeredItem</strong> goes in: <code>resources/assets/yourmod/models/item/</code></p>
+        <p><strong>YourMod-ItemModels</strong> goes in: <code>resources/assets/yourmod/items/</code></p>
+        <p><strong>Atlases</strong> folder goes in: <code>resources/assets/minecraft/atlases/</code></p>
+
+        <p><em>Note: The VanillaItems folder REPLACES vanilla armor models to add trim support.</em></p>
+
+        <h3>Duplicate Warnings:</h3>
+        <p>The generator will warn you about duplicate materials or armor types. While you can continue anyway, duplicates may cause conflicts. Review warnings carefully before proceeding.</p>
+
+        <h3>Have any issues?</h3>
+        <p>Make an issue ticket on my <a href="https://github.com/PotatoWolfie/potatowolfie.github.io/issues">Github</a>!</p>
+    `;
+
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay show';
+    modalOverlay.onclick = (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.remove();
+        }
+    };
+
+    modalOverlay.innerHTML = `
+        <div class="help-modal" onclick="event.stopPropagation()">
+            <div class="help-modal-header">
+                <div class="help-modal-title">Help - Armor Trim Models</div>
+                <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                    <img src="assets/buttons/exit.png" alt="Close">
+                </button>
+            </div>
+            <div class="help-modal-body">
+                ${helpHTML}
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modalOverlay);
 }
 
     function downloadZip() {
@@ -2801,14 +3380,60 @@ function updateProgress(percentage, text) {
     }
 
     function renderPreviewFiles() {
-        const fileList = document.getElementById('fileList');
-        fileList.innerHTML = Object.entries(generatedFiles).map(([path, file]) => `
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = Object.entries(generatedFiles).map(([path, file]) => {
+        const explanation = getFileExplanation(path, file);
+        return `
             <div class="file-item" onclick="showFilePreview('${path}')">
-                <div class="file-category">${file.category}</div>
-                <div class="file-name">${file.name}</div>
-            </div>
-        `).join('');
+    <div class="file-category">${file.category}</div>
+    <div class="file-name">${file.name}</div>
+    <div class="file-explanation">${getFileExplanation(path, file)}</div>
+</div>
+
+        `;
+    }).join('');
+}
+
+function getFileExplanation(path, file) {
+    const filename = file.name.toLowerCase();
+
+    // Gather all materials (vanilla + custom + modded)
+    const allMaterials = [
+        ...VANILLA_MATERIALS.map(m => m[1]),
+        ...(customMaterials || []),
+        ...(additionalMods.flatMap(mod => mod.customMaterials || []))
+    ];
+
+    // Atlas files
+    if (filename === 'blocks.json') {
+        return `Registers trim material textures for items (${allMaterials.join(', ')})`;
     }
+    if (filename === 'armor_trims.json') {
+        return `Registers trim material textures for armor entities (${allMaterials.join(', ')})`;
+    }
+
+    // Parse filename to extract parts
+    const parts = filename.replace('.json', '').split('_');
+
+    // Check if it's a trim file (has "trim" in name)
+    if (filename.includes('_trim.json')) {
+        const armorType = parts[0];
+        const slotType = parts.slice(1, -2).join('_');
+        const material = parts[parts.length - 2];
+
+        return `Defines how ${material} trim appears on ${armorType} ${slotType}`;
+    }
+
+    // Check if it's a vanilla or modded item model
+    if (file.category === 'VanillaItems' || file.category.includes('-ItemModels')) {
+        const armorType = parts[0];
+        const slotType = parts.slice(1).join('_');
+        return `Adds trim material support (${allMaterials.join(', ')}) to ${armorType} ${slotType}`;
+    }
+
+    return `Generated file related to trim materials (${allMaterials.join(', ')})`;
+}
+
 
     function filterPreviewFiles() {
         const searchTerm = document.getElementById('previewSearch').value.toLowerCase();
@@ -2827,14 +3452,19 @@ function updateProgress(percentage, text) {
     }
 
     function showFilePreview(path) {
-        const file = generatedFiles[path];
-        if (!file) return;
+    const file = generatedFiles[path];
+    if (!file) return;
 
-        currentModalFile = path;
-        document.getElementById('modalTitle').textContent = file.name;
-        document.getElementById('modalContent').textContent = file.content;
-        document.getElementById('modalOverlay').classList.add('show');
-    }
+    currentModalFile = path;
+
+    // Set modal title and content
+    document.getElementById('modalTitle').textContent = file.name;
+    document.getElementById('modalContent').textContent = file.content;
+
+    // Show modal
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
 
     function closeModal(event) {
         if (event && event.target !== event.currentTarget) return;
