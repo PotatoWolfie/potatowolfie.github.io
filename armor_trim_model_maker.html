@@ -2771,7 +2771,6 @@ if (selectedCustomArmors.length > 0 && customArmors.length > 0) {
 
     let completedOperations = 0;
 
-   // STEP 1: Generate vanilla armor item models (selector files)
 updateProgress(10, 'Generating vanilla armor selectors...');
 await new Promise(resolve => setTimeout(resolve, 50));
 
@@ -2795,7 +2794,6 @@ const vanillaProgress = 20 + (completedOperations / totalOperations) * 60;
 updateProgress(vanillaProgress, `Generated ${completedOperations}/${totalOperations} files...`);
 await new Promise(resolve => setTimeout(resolve, 50));
 
-// STEP 2: Generate main mod trim models for all selected armors (basic 4 slots)
 updateProgress(vanillaProgress + 5, 'Generating custom trim models...');
 await new Promise(resolve => setTimeout(resolve, 50));
 if (customMaterials.length > 0) {
@@ -2818,7 +2816,6 @@ if (customMaterials.length > 0) {
     });
 }
 
-// Generate vanilla material trims for custom armor types (if we have custom armors)
 if (customArmors.length > 0) {
     const vanillaArmors = ['leather', 'chainmail', 'iron', 'golden', 'diamond', 'netherite', 'copper'];
     const selectedCustomArmors = allSelectedArmors.filter(armor => !vanillaArmors.includes(armor));
@@ -2998,7 +2995,6 @@ if (vanillaWithCustomSlots.length > 0) {
 
     document.getElementById('fileSize').textContent = `${sizeKB} KB`;
 
-// Initialize directoryHTML FIRST
 let directoryHTML = '';
 
 const hasCustomArmorWithVanillaTrims = allSelectedArmors.some(armor => !vanillaArmors.includes(armor));
@@ -3011,7 +3007,6 @@ if (hasCustomArmorWithVanillaTrims && customArmors.length > 0) {
     `;
 }
 
-// Now continue with the rest of the directoryHTML building...
 if (selectedVanillaArmors.length > 0) {
     directoryHTML += `
         <strong>VanillaItems/</strong><br>
@@ -4133,14 +4128,12 @@ function showHelp() {
 function getFileExplanation(path, file) {
     const filename = file.name.toLowerCase();
 
-    // Gather all materials (vanilla + custom + modded)
     const allMaterials = [
         ...VANILLA_MATERIALS.map(m => m[1]),
         ...(customMaterials || []),
         ...(additionalMods.flatMap(mod => mod.customMaterials || []))
     ];
 
-    // Atlas files
     if (filename === 'blocks.json') {
         return `Registers trim material textures for items (${allMaterials.join(', ')})`;
     }
@@ -4148,21 +4141,17 @@ function getFileExplanation(path, file) {
         return `Registers trim material textures for armor entities (${allMaterials.join(', ')})`;
     }
 
-    // Parse filename to extract parts
     const parts = filename.replace('.json', '').split('_');
 
-    // Check if it's a trim file (has "trim" in name)
     if (filename.includes('_trim.json')) {
         const armorType = parts[0];
         const slotType = parts.slice(1, -2).join('_');
         const material = parts[parts.length - 2];
 
-        // Check if it's a vanilla custom slot
         if (file.category.includes('VanillaCustomSlots')) {
             return `Custom slot: Defines how ${material} trim appears on vanilla ${armorType} ${slotType}`;
         }
 
-        // Check if it's vanilla trims on custom armor
         if (file.category.includes('VanillaTrims')) {
             return `Defines how vanilla ${material} trim appears on custom ${armorType} ${slotType}`;
         }
@@ -4170,7 +4159,6 @@ function getFileExplanation(path, file) {
         return `Defines how ${material} trim appears on ${armorType} ${slotType}`;
     }
 
-    // Check if it's a vanilla or modded item model
     if (file.category === 'VanillaItems' || file.category.includes('-ItemModels')) {
         const armorType = parts[0];
         const slotType = parts.slice(1).join('_');
