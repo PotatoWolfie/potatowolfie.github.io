@@ -313,6 +313,45 @@
             }
         }
 
+.timeline-icon {
+    width: 35px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 6px;
+    image-rendering: auto;
+    display: inline-block;
+    object-fit: contain;
+}
+
+.timeline-description {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+@media (max-width: 768px) {
+    .timeline-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .timeline-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
         .side-stack {
             display: flex;
             flex-direction: column;
@@ -799,7 +838,7 @@
                     <button class="variant-tab" onclick="switchVariant(2)">Hanging</button>
                 </div>
 
-                <img src="../assets/blocks/spider_web_ground.png" alt="Spider Web Ground" class="variant-image active" id="variant1" />
+                <img src="../assets/blocks/spider_web_ground-1-0-2-square.png" alt="Spider Web Ground" class="variant-image active" id="variant1" />
                 <img src="../assets/blocks/spider_web_hanging.png" alt="Spider Web Hanging" class="variant-image" id="variant2" />
 
                 <div class="info-row">
@@ -915,7 +954,16 @@
                         <div class="timeline-content">
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
-                                Added Spider Web
+                                <img src="../assets/blocks/spider_web_ground.png" class="timeline-icon" alt=""> Added Spider Web
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-version">Version 1.0.2</div>
+                            <div class="timeline-description">
+                                <img src="../assets/blocks/spider_web_ground-1-0-2.png" class="timeline-icon" alt=""> The texture of the spider web has been changed
                             </div>
                         </div>
                     </div>

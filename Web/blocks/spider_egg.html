@@ -604,6 +604,45 @@
             font-family: 'Minecraft Ten', 'Nunito', sans-serif;
         }
 
+        .timeline-icon {
+    width: 35px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 6px;
+    image-rendering: auto;
+    display: inline-block;
+    object-fit: contain;
+}
+
+.timeline-description {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+@media (max-width: 768px) {
+    .timeline-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .timeline-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
         .timeline-item {
             display: flex;
             align-items: flex-start;
@@ -863,6 +902,15 @@
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
                                 Added Spider Eggs
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-version">Version 1.0.2</div>
+                            <div class="timeline-description">
+                                Spider Eggs now emit a light level of 3
                             </div>
                         </div>
                     </div>
