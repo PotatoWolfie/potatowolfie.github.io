@@ -3754,7 +3754,7 @@ function showHelp() {
 
     <p><strong>1. Main Mod Configuration:</strong></p>
     <ul>
-        <li><strong>Mod ID</strong> (Required): Enter your mod's unique identifier (e.g., "my_mod")</li>
+        <li><strong>Mod ID</strong> (Required): Enter your mod's unique identifier (e.g., "your-mod-id")</li>
         <li><strong>Custom Materials</strong> (Requires at least a custom material or armor type): Add the trim materials you're creating. Press Enter after typing each material name. Click × to remove.</li>
         <li><strong>Custom Armor Types</strong> (Requires at least a custom material or armor type): Add non-vanilla armor types if your mod has unique armor pieces</li>
         <li><strong>Undo/Redo</strong>: Use the ↶ Undo (Ctrl+Z) and ↷ Redo (Ctrl+Shift+Z or Ctrl+Y) buttons to revert changes. Supports up to 20 levels of history.</li>
@@ -3832,7 +3832,7 @@ function showHelp() {
         </li>
         <li><strong>Example Use Case:</strong>
             <div style="background: #2a2a2a; padding: 10px; margin: 8px 0; border-left: 2px solid #3453df;">
-                <p style="margin: 0 0 5px 0; font-size: 13px;"><strong>Scenario:</strong> You have a mod "my_mod" with a "ruby" trim material.
+                <p style="margin: 0 0 5px 0; font-size: 13px;"><strong>Scenario:</strong> You have a mod "your-mod-id" with a "ruby" trim material.
                 Another mod "armor_plus" adds steel gauntlets. You want ruby trims on those gauntlets.</p>
                 <p style="margin: 5px 0 0 0; font-size: 13px;"><strong>Setup:</strong></p>
                 <ul style="margin: 5px 0 0 20px; font-size: 13px;">
@@ -3968,13 +3968,13 @@ function showHelp() {
             must go in that mod's namespace, even if the trim materials come from your mod.
         </p>
         <p style="margin: 0 0 8px 0; font-size: 13px; line-height: 1.6;">
-            <strong>Example:</strong> Mod "armor_plus" adds gauntlets. Your mod "my_mod" adds ruby trims.
+            <strong>Example:</strong> Mod "armor_plus" adds gauntlets. Your mod "your-mod-id" adds ruby trims.
         </p>
         <ul style="margin: 5px 0 0 20px; font-size: 13px; line-height: 1.6;">
             <li>Set Custom Slot Mod ID to: <code>armor_plus</code> (they own gauntlets)</li>
             <li>Generator creates: <code>armor_plus-VanillaCustomSlots/steel_gauntlets_ruby_trim.json</code></li>
             <li>Generator creates: <code>armor_plus-VanillaCustomSlots-Items/steel_gauntlets.json</code></li>
-            <li>Both files reference <code>my_mod:ruby</code> trim material, but live in <code>armor_plus</code> namespace</li>
+            <li>Both files reference <code>your-mod-id:ruby</code> trim material, but live in <code>armor_plus</code> namespace</li>
         </ul>
         <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.6;">
             <strong>The selector file</strong> (in items/) tells Minecraft: "When this gauntlet has a ruby trim, use this model."<br>
