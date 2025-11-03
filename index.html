@@ -2035,14 +2035,6 @@ function navigateToPage(page) {
 const navTabs = [
     { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png', active: true },
     { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
     { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
 ];
 
@@ -2115,7 +2107,7 @@ function renderNavigation() {
             btn.classList.add('nav-arrow');
             btn.innerHTML = `
                 <span class="nav-button-text">Previous</span>
-                <img src="assets/buttons/previous_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+                <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
             `;
             btn.onclick = (e) => {
                 e.preventDefault();
