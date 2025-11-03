@@ -8,7 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="index.css" />
     <style>
         @font-face {
             font-family: 'Minecraft';
@@ -19,34 +18,34 @@
         }
 
         @font-face {
-    font-family: 'Minecraft Ten';
-    src: url('assets/fonts/minecraft.woff2') format('woff2'),
-         url('assets/fonts/minecraft.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                 url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
 
         * {
             box-sizing: border-box;
         }
 
-		img {
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
 
-.logo img {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-}
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
 
         body {
             background: url('Universe76/wiki/background.png');
@@ -65,7 +64,7 @@
             border-bottom: 3px solid #4a4a4a;
             padding: 15px 0;
             backdrop-filter: blur(10px);
-		position: static;
+            position: static;
         }
 
         .header-content {
@@ -82,6 +81,9 @@
             .header-content {
                 padding: 0 15px;
                 gap: 10px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
         }
 
@@ -96,6 +98,12 @@
             height: 60px;
             width: auto;
             flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                margin: 10px 0;
+            }
         }
 
         @media (max-width: 480px) {
@@ -122,6 +130,7 @@
                 margin: 0 10px;
                 max-width: none;
                 flex: 1;
+                width: 100%;
             }
         }
 
@@ -280,66 +289,117 @@
             background: rgba(51, 51, 51, 0.9);
             border-bottom: 2px solid #4a4a4a;
             backdrop-filter: blur(10px);
+            position: relative;
         }
 
-        .nav-content {
-            max-width: 95vw;
-            margin: 0 auto;
+        .nav-scroll-wrapper {
             display: flex;
-            padding: 0 20px;
+            align-items: center;
+            position: relative;
         }
-
-        .nav-tab {
-    padding: 8px 70px;
-    background: #6348d4;
-    border: 2px solid #4a39b3;
-    border-bottom: none;
-    margin-right: 2px;
-    cursor: pointer;
-    font-size: 14px;
-    color: white;
-     font-family: 'Minecraft Ten', 'Inter', sans-serif;
-    font-weight: 6000;
-    text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
-    box-shadow:
-        inset 2px 2px 0 #7354e3,
-        inset -2px -2px 0 #5640c5;
-    text-decoration: none;
-}
-
-.nav-tab:hover {
-    background: #4a39b3;
-}
-
-.nav-tab.active {
-    background: #4a39b3;
-}
-
 
         @media (max-width: 768px) {
-            .nav-content {
-                padding: 0 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-content {
+            .nav-scroll-wrapper {
+                width: 100%;
+                justify-content: flex-start;
+                max-width: 1200px;
+                margin: 0 auto;
                 padding: 0 10px;
             }
         }
 
-        @media (max-width: 768px) {
-            .nav-tab {
-                padding: 8px 40px;
-                font-size: 11px;
+        @media (min-width: 769px) {
+            .nav-scroll-wrapper {
+                padding: 0 20px;
             }
         }
 
-        @media (max-width: 480px) {
-            .nav-tab {
-                padding: 8px 25px;
-                font-size: 10px;
+        .nav-button {
+            background: #6348d4;
+            border: 2px solid #4a39b3;
+            border-bottom: none;
+            margin-right: 2px;
+            cursor: pointer;
+            font-size: 14px;
+            color: white;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: 6000;
+            text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
+            box-shadow:
+                inset 2px 2px 0 #7354e3,
+                inset -2px -2px 0 #5640c5;
+            text-decoration: none;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 20px;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .nav-button:last-child {
+            margin-right: 0;
+        }
+
+        .nav-button:hover {
+            background: #4a39b3;
+        }
+
+        .nav-button.active {
+            background: #4a39b3;
+        }
+
+        .nav-button.hidden {
+            display: none;
+        }
+
+        .nav-button.nav-arrow img {
+    border: none;
+    width: 28px
+}
+
+        .nav-button img {
+    width: 16px;
+    height: 16px;
+    image-rendering: auto;
+    border: 1px solid #3e3099;
+}
+
+        .nav-button-text {
+            display: inline;
+        }
+
+        .nav-button-icon {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-button {
+                padding: 10px 4px;
+                font-size: 11px;
             }
+
+            .nav-button img {
+        width: 20px;
+        height: 20px;
+        image-rendering: auto;
+        border: 1px solid #3e3099;
+    }
+
+            .nav-button-text {
+                display: none;
+            }
+
+            .nav-button-icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #3e3099;
+    }
         }
 
         .main-container {
@@ -379,93 +439,25 @@
             }
         }
 
-        .toc {
-            background: #2e2e2e;
-            border: 2px solid #1a1a1a;
-            padding: 15px;
-            font-family: 'Nunito', sans-serif;
-            width: 300px;
-            flex-shrink: 0;
-            align-self: flex-start;
-            position: sticky;
-            top: 27px;
-            box-shadow:
-                inset 2px 2px 0 #3a3a3a,
-                inset -2px -2px 0 #242424;
-        }
-
-        @media (max-width: 768px) {
-            .toc {
-                width: 100%;
-                position: static;
-                margin-bottom: 25px;
-            }
-        }
-
-        .toc h2 {
-            font-size: 16px;
-            color: #8b4513;
-            margin-bottom: 10px;
-            margin-top: 0;
-            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
-        }
-
-        .toc ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .toc li {
-            margin-bottom: 5px;
-        }
-
-        .toc a {
-            color: #cccccc;
-            text-decoration: none;
-            display: block;
-            padding: 5px 8px;
-            border-radius: 3px;
-            transition: all 0.2s ease;
-        }
-
-        .toc a:hover {
-            color: #8b4513;
-            background: rgba(139, 69, 19, 0.1);
-        }
-
-        @media (hover: none) {
-            .toc a:hover {
-                background: transparent;
-            }
-            .toc a:active {
-                background: rgba(139, 69, 19, 0.1);
-            }
-        }
-
         .content {
             flex: 1;
             min-width: 0;
         }
 
-        .page-title, .main-header {
+        .page-title {
             font-family: 'Minecraft Ten', 'Nunito', sans-serif;
             color: #6348d4;
             word-wrap: break-word;
-        }
-
-        .page-title {
             font-size: 1.7rem;
             margin-bottom: 25px;
             margin-top: 0;
-			border-bottom: 2px solid #4a4a4a;
+            border-bottom: 2px solid #4a4a4a;
         }
 
         @media (max-width: 768px) {
             .page-title {
                 font-size: 1.5rem;
                 margin-bottom: 20px;
-				border-bottom: 2px solid #4a4a4a;
             }
         }
 
@@ -473,26 +465,6 @@
             .page-title {
                 font-size: 1.3rem;
                 margin-bottom: 15px;
-				border-bottom: 2px solid #4a4a4a;
-            }
-        }
-
-        .main-header {
-            font-size: 1.1rem;
-            margin: 30px 0 15px 0;
-        }
-
-        @media (max-width: 768px) {
-            .main-header {
-                font-size: 1.1rem;
-                margin: 25px 0 12px 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-header {
-                font-size: 1.1rem;
-                margin: 20px 0 10px 0;
             }
         }
 
@@ -509,20 +481,6 @@
         @media (max-width: 480px) {
             .content-section {
                 margin-bottom: 20px;
-            }
-        }
-
-        .mini-header {
-            font-size: 18px;
-            color: #a0522d;
-            margin: 20px 0 10px 0;
-            font-weight: 600;
-        }
-
-        @media (max-width: 480px) {
-            .mini-header {
-                font-size: 16px;
-                margin: 15px 0 8px 0;
             }
         }
 
@@ -549,185 +507,6 @@
             }
         }
 
-        .feature-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-            justify-items: center;
-        }
-
-        @media (max-width: 768px) {
-            .feature-gallery {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .feature-gallery {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: 12px;
-            }
-        }
-
-        .feature-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #cccccc;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .feature-item:hover {
-            color: #8b4513;
-            background: rgba(139, 69, 19, 0.1);
-            transform: translateY(-2px);
-        }
-
-        @media (hover: none) {
-            .feature-item:hover {
-                background: transparent;
-                transform: none;
-            }
-            .feature-item:active {
-                background: rgba(139, 69, 19, 0.1);
-                color: #8b4513;
-            }
-        }
-
-        .feature-face {
-            width: 96px;
-            height: 96px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .feature-face {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .feature-face {
-                width: 72px;
-                height: 72px;
-            }
-        }
-
-        .feature-face img {
-            width: 100%;
-            height: 100%;
-            image-rendering: auto;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: optimize-contrast;
-    object-fit: contain;
-    object-position: center;
-        }
-
-        .feature-name {
-            font-size: 14px;
-            text-align: center;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 500;
-            word-wrap: break-word;
-            max-width: 100%;
-        }
-
-        @media (max-width: 480px) {
-            .feature-name {
-                font-size: 12px;
-            }
-        }
-
-        .history-timeline {
-            background: #2e2e2e;
-            border: 2px solid #1a1a1a;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow:
-                inset 2px 2px 0 #3a3a3a,
-                inset -2px -2px 0 #242424;
-        }
-
-        @media (max-width: 480px) {
-            .history-timeline {
-                padding: 15px;
-            }
-        }
-
-        .history-title {
-            font-size: 1.1rem;
-            color: #8b4513;
-            margin-bottom: 15px;
-            margin-top: 0;
-            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
-        }
-
-        .timeline-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        @media (max-width: 480px) {
-            .timeline-item {
-                gap: 10px;
-            }
-        }
-
-        .timeline-marker {
-            width: 4px;
-            height: 100%;
-            min-height: 20px;
-            background: #8b4513;
-            flex-shrink: 0;
-            margin-top: 3px;
-        }
-
-        .timeline-content {
-            flex: 1;
-        }
-
-        .timeline-version {
-            font-size: 16px;
-            color: #a0522d;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        @media (max-width: 480px) {
-            .timeline-version {
-                font-size: 15px;
-            }
-        }
-
-        .timeline-description {
-            color: #cccccc;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 480px) {
-            .timeline-description {
-                font-size: 13px;
-            }
-        }
-
         p {
             margin: 0 0 15px 0;
             word-wrap: break-word;
@@ -739,94 +518,14 @@
             }
         }
 
-        strong {
-            color: #a0522d;
-        }
-
-        .nav-tabs::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .nav-tabs::-webkit-scrollbar-track {
-            background: rgba(51, 51, 51, 0.5);
-        }
-
-        .nav-tabs::-webkit-scrollbar-thumb {
-            background: #8b4513;
-            border-radius: 3px;
-        }
-
-        .nav-tabs::-webkit-scrollbar-thumb:hover {
-            background: #a0522d;
-        }
-
-        .nav-tabs {
-            scrollbar-width: thin;
-            scrollbar-color: #8b4513 rgba(51, 51, 51, 0.5);
-        }
-
-        @media print {
-            .header,
-            .nav-tabs,
-            .search-container {
-                display: none;
-            }
-
-            .main-container {
-                margin: 0;
-                padding: 20px;
-                box-shadow: none;
-                background: white;
-                color: black;
-            }
-
-            .toc {
-                position: static;
-                page-break-inside: avoid;
-            }
+        h1, h2,
+        .page-title {
+            font-family: 'Minecraft Ten', 'Inter', sans-serif !important;
         }
 
         html {
             scroll-padding-top: 20px;
         }
-	   h1, h2,
-.page-title,
-.main-header,
-.category-name,
-.version-item-name,
-.versions-header-text,
-.creator-name,
-.wiki-button-name {
-    font-family: 'Minecraft Ten', 'Inter', sans-serif !important;
-}
-
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-container {
-    width: 100%;
-    max-width: none;
-  }
-
-  .search-box {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .logo {
-    margin: 10px 0;
-  }
-}
     </style>
 </head>
 <body>
@@ -841,21 +540,17 @@
 </div>
 
 <div class="nav-tabs">
-    <div class="nav-content">
-        <a href="index.html" class="nav-tab">Home</a>
-        <a href="web.html" class="nav-tab">Web</a>
-        <a href="universe76.html" class="nav-tab active">Universe 76</a>
+    <div class="nav-scroll-wrapper" id="navWrapper">
+        <!-- Buttons will be dynamically generated here -->
     </div>
 </div>
 
 <div class="main-container">
     <div class="content-wrapper">
-
         <div class="content">
             <h1 class="page-title">Universe 76</h1>
 
             <div class="content-section">
-                <h2 id="biomes" class="main-header"></h2>
                 <img src="Universe76/wiki/nothing_to_see_here.png" alt="No Biomes Here" class="biome-image">
                 <div class="biome-text">Universe 76 at the current moment is not being worked on. It is intended in the future that this project is completely remade.</div>
             </div>
@@ -865,87 +560,145 @@
 
 <script>
     let searchData = {};
-let allSearchItems = [];
+    let allSearchItems = [];
 
-async function loadSearchData() {
-try {
-    const response = await fetch('search-data.json');
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    searchData = await response.json();
-    allSearchItems = Object.values(searchData).flat();
-    console.log('Search data loaded successfully');
-} catch (error) {
-    console.error('Error loading search data:', error);
-    searchData = {};
-    allSearchItems = [];
-}
-}
-
-function initializeSearch() {
-const searchInput = document.getElementById('searchInput');
-const searchSuggestions = document.getElementById('searchSuggestions');
-
-if (!searchInput || !searchSuggestions) {
-    console.error('Search elements not found');
-    return;
-}
-
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase().trim();
-
-    if (query.length === 0) {
-        searchSuggestions.style.display = 'none';
-        return;
-    }
-
-    const matches = allSearchItems.filter(item =>
-        item.title.toLowerCase().includes(query) ||
-        item.category.toLowerCase().includes(query)
-    ).slice(0, 8);
-
-    if (matches.length > 0) {
-        searchSuggestions.innerHTML = matches.map(item => `
-            <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-                <div class="suggestion-category">${item.category}</div>
-                <div class="suggestion-title">${item.title}</div>
-            </div>
-        `).join('');
-        searchSuggestions.style.display = 'block';
-    } else {
-        searchSuggestions.style.display = 'none';
-    }
-});
-
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.search-container')) {
-        searchSuggestions.style.display = 'none';
-    }
-});
-
-searchInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        const query = this.value.toLowerCase().trim();
-        const firstMatch = allSearchItems.find(item =>
-            item.title.toLowerCase().includes(query) ||
-            item.category.toLowerCase().includes(query)
-        );
-        if (firstMatch) {
-            navigateToPage(firstMatch.page);
+    async function loadSearchData() {
+        try {
+            const response = await fetch('search-data.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            searchData = await response.json();
+            allSearchItems = Object.values(searchData).flat();
+            console.log('Search data loaded successfully');
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            searchData = {};
+            allSearchItems = [];
         }
     }
-});
+
+    const navTabs = [
+        { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
+        { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
+        { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png', active: true }
+    ];
+
+    let currentPage = 0;
+    const BUTTONS_PER_PAGE = window.innerWidth <= 768 ? 6 : 8;
+
+    function getButtonWidth() {
+        let availableWidth;
+
+        if (window.innerWidth <= 768) {
+            const mainContainer = document.querySelector('.main-container');
+            const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
+            const totalMargins = 5 * 2;
+            return (containerWidth - totalMargins) / 6;
+        } else {
+            availableWidth = window.innerWidth - 40;
+            const totalMargins = 7 * 2;
+            return (availableWidth - totalMargins) / 8;
+        }
+    }
+
+    function renderNavigation() {
+        const wrapper = document.getElementById('navWrapper');
+        const buttonWidth = getButtonWidth();
+        const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+
+        wrapper.innerHTML = '';
+
+        let buttons = [];
+
+        if (navTabs.length <= buttonsPerPage) {
+            buttons = navTabs.map(tab => ({
+                type: 'tab',
+                data: tab
+            }));
+        } else {
+            if (currentPage === 0) {
+                for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: navTabs[i] });
+                }
+                buttons.push({ type: 'next' });
+            } else {
+                const firstPageTabs = buttonsPerPage - 1;
+                const otherPageTabs = buttonsPerPage - 2;
+                const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
+
+                const remainingTabs = navTabs.length - startIndex;
+                const isLastPage = remainingTabs <= buttonsPerPage - 1;
+
+                if (isLastPage) {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                } else {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                    buttons.push({ type: 'next' });
+                }
+            }
+        }
+
+        buttons.forEach((button, index) => {
+            const btn = document.createElement('a');
+            btn.className = 'nav-button';
+            btn.style.width = buttonWidth + 'px';
+
+            if (button.type === 'prev') {
+    btn.classList.add('nav-arrow');
+    btn.innerHTML = `
+        <img src="assets/buttons/previous_arrow.png" alt="←" style="transform: scaleX(-1);">
+        <span class="nav-button-text">Previous</span>
+        <img src="assets/buttons/previous_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+    `;
+    btn.onclick = (e) => {
+        e.preventDefault();
+        if (currentPage > 0) {
+            currentPage--;
+            renderNavigation();
+        }
+    };
+} else if (button.type === 'next') {
+    btn.classList.add('nav-arrow');
+    btn.innerHTML = `
+        <span class="nav-button-text">Next</span>
+        <img src="assets/buttons/next_arrow.png" alt="→">
+        <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
+    `;
+    btn.onclick = (e) => {
+        e.preventDefault();
+        currentPage++;
+        renderNavigation();
+    };
+} else {
+    btn.href = button.data.href;
+    btn.innerHTML = `
+        <span class="nav-button-text">${button.data.text}</span>
+        <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
+    `;
+    if (button.data.active) {
+        btn.classList.add('active');
+    }
 }
 
-function navigateToPage(page) {
-window.location.href = page;
-}
+            wrapper.appendChild(btn);
+        });
+    }
 
-document.addEventListener('DOMContentLoaded', async function() {
-await loadSearchData();
-initializeSearch();
-});
+    document.addEventListener('DOMContentLoaded', async function() {
+        await loadSearchData();
+        renderNavigation();
+
+        window.addEventListener('resize', function() {
+            renderNavigation();
+        });
+    });
 </script>
 </body>
 </html>

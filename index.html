@@ -205,20 +205,35 @@
         }
 
         .nav-tabs {
-            background: rgba(51, 51, 51, 0.9);
-            border-bottom: 2px solid #4a4a4a;
-            backdrop-filter: blur(10px);
-        }
+    background: rgba(51, 51, 51, 0.9);
+    border-bottom: 2px solid #4a4a4a;
+    backdrop-filter: blur(10px);
+    position: relative;
+}
 
-        .nav-content {
-            max-width: 95vw;
-            margin: 0 auto;
-            display: flex;
-            padding: 0 20px;
-        }
+.nav-scroll-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
 
-        .nav-tab {
-    padding: 8px 70px;
+@media (max-width: 768px) {
+    .nav-scroll-wrapper {
+        width: 100%;
+        justify-content: flex-start;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+}
+
+@media (min-width: 769px) {
+    .nav-scroll-wrapper {
+        padding: 0 20px;
+    }
+}
+
+.nav-button {
     background: #3453df;
     border: 2px solid #3949aa;
     border-bottom: none;
@@ -226,21 +241,88 @@
     cursor: pointer;
     font-size: 14px;
     color: white;
-     font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: 6000;
     text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
     box-shadow:
         inset 2px 2px 0 #4065ec,
         inset -2px -2px 0 #2c47d1;
     text-decoration: none;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 20px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
-.nav-tab:hover {
+.nav-button:last-child {
+    margin-right: 0;
+}
+
+.nav-button:hover {
     background: #3949aa;
 }
 
-.nav-tab.active {
+.nav-button.active {
     background: #3949aa;
+}
+
+.nav-button.hidden {
+    display: none;
+}
+
+.nav-button img {
+    width: 16px;
+    height: 16px;
+    image-rendering: auto;
+    border: 1px solid #2c3d99;
+}
+
+.nav-button.nav-arrow img {
+    border: none;
+    width: 28px
+}
+
+.nav-button-text {
+    display: inline;
+}
+
+.nav-button-icon {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .nav-button {
+        padding: 10px 4px;
+        font-size: 11px;
+    }
+
+    .nav-button img {
+        width: 20px;
+        height: 20px;
+        image-rendering: auto;
+        border: 1px solid #2c3d99;
+    }
+
+    .nav-button-text {
+        display: none;
+    }
+
+    .nav-button-icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #2c3d99;
+    }
+
+    .nav-button.nav-arrow .nav-button-icon {
+        border: none;
+    }
 }
 
         .main-container {
@@ -1620,10 +1702,7 @@ a {
 </div>
 
 <div class="nav-tabs">
-    <div class="nav-content">
-        <a href="#" class="nav-tab active">Home</a>
-        <a href="web.html" class="nav-tab">Web</a>
-        <a href="universe76.html" class="nav-tab">Universe 76</a>
+    <div class="nav-scroll-wrapper" id="navWrapper">
     </div>
 </div>
 
@@ -1876,169 +1955,286 @@ a {
     let isDropdownAnimating = false;
 
     let searchData = {};
-    let allSearchItems = [];
+let allSearchItems = [];
 
-    async function loadSearchData() {
-        try {
-            const response = await fetch('search-data.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            searchData = await response.json();
-            allSearchItems = Object.values(searchData).flat();
-            console.log('Search data loaded successfully');
-        } catch (error) {
-            console.error('Error loading search data:', error);
-            searchData = {};
-            allSearchItems = [];
+async function loadSearchData() {
+    try {
+        const response = await fetch('search-data.json');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        searchData = await response.json();
+        allSearchItems = Object.values(searchData).flat();
+        console.log('Search data loaded successfully');
+    } catch (error) {
+        console.error('Error loading search data:', error);
+        searchData = {};
+        allSearchItems = [];
+    }
+}
+
+function initializeSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchSuggestions = document.getElementById('searchSuggestions');
+
+    if (!searchInput || !searchSuggestions) {
+        console.error('Search elements not found');
+        return;
     }
 
-    function initializeSearch() {
-        const searchInput = document.getElementById('searchInput');
-        const searchSuggestions = document.getElementById('searchSuggestions');
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
 
-        if (!searchInput || !searchSuggestions) {
-            console.error('Search elements not found');
+        if (query.length === 0) {
+            searchSuggestions.style.display = 'none';
             return;
         }
 
-        searchInput.addEventListener('input', function() {
+        const matches = allSearchItems.filter(item =>
+            item.title.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query)
+        ).slice(0, 8);
+
+        if (matches.length > 0) {
+            searchSuggestions.innerHTML = matches.map(item => `
+                <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                    <div class="suggestion-category">${item.category}</div>
+                    <div class="suggestion-title">${item.title}</div>
+                </div>
+            `).join('');
+            searchSuggestions.style.display = 'block';
+        } else {
+            searchSuggestions.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            searchSuggestions.style.display = 'none';
+        }
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
             const query = this.value.toLowerCase().trim();
-
-            if (query.length === 0) {
-                searchSuggestions.style.display = 'none';
-                return;
-            }
-
-            const matches = allSearchItems.filter(item =>
+            const firstMatch = allSearchItems.find(item =>
                 item.title.toLowerCase().includes(query) ||
                 item.category.toLowerCase().includes(query)
-            ).slice(0, 8);
-
-            if (matches.length > 0) {
-                searchSuggestions.innerHTML = matches.map(item => `
-                    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-                        <div class="suggestion-category">${item.category}</div>
-                        <div class="suggestion-title">${item.title}</div>
-                    </div>
-                `).join('');
-                searchSuggestions.style.display = 'block';
-            } else {
-                searchSuggestions.style.display = 'none';
+            );
+            if (firstMatch) {
+                navigateToPage(firstMatch.page);
             }
-        });
+        }
+    });
+}
 
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-container')) {
-                searchSuggestions.style.display = 'none';
-            }
-        });
+function navigateToPage(page) {
+    window.location.href = page;
+}
 
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const query = this.value.toLowerCase().trim();
-                const firstMatch = allSearchItems.find(item =>
-                    item.title.toLowerCase().includes(query) ||
-                    item.category.toLowerCase().includes(query)
-                );
-                if (firstMatch) {
-                    navigateToPage(firstMatch.page);
-                }
-            }
-        });
+const navTabs = [
+    { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png', active: true },
+    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
+    { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
+];
+
+let currentPage = 0;
+
+function getButtonWidth() {
+    let availableWidth;
+
+    if (window.innerWidth <= 768) {
+        const mainContainer = document.querySelector('.main-container');
+        const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
+        const totalMargins = 5 * 2;
+        return (containerWidth - totalMargins) / 6;
+    } else {
+        availableWidth = window.innerWidth - 40;
+        const totalMargins = 7 * 2;
+        return (availableWidth - totalMargins) / 8;
     }
+}
 
-    function navigateToPage(page) {
-        window.location.href = page;
-    }
+function renderNavigation() {
+    const wrapper = document.getElementById('navWrapper');
+    const buttonWidth = getButtonWidth();
+    const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
 
-    function updateArrow() {
-        if (currentRotation === targetRotation || isArrowAnimating) return;
+    wrapper.innerHTML = '';
 
-        const arrow = document.querySelector('.platforms-header-arrow');
-        isArrowAnimating = true;
+    let buttons = [];
 
-        let nextRotation = currentRotation + 180;
-
-        arrow.style.transform = `rotate(${nextRotation}deg)`;
-
-        arrow.addEventListener('transitionend', function handler(e) {
-            if (e.propertyName !== 'transform') return;
-
-            arrow.removeEventListener('transitionend', handler);
-
-            currentRotation = nextRotation;
-
-            if (currentRotation >= 360) {
-                arrow.style.transition = 'none';
-                currentRotation -= 360;
-                targetRotation -= 360;
-                arrow.style.transform = `rotate(${currentRotation}deg)`;
-
-                void arrow.offsetWidth;
-                arrow.style.transition = 'transform 0.4s ease';
+    if (navTabs.length <= buttonsPerPage) {
+        buttons = navTabs.map(tab => ({
+            type: 'tab',
+            data: tab
+        }));
+    } else {
+        if (currentPage === 0) {
+            for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
+                buttons.push({ type: 'tab', data: navTabs[i] });
             }
-
-            isArrowAnimating = false;
-
-            setTimeout(updateArrow, 10);
-        });
-    }
-
-    function togglePlatforms() {
-        const grid = document.getElementById('platforms-grid');
-        const container = document.querySelector('.social-platforms');
-
-        if (isDropdownAnimating) return;
-
-        isDropdownAnimating = true;
-
-        if (grid.classList.contains('open')) {
-            const fullHeight = grid.scrollHeight + 'px';
-            grid.style.maxHeight = fullHeight;
-            requestAnimationFrame(() => {
-                grid.style.maxHeight = '0px';
-            });
+            buttons.push({ type: 'next' });
         } else {
-            grid.classList.add('open');
-            grid.style.maxHeight = '0px';
-            requestAnimationFrame(() => {
-                grid.style.maxHeight = grid.scrollHeight + 'px';
-            });
-        }
+            const firstPageTabs = buttonsPerPage - 1;
+            const otherPageTabs = buttonsPerPage - 2;
+            const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
 
-        grid.addEventListener('transitionend', function handler() {
-            grid.removeEventListener('transitionend', handler);
+            const remainingTabs = navTabs.length - startIndex;
+            const isLastPage = remainingTabs <= buttonsPerPage - 1;
 
-            if (grid.style.maxHeight === '0px') {
-                grid.classList.remove('open');
+            if (isLastPage) {
+                buttons.push({ type: 'prev' });
+                for (let i = startIndex; i < navTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: navTabs[i] });
+                }
+            } else {
+                buttons.push({ type: 'prev' });
+                for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: navTabs[i] });
+                }
+                buttons.push({ type: 'next' });
             }
-
-            isDropdownAnimating = false;
-        });
-
-        container.classList.toggle('expanded');
-
-        targetRotation += 180;
-        if (!isArrowAnimating) {
-            updateArrow();
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.category-item').forEach(item => {
-            item.addEventListener('mousedown', function() {
-                this.classList.add('pressed');
-            });
+    buttons.forEach((button, index) => {
+        const btn = document.createElement('a');
+        btn.className = 'nav-button';
+        btn.style.width = buttonWidth + 'px';
 
-            item.addEventListener('mouseup', function() {
-                this.classList.remove('pressed');
-            });
+        if (button.type === 'prev') {
+            btn.classList.add('nav-arrow');
+            btn.innerHTML = `
+                <span class="nav-button-text">Previous</span>
+                <img src="assets/buttons/previous_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+            `;
+            btn.onclick = (e) => {
+                e.preventDefault();
+                if (currentPage > 0) {
+                    currentPage--;
+                    renderNavigation();
+                }
+            };
+        } else if (button.type === 'next') {
+            btn.classList.add('nav-arrow');
+            btn.innerHTML = `
+                <span class="nav-button-text">Next</span>
+                <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
+            `;
+            btn.onclick = (e) => {
+                e.preventDefault();
+                currentPage++;
+                renderNavigation();
+            };
+        } else {
+            btn.href = button.data.href;
+            btn.innerHTML = `
+                <span class="nav-button-text">${button.data.text}</span>
+                <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
+            `;
+            if (button.data.active) {
+                btn.classList.add('active');
+            }
+        }
 
-            item.addEventListener('mouseleave', function() {
-                this.classList.remove('pressed');
-            });
+        wrapper.appendChild(btn);
+    });
+}
+
+function updateArrow() {
+    if (currentRotation === targetRotation || isArrowAnimating) return;
+
+    const arrow = document.querySelector('.platforms-header-arrow');
+    isArrowAnimating = true;
+
+    let nextRotation = currentRotation + 180;
+
+    arrow.style.transform = `rotate(${nextRotation}deg)`;
+
+    arrow.addEventListener('transitionend', function handler(e) {
+        if (e.propertyName !== 'transform') return;
+
+        arrow.removeEventListener('transitionend', handler);
+
+        currentRotation = nextRotation;
+
+        if (currentRotation >= 360) {
+            arrow.style.transition = 'none';
+            currentRotation -= 360;
+            targetRotation -= 360;
+            arrow.style.transform = `rotate(${currentRotation}deg)`;
+
+            void arrow.offsetWidth;
+            arrow.style.transition = 'transform 0.4s ease';
+        }
+
+        isArrowAnimating = false;
+
+        setTimeout(updateArrow, 10);
+    });
+}
+
+function togglePlatforms() {
+    const grid = document.getElementById('platforms-grid');
+    const container = document.querySelector('.social-platforms');
+
+    if (isDropdownAnimating) return;
+
+    isDropdownAnimating = true;
+
+    if (grid.classList.contains('open')) {
+        const fullHeight = grid.scrollHeight + 'px';
+        grid.style.maxHeight = fullHeight;
+        requestAnimationFrame(() => {
+            grid.style.maxHeight = '0px';
+        });
+    } else {
+        grid.classList.add('open');
+        grid.style.maxHeight = '0px';
+        requestAnimationFrame(() => {
+            grid.style.maxHeight = grid.scrollHeight + 'px';
+        });
+    }
+
+    grid.addEventListener('transitionend', function handler() {
+        grid.removeEventListener('transitionend', handler);
+
+        if (grid.style.maxHeight === '0px') {
+            grid.classList.remove('open');
+        }
+
+        isDropdownAnimating = false;
+    });
+
+    container.classList.toggle('expanded');
+
+    targetRotation += 180;
+    if (!isArrowAnimating) {
+        updateArrow();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadSearchData();
+    initializeSearch();
+    renderNavigation();
+
+    window.addEventListener('resize', function() {
+        renderNavigation();
+    });
+
+    document.querySelectorAll('.category-item').forEach(item => {
+        item.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        item.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        item.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
         });
     });
 
@@ -2078,11 +2274,7 @@ a {
             this.classList.remove('pressed');
         });
     });
-
-    document.addEventListener('DOMContentLoaded', async function() {
-        await loadSearchData();
-        initializeSearch();
-    });
+});
 
     /*
     Put this in style when E&W
