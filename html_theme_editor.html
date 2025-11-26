@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Style Editor</title>
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                 url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        body {
+            font-family: 'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-image: url('assets/home/background.png');
+            background-color: #2d2d2d;
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: top left;
+            color: #e6e6e6;
+            line-height: 1.4;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #262626;
+    border: none;
+    padding: 30px;
+}
+
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #3453df;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 15px;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .header {
+    background: rgba(45, 45, 45, 0.9);
+    border-bottom: 3px solid #4a4a4a;
+    padding: 15px 0;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 100;
+    margin-bottom: 20px;
+}
+
+.header-content {
+    max-width: 95vw;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+}
+
+.logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.main-wrapper {
+    padding: 20px;
+}
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            position: relative;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+        }
+
+        .section h2 {
+            color: #3453df;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .upload-zone {
+            border: 3px dashed #3453df;
+            padding: 40px;
+            text-align: center;
+            background: #1a1a1a;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-zone:hover {
+            background: #242424;
+            border-color: #5a73ff;
+        }
+
+        .upload-zone.dragover {
+            background: #2a2a3a;
+            border-color: #5a73ff;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        input[type="text"] {
+    autocomplete: off;
+}
+
+input[type="text"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}
+
+        .element-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+        .element-card {
+            background: #3a3a3a;
+            padding: 20px;
+            border: 2px solid #1a1a1a;
+            box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #2a2a2a;
+        }
+
+        .element-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .element-name {
+            font-family: 'Minecraft Ten', sans-serif;
+            color: #3453df;
+            font-size: 18px;
+        }
+
+        .element-type {
+            font-size: 14px;
+            color: #a0a0a0;
+            background: #2a2a2a;
+            padding: 4px 8px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .color-item {
+            background: #2a2a2a;
+            padding: 15px;
+            border: 1px solid #1a1a1a;
+        }
+
+        .color-label {
+            font-size: 14px;
+            color: #cccccc;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .color-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        input[type="color"] {
+            width: 100%;
+            height: 50px;
+            border: 2px solid #1a1a1a;
+            background: none;
+            cursor: pointer;
+        }
+
+        input[type="text"].color-hex {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 2px solid #0a0a0a;
+            color: #e6e6e6;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .search-bar {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #1a1a1a;
+    border: 2px solid #0a0a0a;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 15px;
+    background: #2a2a2a;
+    border: 2px solid #1a1a1a;
+    color: #e6e6e6;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #3453df;
+}
+
+.search-input::placeholder {
+    color: #666;
+}
+
+        .minecraft-button {
+            cursor: pointer;
+            height: 45px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            user-select: none;
+            background: none;
+            padding: 0;
+            min-width: 200px;
+        }
+
+        .minecraft-button-left-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .minecraft-button-right-outline {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .minecraft-button-section {
+            flex: 1;
+            background: #48494a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 1px 1px 0 #6c6d6d, inset -1px -1px 0 #5b5c5c;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.15s ease;
+            margin: 0 2px;
+            margin-bottom: 0;
+            border-top: 2px solid #1e1e1e;
+        }
+
+        .minecraft-button-dark-strip {
+            height: 8px;
+            background: #3b3c3c;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            margin: 0 2px;
+            margin-top: 0;
+        }
+
+        .minecraft-button-bottom-outline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .minecraft-button-shadow {
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #1a1a1a;
+            z-index: 1;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .minecraft-button-name {
+            font-size: 15px;
+            color: #ffffff;
+            font-family: 'Minecraft Ten', sans-serif;
+            position: relative;
+            z-index: 2;
+            white-space: nowrap;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+            padding: 0 20px;
+        }
+
+        .minecraft-button.pressed .minecraft-button-section {
+            transform: translateY(6px);
+        }
+
+        .minecraft-button.pressed .minecraft-button-left-outline,
+        .minecraft-button.pressed .minecraft-button-right-outline {
+            transform: translateY(6px);
+        }
+
+        .minecraft-button.pressed .minecraft-button-dark-strip,
+        .minecraft-button.pressed .minecraft-button-shadow {
+            transform: translateY(3px);
+            opacity: 0;
+        }
+
+        .minecraft-button:hover .minecraft-button-section {
+            background: #414242;
+        }
+
+        .minecraft-button:hover .minecraft-button-dark-strip {
+            background: #323333;
+        }
+
+        .minecraft-button.small {
+            height: 35px;
+            min-width: 150px;
+        }
+
+        .minecraft-button.small .minecraft-button-name {
+            font-size: 13px;
+            padding: 0 15px;
+        }
+
+        .minecraft-button.success .minecraft-button-section {
+            background: #3a8b4a;
+            box-shadow: inset 1px 1px 0 #58c169, inset -1px -1px 0 #4fb35f;
+        }
+
+        .minecraft-button.success:hover .minecraft-button-section {
+            background: #2d6b3a;
+        }
+
+        .minecraft-button.success .minecraft-button-dark-strip {
+            background: #2a6b35;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 15px 20px;
+            min-width: 250px;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        .toast.success {
+            border-left: 4px solid #3a8b4a;
+        }
+
+        .toast.error {
+            border-left: 4px solid #8b3a3a;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background: #1a1a1a;
+            border: 2px solid #0a0a0a;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: #2a2a2a;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+
+        .expand-toggle {
+            cursor: pointer;
+            user-select: none;
+            padding: 5px;
+            color: #3453df;
+            font-size: 14px;
+        }
+
+        .expand-toggle:hover {
+            color: #5a73ff;
+        }
+
+        .color-grid.collapsed {
+            display: none;
+        }
+
+        .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-content {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.section-content.collapsed {
+    max-height: 0 !important;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.collapse-toggle {
+    cursor: pointer;
+    user-select: none;
+    color: #3453df;
+    font-size: 14px;
+    padding: 5px 10px;
+    background: #1a1a1a;
+    border: 2px solid #0a0a0a;
+    font-family: 'Minecraft Ten', sans-serif;
+}
+
+.collapse-toggle:hover {
+    background: #2a2a2a;
+    color: #5a73ff;
+}
+
+        .preview-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 20px;
+}
+
+.preview-overlay.show {
+    display: flex;
+}
+
+.preview-container {
+    width: 90%;
+    height: 90%;
+    background: #fff;
+    border: 3px solid #3453df;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 50px rgba(52, 83, 223, 0.5);
+}
+
+.preview-header {
+    background: #2e2e2e;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #1a1a1a;
+}
+
+.preview-title {
+    color: #3453df;
+    font-family: 'Minecraft Ten', sans-serif;
+    font-size: 18px;
+}
+
+.preview-close {
+    background: none;
+    border: none;
+    color: #e6e6e6;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.preview-close:hover {
+    color: #3453df;
+}
+
+.preview-iframe {
+    flex: 1;
+    border: none;
+    background: white;
+}
+
+.palette-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #2a2a2a;
+}
+
+.palette-input {
+    width: 100%;
+    padding: 10px;
+    background: #1a1a1a;
+    border: 2px solid #0a0a0a;
+    color: #e6e6e6;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+        .no-file-message {
+            text-align: center;
+            padding: 40px;
+            color: #a0a0a0;
+            font-size: 16px;
+        }
+
+        .bulk-colors-note {
+            background: #1a1a1a;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #3453df;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        .color-editor-panel {
+            background: #2a2a2a;
+            padding: 20px;
+            border: 2px solid #1a1a1a;
+            margin-top: 15px;
+        }
+
+        .color-editor-title {
+            font-size: 16px;
+            color: #3453df;
+            margin-bottom: 15px;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .color-format-selector {
+            margin-bottom: 15px;
+        }
+
+        .color-format-selector select {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 2px solid #0a0a0a;
+            color: #e6e6e6;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .processing-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .processing-overlay.show {
+            display: flex;
+        }
+
+        .processing-box {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 30px;
+            text-align: center;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+        }
+
+        .processing-text {
+            font-size: 18px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .processing-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #2a2a2a;
+            border-top: 4px solid #3453df;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .chunk-progress {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io">
+                <img src="assets/home/logo.png" alt="PotatoWolfie">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="main-wrapper">
+<div class="container">
+    <h1 class="page-title">HTML Style Editor</h1>
+
+    <div class="section">
+        <h2>Upload HTML File</h2>
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+            <div style="font-size: 48px; margin-bottom: 10px;">📄</div>
+            <div style="font-size: 18px; color: #3453df; margin-bottom: 5px;">Click or drag HTML file here</div>
+            <div style="font-size: 14px; color: #a0a0a0;">Supports .html files</div>
+        </div>
+        <input type="file" id="fileInput" accept=".html,.htm">
+    </div>
+
+    <div id="statsSection" style="display: none;">
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number" id="elementCount">0</div>
+                <div class="stat-label">Elements Found</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="colorCount">0</div>
+                <div class="stat-label">Colors Detected</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="uniqueColorCount">0</div>
+                <div class="stat-label">Unique Colors</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="modifiedCount">0</div>
+                <div class="stat-label">Modified</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="bulkColorsSection" style="display: none;">
+        <div class="section-header">
+            <h2>Color Groups</h2>
+            <button class="collapse-toggle" onclick="toggleSection('bulkColors')">
+                <span id="bulkColorsToggle">▼ Collapse</span>
+            </button>
+        </div>
+        <div class="section-content" id="bulkColorsContent">
+            <div class="bulk-colors-note">
+                Editing one color updates all instances of that color across the entire file.
+            </div>
+            <div id="bulkColorList" class="color-grid"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Styled Elements</h2>
+            <button class="collapse-toggle" onclick="toggleSection('styledElements')">
+                <span id="styledElementsToggle">▼ Collapse</span>
+            </button>
+        </div>
+        <div class="section-content" id="styledElementsContent">
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by element selector or color (e.g., '.button' or '#3453df')..." oninput="filterElements()" autocomplete="off">
+            </div>
+            <div class="button-row" id="globalActions" style="display: none;">
+                <button class="minecraft-button small" onclick="collapseAll()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Collapse All</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+                <button class="minecraft-button small" onclick="expandAll()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Expand All</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+                <button class="minecraft-button small" onclick="resetAll()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Reset All</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+            <div id="elementList" class="element-list">
+                <div class="no-file-message">Upload an HTML file to begin editing styles</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="downloadSection" style="display: none;">
+        <h2>Download & Palette</h2>
+        <div class="button-row">
+            <button class="minecraft-button success" onclick="downloadFile()">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Download Modified HTML</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+            <button class="minecraft-button" onclick="showPreview()">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Preview Changes</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+        </div>
+
+        <div class="palette-section">
+            <h3 style="color: #3453df; font-family: 'Minecraft Ten', sans-serif; margin-bottom: 15px;">Color Palette</h3>
+            <input type="text" class="palette-input" id="paletteName" placeholder="Palette name (e.g., 'Dark Theme')" value="My Color Palette" autocomplete="off">
+            <div class="button-row">
+                <button class="minecraft-button small" onclick="exportPalette()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Export Palette</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+                <button class="minecraft-button small" onclick="document.getElementById('paletteInput').click()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Import Palette</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+            <input type="file" id="paletteInput" accept=".json,.palette.json" style="display: none;">
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="processing-overlay" id="processingOverlay">
+    <div class="processing-box">
+        <div class="processing-text">Processing large file...</div>
+        <div class="processing-spinner"></div>
+        <div class="chunk-progress" id="chunkProgress">Please wait...</div>
+    </div>
+</div>
+
+<div class="preview-overlay" id="previewOverlay">
+    <div class="preview-container">
+        <div class="preview-header">
+            <div class="preview-title">Preview</div>
+            <button class="preview-close" onclick="closePreview()">×</button>
+        </div>
+        <iframe class="preview-iframe" id="previewIframe"></iframe>
+    </div>
+</div>
+
+</div>
+<script>
+    let originalHTML = '';
+    let currentHTML = '';
+    let fileName = '';
+    let styleElements = [];
+    let modifiedCount = 0;
+    let bulkColorGroups = [];
+
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+    });
+
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('dragover');
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file) handleFile(file);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) handleFile(file);
+    });
+
+    function showProcessing(show = true) {
+        const overlay = document.getElementById('processingOverlay');
+        if (show) {
+            overlay.classList.add('show');
+        } else {
+            overlay.classList.remove('show');
+        }
+    }
+
+    function updateChunkProgress(message) {
+        document.getElementById('chunkProgress').textContent = message;
+    }
+
+    async function handleFile(file) {
+    if (!file.name.endsWith('.html') && !file.name.endsWith('.htm')) {
+        showToast('Please upload an HTML file', 'error');
+        return;
+    }
+
+    fileName = file.name;
+    showProcessing(true);
+    updateChunkProgress('Reading file...');
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+        try {
+            originalHTML = e.target.result;
+            currentHTML = originalHTML;
+
+            console.log('File size:', originalHTML.length, 'characters');
+
+            updateChunkProgress('Parsing HTML structure...');
+            await new Promise(resolve => setTimeout(resolve, 50));
+
+            await parseHTMLInChunks(originalHTML);
+
+            console.log('Parsing complete. Found', styleElements.length, 'elements');
+
+            if (styleElements.length === 0) {
+                showToast('No styled elements found in file', 'error');
+            } else {
+                showToast('File loaded successfully!', 'success');
+            }
+
+            showProcessing(false);
+        } catch (error) {
+            console.error('Error processing file:', error);
+            showToast('Error processing file: ' + error.message, 'error');
+            showProcessing(false);
+        }
+    };
+
+    reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+        showToast('Error reading file', 'error');
+        showProcessing(false);
+    };
+
+    reader.readAsText(file);
+}
+
+    async function parseHTMLInChunks(html) {
+    styleElements = [];
+
+    try {
+        const parser = new DOMParser();
+        updateChunkProgress('Parsing document...');
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Check for parser errors
+        const parserError = doc.querySelector('parsererror');
+        if (parserError) {
+            console.error('Parser error:', parserError.textContent);
+            showToast('HTML parsing error - file may be malformed', 'error');
+            showProcessing(false);
+            return;
+        }
+
+        // Get ALL style tags, not just the first one
+        const styleTags = doc.querySelectorAll('style');
+
+        if (styleTags.length === 0) {
+            console.log('No <style> tags found');
+            showToast('No <style> tags found in HTML', 'error');
+            showProcessing(false);
+            return;
+        }
+
+        console.log('Found', styleTags.length, 'style tags');
+
+        // Combine all CSS from all style tags
+        let allCSS = '';
+        styleTags.forEach((tag, index) => {
+            const cssText = tag.textContent;
+            console.log(`Style tag ${index + 1} length:`, cssText.length, 'characters');
+            allCSS += '\n' + cssText;
+        });
+
+        console.log('Total CSS length:', allCSS.length, 'characters');
+
+        updateChunkProgress('Extracting CSS rules...');
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        const rules = parseCSSRules(allCSS);
+        const totalRules = rules.length;
+        console.log('Total CSS rules found:', totalRules);
+
+        const chunkSize = 50;
+
+        for (let i = 0; i < rules.length; i += chunkSize) {
+            const chunk = rules.slice(i, i + chunkSize);
+            updateChunkProgress(`Processing rules ${i + 1} to ${Math.min(i + chunkSize, totalRules)} of ${totalRules}...`);
+
+            chunk.forEach(rule => {
+                const colors = extractColors(rule.styles);
+                if (colors.length > 0) {
+                    styleElements.push({
+                        selector: rule.selector,
+                        colors: colors,
+                        originalRule: rule.fullRule
+                    });
+                }
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 20));
+        }
+
+        console.log('Elements with colors:', styleElements.length);
+
+        updateChunkProgress('Generating color groups...');
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        renderElements();
+        updateStats();
+        generateBulkColors();
+
+        document.getElementById('statsSection').style.display = 'block';
+        document.getElementById('bulkColorsSection').style.display = 'block';
+        document.getElementById('globalActions').style.display = 'flex';
+        document.getElementById('downloadSection').style.display = 'block';
+    } catch (error) {
+        console.error('Error in parseHTMLInChunks:', error);
+        throw error;
+    }
+}
+
+    function parseCSSRules(css) {
+    const rules = [];
+
+    // Remove comments first
+    css = css.replace(/\/\*[\s\S]*?\*\//g, '');
+
+    // More robust regex that handles newlines and whitespace better
+    // This regex captures selector and everything between { and its matching }
+    let depth = 0;
+    let currentRule = '';
+    let currentSelector = '';
+    let inRule = false;
+
+    for (let i = 0; i < css.length; i++) {
+        const char = css[i];
+
+        if (char === '{') {
+            if (depth === 0) {
+                // Starting a new rule
+                currentSelector = currentRule.trim();
+                currentRule = '';
+                inRule = true;
+            } else {
+                currentRule += char;
+            }
+            depth++;
+        } else if (char === '}') {
+            depth--;
+            if (depth === 0 && inRule) {
+                // Ending the rule
+                const styles = currentRule.trim();
+                if (currentSelector && styles) {
+                    rules.push({
+                        selector: currentSelector,
+                        styles: styles,
+                        fullRule: `${currentSelector} { ${styles} }`
+                    });
+                }
+                currentRule = '';
+                currentSelector = '';
+                inRule = false;
+            } else {
+                currentRule += char;
+            }
+        } else {
+            currentRule += char;
+        }
+    }
+
+    console.log('Parsed rules sample:', rules.slice(0, 5));
+    return rules;
+}
+
+    function extractColors(styles) {
+        const colors = [];
+        const colorRegex = /(background|color|border-color|box-shadow|text-shadow|border-left|border-right|border-top|border-bottom|border|outline):\s*([^;]+)/gi;
+        let match;
+
+        while ((match = colorRegex.exec(styles)) !== null) {
+            const property = match[1];
+            const value = match[2].trim();
+
+            const hexMatches = value.match(/#[0-9A-Fa-f]{6}|#[0-9A-Fa-f]{3}/g);
+            const rgbMatches = value.match(/rgba?\([^)]+\)/g);
+
+            if (hexMatches) {
+                hexMatches.forEach(hex => {
+                    colors.push({
+                        property: property,
+                        value: hex,
+                        fullValue: value,
+                        original: hex,
+                        format: 'hex'
+                    });
+                });
+            }
+
+            if (rgbMatches) {
+                rgbMatches.forEach(rgb => {
+                    colors.push({
+                        property: property,
+                        value: rgb,
+                        fullValue: value,
+                        original: rgb,
+                        format: 'rgb'
+                    });
+                });
+            }
+        }
+
+        return colors;
+    }
+
+    function renderElements() {
+        const listDiv = document.getElementById('elementList');
+        listDiv.innerHTML = '';
+
+        styleElements.forEach((element, index) => {
+            const card = document.createElement('div');
+            card.className = 'element-card';
+
+            const safeSelector = element.selector.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+            const colorsHTML = element.colors.map((color, colorIndex) => {
+                const safeProperty = color.property.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const safeValue = color.value.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const normalizedColor = normalizeColor(color.value);
+
+                return `
+                    <div class="color-item">
+                        <div class="color-label">${safeProperty}</div>
+                        <div class="color-editor-panel">
+                            <select class="color-format-selector" onchange="changeColorFormat(${index}, ${colorIndex}, this.value)">
+                                <option value="hex" ${color.format === 'hex' ? 'selected' : ''}>Hex</option>
+                                <option value="rgb" ${color.format === 'rgb' ? 'selected' : ''}>RGB/RGBA</option>
+                            </select>
+                            <div class="color-input-group">
+                                <input type="color" value="${normalizedColor}"
+                                       onchange="updateColorFromPicker(${index}, ${colorIndex}, this.value)">
+                                <input type="text" class="color-hex" value="${safeValue}"
+       onchange="updateColorFromText(${index}, ${colorIndex}, this.value)"
+       placeholder="${color.format === 'hex' ? '#000000' : 'rgba(0,0,0,1)'}"
+       autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            card.innerHTML = `
+                <div class="element-header">
+                    <div>
+                        <div class="element-name">${safeSelector}</div>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div class="element-type">${element.colors.length} colors</div>
+                        <div class="expand-toggle" onclick="toggleExpand(${index})">&#9660; Expand</div>
+                    </div>
+                </div>
+                <div class="color-grid collapsed" id="colors-${index}">
+                    ${colorsHTML}
+                </div>
+                <div class="button-row" style="margin-top: 15px;">
+                    <button class="minecraft-button small" onclick="resetElement(${index})">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Reset</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+            `;
+            listDiv.appendChild(card);
+        });
+    }
+
+    function normalizeColor(color) {
+        if (color.startsWith('#')) {
+            return color.length === 4 ?
+                '#' + color[1] + color[1] + color[2] + color[2] + color[3] + color[3] :
+                color;
+        }
+
+        const rgbMatch = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+        if (rgbMatch) {
+            const r = parseInt(rgbMatch[1]).toString(16).padStart(2, '0');
+            const g = parseInt(rgbMatch[2]).toString(16).padStart(2, '0');
+            const b = parseInt(rgbMatch[3]).toString(16).padStart(2, '0');
+            return `#${r}${g}${b}`;
+        }
+
+        return '#000000';
+    }
+
+    function changeColorFormat(elementIndex, colorIndex, format) {
+        const color = styleElements[elementIndex].colors[colorIndex];
+        const currentValue = color.value;
+
+        if (format === 'hex') {
+            color.value = normalizeColor(currentValue);
+            color.format = 'hex';
+        } else if (format === 'rgb') {
+            const rgb = hexToRgb(normalizeColor(currentValue));
+            color.value = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`;
+            color.format = 'rgb';
+        }
+
+        renderElements();
+    }
+
+    function updateColorFromPicker(elementIndex, colorIndex, newColor) {
+    const color = styleElements[elementIndex].colors[colorIndex];
+
+    if (color.format === 'hex') {
+        color.value = newColor;
+    } else {
+        const rgb = hexToRgb(newColor);
+        const alpha = color.value.includes('rgba') ?
+            color.value.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
+        color.value = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+    }
+
+    applyChanges();
+    modifiedCount++;
+    updateStats();
+    generateBulkColors(); // Regenerate bulk colors to reflect changes
+    renderElements();
+}
+
+    function updateColorFromText(elementIndex, colorIndex, newValue) {
+    styleElements[elementIndex].colors[colorIndex].value = newValue;
+    applyChanges();
+    modifiedCount++;
+    updateStats();
+    generateBulkColors(); // Regenerate bulk colors to reflect changes
+    renderElements();
+}
+
+    function filterElements() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.element-card');
+
+    if (!searchTerm) {
+        // Show all cards if search is empty
+        cards.forEach(card => card.style.display = 'block');
+        return;
+    }
+
+    styleElements.forEach((element, index) => {
+        const card = cards[index];
+        if (!card) return;
+
+        const selectorMatch = element.selector.toLowerCase().includes(searchTerm);
+        const colorMatch = element.colors.some(color =>
+            color.value.toLowerCase().includes(searchTerm) ||
+            normalizeColor(color.value).toLowerCase().includes(searchTerm)
+        );
+
+        if (selectorMatch || colorMatch) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+    function toggleExpand(index) {
+        const colorsDiv = document.getElementById('colors-' + index);
+        const toggles = document.querySelectorAll('.expand-toggle');
+        const toggle = toggles[index];
+
+        if (colorsDiv.classList.contains('collapsed')) {
+            colorsDiv.classList.remove('collapsed');
+            toggle.innerHTML = '&#9650; Collapse';
+        } else {
+            colorsDiv.classList.add('collapsed');
+            toggle.innerHTML = '&#9660; Expand';
+        }
+    }
+
+    function collapseAll() {
+        document.querySelectorAll('.color-grid').forEach(grid => {
+            grid.classList.add('collapsed');
+        });
+        document.querySelectorAll('.expand-toggle').forEach(toggle => {
+            toggle.innerHTML = '&#9660; Expand';
+        });
+    }
+
+    function expandAll() {
+        document.querySelectorAll('.color-grid').forEach(grid => {
+            grid.classList.remove('collapsed');
+        });
+        document.querySelectorAll('.expand-toggle').forEach(toggle => {
+            toggle.innerHTML = '&#9650; Collapse';
+        });
+    }
+
+    function resetElement(elementIndex) {
+    styleElements[elementIndex].colors.forEach(color => {
+        color.value = color.original;
+    });
+    generateBulkColors(); // Regenerate bulk colors after reset
+    renderElements();
+    applyChanges();
+    showToast('Element reset', 'success');
+}
+
+    function resetAll() {
+        styleElements.forEach(element => {
+            element.colors.forEach(color => {
+                color.value = color.original;
+            });
+        });
+        modifiedCount = 0;
+        renderElements();
+        applyChanges();
+        updateStats();
+        showToast('All elements reset', 'success');
+    }
+
+    function applyChanges() {
+    let modifiedHTML = currentHTML;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(originalHTML, 'text/html');
+    const styleTags = doc.querySelectorAll('style');
+
+    if (styleTags.length > 0) {
+        // Process each style tag
+        styleTags.forEach(styleTag => {
+            let newCSS = styleTag.textContent;
+
+            styleElements.forEach(element => {
+                element.colors.forEach(color => {
+                    if (color.value !== color.original) {
+                        newCSS = newCSS.replace(
+                            new RegExp(escapeRegex(color.original), 'g'),
+                            color.value
+                        );
+                    }
+                });
+            });
+
+            styleTag.textContent = newCSS;
+        });
+
+        modifiedHTML = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+    }
+
+    currentHTML = modifiedHTML;
+}
+
+   function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+
+    function downloadFile() {
+        const blob = new Blob([currentHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName.replace('.html', '_modified.html');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('File downloaded!', 'success');
+    }
+
+   function updateStats() {
+    document.getElementById('elementCount').textContent = styleElements.length;
+    const totalColors = styleElements.reduce((sum, el) => sum + el.colors.length, 0);
+    document.getElementById('colorCount').textContent = totalColors;
+
+    const uniqueColorsSet = new Set();
+    styleElements.forEach(element => {
+        element.colors.forEach(color => {
+            uniqueColorsSet.add(color.value.toLowerCase().replace(/\s+/g, ''));
+        });
+    });
+    document.getElementById('uniqueColorCount').textContent = uniqueColorsSet.size;
+
+    document.getElementById('modifiedCount').textContent = modifiedCount;
+}
+
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : { r: 0, g: 0, b: 0 };
+    }
+
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    function generateBulkColors() {
+    // Collect all unique colors with their usage locations
+    const colorMap = new Map();
+
+    styleElements.forEach((element, elementIndex) => {
+        element.colors.forEach((color, colorIndex) => {
+            // Use the actual color value, normalized only for consistency (lowercase, no extra spaces)
+            const normalizedValue = color.value.toLowerCase().replace(/\s+/g, '');
+
+            const usage = {
+                selector: element.selector,
+                property: color.property,
+                elementIndex: elementIndex,
+                colorIndex: colorIndex,
+                originalValue: color.value,
+                format: color.format
+            };
+
+            if (colorMap.has(normalizedValue)) {
+                colorMap.get(normalizedValue).usages.push(usage);
+            } else {
+                colorMap.set(normalizedValue, {
+                    color: color.value,
+                    displayColor: normalizeColor(color.value), // For color picker
+                    usages: [usage]
+                });
+            }
+        });
+    });
+
+    // Convert to array and sort by RGB values for visual grouping
+    bulkColorGroups = Array.from(colorMap.values()).sort((a, b) => {
+        const rgbA = hexToRgb(a.displayColor);
+        const rgbB = hexToRgb(b.displayColor);
+
+        // Sort by hue, then saturation, then lightness for better visual grouping
+        const hslA = rgbToHsl(rgbA.r, rgbA.g, rgbA.b);
+        const hslB = rgbToHsl(rgbB.r, rgbB.g, rgbB.b);
+
+        if (Math.abs(hslA.h - hslB.h) > 0.01) return hslA.h - hslB.h;
+        if (Math.abs(hslA.s - hslB.s) > 0.01) return hslA.s - hslB.s;
+        return hslA.l - hslB.l;
+    });
+
+    renderBulkColors();
+}
+
+function rgbToHsl(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0;
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+        switch (max) {
+            case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+            case g: h = ((b - r) / d + 2) / 6; break;
+            case b: h = ((r - g) / d + 4) / 6; break;
+        }
+    }
+
+    return { h, s, l };
+}
+
+function renderBulkColors() {
+    const listDiv = document.getElementById('bulkColorList');
+
+    if (bulkColorGroups.length === 0) {
+        listDiv.innerHTML = '<div class="no-file-message">No colors found</div>';
+        return;
+    }
+
+    listDiv.innerHTML = bulkColorGroups.map((group, groupIndex) => `
+        <div class="color-item">
+            <div class="color-label">${group.color} (${group.usages.length} ${group.usages.length === 1 ? 'usage' : 'usages'})</div>
+            <div class="color-editor-panel">
+                <div class="color-input-group">
+                    <input type="color" value="${group.displayColor}"
+                           onchange="updateBulkColorFromPicker(${groupIndex}, this.value)">
+                    <input type="text" class="color-hex" value="${group.color}"
+                           onchange="updateBulkColorFromText(${groupIndex}, this.value)"
+                           autocomplete="off">
+                </div>
+                <button class="minecraft-button small" onclick="resetBulkColor(${groupIndex})" style="margin-top: 10px; width: 100%;">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Reset</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; color: #888; line-height: 1.6;">
+                ${group.usages.map(usage =>
+                    `<div style="padding: 3px 0;">${usage.selector} → ${usage.property}</div>`
+                ).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function resetBulkColor(groupIndex) {
+    const group = bulkColorGroups[groupIndex];
+
+    // Reset all usages back to their original values
+    group.usages.forEach(usage => {
+        const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
+        color.value = color.original;
+    });
+
+    // Update the group's color to the original
+    group.color = group.usages[0].originalValue;
+    group.displayColor = normalizeColor(group.usages[0].originalValue);
+
+    // Re-render everything
+    renderElements();
+    renderBulkColors();
+    applyChanges();
+
+    showToast(`Reset ${group.usages.length} ${group.usages.length === 1 ? 'usage' : 'usages'} of this color`, 'success');
+}
+
+function updateBulkColorFromPicker(groupIndex, newColor) {
+    const group = bulkColorGroups[groupIndex];
+
+    group.usages.forEach(usage => {
+        const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
+
+        if (color.format === 'hex') {
+            color.value = newColor;
+        } else {
+            const rgb = hexToRgb(newColor);
+            const alpha = color.value.includes('rgba') ?
+                color.value.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
+            color.value = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+        }
+    });
+
+    // Determine the format to display based on the first usage
+    const firstUsageFormat = group.usages[0].format;
+    if (firstUsageFormat === 'hex') {
+        group.color = newColor;
+    } else {
+        const rgb = hexToRgb(newColor);
+        const alpha = group.usages[0].originalValue.includes('rgba') ?
+            group.usages[0].originalValue.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
+        group.color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+    }
+    group.displayColor = newColor;
+
+    // Re-render bulk colors to update the text input
+    renderBulkColors();
+    renderElements();
+    applyChanges();
+    modifiedCount += group.usages.length;
+    updateStats();
+    showToast(`Updated ${group.usages.length} ${group.usages.length === 1 ? 'usage' : 'usages'} of this color`, 'success');
+}
+
+function updateBulkColorFromText(groupIndex, newValue) {
+    const group = bulkColorGroups[groupIndex];
+
+    group.usages.forEach(usage => {
+        const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
+
+        // Preserve the format but update to the new value
+        if (color.format === 'hex') {
+            // If they entered rgba but original was hex, convert it
+            if (newValue.startsWith('rgba') || newValue.startsWith('rgb')) {
+                color.value = newValue;
+                color.format = 'rgb';
+            } else {
+                color.value = newValue;
+            }
+        } else {
+            // If they entered hex but original was rgba, convert it
+            if (newValue.startsWith('#')) {
+                color.value = newValue;
+                color.format = 'hex';
+            } else {
+                color.value = newValue;
+            }
+        }
+    });
+
+    // Update the group's stored values
+    group.color = newValue;
+    group.displayColor = normalizeColor(newValue);
+
+    // Re-render bulk colors to update the color picker
+    renderBulkColors();
+    renderElements();
+    applyChanges();
+    modifiedCount += group.usages.length;
+    updateStats();
+    showToast(`Updated ${group.usages.length} ${group.usages.length === 1 ? 'usage' : 'usages'} of this color`, 'success');
+}
+
+function updateBulkColorFromText(groupIndex, newValue) {
+    const group = bulkColorGroups[groupIndex];
+    const firstUsageFormat = group.usages[0].format;
+
+    group.usages.forEach(usage => {
+        const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
+
+        // Convert the input value to match each usage's original format
+        if (color.format === 'hex') {
+            if (newValue.startsWith('rgba') || newValue.startsWith('rgb')) {
+                // Convert rgba to hex
+                const rgbMatch = newValue.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+                if (rgbMatch) {
+                    color.value = rgbToHex(parseInt(rgbMatch[1]), parseInt(rgbMatch[2]), parseInt(rgbMatch[3]));
+                }
+            } else {
+                color.value = newValue;
+            }
+        } else {
+            if (newValue.startsWith('#')) {
+                // Convert hex to rgba, preserving original alpha
+                const rgb = hexToRgb(newValue);
+                const alpha = color.value.includes('rgba') ?
+                    color.value.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
+                color.value = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+            } else {
+                color.value = newValue;
+            }
+        }
+    });
+
+    // Update the group's display - convert to appropriate format for display
+    if (firstUsageFormat === 'hex') {
+        if (newValue.startsWith('rgba') || newValue.startsWith('rgb')) {
+            const rgbMatch = newValue.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            if (rgbMatch) {
+                group.color = rgbToHex(parseInt(rgbMatch[1]), parseInt(rgbMatch[2]), parseInt(rgbMatch[3]));
+            }
+        } else {
+            group.color = newValue;
+        }
+    } else {
+        if (newValue.startsWith('#')) {
+            const rgb = hexToRgb(newValue);
+            const alpha = group.usages[0].originalValue.includes('rgba') ?
+                group.usages[0].originalValue.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
+            group.color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+        } else {
+            group.color = newValue;
+        }
+    }
+
+    group.displayColor = normalizeColor(group.color);
+
+    // Re-render to update both the color picker and text
+    renderBulkColors();
+    renderElements();
+    applyChanges();
+    modifiedCount += group.usages.length;
+    updateStats();
+    showToast(`Updated ${group.usages.length} ${group.usages.length === 1 ? 'usage' : 'usages'} of this color`, 'success');
+}
+
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast ${type} show`;
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.minecraft-button')) {
+            const btn = e.target.closest('.minecraft-button');
+            btn.classList.add('pressed');
+            setTimeout(() => btn.classList.remove('pressed'), 150);
+        }
+    });
+
+    // Preview functionality
+function showPreview() {
+    const iframe = document.getElementById('previewIframe');
+    const overlay = document.getElementById('previewOverlay');
+
+    // Show overlay immediately
+    overlay.classList.add('show');
+
+    // Small delay to ensure overlay is visible before heavy operation
+    setTimeout(() => {
+        try {
+            // Write the current HTML to the iframe
+            iframe.srcdoc = currentHTML;
+
+            // If srcdoc fails for large files, try using blob URL instead
+            if (currentHTML.length > 100000) { // If larger than ~100KB
+                const blob = new Blob([currentHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                iframe.src = url;
+
+                // Clean up blob URL after iframe loads
+                iframe.onload = () => {
+                    URL.revokeObjectURL(url);
+                };
+            }
+        } catch (error) {
+            console.error('Error loading preview:', error);
+            alert('Preview failed to load. File may be too large.');
+            closePreview();
+        }
+    }, 100);
+}
+
+function closePreview() {
+    const overlay = document.getElementById('previewOverlay');
+    const iframe = document.getElementById('previewIframe');
+
+    overlay.classList.remove('show');
+
+    // Clear both srcdoc and src to ensure full reset
+    iframe.srcdoc = '';
+    iframe.src = 'about:blank';
+}
+
+// Close preview on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closePreview();
+    }
+});
+
+// Close preview when clicking outside
+document.getElementById('previewOverlay').addEventListener('click', (e) => {
+    if (e.target.id === 'previewOverlay') {
+        closePreview();
+    }
+});
+
+// Export palette
+function exportPalette() {
+    const paletteName = document.getElementById('paletteName').value || 'My Color Palette';
+
+    // Collect all color mappings
+    const colorMappings = [];
+    const processedColors = new Set();
+
+    styleElements.forEach(element => {
+        element.colors.forEach(color => {
+            const original = color.original;
+            const current = color.value;
+
+            // Only include if color was actually changed
+            if (original !== current) {
+                const key = original.toLowerCase().replace(/\s+/g, '');
+
+                if (!processedColors.has(key)) {
+                    processedColors.add(key);
+
+                    // Count how many times this color appears
+                    let usageCount = 0;
+                    styleElements.forEach(el => {
+                        el.colors.forEach(c => {
+                            if (c.original.toLowerCase().replace(/\s+/g, '') === key) {
+                                usageCount++;
+                            }
+                        });
+                    });
+
+                    colorMappings.push({
+                        original: original,
+                        new: current,
+                        usageCount: usageCount
+                    });
+                }
+            }
+        });
+    });
+
+    if (colorMappings.length === 0) {
+        showToast('No color changes to export', 'error');
+        return;
+    }
+
+    const palette = {
+        paletteName: paletteName,
+        createdDate: new Date().toISOString().split('T')[0],
+        totalColors: colorMappings.length,
+        colorMappings: colorMappings
+    };
+
+    // Download as JSON
+    const blob = new Blob([JSON.stringify(palette, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${paletteName.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.palette.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast(`Exported palette with ${colorMappings.length} colors!`, 'success');
+}
+
+// Import palette
+document.getElementById('paletteInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+        const text = await file.text();
+        const palette = JSON.parse(text);
+
+        if (!palette.colorMappings || !Array.isArray(palette.colorMappings)) {
+            showToast('Invalid palette file format', 'error');
+            return;
+        }
+
+        // Create a map for quick lookups
+        const colorMap = new Map();
+        palette.colorMappings.forEach(mapping => {
+            const key = mapping.original.toLowerCase().replace(/\s+/g, '');
+            colorMap.set(key, mapping.new);
+        });
+
+        let appliedCount = 0;
+
+        // Apply palette to current elements
+        styleElements.forEach(element => {
+            element.colors.forEach(color => {
+                const key = color.original.toLowerCase().replace(/\s+/g, '');
+                if (colorMap.has(key)) {
+                    color.value = colorMap.get(key);
+                    appliedCount++;
+                }
+            });
+        });
+
+        if (appliedCount === 0) {
+            showToast('No matching colors found in current file', 'error');
+        } else {
+            modifiedCount += appliedCount;
+            renderElements();
+            generateBulkColors();
+            applyChanges();
+            updateStats();
+            showToast(`Applied palette "${palette.paletteName}" - ${appliedCount} colors updated!`, 'success');
+        }
+
+    } catch (error) {
+        console.error('Error importing palette:', error);
+        showToast('Error reading palette file', 'error');
+    }
+
+    // Reset file input
+    e.target.value = '';
+});
+
+    function toggleSection(sectionName) {
+    const content = document.getElementById(`${sectionName}Content`);
+    const toggle = document.getElementById(`${sectionName}Toggle`);
+
+    if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        toggle.textContent = '▼ Collapse';
+    } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        // Force reflow
+        content.offsetHeight;
+        content.classList.add('collapsed');
+        toggle.textContent = '▶ Expand';
+    }
+}
+</script>
+</body>
+</html>
