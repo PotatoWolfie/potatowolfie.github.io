@@ -743,6 +743,26 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             <div style="font-size: 14px; color: #a0a0a0;">Supports .html files</div>
         </div>
         <input type="file" id="fileInput" accept=".html,.htm">
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #1a1a1a;">
+            <div style="font-size: 16px; color: #3453df; margin-bottom: 10px; font-family: 'Minecraft Ten', sans-serif;">Or Import from URL</div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)"
+                       style="flex: 1; padding: 12px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 14px;" autocomplete="off">
+                <button class="minecraft-button small" onclick="loadFromURL()">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Load URL</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; color: #888;">
+                Note: Due to CORS restrictions, some websites may not be accessible. Works best with sites that allow cross-origin requests.
+            </div>
+        </div>
     </div>
 
     <div id="statsSection" style="display: none;">
@@ -1448,7 +1468,6 @@ function applyChangesWithUnique() {
         styleTags.forEach(styleTag => {
             let newCSS = styleTag.textContent;
 
-            // First apply all non-unique colors globally
             styleElements.forEach(element => {
                 element.colors.forEach(color => {
                     if (!color.isUnique && color.value !== color.original) {
@@ -1460,7 +1479,6 @@ function applyChangesWithUnique() {
                 });
             });
 
-            // Then apply unique colors to their specific selectors only
             styleElements.forEach(element => {
                 element.colors.forEach(color => {
                     if (color.isUnique && color.value !== color.original) {
@@ -1996,6 +2014,73 @@ function toggleUniqueColor(elementIndex, colorIndex, event) {
         toggle.textContent = '▶ Expand';
     }
 }
+
+    async function loadFromURL() {
+    const urlInput = document.getElementById('urlInput');
+    const url = urlInput.value.trim();
+
+    if (!url) {
+        showToast('Please enter a URL', 'error');
+        return;
+    }
+
+    try {
+        new URL(url);
+    } catch (e) {
+        showToast('Invalid URL format', 'error');
+        return;
+    }
+
+    showProcessing(true);
+    updateChunkProgress('Fetching website...');
+
+    try {
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const response = await fetch(proxyUrl + encodeURIComponent(url));
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch URL');
+        }
+
+        const html = await response.text();
+
+        const urlObj = new URL(url);
+        fileName = urlObj.hostname.replace(/\./g, '_') + '.html';
+
+        originalHTML = html;
+        currentHTML = originalHTML;
+
+        updateChunkProgress('Parsing HTML structure...');
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        await parseHTMLInChunks(originalHTML);
+
+        if (styleElements.length === 0) {
+            showToast('No styled elements found in the URL', 'error');
+        } else {
+            showToast('URL loaded successfully!', 'success');
+            urlInput.value = '';
+        }
+
+        showProcessing(false);
+
+    } catch (error) {
+        console.error('Error loading URL:', error);
+        showToast('Error loading URL. The site may block external access (CORS).', 'error');
+        showProcessing(false);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlInput = document.getElementById('urlInput');
+    if (urlInput) {
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loadFromURL();
+            }
+        });
+    }
+});
 </script>
 </body>
 </html>
