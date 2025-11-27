@@ -401,6 +401,34 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             flex-wrap: wrap;
         }
 
+        .unique-color-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: #1a1a1a;
+    border: 1px solid #0a0a0a;
+    margin-bottom: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.unique-color-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.unique-color-checkbox label {
+    font-size: 13px;
+    color: #cccccc;
+    cursor: pointer;
+}
+
+.unique-color-checkbox:hover {
+    background: #242424;
+}
+
         .toast {
             position: fixed;
             top: 20px;
@@ -981,7 +1009,6 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
 
         const doc = parser.parseFromString(html, 'text/html');
 
-        // Check for parser errors
         const parserError = doc.querySelector('parsererror');
         if (parserError) {
             console.error('Parser error:', parserError.textContent);
@@ -990,7 +1017,6 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             return;
         }
 
-        // Get ALL style tags, not just the first one
         const styleTags = doc.querySelectorAll('style');
 
         if (styleTags.length === 0) {
@@ -1002,7 +1028,6 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
 
         console.log('Found', styleTags.length, 'style tags');
 
-        // Combine all CSS from all style tags
         let allCSS = '';
         styleTags.forEach((tag, index) => {
             const cssText = tag.textContent;
@@ -1029,10 +1054,13 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
                 const colors = extractColors(rule.styles);
                 if (colors.length > 0) {
                     styleElements.push({
-                        selector: rule.selector,
-                        colors: colors,
-                        originalRule: rule.fullRule
-                    });
+    selector: rule.selector,
+    colors: colors.map(color => ({
+        ...color,
+        isUnique: false
+    })),
+    originalRule: rule.fullRule
+});
                 }
             });
 
@@ -1061,11 +1089,8 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     function parseCSSRules(css) {
     const rules = [];
 
-    // Remove comments first
     css = css.replace(/\/\*[\s\S]*?\*\//g, '');
 
-    // More robust regex that handles newlines and whitespace better
-    // This regex captures selector and everything between { and its matching }
     let depth = 0;
     let currentRule = '';
     let currentSelector = '';
@@ -1076,7 +1101,6 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
 
         if (char === '{') {
             if (depth === 0) {
-                // Starting a new rule
                 currentSelector = currentRule.trim();
                 currentRule = '';
                 inRule = true;
@@ -1087,7 +1111,6 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
         } else if (char === '}') {
             depth--;
             if (depth === 0 && inRule) {
-                // Ending the rule
                 const styles = currentRule.trim();
                 if (currentSelector && styles) {
                     rules.push({
@@ -1162,30 +1185,40 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             const safeSelector = element.selector.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
             const colorsHTML = element.colors.map((color, colorIndex) => {
-                const safeProperty = color.property.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                const safeValue = color.value.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                const normalizedColor = normalizeColor(color.value);
+    const safeProperty = color.property.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    const safeValue = color.value.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    const normalizedColor = normalizeColor(color.value);
 
-                return `
-                    <div class="color-item">
-                        <div class="color-label">${safeProperty}</div>
-                        <div class="color-editor-panel">
-                            <select class="color-format-selector" onchange="changeColorFormat(${index}, ${colorIndex}, this.value)">
-                                <option value="hex" ${color.format === 'hex' ? 'selected' : ''}>Hex</option>
-                                <option value="rgb" ${color.format === 'rgb' ? 'selected' : ''}>RGB/RGBA</option>
-                            </select>
-                            <div class="color-input-group">
-                                <input type="color" value="${normalizedColor}"
-                                       onchange="updateColorFromPicker(${index}, ${colorIndex}, this.value)">
-                                <input type="text" class="color-hex" value="${safeValue}"
-       onchange="updateColorFromText(${index}, ${colorIndex}, this.value)"
-       placeholder="${color.format === 'hex' ? '#000000' : 'rgba(0,0,0,1)'}"
-       autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+    return `
+        <div class="color-item">
+            <div class="color-label">${safeProperty}</div>
+            <div class="color-editor-panel">
+                ${!color.isUnique ? `
+                <div class="unique-color-checkbox" onclick="toggleUniqueColor(${index}, ${colorIndex}, event)">
+                    <input type="checkbox" id="unique-${index}-${colorIndex}">
+                    <label for="unique-${index}-${colorIndex}">Make this color unique to this element</label>
+                </div>
+                ` : `
+                <div style="padding: 10px; background: #1a1a1a; border: 1px solid #3453df; margin-bottom: 10px; font-size: 13px; color: #3453df;">
+                    ✓ This color is unique to this element
+                </div>
+                `}
+                <select class="color-format-selector" onchange="changeColorFormat(${index}, ${colorIndex}, this.value)">
+                    <option value="hex" ${color.format === 'hex' ? 'selected' : ''}>Hex</option>
+                    <option value="rgb" ${color.format === 'rgb' ? 'selected' : ''}>RGB/RGBA</option>
+                </select>
+                <div class="color-input-group">
+                    <input type="color" value="${normalizedColor}"
+                           onchange="updateColorFromPicker(${index}, ${colorIndex}, this.value)">
+                    <input type="text" class="color-hex" value="${safeValue}"
+                           onchange="updateColorFromText(${index}, ${colorIndex}, this.value)"
+                           placeholder="${color.format === 'hex' ? '#000000' : 'rgba(0,0,0,1)'}"
+                           autocomplete="off">
+                </div>
+            </div>
+        </div>
+    `;
+}).join('');
 
             card.innerHTML = `
                 <div class="element-header">
@@ -1263,19 +1296,31 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
         color.value = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
     }
 
-    applyChanges();
+    if (color.isUnique) {
+        applyChangesWithUnique();
+    } else {
+        applyChanges();
+    }
+
     modifiedCount++;
     updateStats();
-    generateBulkColors(); // Regenerate bulk colors to reflect changes
+    generateBulkColors();
     renderElements();
 }
 
     function updateColorFromText(elementIndex, colorIndex, newValue) {
-    styleElements[elementIndex].colors[colorIndex].value = newValue;
-    applyChanges();
+    const color = styleElements[elementIndex].colors[colorIndex];
+    color.value = newValue;
+
+    if (color.isUnique) {
+        applyChangesWithUnique();
+    } else {
+        applyChanges();
+    }
+
     modifiedCount++;
     updateStats();
-    generateBulkColors(); // Regenerate bulk colors to reflect changes
+    generateBulkColors();
     renderElements();
 }
 
@@ -1284,7 +1329,6 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     const cards = document.querySelectorAll('.element-card');
 
     if (!searchTerm) {
-        // Show all cards if search is empty
         cards.forEach(card => card.style.display = 'block');
         return;
     }
@@ -1343,7 +1387,7 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     styleElements[elementIndex].colors.forEach(color => {
         color.value = color.original;
     });
-    generateBulkColors(); // Regenerate bulk colors after reset
+    generateBulkColors();
     renderElements();
     applyChanges();
     showToast('Element reset', 'success');
@@ -1369,17 +1413,68 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     const styleTags = doc.querySelectorAll('style');
 
     if (styleTags.length > 0) {
-        // Process each style tag
         styleTags.forEach(styleTag => {
             let newCSS = styleTag.textContent;
 
             styleElements.forEach(element => {
                 element.colors.forEach(color => {
+                    if (color.isUnique) return;
+
                     if (color.value !== color.original) {
                         newCSS = newCSS.replace(
                             new RegExp(escapeRegex(color.original), 'g'),
                             color.value
                         );
+                    }
+                });
+            });
+
+            styleTag.textContent = newCSS;
+        });
+
+        modifiedHTML = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+    }
+
+    currentHTML = modifiedHTML;
+}
+
+function applyChangesWithUnique() {
+    let modifiedHTML = currentHTML;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(originalHTML, 'text/html');
+    const styleTags = doc.querySelectorAll('style');
+
+    if (styleTags.length > 0) {
+        styleTags.forEach(styleTag => {
+            let newCSS = styleTag.textContent;
+
+            // First apply all non-unique colors globally
+            styleElements.forEach(element => {
+                element.colors.forEach(color => {
+                    if (!color.isUnique && color.value !== color.original) {
+                        newCSS = newCSS.replace(
+                            new RegExp(escapeRegex(color.original), 'g'),
+                            color.value
+                        );
+                    }
+                });
+            });
+
+            // Then apply unique colors to their specific selectors only
+            styleElements.forEach(element => {
+                element.colors.forEach(color => {
+                    if (color.isUnique && color.value !== color.original) {
+                        const selectorPattern = new RegExp(
+                            escapeRegex(element.selector) + '\\s*{[^}]*' + escapeRegex(color.original) + '[^}]*}',
+                            'g'
+                        );
+
+                        newCSS = newCSS.replace(selectorPattern, (match) => {
+                            return match.replace(
+                                new RegExp(escapeRegex(color.original), 'g'),
+                                color.value
+                            );
+                        });
                     }
                 });
             });
@@ -1441,12 +1536,10 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     }
 
     function generateBulkColors() {
-    // Collect all unique colors with their usage locations
     const colorMap = new Map();
 
     styleElements.forEach((element, elementIndex) => {
         element.colors.forEach((color, colorIndex) => {
-            // Use the actual color value, normalized only for consistency (lowercase, no extra spaces)
             const normalizedValue = color.value.toLowerCase().replace(/\s+/g, '');
 
             const usage = {
@@ -1463,19 +1556,17 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             } else {
                 colorMap.set(normalizedValue, {
                     color: color.value,
-                    displayColor: normalizeColor(color.value), // For color picker
+                    displayColor: normalizeColor(color.value),
                     usages: [usage]
                 });
             }
         });
     });
 
-    // Convert to array and sort by RGB values for visual grouping
     bulkColorGroups = Array.from(colorMap.values()).sort((a, b) => {
         const rgbA = hexToRgb(a.displayColor);
         const rgbB = hexToRgb(b.displayColor);
 
-        // Sort by hue, then saturation, then lightness for better visual grouping
         const hslA = rgbToHsl(rgbA.r, rgbA.g, rgbA.b);
         const hslB = rgbToHsl(rgbB.r, rgbB.g, rgbB.b);
 
@@ -1554,17 +1645,14 @@ function renderBulkColors() {
 function resetBulkColor(groupIndex) {
     const group = bulkColorGroups[groupIndex];
 
-    // Reset all usages back to their original values
     group.usages.forEach(usage => {
         const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
         color.value = color.original;
     });
 
-    // Update the group's color to the original
     group.color = group.usages[0].originalValue;
     group.displayColor = normalizeColor(group.usages[0].originalValue);
 
-    // Re-render everything
     renderElements();
     renderBulkColors();
     applyChanges();
@@ -1588,7 +1676,6 @@ function updateBulkColorFromPicker(groupIndex, newColor) {
         }
     });
 
-    // Determine the format to display based on the first usage
     const firstUsageFormat = group.usages[0].format;
     if (firstUsageFormat === 'hex') {
         group.color = newColor;
@@ -1600,7 +1687,6 @@ function updateBulkColorFromPicker(groupIndex, newColor) {
     }
     group.displayColor = newColor;
 
-    // Re-render bulk colors to update the text input
     renderBulkColors();
     renderElements();
     applyChanges();
@@ -1615,9 +1701,7 @@ function updateBulkColorFromText(groupIndex, newValue) {
     group.usages.forEach(usage => {
         const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
 
-        // Preserve the format but update to the new value
         if (color.format === 'hex') {
-            // If they entered rgba but original was hex, convert it
             if (newValue.startsWith('rgba') || newValue.startsWith('rgb')) {
                 color.value = newValue;
                 color.format = 'rgb';
@@ -1625,7 +1709,6 @@ function updateBulkColorFromText(groupIndex, newValue) {
                 color.value = newValue;
             }
         } else {
-            // If they entered hex but original was rgba, convert it
             if (newValue.startsWith('#')) {
                 color.value = newValue;
                 color.format = 'hex';
@@ -1635,11 +1718,9 @@ function updateBulkColorFromText(groupIndex, newValue) {
         }
     });
 
-    // Update the group's stored values
     group.color = newValue;
     group.displayColor = normalizeColor(newValue);
 
-    // Re-render bulk colors to update the color picker
     renderBulkColors();
     renderElements();
     applyChanges();
@@ -1655,10 +1736,8 @@ function updateBulkColorFromText(groupIndex, newValue) {
     group.usages.forEach(usage => {
         const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
 
-        // Convert the input value to match each usage's original format
         if (color.format === 'hex') {
             if (newValue.startsWith('rgba') || newValue.startsWith('rgb')) {
-                // Convert rgba to hex
                 const rgbMatch = newValue.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
                 if (rgbMatch) {
                     color.value = rgbToHex(parseInt(rgbMatch[1]), parseInt(rgbMatch[2]), parseInt(rgbMatch[3]));
@@ -1668,7 +1747,6 @@ function updateBulkColorFromText(groupIndex, newValue) {
             }
         } else {
             if (newValue.startsWith('#')) {
-                // Convert hex to rgba, preserving original alpha
                 const rgb = hexToRgb(newValue);
                 const alpha = color.value.includes('rgba') ?
                     color.value.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
@@ -1679,7 +1757,6 @@ function updateBulkColorFromText(groupIndex, newValue) {
         }
     });
 
-    // Update the group's display - convert to appropriate format for display
     if (firstUsageFormat === 'hex') {
         if (newValue.startsWith('rgba') || newValue.startsWith('rgb')) {
             const rgbMatch = newValue.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
@@ -1702,7 +1779,6 @@ function updateBulkColorFromText(groupIndex, newValue) {
 
     group.displayColor = normalizeColor(group.color);
 
-    // Re-render to update both the color picker and text
     renderBulkColors();
     renderElements();
     applyChanges();
@@ -1728,27 +1804,21 @@ function updateBulkColorFromText(groupIndex, newValue) {
         }
     });
 
-    // Preview functionality
 function showPreview() {
     const iframe = document.getElementById('previewIframe');
     const overlay = document.getElementById('previewOverlay');
 
-    // Show overlay immediately
     overlay.classList.add('show');
 
-    // Small delay to ensure overlay is visible before heavy operation
     setTimeout(() => {
         try {
-            // Write the current HTML to the iframe
             iframe.srcdoc = currentHTML;
 
-            // If srcdoc fails for large files, try using blob URL instead
-            if (currentHTML.length > 100000) { // If larger than ~100KB
+            if (currentHTML.length > 100000) {
                 const blob = new Blob([currentHTML], { type: 'text/html' });
                 const url = URL.createObjectURL(blob);
                 iframe.src = url;
 
-                // Clean up blob URL after iframe loads
                 iframe.onload = () => {
                     URL.revokeObjectURL(url);
                 };
@@ -1767,30 +1837,25 @@ function closePreview() {
 
     overlay.classList.remove('show');
 
-    // Clear both srcdoc and src to ensure full reset
     iframe.srcdoc = '';
     iframe.src = 'about:blank';
 }
 
-// Close preview on Escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closePreview();
     }
 });
 
-// Close preview when clicking outside
 document.getElementById('previewOverlay').addEventListener('click', (e) => {
     if (e.target.id === 'previewOverlay') {
         closePreview();
     }
 });
 
-// Export palette
 function exportPalette() {
     const paletteName = document.getElementById('paletteName').value || 'My Color Palette';
 
-    // Collect all color mappings
     const colorMappings = [];
     const processedColors = new Set();
 
@@ -1799,14 +1864,12 @@ function exportPalette() {
             const original = color.original;
             const current = color.value;
 
-            // Only include if color was actually changed
             if (original !== current) {
                 const key = original.toLowerCase().replace(/\s+/g, '');
 
                 if (!processedColors.has(key)) {
                     processedColors.add(key);
 
-                    // Count how many times this color appears
                     let usageCount = 0;
                     styleElements.forEach(el => {
                         el.colors.forEach(c => {
@@ -1838,7 +1901,6 @@ function exportPalette() {
         colorMappings: colorMappings
     };
 
-    // Download as JSON
     const blob = new Blob([JSON.stringify(palette, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1852,7 +1914,6 @@ function exportPalette() {
     showToast(`Exported palette with ${colorMappings.length} colors!`, 'success');
 }
 
-// Import palette
 document.getElementById('paletteInput').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -1866,7 +1927,6 @@ document.getElementById('paletteInput').addEventListener('change', async (e) => 
             return;
         }
 
-        // Create a map for quick lookups
         const colorMap = new Map();
         palette.colorMappings.forEach(mapping => {
             const key = mapping.original.toLowerCase().replace(/\s+/g, '');
@@ -1875,7 +1935,6 @@ document.getElementById('paletteInput').addEventListener('change', async (e) => 
 
         let appliedCount = 0;
 
-        // Apply palette to current elements
         styleElements.forEach(element => {
             element.colors.forEach(color => {
                 const key = color.original.toLowerCase().replace(/\s+/g, '');
@@ -1902,9 +1961,25 @@ document.getElementById('paletteInput').addEventListener('change', async (e) => 
         showToast('Error reading palette file', 'error');
     }
 
-    // Reset file input
     e.target.value = '';
 });
+
+function toggleUniqueColor(elementIndex, colorIndex, event) {
+    event.stopPropagation();
+
+    const color = styleElements[elementIndex].colors[colorIndex];
+    const checkbox = document.getElementById(`unique-${elementIndex}-${colorIndex}`);
+
+    if (checkbox && !color.isUnique) {
+        color.isUnique = checkbox.checked;
+
+        if (color.isUnique) {
+            showToast('Color marked as unique to this element', 'success');
+            renderElements();
+            generateBulkColors();
+        }
+    }
+}
 
     function toggleSection(sectionName) {
     const content = document.getElementById(`${sectionName}Content`);
@@ -1916,7 +1991,6 @@ document.getElementById('paletteInput').addEventListener('change', async (e) => 
         toggle.textContent = '▼ Collapse';
     } else {
         content.style.maxHeight = content.scrollHeight + 'px';
-        // Force reflow
         content.offsetHeight;
         content.classList.add('collapsed');
         toggle.textContent = '▶ Expand';
