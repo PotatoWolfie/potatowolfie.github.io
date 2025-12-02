@@ -1,0 +1,26 @@
+{
+    "Mobs": [
+        { "title": "Mob", "page": "mobs/goose.html", "category": "Category" },
+        { "title": "Goose", "page": "mobs/goose.html", "category": "Mobs" },
+        { "title": "Warm Goose", "page": "mobs/goose.html#warm", "category": "Mobs" },
+        { "title": "Cold Goose", "page": "mobs/goose.html#cold", "category": "Mobs" }
+    ],
+    "Items": [
+        { "title": "Item", "page": "items/goose_spawn_egg.html", "category": "Category" },
+        { "title": "Goose Spawn Egg", "page": "items/goose_spawn_egg.html", "category": "Items" },
+        { "title": "White Egg", "page": "items/white_egg.html", "category": "Items" },
+        { "title": "Big White Egg", "page": "items/big_white_egg.html", "category": "Items" },
+        { "title": "Small White Egg", "page": "items/small_white_egg.html", "category": "Items" },
+        { "title": "Raw Goose", "page": "items/goose.html", "category": "Items" },
+        { "title": "Cooked Goose", "page": "items/cooked_goose.html", "category": "Items" }
+    ],
+    "Advancements": [
+        { "title": "Advancement", "page": "advancements.html", "category": "Category" },
+        { "title": "Honk and Run", "page": "advancements.html#honk-and-run", "category": "Advancements" },
+        { "title": "Hit and Run", "page": "advancements.html#hit-and-run", "category": "Advancements" },
+        { "title": "Unfair Trade", "page": "advancements.html#unfair-trade", "category": "Advancements" }
+    ],
+    "History": [
+        { "title": "History", "page": "history.html", "category": "Category" }
+    ]
+}

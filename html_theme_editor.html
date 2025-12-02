@@ -760,7 +760,7 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
                 </button>
             </div>
             <div style="margin-top: 10px; font-size: 12px; color: #888;">
-                Note: Due to CORS restrictions, some websites may not be accessible. Works best with sites that allow cross-origin requests.
+                Note: Due to CORS restrictions, some websites may not be accessible. Works best with sites that allow cross-origin requests. Connection errors may occur.
             </div>
         </div>
     </div>
@@ -1079,7 +1079,8 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
         ...color,
         isUnique: false
     })),
-    originalRule: rule.fullRule
+    originalRule: rule.fullRule,
+    isPinned: false
 });
                 }
             });
@@ -1104,6 +1105,14 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
         console.error('Error in parseHTMLInChunks:', error);
         throw error;
     }
+}
+
+function sortElementsByPinned() {
+    styleElements.sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return 0;
+    });
 }
 
     function parseCSSRules(css) {
@@ -1195,80 +1204,108 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     }
 
     function renderElements() {
-        const listDiv = document.getElementById('elementList');
-        listDiv.innerHTML = '';
+    const listDiv = document.getElementById('elementList');
+    const searchInput = document.getElementById('searchInput');
+    const currentSearchValue = searchInput ? searchInput.value : '';
 
-        styleElements.forEach((element, index) => {
-            const card = document.createElement('div');
-            card.className = 'element-card';
+    const expandedStates = [];
+    styleElements.forEach((element, index) => {
+        const colorsDiv = document.getElementById('colors-' + index);
+        expandedStates[index] = colorsDiv && !colorsDiv.classList.contains('collapsed');
+    });
 
-            const safeSelector = element.selector.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    listDiv.innerHTML = '';
 
-            const colorsHTML = element.colors.map((color, colorIndex) => {
-    const safeProperty = color.property.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-    const safeValue = color.value.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-    const normalizedColor = normalizeColor(color.value);
+    styleElements.forEach((element, index) => {
+        const card = document.createElement('div');
+        card.className = 'element-card';
 
-    return `
-        <div class="color-item">
-            <div class="color-label">${safeProperty}</div>
-            <div class="color-editor-panel">
-                ${!color.isUnique ? `
-                <div class="unique-color-checkbox" onclick="toggleUniqueColor(${index}, ${colorIndex}, event)">
-                    <input type="checkbox" id="unique-${index}-${colorIndex}">
-                    <label for="unique-${index}-${colorIndex}">Make this color unique to this element</label>
-                </div>
-                ` : `
-                <div style="padding: 10px; background: #1a1a1a; border: 1px solid #3453df; margin-bottom: 10px; font-size: 13px; color: #3453df;">
-                    ✓ This color is unique to this element
-                </div>
-                `}
-                <select class="color-format-selector" onchange="changeColorFormat(${index}, ${colorIndex}, this.value)">
-                    <option value="hex" ${color.format === 'hex' ? 'selected' : ''}>Hex</option>
-                    <option value="rgb" ${color.format === 'rgb' ? 'selected' : ''}>RGB/RGBA</option>
-                </select>
-                <div class="color-input-group">
-                    <input type="color" value="${normalizedColor}"
-                           onchange="updateColorFromPicker(${index}, ${colorIndex}, this.value)">
-                    <input type="text" class="color-hex" value="${safeValue}"
-                           onchange="updateColorFromText(${index}, ${colorIndex}, this.value)"
-                           placeholder="${color.format === 'hex' ? '#000000' : 'rgba(0,0,0,1)'}"
-                           autocomplete="off">
-                </div>
-            </div>
-        </div>
-    `;
-}).join('');
+        const safeSelector = element.selector.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
-            card.innerHTML = `
-                <div class="element-header">
-                    <div>
-                        <div class="element-name">${safeSelector}</div>
-                    </div>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <div class="element-type">${element.colors.length} colors</div>
-                        <div class="expand-toggle" onclick="toggleExpand(${index})">&#9660; Expand</div>
-                    </div>
-                </div>
-                <div class="color-grid collapsed" id="colors-${index}">
-                    ${colorsHTML}
-                </div>
-                <div class="button-row" style="margin-top: 15px;">
-                    <button class="minecraft-button small" onclick="resetElement(${index})">
-                        <div class="minecraft-button-left-outline"></div>
-                        <div class="minecraft-button-right-outline"></div>
-                        <div class="minecraft-button-section">
-                            <div class="minecraft-button-name">Reset</div>
+        const colorsHTML = element.colors.map((color, colorIndex) => {
+            const safeProperty = color.property.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeValue = color.value.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const normalizedColor = normalizeColor(color.value);
+
+            return `
+                <div class="color-item">
+                    <div class="color-label">${safeProperty}</div>
+                    <div class="color-editor-panel">
+                        ${!color.isUnique ? `
+                        <div class="unique-color-checkbox" onclick="toggleUniqueColor(${index}, ${colorIndex}, event)">
+                            <input type="checkbox" id="unique-${index}-${colorIndex}">
+                            <label for="unique-${index}-${colorIndex}">Make this color unique to this element</label>
                         </div>
-                        <div class="minecraft-button-dark-strip"></div>
-                        <div class="minecraft-button-bottom-outline"></div>
-                        <div class="minecraft-button-shadow"></div>
-                    </button>
+                        ` : `
+                        <div style="padding: 10px; background: #1a1a1a; border: 1px solid #3453df; margin-bottom: 10px; font-size: 13px; color: #3453df;">
+                            ✓ This color is unique to this element
+                        </div>
+                        `}
+                        <select class="color-format-selector" onchange="changeColorFormat(${index}, ${colorIndex}, this.value)">
+                            <option value="hex" ${color.format === 'hex' ? 'selected' : ''}>Hex</option>
+                            <option value="rgb" ${color.format === 'rgb' ? 'selected' : ''}>RGB/RGBA</option>
+                        </select>
+                        <div class="color-input-group">
+                            <input type="color" value="${normalizedColor}"
+                                   onchange="updateColorFromPicker(${index}, ${colorIndex}, this.value)">
+                            <input type="text" class="color-hex" value="${safeValue}"
+                                   onchange="updateColorFromText(${index}, ${colorIndex}, this.value)"
+                                   placeholder="${color.format === 'hex' ? '#000000' : 'rgba(0,0,0,1)'}"
+                                   autocomplete="off">
+                        </div>
+                    </div>
                 </div>
             `;
-            listDiv.appendChild(card);
-        });
+        }).join('');
+
+        const isExpanded = expandedStates[index];
+        const collapsedClass = isExpanded ? '' : 'collapsed';
+        const toggleText = isExpanded ? '&#9650; Collapse' : '&#9660; Expand';
+
+        card.innerHTML = `
+    <div class="element-header">
+        <div>
+            <div class="element-name">${safeSelector}</div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <div class="element-type">${element.colors.length} colors</div>
+            <button class="minecraft-button small" onmousedown="event.stopPropagation(); this.classList.add('pressed');" onmouseup="event.stopPropagation(); const btn = this; setTimeout(() => { btn.classList.remove('pressed'); }, 150);" onclick="event.stopPropagation(); togglePin(${index});" style="min-width: 80px; height: 30px;">
+    <div class="minecraft-button-left-outline"></div>
+    <div class="minecraft-button-right-outline"></div>
+    <div class="minecraft-button-section" style="background: ${element.isPinned ? '#3453df' : '#48494a'};">
+        <div class="minecraft-button-name" style="font-size: 12px;">${element.isPinned ? 'Unpin' : 'Pin'}</div>
+    </div>
+    <div class="minecraft-button-dark-strip"></div>
+    <div class="minecraft-button-bottom-outline"></div>
+    <div class="minecraft-button-shadow"></div>
+</button>
+            <div class="expand-toggle" onclick="toggleExpand(${index})">${toggleText}</div>
+        </div>
+    </div>
+    <div class="color-grid ${collapsedClass}" id="colors-${index}">
+        ${colorsHTML}
+    </div>
+    <div class="button-row" style="margin-top: 15px;">
+        <button class="minecraft-button small" onmousedown="event.stopPropagation(); this.classList.add('pressed');" onmouseup="event.stopPropagation(); const btn = this; setTimeout(() => { btn.classList.remove('pressed'); }, 150);" onclick="event.stopPropagation(); resetElement(${index});">
+    <div class="minecraft-button-left-outline"></div>
+    <div class="minecraft-button-right-outline"></div>
+    <div class="minecraft-button-section">
+        <div class="minecraft-button-name">Reset</div>
+    </div>
+    <div class="minecraft-button-dark-strip"></div>
+    <div class="minecraft-button-bottom-outline"></div>
+    <div class="minecraft-button-shadow"></div>
+</button>
+    </div>
+`;
+        listDiv.appendChild(card);
+    });
+
+    if (currentSearchValue) {
+        searchInput.value = currentSearchValue;
+        filterElements();
     }
+}
 
     function normalizeColor(color) {
         if (color.startsWith('#')) {
@@ -1344,6 +1381,14 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     renderElements();
 }
 
+function togglePin(index, event) {
+    if (event) event.stopPropagation();
+    styleElements[index].isPinned = !styleElements[index].isPinned;
+    sortElementsByPinned();
+    renderElements();
+    showToast(styleElements[index].isPinned ? 'Element pinned' : 'Element unpinned', 'success');
+}
+
     function filterElements() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     const cards = document.querySelectorAll('.element-card');
@@ -1403,7 +1448,8 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
         });
     }
 
-    function resetElement(elementIndex) {
+    function resetElement(elementIndex, event) {
+    if (event) event.stopPropagation();
     styleElements[elementIndex].colors.forEach(color => {
         color.value = color.original;
     });
@@ -1814,13 +1860,22 @@ function updateBulkColorFromText(groupIndex, newValue) {
         }, 3000);
     }
 
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('.minecraft-button')) {
-            const btn = e.target.closest('.minecraft-button');
-            btn.classList.add('pressed');
-            setTimeout(() => btn.classList.remove('pressed'), 150);
+    document.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.minecraft-button')) {
+        const btn = e.target.closest('.minecraft-button');
+        btn.classList.add('pressed');
+    }
+});
+
+document.addEventListener('mouseup', (e) => {
+    document.querySelectorAll('.minecraft-button.pressed').forEach(btn => {
+        if (!btn.onclick || btn.onclick.toString().indexOf('stopPropagation') === -1) {
+            setTimeout(() => {
+                btn.classList.remove('pressed');
+            }, 150);
         }
     });
+});
 
 function showPreview() {
     const iframe = document.getElementById('previewIframe');
@@ -1985,17 +2040,19 @@ document.getElementById('paletteInput').addEventListener('change', async (e) => 
 function toggleUniqueColor(elementIndex, colorIndex, event) {
     event.stopPropagation();
 
-    const color = styleElements[elementIndex].colors[colorIndex];
     const checkbox = document.getElementById(`unique-${elementIndex}-${colorIndex}`);
+    const color = styleElements[elementIndex].colors[colorIndex];
 
     if (checkbox && !color.isUnique) {
-        color.isUnique = checkbox.checked;
+        setTimeout(() => {
+            color.isUnique = checkbox.checked;
 
-        if (color.isUnique) {
-            showToast('Color marked as unique to this element', 'success');
-            renderElements();
-            generateBulkColors();
-        }
+            if (color.isUnique) {
+                showToast('Color marked as unique to this element', 'success');
+                generateBulkColors();
+                renderElements();
+            }
+        }, 0);
     }
 }
 

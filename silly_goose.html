@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://potatowolfie.github.io">
-    <meta property="og:title" content="PW Wiki Homepage">
-    <meta property="og:description" content="All of the official wiki pages for PotatoWolfie mods are here!">
-    <meta property="og:image" content="https://potatowolfie.github.io/assets/home/logo.png">
+    <meta property="og:title" content="Silly Goose Wiki">
+    <meta property="og:description" content="The Silly Goose Wiki is the Wiki for the Minecraft mod, Silly Goose! All information you could possibly need is probably here!">
+    <meta property="og:image" content="https://potatowolfie.github.io/Silly_Goose/assets/wiki/silly_goose_wiki.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="PotatoWolfie">
-    <meta name="theme-color" content="#3453df">
+    <meta property="og:site_name" content="Silly Goose Wiki">
+    <meta name="theme-color" content="#8b4513">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://potatowolfie.github.io">
-    <meta name="twitter:title" content="PW Wiki Homepage">
-    <meta property="og:description" content="All of the official wiki pages for PotatoWolfie mods are here!">
-    <meta name="twitter:image" content="https://potatowolfie.github.io/assets/home/logo.png">
-    <title>PW Wiki Homepage</title>
-    <link rel="icon" type="image/x-icon" href="goggles.ico">
+    <meta name="twitter:title" content="Silly Goose Wiki">
+    <meta name="twitter:description" content="The Silly Goose Wiki is the Wiki for the Minecraft mod, Silly Goose! All information you could possibly need is probably here!">
+    <meta name="twitter:image" content="https://potatowolfie.github.io/Silly_Goose/assets/wiki/silly_goose_wiki.png">
+    <title>Silly Goose Wiki</title>
+    <link rel="icon" type="image/x-icon" href="silly_goose_wiki_favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <style>
         @font-face {
@@ -55,7 +54,7 @@
 
         body {
             font-family: 'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-image: url('assets/home/background.png');
+            background-image: url('Silly_Goose/assets/wiki/background.png');
             background-color: #2d2d2d;
             background-size: auto;
             background-repeat: repeat;
@@ -65,6 +64,50 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+
+        @keyframes geraldFall {
+    0% {
+        transform: translateY(-200px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 200px)) rotate(360deg);
+        opacity: 0.7;
+    }
+}
+
+.gerald-rain {
+    position: fixed;
+    width: auto;
+    height: 64px;
+    pointer-events: none;
+    z-index: 9998;
+    animation: geraldFall linear forwards;
+}
+
+        .honk-text {
+    position: fixed;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #ffffff;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 9999;
+    animation: honkRise 1s ease-out forwards;
+}
+
+@keyframes honkRise {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.2);
+    }
+}
+
 .search-container {
             flex: 1;
             max-width: 500px;
@@ -76,7 +119,7 @@
     width: 100%;
     padding: 8px 12px;
     background: #3a3a3a;
-    border: none; /* No border when unfocused */
+    border: none;
     color: #e6e6e6;
     font-size: 16px;
     font-family: 'Nunito', sans-serif;
@@ -86,7 +129,7 @@
 
 .search-box:focus {
     outline: none;
-    border: 2px solid #3453df;
+    border: 2px solid #2a78c6;
 }
 
 .search-suggestions {
@@ -125,7 +168,7 @@
 }
 
 .search-suggestion:hover .suggestion-title {
-    color: #3453df;
+    color: #2a78c6;
 }
 
 .search-suggestion:last-child {
@@ -134,7 +177,7 @@
 
 .suggestion-category {
     font-size: 12px;
-    color: #3453df;
+    color: #2a78c6;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: normal;
 }
@@ -172,10 +215,6 @@
 @media (max-width: 768px) {
     .search-box {
         font-size: 16px;
-    }
-
-    .category-item .category-name {
-        font-size: 11px;
     }
 }
 
@@ -238,8 +277,8 @@
 }
 
 .nav-button {
-    background: #3453df;
-    border: 2px solid #3949aa;
+    background: #2a78c6;
+    border: 2px solid #004694;
     border-bottom: none;
     margin-right: 2px;
     cursor: pointer;
@@ -247,10 +286,10 @@
     color: white;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: 6000;
-    text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
+    text-shadow: 2px 2px 0px rgba(0,60,138,0.8);
     box-shadow:
-        inset 2px 2px 0 #4065ec,
-        inset -2px -2px 0 #2c47d1;
+        inset 2px 2px 0 #3e8cda,
+        inset -2px -2px 0 #1b69b7;
     text-decoration: none;
     flex-shrink: 0;
     display: flex;
@@ -269,11 +308,11 @@
 }
 
 .nav-button:hover {
-    background: #3949aa;
+    background: #1b69b7;
 }
 
 .nav-button.active {
-    background: #3949aa;
+    background: #1b69b7;
 }
 
 .nav-button.hidden {
@@ -284,12 +323,12 @@
     width: 16px;
     height: 16px;
     image-rendering: auto;
-    border: 1px solid #2c3d99;
+    border: 1px solid #0a4694;
 }
 
 .nav-button.nav-arrow img {
     border: none;
-    width: 35px
+    width: 28px
 }
 
 .nav-button-text {
@@ -310,7 +349,7 @@
         width: 25px;
         height: 25px;
         image-rendering: auto;
-        border: 2px solid #2c3d99;
+        border: 2px solid #0a4694;
     }
 
     .nav-button-text {
@@ -321,12 +360,13 @@
         display: block;
         width: 20px;
         height: 20px;
-        border: 1px solid #2c3d99;
+        border: 1px solid #0a4694;
     }
 
-    .nav-button.nav-arrow .nav-button-icon {
-        border: none;
-    }
+    .nav-button.nav-arrow img {
+    border: none;
+    width: 35px
+}
 }
 
         .main-container {
@@ -350,7 +390,7 @@
         .page-title {
             font-size: 28px;
             margin-bottom: 25px;
-            color: #3453df;
+            color: #2a78c6;
             border-bottom: 2px solid #4a4a4a;
             padding-bottom: 15px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
@@ -425,7 +465,7 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin: 25px 0;
             width: 100%;
@@ -435,8 +475,8 @@
         .category-item {
             cursor: pointer;
             aspect-ratio: 1;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -521,13 +561,32 @@
         }
 
         .category-item img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     image-rendering: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimize-contrast;
     object-fit: contain;
     object-position: center;
+}
+
+.category-item.mobs-button img {
+    image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+}
+.category-item.history-button img {
+    image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+}
+.category-item.advancement-button img {
+    image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
 }
 
         .category-button-section {
@@ -579,7 +638,7 @@
         }
 
         .category-name {
-            font-size: 14px;
+            font-size: 12px;
             color: #ffffff;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -630,7 +689,7 @@
             background: #323333;
         }
 
-        .social-platforms {
+        .latest-versions {
     margin-top: 35px;
     background: #2e2e2e;
     border: 2px solid #1a1a1a;
@@ -644,12 +703,12 @@
     -moz-user-select: none;
 }
 
-.social-platforms a,
-.social-platforms .platform-item-name {
+.latest-versions a,
+.latest-versions .version-item-name {
     user-select: text;
 }
 
-.social-platforms::before {
+.latest-versions::before {
     content: '';
     position: absolute;
     top: 0px;
@@ -663,7 +722,7 @@
     transition: all 0.3s ease;
 }
 
-        .platforms-header {
+        .versions-header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -677,34 +736,34 @@
     padding-bottom: 20px;
 }
 
-.social-platforms.expanded {
+.latest-versions.expanded {
     border: 2px solid #1a1a1a;
 }
 
-        .platforms-header {
+        .versions-header {
     border-bottom: 2px solid #1a1a1a;
 }
 
-        .platforms-header-text {
+        .versions-header-text {
     position: relative;
     z-index: 2;
     font-size: 18px;
-    color: #3453df;
+    color: #2a78c6;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: normal;
     text-shadow: none;
     margin-bottom: 8px;
 }
 
-.platforms-header-text,
-.platforms-header-arrow {
+.versions-header-text,
+.versions-header-arrow {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     -moz-user-select: none;
 }
 
-        .platforms-grid {
+        .versions-grid {
     position: relative;
     max-height: 0;
     overflow: hidden;
@@ -717,7 +776,7 @@
     transform: translateY(0);
 }
 
-.platforms-grid-border {
+.versions-grid-border {
     position: absolute;
     bottom: -1px;
     left: 0;
@@ -729,7 +788,7 @@
     transition: transform 0.3s ease;
 }
 
-.platforms-inset-shadow {
+.versions-inset-shadow {
     position: absolute;
     top: 0;
     left: 0;
@@ -742,7 +801,7 @@
     z-index: 1;
 }
 
-.platforms-grid::before {
+.versions-grid::before {
     content: '';
     position: absolute;
     top: 0px;
@@ -755,11 +814,11 @@
     pointer-events: none;
 }
 
-.platforms-grid.open {
+.versions-grid.open {
     max-height: none;
 }
 
-        .platforms-content {
+        .versions-content {
     position: relative;
     z-index: 1;
     padding: 20px;
@@ -772,7 +831,7 @@
     border: 0px solid #1a1a1a;
 }
 
-.platforms-content::before {
+.versions-content::before {
     content: '';
     position: absolute;
     top: 0px;
@@ -785,7 +844,7 @@
     pointer-events: none;
 }
 
-        .platform-item {
+        .version-item {
     cursor: pointer;
     aspect-ratio: 1;
     width: 250px;
@@ -801,7 +860,7 @@
     transition: transform 0.2s ease;
 }
 
-platform-item-image-container {
+version-item-image-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -814,7 +873,7 @@ platform-item-image-container {
     height: 80px;
     margin-top: -10px;
 }
-.platform-item-top-outline {
+.version-item-top-outline {
     position: absolute;
     top: 0;
     left: 0;
@@ -824,7 +883,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-left-outline {
+.version-item-left-outline {
     position: absolute;
     top: 0;
     left: 0;
@@ -834,7 +893,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-right-outline {
+.version-item-right-outline {
     position: absolute;
     top: 0;
     right: 0;
@@ -844,7 +903,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-top-highlight {
+.version-item-top-highlight {
     position: absolute;
     top: 4px;
     left: 4px;
@@ -854,7 +913,7 @@ platform-item-image-container {
     z-index: 4;
 }
 
-.platform-item-image-container {
+.version-item-image-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -868,7 +927,7 @@ platform-item-image-container {
     margin-top: -20px;
 }
 
-.platform-item-image-section {
+.version-item-image-section {
     flex: 2;
     position: relative;
     background: #3e414a;
@@ -880,7 +939,7 @@ platform-item-image-container {
     display: block;
 }
 
-.platform-item-image-section {
+.version-item-image-section {
     flex: 2;
     position: relative;
     background: #3e414a;
@@ -892,7 +951,7 @@ platform-item-image-container {
     display: block;
 }
 
-.platform-item-button-section {
+.version-item-button-section {
     flex: 0.6;
     background: #48494a;
     position: relative;
@@ -909,7 +968,7 @@ platform-item-image-container {
     border-top: 4px solid #1e1e1e;
 }
 
-.platform-item-dark-strip {
+.version-item-dark-strip {
     flex: 0.2;
     background: #3b3c3c;
     position: relative;
@@ -919,7 +978,7 @@ platform-item-image-container {
     margin-top: 0;
 }
 
-.platform-item-bottom-outline {
+.version-item-bottom-outline {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -929,7 +988,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-shadow {
+.version-item-shadow {
     position: absolute;
     bottom: -6px;
     left: 0;
@@ -940,45 +999,45 @@ platform-item-image-container {
     transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-.platform-item:hover {
+.version-item:hover {
 }
 
-.platform-item.pressed .platform-item-image-section {
+.version-item.pressed .version-item-image-section {
     transform: scaleY(1.058);
     transform-origin: top;
 }
 
-.platform-item.pressed .platform-item-button-section {
+.version-item.pressed .version-item-button-section {
     transform: translateY(6px);
 }
 
-.platform-item.pressed .platform-item-dark-strip {
-    transform: translateY(6px);
-    opacity: 0;
-}
-
-.platform-item.pressed .platform-item-shadow {
+.version-item.pressed .version-item-dark-strip {
     transform: translateY(6px);
     opacity: 0;
 }
 
-.platform-item:hover .platform-item-image-section {
+.version-item.pressed .version-item-shadow {
+    transform: translateY(6px);
+    opacity: 0;
+}
+
+.version-item:hover .version-item-image-section {
     background: #4b4e56;
 }
 
-.platform-item:hover .platform-item-top-highlight {
+.version-item:hover .version-item-top-highlight {
     background: #39424a;
 }
 
-.platform-item:hover .platform-item-image-section::after {
+.version-item:hover .version-item-image-section::after {
     background: #565960;
 }
 
-.platform-item:hover .platform-item-button-section {
+.version-item:hover .version-item-button-section {
     background: #414242;
 }
 
-	    .platform-item-image-section::after {
+	    .version-item-image-section::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -988,11 +1047,11 @@ platform-item-image-container {
     background: #565960;
 }
 
-.platform-item:hover .platform-item-dark-strip {
+.version-item:hover .version-item-dark-strip {
     background: #323333;
 }
 
-        .platform-item img {
+        .version-item img {
     width: 75px;
     height: 75px;
     image-rendering: auto;
@@ -1004,13 +1063,13 @@ platform-item-image-container {
     z-index: 11;
 }
 
-	    .platform-item-image-section {
+	    .version-item-image-section {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.platform-item-name {
+.version-item-name {
     font-size: 12px;
     color: #ffffff;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
@@ -1021,7 +1080,7 @@ platform-item-image-container {
     text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
 }
 
-.platforms-header {
+.versions-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1029,7 +1088,7 @@ platform-item-image-container {
     position: relative;
 }
 
-.platforms-header-arrow {
+.versions-header-arrow {
     width: 15px;
     height: 15px;
     margin-left: 10px;
@@ -1040,15 +1099,15 @@ platform-item-image-container {
     transform: rotate(0deg);
 }
 
-.platforms-header-arrow.rotated {
+.versions-header-arrow.rotated {
     transform: rotate(180deg);
 }
 
-.platforms-header-arrow.spinback-clockwise {
+.versions-header-arrow.spinback-clockwise {
     transform: rotate(360deg);
 }
 
-.platforms-header-arrow.spinback-counter {
+.versions-header-arrow.spinback-counter {
     transform: rotate(-360deg);
 }
 
@@ -1071,7 +1130,7 @@ platform-item-image-container {
 
         .sidebar-title {
             font-size: 16px;
-            color: #3453df;
+            color: #2a78c6;
             margin-bottom: 20px;
             padding-bottom: 12px;
             border-bottom: 1px solid #4a4a4a;
@@ -1097,11 +1156,11 @@ platform-item-image-container {
         }
 
         .sidebar-list a:hover {
-            color: #3453df;
+            color: #2a78c6;
         }
 
         .stats {
-            background: linear-gradient(135deg, #3453df, #5e26c0);
+            background: linear-gradient(135deg, #2a78c6, #1b539d);
             border-radius: 0;
             padding: 20px;
             text-align: center;
@@ -1164,7 +1223,7 @@ platform-item-image-container {
 
         .creator-name {
             font-size: 14px;
-            color: #3453df;
+            color: #2a78c6;
             margin-bottom: 12px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1178,7 +1237,7 @@ platform-item-image-container {
 
         .creator-link {
             background: rgba(26, 26, 26, 0.6);
-            color: #3453df;
+            color: #2a78c6;
             text-decoration: none;
             padding: 6px 12px;
             border-radius: 0;
@@ -1198,7 +1257,7 @@ platform-item-image-container {
         }
 
         .about-section h2 {
-            color: #3453df;
+            color: #2a78c6;
             margin-bottom: 20px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1214,7 +1273,7 @@ platform-item-image-container {
         }
 
         h2 {
-            color: #3453df;
+            color: #2a78c6;
             margin-bottom: 20px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1241,18 +1300,18 @@ platform-item-image-container {
     }
 
     .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 15px;
     }
 
     .category-item {
-        width: 180px;
-        height: 180px;
+        width: 140px;
+        height: 140px;
     }
 
     .category-item img {
-        width: 90px;
-        height: 90px;
+        width: 70px;
+        height: 70px;
     }
 }
 
@@ -1288,31 +1347,31 @@ platform-item-image-container {
     }
 
     .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 15px;
     }
 
     .category-item {
-        width: 160px;
-        height: 160px;
+        width: 130px;
+        height: 130px;
     }
 
     .category-item img {
-        width: 80px;
-        height: 80px;
+        width: 65px;
+        height: 65px;
     }
 
-    .platforms-content {
+    .versions-content {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
 
-    .platform-item {
+    .version-item {
         width: 200px;
         height: 130px;
     }
 
-    .platform-item img {
+    .version-item img {
         width: 60px;
         height: 60px;
     }
@@ -1391,35 +1450,35 @@ platform-item-image-container {
         font-size: 14px;
     }
 
-    .platforms-content {
+    .versions-content {
         grid-template-columns: 1fr;
         gap: 15px;
         justify-items: center;
     }
 
-    .platform-item {
+    .version-item {
         width: 280px;
         height: 180px;
     }
 
-    .platform-item img {
+    .version-item img {
         width: 90px;
         height: 90px;
     }
 
-    .platform-item-name {
+    .version-item-name {
         font-size: 14px;
     }
 
-    .social-platforms {
+    .latest-versions {
         margin-top: 25px;
     }
 
-    .platforms-header {
+    .versions-header {
         padding: 15px;
     }
 
-    .platforms-header-text {
+    .versions-header-text {
         font-size: 17px;
     }
 }
@@ -1462,7 +1521,7 @@ platform-item-image-container {
     }
 
     .category-name {
-        font-size: 12px;
+        font-size: 9px;
     }
 
 	.category-item {
@@ -1483,12 +1542,12 @@ a {
     color: inherit !important;
 }
 
-    .platform-item {
+    .version-item {
         width: 250px;
         height: 160px;
     }
 
-    .platform-item img {
+    .version-item img {
         width: 80px;
         height: 80px;
     }
@@ -1517,6 +1576,253 @@ a {
     width: 100%;
   }
 }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io/silly_goose">
+                <img src="Silly_Goose/assets/wiki/silly_goose_wiki.png" alt="Silly Goose Wiki">
+            </a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search Silly Goose Wiki" id="searchInput" autocomplete="off">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+</div>
+
+<div class="nav-tabs">
+    <div class="nav-scroll-wrapper" id="navWrapper">
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content">
+        <h1 class="page-title">Welcome to The Silly Goose Wiki!</h1>
+
+        <div class="featured-section">
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <img src="Silly_Goose/assets/silly_goose/news/news1.png" alt="News">
+                    <div class="card-title">Geese!</div>
+                    <div class="card-content">
+                        Look at how silly they are! These are the sole purpose of the mod. If they aren't here,
+                        the mod isn't here. What makes them unique from any other mob? Well, dear reader, they
+                        can do a move called the honk-and-run™, or a hit-and-run. Every now and then, a goose
+                        may come up to you, the player, and hit it once, then run away! Don't take this action
+                        to heart, for the other geese put him up to it. It was a bet.
+                    </div>
+                </div>
+
+                <div class="featured-card">
+                    <img src="Silly_Goose/assets/silly_goose/news/news2.png" alt="News">
+                    <div class="card-title">HONK HONK</div>
+                    <div class="card-content">
+                        HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK
+                        HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK
+                        HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK
+                        (press G to honk)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Mod Categories</h2>
+        <div class="category-grid">
+            <a href="Silly_Goose/mobs.html" class="category-item mobs-button">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="Silly_Goose/assets/buttons/mobs_button.png" alt="Mobs">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Mobs</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+            <a href="Silly_Goose/items.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="Silly_Goose/assets/buttons/items_button.png" alt="Items">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Items</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+            <a href="Silly_Goose/advancements.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="Silly_Goose/assets/buttons/advancements_button.png" alt="Advancements">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Advancements</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+            <a href="Silly_Goose/history.html" class="category-item history-button">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="Silly_Goose/assets/buttons/history_button.png" alt="History">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">History</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+        </div>
+
+        <div class="latest-versions">
+            <div class="versions-header" onclick="toggleVersions()">
+                <div class="versions-inset-shadow"></div>
+                <div class="versions-header-text">Latest Versions</div>
+                <div class="versions-header-arrow">
+                    <img src="assets/wiki/buttons/dropdown_arrow.png" alt="Dropdown Arrow">
+                </div>
+            </div>
+            <div class="versions-grid" id="versions-grid">
+                <div class="versions-content">
+                    <a href="https://modrinth.com/mod/silly-goose" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="assets/wiki/buttons/modrinth_button.png" alt="Modrinth">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Modrinth</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+
+                    <a href="https://www.curseforge.com/minecraft/mc-mods/silly-goose" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="assets/wiki/buttons/curseforge_button.png" alt="Curseforge">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Curseforge</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+
+                    <a href="https://www.planetminecraft.com/mod/silly-goose" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="assets/wiki/buttons/planet_minecraft_button.png" alt="Planet Minecraft">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Planet Minecraft</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <div class="about-section">
+                <div class="wiki-boxes">
+                    <div class="wiki-box">
+                        <h2>about the Mod</h2>
+                        <p>
+                            Geese have been labeled “silly” ever since the 15th century, often used as a metaphor for foolish or absurd behavior.
+                            The saying that resulted from this, “Silly goose,” has consequently been passed down from generation to generation until
+                            eventually reaching modern day. Today, we even have entire games dedicated to geese, such as Duck, Duck, Goose or
+                            Untitled Goose Game. And now, you can finally find these extraordinarily silly geese in Minecraft.
+                        </p>
+                        <p>
+                        You can now find geese across your Minecraft worlds spawning near bodies of water. You can find three types of geese,
+                            Temperate (Regular), Cold, and Warm. They spawn in coordinate to temperate, warm, or cold biomes. Every few minutes,
+                            if you happen to be near a goose, they might conduct a hit-and-run on you. That's just rumor though.
+                        </p>
+                        <div class="wiki-button">
+                            <div class="wiki-button-left-outline"></div>
+                            <div class="wiki-button-right-outline"></div>
+                            <div class="wiki-button-section">
+                                <div class="wiki-button-name">Get Silly Goose</div>
+                            </div>
+                            <div class="wiki-button-dark-strip"></div>
+                            <div class="wiki-button-bottom-outline"></div>
+                            <div class="wiki-button-shadow"></div>
+                        </div>
+                    </div>
+
+                    <div class="wiki-box">
+                        <h2>Featured article</h2>
+                        <p>
+                            The <strong>White Egg</strong> is an egg, similar to the one chickens spontaneously drop, that you can throw for
+                            a chance to spawn a baby goose. There are three types of these eggs: White Egg (Temperate), Big White Egg (Cold), and Small White Egg (Warm).
+                            It is visually larger than a regular chicken egg, even the small egg. Geese drop these eggs every 5-10 minutes.
+                        </p>
+                        <div class="wiki-button">
+                            <div class="wiki-button-left-outline"></div>
+                            <div class="wiki-button-right-outline"></div>
+                            <div class="wiki-button-section">
+                                <div class="wiki-button-name">Read More</div>
+                            </div>
+                            <div class="wiki-button-dark-strip"></div>
+                            <div class="wiki-button-bottom-outline"></div>
+                            <div class="wiki-button-shadow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
 
                 .wiki-boxes {
                     display: flex;
@@ -1688,284 +1994,98 @@ a {
                         font-size: 15px;
                     }
                 }
-    </style>
-</head>
-<body>
-<div class="header">
-    <div class="header-content">
-        <div class="logo">
-            <a href="https://potatowolfie.github.io">
-                <img src="assets/home/logo.png" alt="PotatoWolfie">
-            </a>
-        </div>
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search a Wiki" id="searchInput" autocomplete="off">
-            <div class="search-suggestions" id="searchSuggestions"></div>
-        </div>
-    </div>
-</div>
+            </style>
 
-<div class="nav-tabs">
-    <div class="nav-scroll-wrapper" id="navWrapper">
-    </div>
-</div>
+            <script>
+                document.querySelectorAll('.wiki-button').forEach(button => {
+                    button.addEventListener('mousedown', function() {
+                        this.classList.add('pressed');
+                    });
 
-<div class="main-container">
-    <div class="content">
-        <h1 class="page-title">Homepage</h1>
+                    button.addEventListener('mouseup', function() {
+                        this.classList.remove('pressed');
+                    });
 
-        <div class="featured-section">
-            <div class="featured-grid">
-                <div class="featured-card">
-                    <img src="assets/home/news/web1.png" alt="Web">
-                    <div class="card-title">Web</div>
-                    <div class="card-content">
-                        Web is a mod that expands on spiders by giving them new behaviors and animations. Spiders can now shoot webs to trap players, and baby spiders will hatch from eggs found in Spider Egg Clusters underground. Their attacks and style are inspired by the way Minecraft Dungeons implemented spiders
-                    </div>
-                </div>
+                    button.addEventListener('mouseleave', function() {
+                        this.classList.remove('pressed');
+                    });
 
-                <div class="featured-card">
-                    <img src="assets/home/news/un76_1.png" alt="Universe 76">
-                    <div class="card-title">Universe 76</div>
-                    <div class="card-content">
-                        Universe 76 is the aftermath of a deleted Minecraft world. It shows what happened to that world, corruption. Corruption spread across the world, infecting biomes and mobs and sending them to a new dimension, the Corrupted Nexus.
-                    </div>
-                </div>
-            </div>
-        </div>
+                    button.addEventListener('click', function() {
+                        const buttonText = this.querySelector('.wiki-button-name').textContent;
+                        if (buttonText === 'Get Web') {
+                            window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
+                        } else if (buttonText === 'Read More') {
+                            window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
+                        }
+                    });
+                });
 
-        <h2>Modder's Tools</h2>
-        <div class="category-grid">
-            <a href="armor_trim_model_maker.html" class="category-item">
-                <div class="category-top-outline"></div>
-                <div class="category-left-outline"></div>
-                <div class="category-right-outline"></div>
-                <div class="category-top-highlight"></div>
-                <div class="category-image-container">
-                    <img src="assets/helper_tools/buttons/trim_item_models_button.png" alt="Trim Model Maker">
-                </div>
-                <div class="category-image-section"></div>
-                <div class="category-button-section">
-                    <div class="category-name">armor Trim Items</div>
-                </div>
-                <div class="category-dark-strip"></div>
-                <div class="category-bottom-outline"></div>
-                <div class="category-shadow"></div>
-            </a>
-        </div>
-        <h2>Website Related Tools</h2>
-        <div class="category-grid">
-            <a href="html_theme_editor.html" class="category-item">
-                <div class="category-top-outline"></div>
-                <div class="category-left-outline"></div>
-                <div class="category-right-outline"></div>
-                <div class="category-top-highlight"></div>
-                <div class="category-image-container">
-                    <img src="assets/helper_tools/buttons/html_theme_editor_button.png" alt="HTML Theme Editor">
-                </div>
-                <div class="category-image-section"></div>
-                <div class="category-button-section">
-                    <div class="category-name">HTML Theme Editor</div>
-                </div>
-                <div class="category-dark-strip"></div>
-                <div class="category-bottom-outline"></div>
-                <div class="category-shadow"></div>
-            </a>
-        </div>
+                document.querySelectorAll('.version-item').forEach(item => {
+                    item.addEventListener('mousedown', function() {
+                        this.classList.add('pressed');
+                    });
 
-        <div class="social-platforms">
-            <div class="platforms-header" onclick="togglePlatforms()">
-                <div class="platforms-inset-shadow"></div>
-                <div class="platforms-header-text">Platforms</div>
-                <div class="platforms-header-arrow">
-                    <img src="assets/wiki/buttons/dropdown_arrow.png" alt="Dropdown Arrow">
-                </div>
-            </div>
-            <div class="platforms-grid" id="platforms-grid">
-                <div class="platforms-content">
-                    <a href="https://www.youtube.com/@PotatoWolfie" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
+                    item.addEventListener('mouseup', function() {
+                        this.classList.remove('pressed');
+                    });
 
-                        <div class="platform-item-image-container">
-                            <img src="assets/home/buttons/youtube_button.png" alt="YouTube">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">YouTube</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.twitch.tv/potatowolfie64" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/home/buttons/twitch_button.png" alt="Twitch">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Twitch</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://github.com/PotatoWolfie" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/home/buttons/github_button.png" alt="GitHub">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">GitHub</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.planetminecraft.com/member/potatowolfie/" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/wiki/buttons/planet_minecraft_button.png" alt="Planet Minecraft">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Planet Minecraft</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://modrinth.com/user/PotatoWolfie" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/wiki/buttons/modrinth_button.png" alt="Modrinth">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Modrinth</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.curseforge.com/members/potatowolfie/projects" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/wiki/buttons/curseforge_button.png" alt="Curseforge">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Curseforge</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="about-section">
-            <div class="about-section">
-                <div class="wiki-boxes">
-                    <div class="wiki-box">
-                        <h2>About PotatoWolfie</h2>
-                        <p>
-                            I, <strong>PotatoWolfie</strong>, am a Minecraft creator and mod developer who enjoys
-                            making vanilla friendly mods, but I like to experiment with some mods that go beyond what
-                            vanilla would add. I work as hard as I can to make quality mods (disregarding Universe 76) that aren't
-                            unbearable to play. I work with creators like <strong>Demidiant</strong>, who I have led projects with
-                            in the past. Have a good day, reader!
-                        </p>
-                    </div>
-
-                    <div class="wiki-box">
-                        <h2>Latest Project</h2>
-                        <p>
-                            The latest mod released, <strong>Web</strong>, expands the role of spiders in Minecraft.
-                            With <strong>new behaviors</strong> and <strong>fresh animations</strong>, spiders are more dynamic than ever.
-                            They can <strong>shoot webs</strong> to trap players, and <strong>Spider Egg Clusters</strong> found
-                            underground may burst open with baby spiders. Inspired by <em>Minecraft Dungeons</em>, this mod
-                            makes every encounter with spiders more tense and dangerous.
-                        </p>
-                        <div class="wiki-button">
-                            <div class="wiki-button-left-outline"></div>
-                            <div class="wiki-button-right-outline"></div>
-                            <div class="wiki-button-section">
-                                <div class="wiki-button-name">Learn More</div>
-                            </div>
-                            <div class="wiki-button-dark-strip"></div>
-                            <div class="wiki-button-bottom-outline"></div>
-                            <div class="wiki-button-shadow"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    item.addEventListener('mouseleave', function() {
+                        this.classList.remove('pressed');
+                    });
+                });
+            </script>
         </div>
     </div>
 
     <div class="sidebar">
         <div class="sidebar-section stats">
-            <div class="stat-number">2</div>
-            <div class="stat-label">Active Mods</div>
+            <div class="stat-number">13</div>
+            <div class="stat-label">Articles</div>
             <div style="margin: 15px 0;">•</div>
-            <div class="stat-number">40K+</div>
-            <div class="stat-label">Downloads</div>
+            <div class="stat-number">33</div>
+            <div class="stat-label">Files</div>
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-title">Did you know...</div>
             <ul class="sidebar-list">
-                <li>...that I started modding using Mcreator?</li>
-                <li>...Universe 76 was inspired by a YouTube video asking what happened to deleted Minecraft worlds?</li>
+                <li>...the idea for this mod was made 9 months before work on it started?</li>
+                <li>...that neither of the creators of this mod knew much about geese before this mod?</li>
+                <li>...that this mod is loosely inspired by Untitled Goose Game?</li>
             </ul>
+        </div>
+
+        <div class="sidebar-section creators-section">
+            <div class="creators-content">
+                <div class="sidebar-title">Creator</div>
+
+                <div class="creator">
+                    <div class="creator-name">PotatoWolfie</div>
+                    <div class="creator-links">
+                        <a href="https://www.youtube.com/@PotatoWolfie" class="creator-link" target="_blank">YouTube</a>
+                        <a href="https://www.twitch.tv/potatowolfie64" class="creator-link" target="_blank">Twitch</a>
+                        <a href="https://www.planetminecraft.com/member/potatowolfie/" class="creator-link" target="_blank">Planet Minecraft</a>
+                        <a href="https://www.curseforge.com/members/potatowolfie/projects" class="creator-link" target="_blank">CurseForge</a>
+                        <a href="https://modrinth.com/user/PotatoWolfie" class="creator-link" target="_blank">Modrinth</a>
+                        <a href="https://github.com/PotatoWolfie" class="creator-link" target="_blank">Github</a>
+                    </div>
+                </div>
+                <div class="creator">
+                    <div class="creator-name">Demidiant</div>
+                    <div class="creator-links">
+                        <a href="https://www.youtube.com/@DemidiantTheBuilder" class="creator-link" target="_blank">YouTube</a>
+                        <a href="https://www.planetminecraft.com/member/demidiant_/" class="creator-link" target="_blank">Planet Minecraft</a>
+                        <a href="https://modrinth.com/user/Demidiant" class="creator-link" target="_blank">Modrinth</a>
+                        <a href="https://github.com/Demidiant" class="creator-link" target="_blank">Github</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="sidebar-section minecraft">
             <div class="sidebar-title">Legal Notice</div>
             <ul class="sidebar-list">
-                <li>All mods made by me are unofficial Minecraft modifications and are not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft in any way. Minecraft is a sandbox video game developed by Mojang Studios.</li>
+                <li>Silly Goose is an unofficial Minecraft mod and is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft in any way. Minecraft is a sandbox video game developed by Mojang Studios that allows players to explore, build, and survive in a block-based world.</li>
             </ul>
         </div>
     </div>
@@ -1978,87 +2098,260 @@ a {
     let isDropdownAnimating = false;
 
     let searchData = {};
-let allSearchItems = [];
+    let allSearchItems = [];
 
-async function loadSearchData() {
-    try {
-        const response = await fetch('search-data.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    async function loadSearchData() {
+        try {
+            const response = await fetch('search-data-silly-goose');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            searchData = await response.json();
+            allSearchItems = Object.values(searchData).flat();
+            console.log('Search data loaded successfully');
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            searchData = {};
+            allSearchItems = [];
         }
-        searchData = await response.json();
-        allSearchItems = Object.values(searchData).flat();
-        console.log('Search data loaded successfully');
-    } catch (error) {
-        console.error('Error loading search data:', error);
-        searchData = {};
-        allSearchItems = [];
-    }
-}
-
-function initializeSearch() {
-    const searchInput = document.getElementById('searchInput');
-    const searchSuggestions = document.getElementById('searchSuggestions');
-
-    if (!searchInput || !searchSuggestions) {
-        console.error('Search elements not found');
-        return;
     }
 
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
+    function initializeSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
 
-        if (query.length === 0) {
-            searchSuggestions.style.display = 'none';
+        if (!searchInput || !searchSuggestions) {
+            console.error('Search elements not found');
             return;
         }
 
-        const matches = allSearchItems.filter(item =>
-            item.title.toLowerCase().includes(query) ||
-            item.category.toLowerCase().includes(query)
-        ).slice(0, 8);
-
-        if (matches.length > 0) {
-            searchSuggestions.innerHTML = matches.map(item => `
-                <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-                    <div class="suggestion-category">${item.category}</div>
-                    <div class="suggestion-title">${item.title}</div>
-                </div>
-            `).join('');
-            searchSuggestions.style.display = 'block';
-        } else {
-            searchSuggestions.style.display = 'none';
-        }
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.search-container')) {
-            searchSuggestions.style.display = 'none';
-        }
-    });
-
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
+        searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
-            const firstMatch = allSearchItems.find(item =>
+
+            if (query.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = allSearchItems.filter(item =>
                 item.title.toLowerCase().includes(query) ||
                 item.category.toLowerCase().includes(query)
-            );
-            if (firstMatch) {
-                navigateToPage(firstMatch.page);
-            }
-        }
-    });
-}
+            ).slice(0, 8);
 
-function navigateToPage(page) {
-    window.location.href = page;
-}
+            if (matches.length > 0) {
+                searchSuggestions.innerHTML = matches.map(item => `
+                    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                        <div class="suggestion-category">${item.category}</div>
+                        <div class="suggestion-title">${item.title}</div>
+                    </div>
+                `).join('');
+                searchSuggestions.style.display = 'block';
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase().trim();
+                const firstMatch = allSearchItems.find(item =>
+                    item.title.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query)
+                );
+                if (firstMatch) {
+                    navigateToPage(firstMatch.page);
+                }
+            }
+        });
+    }
+
+    function navigateToPage(page) {
+        window.location.href = page;
+    }
+
+    function updateArrow() {
+        if (currentRotation === targetRotation || isArrowAnimating) return;
+
+        const arrow = document.querySelector('.versions-header-arrow');
+        isArrowAnimating = true;
+
+        let nextRotation = currentRotation + 180;
+
+        arrow.style.transform = `rotate(${nextRotation}deg)`;
+
+        arrow.addEventListener('transitionend', function handler(e) {
+            if (e.propertyName !== 'transform') return;
+
+            arrow.removeEventListener('transitionend', handler);
+
+            currentRotation = nextRotation;
+
+            if (currentRotation >= 360) {
+                arrow.style.transition = 'none';
+                currentRotation -= 360;
+                targetRotation -= 360;
+                arrow.style.transform = `rotate(${currentRotation}deg)`;
+
+                void arrow.offsetWidth;
+                arrow.style.transition = 'transform 0.4s ease';
+            }
+
+            isArrowAnimating = false;
+
+            setTimeout(updateArrow, 10);
+        });
+    }
+
+    function toggleVersions() {
+        const grid = document.getElementById('versions-grid');
+        const container = document.querySelector('.latest-versions');
+
+        if (isDropdownAnimating) return;
+
+        isDropdownAnimating = true;
+
+        if (grid.classList.contains('open')) {
+            const fullHeight = grid.scrollHeight + 'px';
+            grid.style.maxHeight = fullHeight;
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = '0px';
+            });
+        } else {
+            grid.classList.add('open');
+            grid.style.maxHeight = '0px';
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = grid.scrollHeight + 'px';
+            });
+        }
+
+        grid.addEventListener('transitionend', function handler() {
+            grid.removeEventListener('transitionend', handler);
+
+            if (grid.style.maxHeight === '0px') {
+                grid.classList.remove('open');
+            }
+
+            isDropdownAnimating = false;
+        });
+
+        container.classList.toggle('expanded');
+
+        targetRotation += 180;
+        if (!isArrowAnimating) {
+            updateArrow();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            item.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+        });
+    });
+
+    document.querySelectorAll('.wiki-button').forEach(button => {
+        button.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        button.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('click', function() {
+            const buttonText = this.querySelector('.wiki-button-name').textContent;
+            if (buttonText === 'Get Silly Goose') {
+                window.open('https://www.curseforge.com/minecraft/mc-mods/silly-goose', '_blank');
+            } else if (buttonText === 'Read More') {
+                window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', async function() {
+    await loadSearchData();
+    initializeSearch();
+    renderNavigation();
+
+    window.addEventListener('resize', function() {
+        renderNavigation();
+    });
+
+    document.querySelectorAll('.category-item').forEach(item => {
+        item.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        item.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        item.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+    });
+
+    document.querySelectorAll('.wiki-button').forEach(button => {
+        button.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        button.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('click', function() {
+            const buttonText = this.querySelector('.wiki-button-name').textContent;
+            if (buttonText === 'Get Silly Goose') {
+                window.open('https://www.curseforge.com/minecraft/mc-mods/silly-goose', '_blank');
+            } else if (buttonText === 'Read More') {
+                window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
+            }
+        });
+    });
+
+    document.querySelectorAll('.version-item').forEach(item => {
+        item.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        item.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        item.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+    });
+});
 
 const navTabs = [
-    { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png', active: true },
+    { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
     { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png' },
+    { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png', active: true },
     { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
 ];
 
@@ -2166,162 +2459,109 @@ function renderNavigation() {
     });
 }
 
-function updateArrow() {
-    if (currentRotation === targetRotation || isArrowAnimating) return;
+    const honkSounds = [
+    'Silly_Goose/assets/sounds/goose_attack.ogg',
+    'Silly_Goose/assets/sounds/goose_death_1.ogg',
+    'Silly_Goose/assets/sounds/goose_death_2.ogg',
+    'Silly_Goose/assets/sounds/goose_honk_1.ogg',
+    'Silly_Goose/assets/sounds/goose_honk_2.ogg',
+    'Silly_Goose/assets/sounds/goose_honk_3.ogg',
+    'Silly_Goose/assets/sounds/goose_hurt_1.ogg',
+    'Silly_Goose/assets/sounds/goose_hurt_2.ogg'
+];
 
-    const arrow = document.querySelector('.platforms-header-arrow');
-    isArrowAnimating = true;
-
-    let nextRotation = currentRotation + 180;
-
-    arrow.style.transform = `rotate(${nextRotation}deg)`;
-
-    arrow.addEventListener('transitionend', function handler(e) {
-        if (e.propertyName !== 'transform') return;
-
-        arrow.removeEventListener('transitionend', handler);
-
-        currentRotation = nextRotation;
-
-        if (currentRotation >= 360) {
-            arrow.style.transition = 'none';
-            currentRotation -= 360;
-            targetRotation -= 360;
-            arrow.style.transform = `rotate(${currentRotation}deg)`;
-
-            void arrow.offsetWidth;
-            arrow.style.transition = 'transform 0.4s ease';
-        }
-
-        isArrowAnimating = false;
-
-        setTimeout(updateArrow, 10);
-    });
-}
-
-function togglePlatforms() {
-    const grid = document.getElementById('platforms-grid');
-    const container = document.querySelector('.social-platforms');
-
-    if (isDropdownAnimating) return;
-
-    isDropdownAnimating = true;
-
-    if (grid.classList.contains('open')) {
-        const fullHeight = grid.scrollHeight + 'px';
-        grid.style.maxHeight = fullHeight;
-        requestAnimationFrame(() => {
-            grid.style.maxHeight = '0px';
-        });
-    } else {
-        grid.classList.add('open');
-        grid.style.maxHeight = '0px';
-        requestAnimationFrame(() => {
-            grid.style.maxHeight = grid.scrollHeight + 'px';
-        });
-    }
-
-    grid.addEventListener('transitionend', function handler() {
-        grid.removeEventListener('transitionend', handler);
-
-        if (grid.style.maxHeight === '0px') {
-            grid.classList.remove('open');
-        }
-
-        isDropdownAnimating = false;
-    });
-
-    container.classList.toggle('expanded');
-
-    targetRotation += 180;
-    if (!isArrowAnimating) {
-        updateArrow();
-    }
-}
-
-document.addEventListener('DOMContentLoaded', async function() {
-    await loadSearchData();
-    initializeSearch();
-    renderNavigation();
-
-    window.addEventListener('resize', function() {
-        renderNavigation();
-    });
-
-    document.querySelectorAll('.category-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
-
-    document.querySelectorAll('.wiki-button').forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        button.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('click', function() {
-            const buttonText = this.querySelector('.wiki-button-name').textContent;
-            if (buttonText === 'View Mods') {
-                window.open('https://www.curseforge.com/members/potatowolfie/projects', '_blank');
-            } else if (buttonText === 'Learn More') {
-                window.open('web.html', '_blank');
-            }
-        });
-    });
-
-    document.querySelectorAll('.platform-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
+const preloadedHonks = honkSounds.map(src => {
+    const audio = new Audio(src);
+    audio.preload = 'auto';
+    return audio;
 });
 
-    /*
-    Put this in style when E&W
-    <h2>Other Mods</h2>
-        <div class="category-grid">
-            <a href="web.html" class="category-item">
-                <div class="category-top-outline"></div>
-                <div class="category-left-outline"></div>
-                <div class="category-right-outline"></div>
-                <div class="category-top-highlight"></div>
-                <div class="category-image-container">
-                    <img src="assets/web/wiki/buttons/mobs_button.png" alt="Web">
-                </div>
-                <div class="category-image-section"></div>
-                <div class="category-button-section">
-                    <div class="category-name">Web</div>
-                </div>
-                <div class="category-dark-strip"></div>
-                <div class="category-bottom-outline"></div>
-                <div class="category-shadow"></div>
-            </a>
-        </div>
-    */
+let mouseX = 0;
+let mouseY = 0;
+let honkCount = 0;
+let isRaining = false;
+let rainTimer = null;
+let rainEndTime = 0;
+
+document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+function createHonkText() {
+    const honkText = document.createElement('div');
+    honkText.className = 'honk-text';
+    honkText.textContent = 'HONK!';
+    honkText.style.left = mouseX + 'px';
+    honkText.style.top = mouseY + 'px';
+    honkText.style.transform = 'translate(-100%, -100%)';
+
+    document.body.appendChild(honkText);
+
+    setTimeout(() => {
+        honkText.remove();
+    }, 1000);
+}
+
+function createGeraldRain() {
+    const gerald = document.createElement('img');
+    gerald.src = 'Silly_Goose/assets/wiki/gerald.png';
+    gerald.className = 'gerald-rain';
+    gerald.style.left = Math.random() * window.innerWidth + 'px';
+    gerald.style.top = '-200px';  // Start above the screen
+    gerald.style.animationDuration = (2 + Math.random() * 3) + 's';
+
+    document.body.appendChild(gerald);
+
+    setTimeout(() => {
+        gerald.remove();
+    }, 5000);
+}
+
+function startGeraldRain() {
+    if (isRaining) return;
+
+    isRaining = true;
+    rainEndTime = Date.now() + 12000;
+
+    const rainInterval = setInterval(() => {
+        if (Date.now() >= rainEndTime) {
+            clearInterval(rainInterval);
+            isRaining = false;
+            return;
+        }
+        createGeraldRain();
+    }, 100);
+
+    rainTimer = rainInterval;
+}
+
+function playRandomHonk() {
+    const randomIndex = Math.floor(Math.random() * preloadedHonks.length);
+    const honk = preloadedHonks[randomIndex].cloneNode();
+    honk.volume = 0.5;
+    honk.play().catch(err => console.log('Honk playback failed:', err));
+
+    createHonkText();
+
+    honkCount++;
+
+    if (isRaining) {
+        rainEndTime += 100;
+    }
+
+    if (honkCount >= 50 && !isRaining) {
+        honkCount = 0;
+        startGeraldRain();
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key.toLowerCase() === 'g' &&
+        !e.target.matches('input, textarea, [contenteditable="true"]')) {
+        playRandomHonk();
+    }
+});
 </script>
-</body>
-</html>
+
+</body></html>

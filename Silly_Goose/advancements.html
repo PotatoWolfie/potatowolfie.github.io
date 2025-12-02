@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://potatowolfie.github.io">
+    <meta property="og:title" content="Silly Goose Advancements">
+    <meta property="og:description" content="The Silly Goose Wiki is the Wiki for the Minecraft mod, Silly Goose! All information you could possibly need is probably here!">
+    <meta property="og:image" content="https://potatowolfie.github.io/Silly_Goose/assets/wiki/silly_goose_wiki.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Silly Goose Wiki">
+    <meta name="theme-color" content="#8b4513">
+    <meta property="og:locale" content="en_US">
+    <title>Silly Goose Advancements</title>
+    <link rel="icon" type="image/x-icon" href="silly_goose_wiki_favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('assets/font/minecraft.woff2') format('woff2'),
+                 url('assets/font/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                 url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+        body {
+            background: url('assets/wiki/background.png');
+            background-color: #2d2d2d;
+            background-repeat: repeat;
+            background-position: top left;
+            font-family: 'Nunito', 'Inter', sans-serif;
+            color: #e6e6e6;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(45, 45, 45, 0.9);
+            border-bottom: 3px solid #4a4a4a;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            position: static;
+        }
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            gap: 15px;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: none;
+            color: #e6e6e6;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            border-radius: 4px;
+        }
+
+        .search-box:focus {
+    outline: 2px solid #2a78c6;
+    outline-offset: -2px;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #2e2e2e;
+    border: 2px solid #1a1a1a;
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow:
+        inset 2px 2px 0 #3a3a3a,
+        inset -2px -2px 0 #242424;
+}
+
+.search-suggestion {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #3a3a3a;
+    color: #cccccc;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.search-suggestion:hover {
+    background: #4f5a75;
+}
+
+.search-suggestion:hover .suggestion-title {
+    color: #2a78c6;
+}
+
+.search-suggestion:last-child {
+    border-bottom: none;
+}
+
+.suggestion-category {
+    font-size: 12px;
+    color: #2a78c6;
+    font-family: 'Minecraft Ten', 'Inter', sans-serif;
+    font-weight: normal;
+}
+
+.suggestion-title {
+    font-size: 14px;
+    margin-top: 2px;
+    font-family: 'Nunito', sans-serif;
+    color: #cccccc;
+}
+
+.search-suggestions::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-suggestions::-webkit-scrollbar-track {
+    background: #242424;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb {
+    background: #4f5a75;
+    border-radius: 4px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb:hover {
+    background: #5a6580;
+}
+
+.search-suggestions {
+    scrollbar-width: thin;
+    scrollbar-color: #4f5a75 #242424;
+}
+
+        .main-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            background: #262626;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .toc {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 15px;
+            font-family: 'Nunito', sans-serif;
+            width: 300px;
+            flex-shrink: 0;
+            align-self: flex-start;
+            position: sticky;
+            top: 27px;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+        }
+
+        .toc h2 {
+            font-size: 16px;
+            color: #2a78c6;
+            margin-bottom: 10px;
+            margin-top: 0;
+            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin-bottom: 5px;
+        }
+
+        .toc a {
+            color: #cccccc;
+            text-decoration: none;
+            display: block;
+            padding: 5px 8px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .toc a:hover {
+            color: #2a78c6;
+            background: rgba(0,60,138,0.1);
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+    .header-content {
+        padding: 0 15px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .logo {
+        margin: 10px 0;
+    }
+
+    .search-container {
+        margin: 0 10px;
+        max-width: none;
+        flex: 1;
+        width: 100%;
+    }
+
+    .search-suggestions {
+        max-height: 250px;
+        left: -2px;
+        right: -2px;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .toc {
+        width: 100%;
+        position: static;
+        margin-bottom: 25px;
+    }
+
+    .main-container {
+        margin: 20px 15px;
+        padding: 25px 20px;
+        max-width: none;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .main-header {
+        font-size: 1.1rem;
+        margin: 25px 0 12px 0;
+    }
+
+    .advancement-table {
+        font-size: 11px;
+    }
+
+    .advancement-table th,
+    .advancement-table td {
+        padding: 6px 4px;
+    }
+
+    .icon-cell img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-content {
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .logo {
+        height: 50px;
+    }
+
+    .search-container {
+        margin: 0 5px;
+        min-width: 0;
+    }
+
+    .search-box {
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+
+    .search-suggestions {
+        max-height: 200px;
+        border-radius: 0 0 4px 4px;
+    }
+
+    .search-suggestion {
+        padding: 12px 15px;
+        min-height: 50px;
+    }
+
+    .suggestion-category {
+        font-size: 11px;
+    }
+
+    .suggestion-title {
+        font-size: 15px;
+        margin-top: 3px;
+    }
+
+    .main-container {
+        margin: 15px 10px;
+        padding: 20px 15px;
+    }
+
+    .page-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .main-header {
+        font-size: 1.1rem;
+        margin: 20px 0 10px 0;
+    }
+}
+
+@media (hover: none) {
+    .search-suggestion:hover {
+        background: transparent;
+    }
+    .search-suggestion:active {
+        background: #4f5a75;
+    }
+    .search-suggestion:active .suggestion-title {
+        color: #2a78c6;
+    }
+    .toc a:hover {
+        background: transparent;
+    }
+    .toc a:active {
+        background: rgba(0,60,138,0.1);
+    }
+}
+
+        .page-title {
+            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
+            color: #2a78c6;
+            font-size: 1.7rem;
+            margin-bottom: 25px;
+            margin-top: 0;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 10px;
+        }
+
+        .main-header {
+            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
+            color: #2a78c6;
+            font-size: 1.1rem;
+            margin: 30px 0 15px 0;
+        }
+
+        .advancement-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a1a1a;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        .advancement-table th {
+            background: #2a2a2a;
+            color: #2a78c6;
+            padding: 10px 8px;
+            text-align: left;
+            border: 1px solid #3a3a3a;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            white-space: nowrap;
+        }
+
+        .advancement-table td {
+            padding: 8px;
+            border: 1px solid #3a3a3a;
+            color: #e6e6e6;
+            vertical-align: top;
+        }
+
+        .advancement-table tr:nth-child(even) {
+            background: #222222;
+        }
+
+        .icon-cell {
+            width: 50px;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .icon-cell img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+
+        .advancement-name {
+            font-weight: 600;
+            color: #ffffff;
+            min-width: 150px;
+        }
+
+        .description-cell {
+            min-width: 200px;
+        }
+
+        .parent-cell {
+            min-width: 100px;
+        }
+
+        .requirements-cell {
+            min-width: 250px;
+        }
+
+        .requirements-cell ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .requirements-cell li {
+            margin: 3px 0;
+        }
+
+        .resource-location {
+            font-family: 'Courier New', monospace;
+            background: #2a2a2a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            color: #3e8cda;
+        }
+
+        .minecraft-header {
+            background: #2a2a2a;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #2a78c6;
+        }
+
+        .minecraft-header img {
+            height: 16px;
+            width: auto;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .minecraft-link {
+            color: #3e8cda;
+            text-decoration: none;
+        }
+
+        .minecraft-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .toc {
+                width: 100%;
+                position: static;
+            }
+
+            .main-container {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+
+            .advancement-table {
+                font-size: 11px;
+            }
+
+            .advancement-table th,
+            .advancement-table td {
+                padding: 6px 4px;
+            }
+
+            .icon-cell img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        h1, h2 {
+            font-family: 'Minecraft Ten', 'Inter', sans-serif !important;
+        }
+
+        p {
+    margin: 0 0 15px 0;
+    word-wrap: break-word;
+}
+
+strong {
+    color: #3e8cda;
+}
+
+html {
+    scroll-padding-top: 20px;
+}
+
+@media print {
+    .header,
+    .search-container {
+        display: none;
+    }
+
+    .main-container {
+        margin: 0;
+        padding: 20px;
+        box-shadow: none;
+        background: white;
+        color: black;
+    }
+
+    .toc {
+        position: static;
+        page-break-inside: avoid;
+    }
+}
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io/silly_goose">
+                <img src="assets/wiki/silly_goose_wiki.png" alt="Silly Goose Wiki">
+            </a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search Silly Goose Wiki" id="searchInput" autocomplete="off">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content-wrapper">
+        <div class="toc">
+            <h2>Contents</h2>
+            <ul>
+                <li><a href="#list-of-advancements">List of Advancements</a></li>
+                <li><a href="#history">History</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h1 class="page-title">Advancements</h1>
+            <p>
+                <strong>Silly Goose</strong> adds three advancements, all related to the lovely goose.
+            </p>
+
+            <h2 id="list-of-advancements" class="main-header">List of Advancements</h2>
+
+            <table class="advancement-table">
+                <thead>
+                <tr>
+                    <th>Icon</th>
+                    <th>Advancement</th>
+                    <th>In-game description</th>
+                    <th>Parent</th>
+                    <th>Requirements</th>
+                    <th>Resource location</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <tr id="honk-and-run">
+                    <td class="icon-cell">
+                        <img src="assets/wiki/items/feather.png" alt="Advancement Icon">
+                    </td>
+                    <td class="advancement-name">Honk and Run</td>
+                    <td class="description-cell">Get hit by a goose</td>
+                    <td class="parent-cell">Adventure</td>
+                    <td class="requirements-cell">You must be hit by a goose while a goose is in its "Hit and Run" mode.</td>
+                    <td><span class="resource-location">adventure/honk_and_run</span></td>
+                </tr>
+                <tr id="hit-and-run">
+                    <td class="icon-cell">
+                        <img src="assets/wiki/items/stone_sword.png" alt="Advancement Icon">
+                    </td>
+                    <td class="advancement-name">Hit and Run</td>
+                    <td class="description-cell">Get hit by a goose holding a sword</td>
+                    <td class="parent-cell">Honk and Run</td>
+                    <td class="requirements-cell">You must be hit by a goose while a goose is in its "Hit and Run" while it holds a sword.</td>
+                    <td><span class="resource-location">adventure/hit_and_run</span></td>
+                </tr>
+                <tr id="unfair-trade">
+                    <td class="icon-cell">
+                        <img src="assets/wiki/items/wheat_seeds.png" alt="Advancement Icon">
+                    </td>
+                    <td class="advancement-name">Unfair Trade</td>
+                    <td class="description-cell">Give a goose food in turn for a sword</td>
+                    <td class="parent-cell">Adventure</td>
+                    <td class="requirements-cell">Give a goose seeds of any kind.</td>
+                    <td><span class="resource-location">adventure/unfair_trade</span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2 id="history" class="main-header">History</h2>
+            <div style="background: #2e2e2e; border: 2px solid #1a1a1a; padding: 20px; margin-top: 20px; box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;">
+                <div style="font-size: 1.1rem; color: #2a78c6; margin-bottom: 15px; font-family: 'Minecraft Ten', 'Nunito', sans-serif;">Timeline</div>
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div style="width: 4px; background: #2a78c6; flex-shrink: 0;"></div>
+                    <div>
+                        <div style="font-size: 16px; color: #3e8cda; font-weight: 600; margin-bottom: 5px;">Version 1.0.0</div>
+                        <div style="color: #cccccc; font-size: 14px;">Added Honk and Run, Hit and Run, and Unfair Trade</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let searchData = {};
+let allSearchItems = [];
+
+async function loadSearchData() {
+    try {
+        const response = await fetch('search-data-silly-goose.json');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        searchData = await response.json();
+        allSearchItems = Object.values(searchData).flat();
+        console.log('Search data loaded successfully');
+    } catch (error) {
+        console.error('Error loading search data:', error);
+        searchData = {};
+        allSearchItems = [];
+    }
+}
+
+function initializeSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchSuggestions = document.getElementById('searchSuggestions');
+
+    if (!searchInput || !searchSuggestions) {
+        console.error('Search elements not found');
+        return;
+    }
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+
+        if (query.length === 0) {
+            searchSuggestions.style.display = 'none';
+            return;
+        }
+
+        const matches = allSearchItems.filter(item =>
+            item.title.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query)
+        ).slice(0, 8);
+
+        if (matches.length > 0) {
+            searchSuggestions.innerHTML = matches.map(item => `
+                <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                    <div class="suggestion-category">${item.category}</div>
+                    <div class="suggestion-title">${item.title}</div>
+                </div>
+            `).join('');
+            searchSuggestions.style.display = 'block';
+        } else {
+            searchSuggestions.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            searchSuggestions.style.display = 'none';
+        }
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const query = this.value.toLowerCase().trim();
+            const firstMatch = allSearchItems.find(item =>
+                item.title.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+            if (firstMatch) {
+                navigateToPage(firstMatch.page);
+            }
+        }
+    });
+}
+
+function navigateToPage(page) {
+    window.location.href = page;
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadSearchData();
+    initializeSearch();
+});
+</script>
+</body>
+</html>
