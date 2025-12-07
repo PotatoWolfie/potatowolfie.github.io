@@ -900,10 +900,11 @@
     }
 
     function navigateToPage(page) {
-        if (!page.startsWith('http') && !page.startsWith('../')) {
-            page = '../' + page;
+        if (page.startsWith('http')) {
+            window.location.href = page;
+        } else {
+            window.location.href = 'https://potatowolfie.github.io/' + page;
         }
-        window.location.href = page;
     }
 
     document.addEventListener('DOMContentLoaded', async function() {

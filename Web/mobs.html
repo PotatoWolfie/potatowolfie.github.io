@@ -981,8 +981,12 @@ searchInput.addEventListener('keydown', function(e) {
 }
 
 function navigateToPage(page) {
-window.location.href = page;
-}
+        if (page.startsWith('http')) {
+            window.location.href = page;
+        } else {
+            window.location.href = 'https://potatowolfie.github.io/' + page;
+        }
+    }
 
 document.addEventListener('DOMContentLoaded', async function() {
 await loadSearchData();
