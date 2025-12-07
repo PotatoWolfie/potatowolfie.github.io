@@ -467,13 +467,21 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
         }
 
         .stats-bar {
-            display: flex;
-            gap: 20px;
-            padding: 15px;
-            background: #1a1a1a;
-            border: 2px solid #0a0a0a;
-            margin-bottom: 20px;
-        }
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 15px;
+    background: #1a1a1a;
+    border: 2px solid #0a0a0a;
+    margin-bottom: 20px;
+}
+
+        @media (max-width: 768px) {
+    .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+        display: grid;
+    }
+}
 
         .stat-item {
             flex: 1;
@@ -719,9 +727,175 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             font-size: 14px;
             color: #a0a0a0;
         }
+
+        .theme-panel {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 350px;
+            background: #262626;
+            border-right: 3px solid #4a4a4a;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 2500;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .theme-panel.show {
+            transform: translateX(0);
+        }
+
+        .theme-panel-header {
+            background: #2e2e2e;
+            padding: 20px;
+            border-bottom: 2px solid #1a1a1a;
+            flex-shrink: 0;
+        }
+
+        .theme-panel-title {
+            font-size: 18px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .theme-panel-subtitle {
+            font-size: 13px;
+            color: #a0a0a0;
+        }
+
+        .theme-panel-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #e6e6e6;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .theme-panel-close:hover {
+            color: #3453df;
+        }
+
+        .theme-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .theme-color-mapping {
+            background: #2a2a2a;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #1a1a1a;
+        }
+
+        .theme-color-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .theme-color-box {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #1a1a1a;
+            flex-shrink: 0;
+        }
+
+        .theme-color-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .theme-arrow {
+            font-size: 20px;
+            color: #3453df;
+        }
+
+        .theme-usage-count {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .theme-panel-actions {
+            padding: 20px;
+            background: #2e2e2e;
+            border-top: 2px solid #1a1a1a;
+            flex-shrink: 0;
+        }
+
+.theme-panel-mobile-section {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .theme-panel {
+        display: none !important;
+    }
+
+    .theme-panel-mobile-section.show {
+        display: block !important;
+    }
+
+    .main-content-shifted {
+        margin-left: 0;
+    }
+}
+
+        .main-content-shifted {
+            margin-left: 350px;
+            transition: margin-left 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .main-content-shifted {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 <body>
+<div class="theme-panel" id="themePanel">
+    <div class="theme-panel-header">
+        <button class="theme-panel-close" onclick="closeThemePanel()">×</button>
+        <div class="theme-panel-title" id="themePanelTitle">Imported Theme</div>
+        <div class="theme-panel-subtitle" id="themePanelSubtitle">0 color mappings</div>
+    </div>
+    <div class="theme-panel-content" id="themePanelContent">
+    </div>
+    <div class="theme-panel-actions">
+        <button class="minecraft-button success" onclick="applyThemeToHTML()" style="width: 100%; margin-bottom: 10px;">
+            <div class="minecraft-button-left-outline"></div>
+            <div class="minecraft-button-right-outline"></div>
+            <div class="minecraft-button-section">
+                <div class="minecraft-button-name">Apply to Current HTML</div>
+            </div>
+            <div class="minecraft-button-dark-strip"></div>
+            <div class="minecraft-button-bottom-outline"></div>
+            <div class="minecraft-button-shadow"></div>
+        </button>
+        <button class="minecraft-button small" onclick="exportModifiedTheme()" style="width: 100%; margin-bottom: 10px;">
+            <div class="minecraft-button-left-outline"></div>
+            <div class="minecraft-button-right-outline"></div>
+            <div class="minecraft-button-section">
+                <div class="minecraft-button-name">Export Modified Theme</div>
+            </div>
+            <div class="minecraft-button-dark-strip"></div>
+            <div class="minecraft-button-bottom-outline"></div>
+            <div class="minecraft-button-shadow"></div>
+        </button>
+    </div>
+</div>
 <div class="header">
     <div class="header-content">
         <div class="logo">
@@ -731,7 +905,7 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
         </div>
     </div>
 </div>
-<div class="main-wrapper">
+<div class="main-wrapper" id="mainWrapper">
 <div class="container">
     <h1 class="page-title">HTML Style Editor</h1>
 
@@ -798,6 +972,43 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
                 Editing one color updates all instances of that color across the entire file.
             </div>
             <div id="bulkColorList" class="color-grid"></div>
+        </div>
+    </div>
+
+    <!-- Add this new section in the container, after the bulkColorsSection and before the "Styled Elements" section -->
+    <div class="section theme-panel-mobile-section" id="themePanelMobileSection" style="display: none;">
+        <div class="section-header">
+            <h2>Imported Theme</h2>
+            <button class="collapse-toggle" onclick="toggleSection('themePanelMobile')">
+                <span id="themePanelMobileToggle">▼ Collapse</span>
+            </button>
+        </div>
+        <div class="section-content" id="themePanelMobileContent">
+            <div id="themePanelMobileContentInner"></div>
+            <div class="button-row" style="margin-top: 15px;">
+                <button class="minecraft-button success" onclick="applyThemeToHTML()" style="width: 100%;">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Apply to Current HTML</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
+            <div class="button-row">
+                <button class="minecraft-button small" onclick="exportModifiedTheme()" style="width: 100%;">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">Export Modified Theme</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -894,6 +1105,16 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
                     <div class="minecraft-button-right-outline"></div>
                     <div class="minecraft-button-section">
                         <div class="minecraft-button-name">Import Palette</div>
+                    </div>
+                    <div class="minecraft-button-dark-strip"></div>
+                    <div class="minecraft-button-bottom-outline"></div>
+                    <div class="minecraft-button-shadow"></div>
+                </button>
+                <button class="minecraft-button small" onclick="reopenThemePanel()" id="reopenThemeBtn" style="display: none;">
+                    <div class="minecraft-button-left-outline"></div>
+                    <div class="minecraft-button-right-outline"></div>
+                    <div class="minecraft-button-section">
+                        <div class="minecraft-button-name">View Loaded Theme</div>
                     </div>
                     <div class="minecraft-button-dark-strip"></div>
                     <div class="minecraft-button-bottom-outline"></div>
@@ -1286,7 +1507,7 @@ function sortElementsByPinned() {
         ${colorsHTML}
     </div>
     <div class="button-row" style="margin-top: 15px;">
-        <button class="minecraft-button small" onmousedown="event.stopPropagation(); this.classList.add('pressed');" onmouseup="event.stopPropagation(); const btn = this; setTimeout(() => { btn.classList.remove('pressed'); }, 150);" onclick="event.stopPropagation(); resetElement(${index});">
+        <button class="minecraft-button small" onclick="event.stopPropagation(); this.classList.add('pressed'); setTimeout(() => { this.classList.remove('pressed'); resetElement(${index}, event); }, 150);">
     <div class="minecraft-button-left-outline"></div>
     <div class="minecraft-button-right-outline"></div>
     <div class="minecraft-button-section">
@@ -1450,9 +1671,29 @@ function togglePin(index, event) {
 
     function resetElement(elementIndex, event) {
     if (event) event.stopPropagation();
+
+    console.log('=== RESET ELEMENT CALLED ===', elementIndex);
+    console.log('styleElements length:', styleElements.length);
+
+    if (!styleElements[elementIndex]) {
+        console.error('Element not found at index', elementIndex);
+        return;
+    }
+
+    console.log('Colors before reset:', styleElements[elementIndex].colors);
+
     styleElements[elementIndex].colors.forEach(color => {
-        color.value = color.original;
+        console.log('Resetting color:', {
+            current: color.value,
+            original: color.original,
+            trueOriginal: color.trueOriginal
+        });
+        color.value = color.trueOriginal || color.original;
+        delete color.trueOriginal;
     });
+
+    console.log('Colors after reset:', styleElements[elementIndex].colors);
+
     generateBulkColors();
     renderElements();
     applyChanges();
@@ -1460,17 +1701,60 @@ function togglePin(index, event) {
 }
 
     function resetAll() {
-        styleElements.forEach(element => {
-            element.colors.forEach(color => {
-                color.value = color.original;
-            });
+    styleElements.forEach(element => {
+        element.colors.forEach(color => {
+            color.value = color.trueOriginal || color.original;
+            delete color.trueOriginal;
         });
-        modifiedCount = 0;
-        renderElements();
-        applyChanges();
-        updateStats();
-        showToast('All elements reset', 'success');
+    });
+    modifiedCount = 0;
+    renderElements();
+    applyChanges();
+    updateStats();
+    generateBulkColors();
+    if (currentTheme) {
+        renderThemePanel();
     }
+    showToast('All elements reset', 'success');
+}
+
+function updateBulkColorFromPicker(groupIndex, newColor) {
+    const group = bulkColorGroups[groupIndex];
+
+    group.usages.forEach(usage => {
+        const color = styleElements[usage.elementIndex].colors[usage.colorIndex];
+
+        if (color.format === 'hex') {
+            color.value = newColor;
+        } else {
+            const rgb = hexToRgb(newColor);
+            const alpha = color.value.includes('rgba') ?
+                color.value.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
+            color.value = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+        }
+    });
+
+    const firstUsageFormat = group.usages[0].format;
+    if (firstUsageFormat === 'hex') {
+        group.color = newColor;
+    } else {
+        const rgb = hexToRgb(newColor);
+        const alpha = group.usages[0].originalValue.includes('rgba') ?
+            group.usages[0].originalValue.match(/[\d.]+\)$/)?.[0].replace(')', '') : '1';
+        group.color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+    }
+    group.displayColor = newColor;
+
+    renderBulkColors();
+    renderElements();
+    applyChanges();
+    modifiedCount += group.usages.length;
+    updateStats();
+    if (currentTheme) {
+        renderThemePanel();
+    }
+    showToast(`Updated ${group.usages.length} ${group.usages.length === 1 ? 'usage' : 'usages'} of this color`, 'success');
+}
 
     function applyChanges() {
     let modifiedHTML = currentHTML;
@@ -2000,34 +2284,8 @@ document.getElementById('paletteInput').addEventListener('change', async (e) => 
             return;
         }
 
-        const colorMap = new Map();
-        palette.colorMappings.forEach(mapping => {
-            const key = mapping.original.toLowerCase().replace(/\s+/g, '');
-            colorMap.set(key, mapping.new);
-        });
-
-        let appliedCount = 0;
-
-        styleElements.forEach(element => {
-            element.colors.forEach(color => {
-                const key = color.original.toLowerCase().replace(/\s+/g, '');
-                if (colorMap.has(key)) {
-                    color.value = colorMap.get(key);
-                    appliedCount++;
-                }
-            });
-        });
-
-        if (appliedCount === 0) {
-            showToast('No matching colors found in current file', 'error');
-        } else {
-            modifiedCount += appliedCount;
-            renderElements();
-            generateBulkColors();
-            applyChanges();
-            updateStats();
-            showToast(`Applied palette "${palette.paletteName}" - ${appliedCount} colors updated!`, 'success');
-        }
+        showThemePanel(palette);
+        showToast(`Theme "${palette.paletteName}" loaded - review and apply when ready!`, 'success');
 
     } catch (error) {
         console.error('Error importing palette:', error);
@@ -2138,6 +2396,304 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+    let currentTheme = null;
+
+function showThemePanel(theme) {
+    currentTheme = theme;
+
+    themeHistory = [];
+    themeHistoryIndex = -1;
+
+    const reopenBtn = document.getElementById('reopenThemeBtn');
+    if (reopenBtn) reopenBtn.style.display = 'inline-block';
+
+    const panel = document.getElementById('themePanel');
+    panel.classList.add('show');
+    document.getElementById('mainWrapper').classList.add('main-content-shifted');
+
+    const mobileSection = document.getElementById('themePanelMobileSection');
+    if (mobileSection) {
+        mobileSection.style.display = '';
+        mobileSection.classList.add('show');
+    }
+
+    renderThemePanel();
+}
+
+function closeThemePanel() {
+    document.getElementById('themePanel').classList.remove('show');
+    document.getElementById('mainWrapper').classList.remove('main-content-shifted');
+
+    const mobileSection = document.getElementById('themePanelMobileSection');
+    if (mobileSection) {
+        mobileSection.classList.remove('show');
+        mobileSection.style.display = 'none';
+    }
+}
+
+function renderThemePanel() {
+    if (!currentTheme) return;
+
+    const mappingsHTML = currentTheme.colorMappings.map((mapping, index) => {
+        let actualUsageCount = 0;
+
+        if (styleElements.length > 0) {
+            styleElements.forEach(element => {
+                element.colors.forEach(color => {
+                    const currentColorKey = color.value.toLowerCase().replace(/\s+/g, '');
+                    const mappingOriginalKey = mapping.original.toLowerCase().replace(/\s+/g, '');
+                    if (currentColorKey === mappingOriginalKey) {
+                        actualUsageCount++;
+                    }
+                });
+            });
+        }
+
+        const uniqueKey = Date.now() + index;
+
+        return `
+        <div class="theme-color-mapping">
+            <div class="theme-color-label">Original Color</div>
+            <div class="theme-color-row">
+                <div class="theme-color-box" style="background: ${mapping.original};"></div>
+                <input type="color" value="${normalizeColor(mapping.original)}"
+                       onchange="updateThemeOriginalColor(${index}, this.value)"
+                       style="width: 50px; height: 40px;"
+                       key="${uniqueKey}-orig-color">
+                <input type="text" class="color-hex" value="${mapping.original}"
+                       onchange="updateThemeOriginalColorText(${index}, this.value)"
+                       style="flex: 1;"
+                       key="${uniqueKey}-orig-text">
+            </div>
+
+            <div class="theme-arrow">↓</div>
+
+            <div class="theme-color-label">New Color</div>
+            <div class="theme-color-row">
+                <div class="theme-color-box" style="background: ${mapping.new};"></div>
+                <input type="color" value="${normalizeColor(mapping.new)}"
+                       onchange="updateThemeColor(${index}, this.value)"
+                       style="width: 50px; height: 40px;"
+                       key="${uniqueKey}-new-color">
+                <input type="text" class="color-hex" value="${mapping.new}"
+                       onchange="updateThemeColorText(${index}, this.value)"
+                       style="flex: 1;"
+                       key="${uniqueKey}-new-text">
+            </div>
+
+            <div class="theme-usage-count">${actualUsageCount} ${actualUsageCount === 1 ? 'usage' : 'usages'} of original color in current HTML</div>
+            <button class="minecraft-button small" onclick="removeThemeMapping(${index})" style="width: 100%; margin-top: 10px; height: 30px;">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name" style="font-size: 12px;">Remove Mapping</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+        </div>
+    `;
+    }).join('');
+
+    const addButtonHTML = `
+        <button class="minecraft-button success" onclick="addNewThemeMapping()" style="width: 100%; margin-top: 10px;">
+            <div class="minecraft-button-left-outline"></div>
+            <div class="minecraft-button-right-outline"></div>
+            <div class="minecraft-button-section">
+                <div class="minecraft-button-name">+ Add New Mapping</div>
+            </div>
+            <div class="minecraft-button-dark-strip"></div>
+            <div class="minecraft-button-bottom-outline"></div>
+            <div class="minecraft-button-shadow"></div>
+        </button>
+    `;
+
+    const content = document.getElementById('themePanelContent');
+    document.getElementById('themePanelTitle').textContent = currentTheme.paletteName || 'Imported Theme';
+    document.getElementById('themePanelSubtitle').textContent = `${currentTheme.colorMappings.length} color mappings`;
+    content.innerHTML = mappingsHTML + addButtonHTML;
+
+    const mobileContent = document.getElementById('themePanelMobileContentInner');
+    if (mobileContent) {
+        mobileContent.innerHTML = mappingsHTML + addButtonHTML;
+    }
+}
+
+function updateThemeColor(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].new = newColor;
+        renderThemePanel();
+    }
+}
+
+function updateThemeColorText(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].new = newColor;
+        renderThemePanel();
+    }
+}
+
+function applyThemeToHTML() {
+    if (!currentTheme || !originalHTML) {
+        showToast('No theme or HTML file loaded', 'error');
+        return;
+    }
+
+    const colorMap = new Map();
+    currentTheme.colorMappings.forEach(mapping => {
+        const key = mapping.original.toLowerCase().replace(/\s+/g, '');
+        colorMap.set(key, mapping.new);
+    });
+
+    let appliedCount = 0;
+
+    styleElements.forEach(element => {
+        element.colors.forEach(color => {
+            const originalKey = color.original.toLowerCase().replace(/\s+/g, '');
+            if (colorMap.has(originalKey)) {
+    if (color.trueOriginal === undefined) {
+        color.trueOriginal = color.original;
+    }
+    color.value = colorMap.get(originalKey);
+    appliedCount++;
+}
+        });
+    });
+
+    if (appliedCount === 0) {
+        showToast('No matching colors found in current file', 'error');
+    } else {
+        modifiedCount += appliedCount;
+        renderElements();
+        generateBulkColors();
+        applyChanges();
+        updateStats();
+        renderThemePanel();
+        showToast(`Applied theme - ${appliedCount} colors updated!`, 'success');
+    }
+}
+
+function updateThemeColor(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].new = newColor;
+        renderThemePanel();
+    }
+}
+
+function updateThemeColorText(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].new = newColor;
+        renderThemePanel();
+    }
+}
+
+function updateThemeOriginalColor(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].original = newColor;
+        renderThemePanel();
+    }
+}
+
+function updateThemeOriginalColorText(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].original = newColor;
+        renderThemePanel();
+    }
+}
+
+function exportModifiedTheme() {
+    if (!currentTheme) {
+        showToast('No theme loaded', 'error');
+        return;
+    }
+
+    const modifiedTheme = {
+        paletteName: currentTheme.paletteName + ' (Modified)',
+        createdDate: new Date().toISOString().split('T')[0],
+        totalColors: currentTheme.colorMappings.length,
+        colorMappings: currentTheme.colorMappings
+    };
+
+    const blob = new Blob([JSON.stringify(modifiedTheme, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${modifiedTheme.paletteName.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.palette.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast('Modified theme exported!', 'success');
+}
+
+    function reopenThemePanel() {
+    if (!currentTheme) {
+        showToast('No theme loaded. Import a palette first.', 'error');
+        return;
+    }
+    const panel = document.getElementById('themePanel');
+    panel.classList.add('show');
+    document.getElementById('mainWrapper').classList.add('main-content-shifted');
+    renderThemePanel();
+}
+
+    function updateThemeOriginalColor(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].original = newColor;
+        renderThemePanel();
+    }
+}
+
+function updateThemeOriginalColorText(index, newColor) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings[index].original = newColor;
+        renderThemePanel();
+    }
+}
+
+function addNewThemeMapping() {
+    if (!currentTheme) {
+        currentTheme = {
+            paletteName: 'Custom Theme',
+            createdDate: new Date().toISOString().split('T')[0],
+            totalColors: 0,
+            colorMappings: []
+        };
+    }
+
+    currentTheme.colorMappings.push({
+        original: '#000000',
+        new: '#ffffff',
+        usageCount: 0
+    });
+
+    currentTheme.totalColors = currentTheme.colorMappings.length;
+    renderThemePanel();
+    showToast('New mapping added', 'success');
+}
+
+function removeThemeMapping(index) {
+    if (currentTheme && currentTheme.colorMappings[index]) {
+        currentTheme.colorMappings.splice(index, 1);
+        currentTheme.totalColors = currentTheme.colorMappings.length;
+
+        if (currentTheme.colorMappings.length === 0) {
+            closeThemePanel();
+            currentTheme = null;
+            themeHistory = [];
+            themeHistoryIndex = -1;
+            const reopenBtn = document.getElementById('reopenThemeBtn');
+            if (reopenBtn) reopenBtn.style.display = 'none';
+            showToast('All mappings removed', 'success');
+        } else {
+            renderThemePanel();
+            showToast('Mapping removed', 'success');
+        }
+    }
+}
 </script>
 </body>
 </html>
