@@ -818,6 +818,8 @@
                     </ul>
                 </div>
 
+            </div>
+
             <div class="content-section">
                 <h2 id="combat" class="main-header">Combat</h2>
 
@@ -832,6 +834,7 @@
                         <li><strong>Climbing:</strong> Maintains wall-climbing abilities</li>
                     </ul>
                 </div>
+            </div>
 
             <div class="content-section">
                 <h2 id="history" class="main-header">History</h2>
@@ -843,6 +846,7 @@
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
                                 Added Baby Spiders
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -851,102 +855,124 @@
         </div>
     </div>
 </div>
+            <script>
+                let searchData = {};
+                let allSearchItems = [];
 
-<script>
-    let searchData = {};
-    let allSearchItems = [];
+                const searchDataFiles = [
+                    '../../search-data-web.json'
+                ];
 
-    async function loadSearchData() {
-        try {
-            const response = await fetch('../search-data.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            searchData = await response.json();
-            allSearchItems = Object.values(searchData).flat();
-            console.log('Search data loaded successfully');
-        } catch (error) {
-            console.error('Error loading search data:', error);
-            searchData = {};
-            allSearchItems = [];
-        }
-    }
+                async function loadSearchData() {
+                    try {
+                        const allData = [];
+                        const cacheBuster = new Date().getTime();
 
-    function initializeSearch() {
-        const searchInput = document.getElementById('searchInput');
-        const searchSuggestions = document.getElementById('searchSuggestions');
+                        for (const file of searchDataFiles) {
+                            try {
+                                const response = await fetch(`${file}?v=${cacheBuster}`, {
+                                    cache: 'no-store',
+                                    headers: {
+                                        'Cache-Control': 'no-cache',
+                                        'Pragma': 'no-cache'
+                                    }
+                                });
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    const items = Object.values(data).flat();
+                                    allData.push(...items);
+                                    console.log(`Loaded search data from ${file}`);
+                                }
+                            } catch (error) {
+                                console.warn(`Could not load ${file}:`, error);
+                            }
+                        }
 
-        if (!searchInput || !searchSuggestions) {
-            console.error('Search elements not found');
-            return;
-        }
-
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-
-            if (query.length === 0) {
-                searchSuggestions.style.display = 'none';
-                return;
-            }
-
-            const matches = allSearchItems.filter(item =>
-                item.title.toLowerCase().includes(query) ||
-                item.category.toLowerCase().includes(query)
-            ).slice(0, 8);
-
-            if (matches.length > 0) {
-                searchSuggestions.innerHTML = matches.map(item => `
-                    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-                        <div class="suggestion-title">${item.title}</div>
-                    </div>
-                `).join('');
-                searchSuggestions.style.display = 'block';
-            } else {
-                searchSuggestions.style.display = 'none';
-            }
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-container')) {
-                searchSuggestions.style.display = 'none';
-            }
-        });
-
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const query = this.value.toLowerCase().trim();
-                const firstMatch = allSearchItems.find(item =>
-                    item.title.toLowerCase().includes(query) ||
-                    item.category.toLowerCase().includes(query)
-                );
-                if (firstMatch) {
-                    navigateToPage(firstMatch.page);
+                        allSearchItems = allData;
+                        console.log(`Total search items loaded: ${allSearchItems.length}`);
+                    } catch (error) {
+                        console.error('Error loading search data:', error);
+                        allSearchItems = [];
+                    }
                 }
-            }
-        });
-    }
 
-    function navigateToPage(page) {
-        if (!page.startsWith('http') && !page.startsWith('../')) {
-            page = '../' + page;
-        }
-        window.location.href = page;
-    }
+                function initializeSearch() {
+                    const searchInput = document.getElementById('searchInput');
+                    const searchSuggestions = document.getElementById('searchSuggestions');
 
-    function switchVariant(variantNumber) {
-        // Remove active class from all tabs and images
-        document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.variant-image').forEach(img => img.classList.remove('active'));
+                    if (!searchInput || !searchSuggestions) {
+                        console.error('Search elements not found');
+                        return;
+                    }
 
-        // Add active class to selected tab and image
-        document.querySelectorAll('.variant-tab')[variantNumber - 1].classList.add('active');
-        document.getElementById('variant' + variantNumber).classList.add('active');
-    }
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .suggestion-category {
+                            font-size: 12px;
+                            color: #8b4513;
+                            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+                            font-weight: normal;
+                        }
+                    `;
+                    document.head.appendChild(style);
 
-    document.addEventListener('DOMContentLoaded', async function() {
-        await loadSearchData();
-        initializeSearch();
-    });
-</script>
+                    searchInput.addEventListener('input', function() {
+                        const query = this.value.toLowerCase().trim();
+
+                        if (query.length === 0) {
+                            searchSuggestions.style.display = 'none';
+                            return;
+                        }
+
+                        const matches = allSearchItems.filter(item =>
+                            item.title.toLowerCase().includes(query) ||
+                            item.category.toLowerCase().includes(query)
+                        ).slice(0, 8);
+
+                        if (matches.length > 0) {
+                            searchSuggestions.innerHTML = matches.map(item => `
+                                <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                                    <div class="suggestion-category">${item.category}</div>
+                                    <div class="suggestion-title">${item.title}</div>
+                                </div>
+                            `).join('');
+                            searchSuggestions.style.display = 'block';
+                        } else {
+                            searchSuggestions.style.display = 'none';
+                        }
+                    });
+
+                    document.addEventListener('click', function(e) {
+                        if (!e.target.closest('.search-container')) {
+                            searchSuggestions.style.display = 'none';
+                        }
+                    });
+
+                    searchInput.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            const query = this.value.toLowerCase().trim();
+                            const firstMatch = allSearchItems.find(item =>
+                                item.title.toLowerCase().includes(query) ||
+                                item.category.toLowerCase().includes(query)
+                            );
+                            if (firstMatch) {
+                                navigateToPage(firstMatch.page);
+                            }
+                        }
+                    });
+                }
+
+                function navigateToPage(page) {
+                    if (!page.startsWith('http') && !page.startsWith('../')) {
+                        page = '../' + page;
+                    }
+                    window.location.href = page;
+                }
+
+                document.addEventListener('DOMContentLoaded', async function() {
+                    await loadSearchData();
+                    initializeSearch();
+                });
+            </script>
 </body>
 </html>

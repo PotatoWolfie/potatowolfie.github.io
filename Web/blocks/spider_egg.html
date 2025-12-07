@@ -924,18 +924,39 @@
     let searchData = {};
     let allSearchItems = [];
 
+    const searchDataFiles = [
+        '../../search-data-web.json'
+    ];
+
     async function loadSearchData() {
         try {
-            const response = await fetch('../search-data.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            const allData = [];
+            const cacheBuster = new Date().getTime();
+
+            for (const file of searchDataFiles) {
+                try {
+                    const response = await fetch(`${file}?v=${cacheBuster}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const items = Object.values(data).flat();
+                        allData.push(...items);
+                        console.log(`Loaded search data from ${file}`);
+                    }
+                } catch (error) {
+                    console.warn(`Could not load ${file}:`, error);
+                }
             }
-            searchData = await response.json();
-            allSearchItems = Object.values(searchData).flat();
-            console.log('Search data loaded successfully');
+
+            allSearchItems = allData;
+            console.log(`Total search items loaded: ${allSearchItems.length}`);
         } catch (error) {
             console.error('Error loading search data:', error);
-            searchData = {};
             allSearchItems = [];
         }
     }
@@ -948,6 +969,17 @@
             console.error('Search elements not found');
             return;
         }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .suggestion-category {
+                font-size: 12px;
+                color: #8b4513;
+                font-family: 'Minecraft Ten', 'Inter', sans-serif;
+                font-weight: normal;
+            }
+        `;
+        document.head.appendChild(style);
 
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
@@ -995,8 +1027,15 @@
         });
     }
 
+    function switchVariant(variantNumber) {
+        document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.variant-image').forEach(img => img.classList.remove('active'));
+
+        document.querySelectorAll('.variant-tab')[variantNumber - 1].classList.add('active');
+        document.getElementById('variant' + variantNumber).classList.add('active');
+    }
+
     function navigateToPage(page) {
-        // Adjust relative paths for subdirectory
         if (!page.startsWith('http') && !page.startsWith('../')) {
             page = '../' + page;
         }

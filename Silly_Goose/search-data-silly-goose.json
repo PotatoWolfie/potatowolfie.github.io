@@ -1,12 +1,12 @@
 {
     "Mobs": [
-        { "title": "Mob", "page": "mobs/goose.html", "category": "Category" },
+        { "title": "Mob", "page": "mobs.html", "category": "Category" },
         { "title": "Goose", "page": "mobs/goose.html", "category": "Mobs" },
         { "title": "Warm Goose", "page": "mobs/goose.html#warm", "category": "Mobs" },
         { "title": "Cold Goose", "page": "mobs/goose.html#cold", "category": "Mobs" }
     ],
     "Items": [
-        { "title": "Item", "page": "items/goose_spawn_egg.html", "category": "Category" },
+        { "title": "Item", "page": "items.html", "category": "Category" },
         { "title": "Goose Spawn Egg", "page": "items/goose_spawn_egg.html", "category": "Items" },
         { "title": "White Egg", "page": "items/white_egg.html", "category": "Items" },
         { "title": "Big White Egg", "page": "items/big_white_egg.html", "category": "Items" },

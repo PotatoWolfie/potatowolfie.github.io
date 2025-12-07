@@ -749,23 +749,44 @@
 </div>
 <script>
     let searchData = {};
-    let allSearchItems = [];
+let allSearchItems = [];
 
-    async function loadSearchData() {
-        try {
-            const response = await fetch('search-data-silly-goose.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+const searchDataFiles = [
+    'search-data-silly-goose.json'
+];
+
+async function loadSearchData() {
+    try {
+        const allData = [];
+        const cacheBuster = new Date().getTime();
+
+        for (const file of searchDataFiles) {
+            try {
+                const response = await fetch(`${file}?v=${cacheBuster}`, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    const items = Object.values(data).flat();
+                    allData.push(...items);
+                    console.log(`Loaded search data from ${file}`);
+                }
+            } catch (error) {
+                console.warn(`Could not load ${file}:`, error);
             }
-            searchData = await response.json();
-            allSearchItems = Object.values(searchData).flat();
-            console.log('Search data loaded successfully');
-        } catch (error) {
-            console.error('Error loading search data:', error);
-            searchData = {};
-            allSearchItems = [];
         }
+
+        allSearchItems = allData;
+        console.log(`Total search items loaded: ${allSearchItems.length}`);
+    } catch (error) {
+        console.error('Error loading search data:', error);
+        allSearchItems = [];
     }
+}
 
     function initializeSearch() {
         const searchInput = document.getElementById('searchInput');

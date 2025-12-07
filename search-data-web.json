@@ -1,0 +1,25 @@
+{
+    "Mobs": [
+        { "title": "Mob", "page": "mobs.html", "category": "Category" },
+        { "title": "Spider", "page": "Web/mobs/spider.html", "category": "Mobs" },
+        { "title": "Baby Spider", "page": "Web/mobs/spiderling.html", "category": "Mobs" },
+        { "title": "Cave Spider", "page": "Web/mobs/cave_spider.html", "category": "Mobs" }
+    ],
+    "Blocks": [
+        { "title": "Block", "page": "blocks.html", "category": "Category" },
+        { "title": "Spider Egg", "page": "Web/blocks/spider_egg.html", "category": "Blocks" },
+        { "title": "Spider Egg Shells", "page": "Web/blocks/spider_egg_shells.html", "category": "Blocks" },
+        { "title": "Spider Moss", "page": "Web/blocks/spider_moss.html", "category": "Blocks" },
+        { "title": "Spider Web", "page": "Web/blocks/spider_web.html", "category": "Blocks" }
+    ],
+    "Biomes": [
+        { "title": "Biome", "page": "Web/biomes.html", "category": "Category" },
+        { "title": "Spider Egg Cluster", "page": "biomes/dark_dripstone_cave.html", "category": "Feature" }
+    ],
+    "History": [
+        { "title": "History", "page": "Web/history.html", "category": "Category" }
+    ],
+    "Advancements": [
+        { "title": "Burn the Nest", "page": "Web/blocks/spider_egg.html#behavior", "category": "Advancement" }
+    ]
+}

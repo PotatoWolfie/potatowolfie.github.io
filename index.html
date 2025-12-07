@@ -1956,11 +1956,12 @@ a {
                         <h2>Latest Project</h2>
                         <img src="Silly_Goose/assets/wiki/silly_goose_wiki.png" alt="Silly Goose Wiki" class="wiki-box-image">
                         <p>
-                            The latest mod released, <strong>Web</strong>, expands the role of spiders in Minecraft.
-                            With <strong>new behaviors</strong> and <strong>fresh animations</strong>, spiders are more dynamic than ever.
-                            They can <strong>shoot webs</strong> to trap players, and <strong>Spider Egg Clusters</strong> found
-                            underground may burst open with baby spiders. Inspired by <em>Minecraft Dungeons</em>, this mod
-                            makes every encounter with spiders more tense and dangerous.
+                            My latest mod, <strong>Silly Goose</strong>, adds the lovely and most definitely silly
+                            goose to Minecraft! These geese come in three variants, temperate, cold, and warm. They are
+                            mostly friendly, but they occasionally hit you if you bother them with your presence enough.
+                            If you kill a goose, they will know. They will find you. They will peck you. I wouldn't
+                            recommend becoming an enemy of geese.
+
                         </p>
                         <div class="wiki-button">
                             <div class="wiki-button-left-outline"></div>
@@ -1992,6 +1993,7 @@ a {
             <ul class="sidebar-list">
                 <li>...that I started modding using Mcreator?</li>
                 <li>...Universe 76 was inspired by a YouTube video asking what happened to deleted Minecraft worlds?</li>
+                <li>...that despite the name, my favorite animal is actually the duck?</li>
             </ul>
         </div>
 
@@ -2010,21 +2012,43 @@ a {
     let isArrowAnimating = false;
     let isDropdownAnimating = false;
 
-    let searchData = {};
+let searchData = {};
 let allSearchItems = [];
+
+const searchDataFiles = [
+    'search-data-web.json',
+    'Silly_Goose/search-data-silly-goose.json'
+];
 
 async function loadSearchData() {
     try {
-        const response = await fetch('search-data.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        const allData = [];
+        const cacheBuster = new Date().getTime();
+
+        for (const file of searchDataFiles) {
+            try {
+                const response = await fetch(`${file}?v=${cacheBuster}`, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    const items = Object.values(data).flat();
+                    allData.push(...items);
+                    console.log(`Loaded search data from ${file}`);
+                }
+            } catch (error) {
+                console.warn(`Could not load ${file}:`, error);
+            }
         }
-        searchData = await response.json();
-        allSearchItems = Object.values(searchData).flat();
-        console.log('Search data loaded successfully');
+
+        allSearchItems = allData;
+        console.log(`Total search items loaded: ${allSearchItems.length}`);
     } catch (error) {
         console.error('Error loading search data:', error);
-        searchData = {};
         allSearchItems = [];
     }
 }
@@ -2313,7 +2337,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (buttonText === 'View Mods') {
                 window.open('https://www.curseforge.com/members/potatowolfie/projects', '_blank');
             } else if (buttonText === 'Learn More') {
-                window.open('web.html', '_blank');
+                window.open('silly_goose.html', '_blank');
             }
         });
     });
