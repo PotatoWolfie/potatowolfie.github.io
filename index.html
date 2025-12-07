@@ -2025,6 +2025,11 @@ async function loadSearchData() {
         const allData = [];
         const cacheBuster = new Date().getTime();
 
+        const modNameMap = {
+            'search-data-web.json': 'Web',
+            'Silly_Goose/search-data-silly-goose.json': 'Silly Goose'
+        };
+
         for (const file of searchDataFiles) {
             try {
                 const response = await fetch(`${file}?v=${cacheBuster}`, {
@@ -2037,6 +2042,12 @@ async function loadSearchData() {
                 if (response.ok) {
                     const data = await response.json();
                     const items = Object.values(data).flat();
+
+                    const modName = modNameMap[file] || 'Unknown';
+                    items.forEach(item => {
+                        item.modName = modName;
+                    });
+
                     allData.push(...items);
                     console.log(`Loaded search data from ${file}`);
                 }
@@ -2077,11 +2088,11 @@ function initializeSearch() {
 
         if (matches.length > 0) {
             searchSuggestions.innerHTML = matches.map(item => `
-                <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-                    <div class="suggestion-category">${item.category}</div>
-                    <div class="suggestion-title">${item.title}</div>
-                </div>
-            `).join('');
+    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+        <div class="suggestion-category">${item.modName}:${item.category}</div>
+        <div class="suggestion-title">${item.title}</div>
+    </div>
+`).join('');
             searchSuggestions.style.display = 'block';
         } else {
             searchSuggestions.style.display = 'none';
