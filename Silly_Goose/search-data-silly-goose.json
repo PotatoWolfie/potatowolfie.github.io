@@ -1,26 +1,26 @@
 {
     "Mobs": [
-        { "title": "Mob", "page": "mobs.html", "category": "Category" },
-        { "title": "Goose", "page": "mobs/goose.html", "category": "Mobs" },
-        { "title": "Warm Goose", "page": "mobs/goose.html#warm", "category": "Mobs" },
-        { "title": "Cold Goose", "page": "mobs/goose.html#cold", "category": "Mobs" }
+        { "title": "Mob", "page": "Silly_Goose/mobs.html", "category": "Category" },
+        { "title": "Goose", "page": "Silly_Goose/mobs/goose.html", "category": "Mobs" },
+        { "title": "Warm Goose", "page": "Silly_Goose/mobs/goose.html#warm", "category": "Mobs" },
+        { "title": "Cold Goose", "page": "Silly_Goose/mobs/goose.html#cold", "category": "Mobs" }
     ],
     "Items": [
-        { "title": "Item", "page": "items.html", "category": "Category" },
-        { "title": "Goose Spawn Egg", "page": "items/goose_spawn_egg.html", "category": "Items" },
-        { "title": "White Egg", "page": "items/white_egg.html", "category": "Items" },
-        { "title": "Big White Egg", "page": "items/big_white_egg.html", "category": "Items" },
-        { "title": "Small White Egg", "page": "items/small_white_egg.html", "category": "Items" },
-        { "title": "Raw Goose", "page": "items/goose.html", "category": "Items" },
-        { "title": "Cooked Goose", "page": "items/cooked_goose.html", "category": "Items" }
+        { "title": "Item", "page": "Silly_Goose/items.html", "category": "Category" },
+        { "title": "Goose Spawn Egg", "page": "Silly_Goose/items/goose_spawn_egg.html", "category": "Items" },
+        { "title": "White Egg", "page": "Silly_Goose/items/white_egg.html", "category": "Items" },
+        { "title": "Big White Egg", "page": "Silly_Goose/items/big_white_egg.html", "category": "Items" },
+        { "title": "Small White Egg", "page": "Silly_Goose/items/small_white_egg.html", "category": "Items" },
+        { "title": "Raw Goose", "page": "Silly_Goose/items/goose.html", "category": "Items" },
+        { "title": "Cooked Goose", "page": "Silly_Goose/items/cooked_goose.html", "category": "Items" }
     ],
     "Advancements": [
-        { "title": "Advancement", "page": "advancements.html", "category": "Category" },
-        { "title": "Honk and Run", "page": "advancements.html#honk-and-run", "category": "Advancements" },
-        { "title": "Hit and Run", "page": "advancements.html#hit-and-run", "category": "Advancements" },
-        { "title": "Unfair Trade", "page": "advancements.html#unfair-trade", "category": "Advancements" }
+        { "title": "Advancement", "page": "Silly_Goose/advancements.html", "category": "Category" },
+        { "title": "Honk and Run", "page": "Silly_Goose/advancements.html#honk-and-run", "category": "Advancements" },
+        { "title": "Hit and Run", "page": "Silly_Goose/advancements.html#hit-and-run", "category": "Advancements" },
+        { "title": "Unfair Trade", "page": "Silly_Goose/advancements.html#unfair-trade", "category": "Advancements" }
     ],
     "History": [
-        { "title": "History", "page": "history.html", "category": "Category" }
+        { "title": "History", "page": "Silly_Goose/history.html", "category": "Category" }
     ]
 }
