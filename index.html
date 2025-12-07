@@ -2017,7 +2017,8 @@ let allSearchItems = [];
 
 const searchDataFiles = [
     'search-data-web.json',
-    'Silly_Goose/search-data-silly-goose.json'
+    'Silly_Goose/search-data-silly-goose.json',
+    'search-data-mods.json'
 ];
 
 async function loadSearchData() {
@@ -2043,7 +2044,7 @@ async function loadSearchData() {
                     const data = await response.json();
                     const items = Object.values(data).flat();
 
-                    const modName = modNameMap[file] || 'Unknown';
+                    const modName = modNameMap[file] || '';
                     items.forEach(item => {
                         item.modName = modName;
                     });
@@ -2089,7 +2090,7 @@ function initializeSearch() {
         if (matches.length > 0) {
             searchSuggestions.innerHTML = matches.map(item => `
     <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-        <div class="suggestion-category">${item.modName}:${item.category}</div>
+        <div class="suggestion-category">${item.modName ? item.modName + ':' : ''}${item.category}</div>
         <div class="suggestion-title">${item.title}</div>
     </div>
 `).join('');

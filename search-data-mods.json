@@ -1,0 +1,12 @@
+{
+    "Mods": [
+        { "title": "Home", "page": "index.html", "category": "Home" },
+        { "title": "Web", "page": "web.html", "category": "Mods" },
+        { "title": "Silly Goose", "page": "silly_goose.html", "category": "Mods" },
+        { "title": "Universe 76", "page": "universe76.html", "category": "Mods" }
+    ],
+    "Tools": [
+        { "title": "Armor Trim Model Maker", "page": "armor_trim_model_maker.html", "category": "Modding Tools" },
+        { "title": "HTML Theme Editor", "page": "html_theme_editor.html", "category": "Website Tools" }
+    ]
+}
