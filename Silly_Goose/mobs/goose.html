@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goose</title>
+    <link rel="icon" type="image/x-icon" href="../../silly_goose_favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('../assets/fonts/minecraft.woff2') format('woff2'),
+                 url('../assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        body {
+            background: url('../assets/wiki/background.png');
+            background-color: #2d2d2d;
+            background-repeat: repeat;
+            background-position: top left;
+            font-family: 'Nunito', 'Inter', sans-serif;
+            color: #e6e6e6;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(45, 45, 45, 1.0);
+            border-bottom: 3px solid #4a4a4a;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            position: static;
+        }
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 15px;
+                gap: 10px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .logo {
+                margin: 10px 0;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: none;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 10px;
+                gap: 8px;
+            }
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                height: 50px;
+            }
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                margin: 0 10px;
+                max-width: none;
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-container {
+                margin: 0 5px;
+                min-width: 0;
+            }
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: none;
+            color: #e6e6e6;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .search-box:focus {
+            outline: 2px solid #2a78c6;
+            outline-offset: -2px;
+        }
+
+        @media (max-width: 480px) {
+            .search-box {
+                padding: 10px 12px;
+                font-size: 16px;
+            }
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            border-top: none;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        .search-suggestion {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #3a3a3a;
+            color: #cccccc;
+            min-height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .search-suggestion:hover {
+            background: #4f5a75;
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            margin-top: 2px;
+            font-family: 'Nunito', sans-serif;
+            color: #cccccc;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: #262626;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border-radius: 0px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 20px 15px;
+                padding: 25px 20px;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                margin: 15px 10px;
+                padding: 20px 15px;
+            }
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        .side-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: sticky;
+            top: 27px;
+            align-self: flex-start;
+            width: 300px;
+        }
+
+        @media (max-width: 768px) {
+            .side-stack {
+                width: 100%;
+                position: static;
+                margin-bottom: 25px;
+            }
+        }
+
+        .toc {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 15px;
+            font-family: 'Nunito', sans-serif;
+            flex-shrink: 0;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        .toc h2 {
+            font-size: 16px;
+            color: #2a78c6;
+            margin-bottom: 10px;
+            margin-top: 0;
+            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin-bottom: 5px;
+        }
+
+        .toc a {
+            color: #cccccc;
+            text-decoration: none;
+            display: block;
+            padding: 5px 8px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .toc a:hover {
+            color: #2a78c6;
+            background: rgba(0,60,138,0.1);
+        }
+
+        .info-box {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 15px;
+            font-size: 14px;
+            color: #ccc;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        .variant-tabs {
+            display: flex;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .variant-tab {
+            flex: 1;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: none;
+            color: #cccccc;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Nunito', sans-serif;
+            border-right: 1px solid #1a1a1a;
+            transition: all 0.2s ease;
+        }
+
+        .variant-tab:last-child {
+            border-right: none;
+        }
+
+        .variant-tab.active {
+            background: #2a78c6;
+            color: #ffffff;
+        }
+
+        .variant-tab:hover:not(.active) {
+            background: #4a4a4a;
+        }
+
+        .variant-image {
+            display: none;
+        }
+
+        .variant-image.active {
+            display: block;
+        }
+
+        .info-box img {
+            width: 100%;
+            image-rendering: pixelated;
+            border: 2px solid #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #3a3a3a;
+            padding-bottom: 4px;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #2a78c6;
+        }
+
+        .info-value {
+            color: #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .content a {
+            color: #2a78c6;
+            text-decoration: none;
+        }
+
+        .content a:hover {
+            color: #3e8cda;
+            text-decoration: underline;
+        }
+
+        .info-value img {
+            width: auto;
+            height: 10px;
+            margin: 0;
+            border: none;
+        }
+
+        .info-value a {
+            color: #2a78c6;
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .page-title, .main-header {
+            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
+            color: #2a78c6;
+            word-wrap: break-word;
+        }
+
+        .page-title {
+            font-size: 1.7rem;
+            margin-bottom: 25px;
+            margin-top: 0;
+            border-bottom: 2px solid #4a4a4a;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+        }
+
+        .main-header {
+            font-size: 1.1rem;
+            margin: 30px 0 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                font-size: 1.1rem;
+                margin: 25px 0 12px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                font-size: 1.1rem;
+                margin: 20px 0 10px 0;
+            }
+        }
+
+        .content-section {
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-section {
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-section {
+                margin-bottom: 20px;
+            }
+        }
+
+        .mini-header {
+            font-size: 18px;
+            color: #3e8cda;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .mini-header {
+                font-size: 16px;
+                margin: 15px 0 8px 0;
+            }
+        }
+
+        .feature-list {
+            background: #2e2e2e;
+            border-left: 4px solid #2a78c6;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 0 4px 4px 0;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 480px) {
+            .feature-list {
+                padding: 12px;
+                margin: 8px 0;
+            }
+        }
+
+        .feature-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .feature-list ul {
+                padding-left: 16px;
+            }
+        }
+
+        .feature-list li {
+            margin-bottom: 5px;
+            color: #cccccc;
+            word-wrap: break-word;
+        }
+
+        .feature-list a {
+            color: #2a78c6;
+            text-decoration: none;
+        }
+
+        .feature-list a:hover {
+            color: #3e8cda;
+            text-decoration: underline;
+        }
+
+        .history-timeline {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        @media (max-width: 480px) {
+            .history-timeline {
+                padding: 15px;
+            }
+        }
+
+        .history-title {
+            font-size: 1.1rem;
+            color: #2a78c6;
+            margin-bottom: 15px;
+            margin-top: 0;
+            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
+        }
+
+        .timeline-icon {
+            width: 35px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 6px;
+            image-rendering: auto;
+            display: inline-block;
+            object-fit: contain;
+        }
+
+        .timeline-description {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-icon {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timeline-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 8px;
+            }
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .timeline-icon {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 480px) {
+            .timeline-item {
+                gap: 10px;
+            }
+        }
+
+        .timeline-marker {
+            width: 4px;
+            height: 100%;
+            min-height: 20px;
+            background: #2a78c6;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-version {
+            font-size: 16px;
+            color: #3e8cda;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .timeline-version {
+                font-size: 15px;
+            }
+        }
+
+        .timeline-description {
+            color: #cccccc;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .timeline-description {
+                font-size: 13px;
+            }
+        }
+
+        .behavior-box {
+            background: #2e2e2e;
+            border: 2px solid #d4af37;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        .behavior-title {
+            font-size: 16px;
+            color: #d4af37;
+            font-weight: 600;
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        .stat-card {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #2a78c6;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            color: #cccccc;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 480px) {
+            p {
+                margin: 0 0 12px 0;
+            }
+        }
+
+        strong {
+            color: #3e8cda;
+        }
+
+        html {
+            scroll-padding-top: 20px;
+        }
+
+        h1, h2,
+        .page-title,
+        .main-header {
+            font-family: 'Minecraft Ten', 'Inter', sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io/silly_goose">
+                <img src="../assets/wiki/silly_goose_wiki.png" alt="Silly Goose Wiki">
+            </a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search Silly Goose Wiki" id="searchInput" autocomplete="off">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content-wrapper">
+        <div class="side-stack">
+            <div class="toc">
+                <h2>Contents</h2>
+                <ul>
+                    <li><a href="#goose">Goose</a></li>
+                    <li><a href="#spawning">Spawning</a></li>
+                    <li><a href="#behavior">Behavior</a></li>
+                    <li><a href="#combat">Combat</a></li>
+                    <li><a href="#history">History</a></li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <div class="variant-tabs">
+                    <button class="variant-tab active" onclick="switchVariant(1)">Temperate</button>
+                    <button class="variant-tab" onclick="switchVariant(2)">Cold</button>
+                    <button class="variant-tab" onclick="switchVariant(3)">Warm</button>
+                </div>
+
+                <img src="temperate_goose_idle.gif" alt="Temperate Goose" class="variant-image active" id="variant1">
+                <img src="warm_goose_idle.gif" alt="Warm Goose" class="variant-image" id="variant2">
+                <img src="cold_goose_idle.gif" alt="Cold Goose" class="variant-image" id="variant3">
+
+                <div class="info-row">
+                    <span class="info-label">Health points</span>
+                    <span class="info-value">10 <img src="assets/sprites/Heart.png" alt="Heart"> × 5</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Behavior</span>
+                    <span class="info-value">Neutral (mostly)<br>Hostile (revenge)</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Attack damage</span>
+                    <span class="info-value">3 <img src="assets/sprites/Heart.png" alt="Heart"> × 1.5</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Speed</span>
+                    <span class="info-value">0.25</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Scale</span>
+                    <span class="info-value">Baby: 0.7<br>Adult: 1.0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <h1 id="goose" class="page-title">Goose</h1>
+
+            <p><strong>Geese</strong> are semi-aquatic neutral mobs that prefer staying near water.
+                They exhibit sophisticated territorial behaviors, can hold grudges against players, and may even pick up swords to use as weapons in hit-and-run attacks.</p>
+
+            <div class="content-section">
+                <h2 id="spawning" class="main-header">Spawning</h2>
+
+                <div class="mini-header">Natural Spawning</div>
+                <p>Geese naturally spawn in areas near water bodies. They require at least 6 water blocks within a 12-block
+                    horizontal radius and 5-block vertical range to spawn. Geese can spawn on blocks with ice covering water underneath.</p>
+
+                <div class="mini-header">Variants</div>
+                <p>There are three goose variants that spawn based on biome:</p>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>Temperate Goose:</strong> The standard variant found in temperate biomes</li>
+                        <li><strong>Cold Goose:</strong> Found in cold and snowy biomes, lays large white eggs</li>
+                        <li><strong>Warm Goose:</strong> Found in warm biomes, lays small white eggs</li>
+                    </ul>
+                </div>
+
+                <div class="mini-header">Family Groups</div>
+                <p>Adult geese have a 30% chance to spawn with 1-3 baby geese nearby during natural spawning, creating small family groups.</p>
+            </div>
+
+            <div class="content-section">
+                <h2 id="behavior" class="main-header">Behavior</h2>
+
+                <div class="mini-header">Water Preference</div>
+                <p>Each goose has a randomly assigned preference for either water or land. This preference changes every 4-7 minutes (4800-7200 ticks).
+                    When geese spend 30-60 seconds in their non-preferred environment, they actively seek to return to their preferred habitat.</p>
+
+                <div class="mini-header">Egg Laying</div>
+                <p>Adult geese lay eggs every 5-10 minutes (6000-12000 ticks). The egg type depends on the goose variant:</p>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>Temperate:</strong> White Egg</li>
+                        <li><strong>Cold:</strong> Big White Egg</li>
+                        <li><strong>Warm:</strong> Small White Egg</li>
+                    </ul>
+                </div>
+
+                <div class="mini-header">Weapon Pickup</div>
+                <p>Adult geese can pick up swords from the ground to use as weapons. Players can trade any type of seeds to convince a goose to
+                    drop its weapon, and the goose won't pick up another sword for 20 seconds after trading.</p>
+            </div>
+
+            <div class="content-section">
+                <h2 id="combat" class="main-header">Combat</h2>
+
+                <div class="mini-header">Hit-and-Run Attacks</div>
+                <p>Geese employ a unique hit-and-run combat strategy when attacking players:</p>
+                <div class="feature-list">
+                    <ul>
+                        <li>Approach the player at 1.5× normal speed</li>
+                        <li>Strike once with their beak or equipped sword</li>
+                        <li>Immediately flee 8-16 blocks away</li>
+                        <li>Wait 5-7 minutes (6000-8400 ticks) before considering another attack</li>
+                        <li>Armed geese are prioritized as attackers over unarmed ones</li>
+                    </ul>
+                </div>
+
+                <div class="mini-header">Death Messages</div>
+                <p>Geese use three different death messages randomly:</p>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>Goose Bother:</strong> "was bothered to death"</li>
+                        <li><strong>Goose Peck:</strong> "was pecked to death"</li>
+                        <li><strong>Goose Honk:</strong> "was honked at by Goose"</li>
+                    </ul>
+                </div>
+
+                <div class="mini-header">Revenge</div>
+                <p>Geese have a revenge mechanic:</p>
+                <div class="feature-list">
+                    <ul>
+                        <li>When a goose is killed by a player, all geese within 64 blocks remember that player</li>
+                        <li>Geese will remember this player for 2-3 1/3 hours</li>
+                        <li>Geese have a countdown of 60-120 seconds between attack attempts</li>
+                        <li>During revenge attacks, geese strike 2-3 times before fleeing</li>
+                    </ul>
+                </div>
+                </div>
+
+            <div class="content-section">
+                <h2 id="history" class="main-header">History</h2>
+                <div class="history-timeline">
+                    <div class="history-title">Timeline</div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-version">Version 1.0.0</div>
+                            <div class="timeline-description">
+                                Added Goose
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    let searchData = {};
+    let allSearchItems = [];
+
+    const searchDataFiles = [
+        '../search-data-silly-goose.json'
+    ];
+
+    async function loadSearchData() {
+        try {
+            const allData = [];
+            const cacheBuster = new Date().getTime();
+
+            for (const file of searchDataFiles) {
+                try {
+                    const response = await fetch(`${file}?v=${cacheBuster}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const items = Object.values(data).flat();
+                        allData.push(...items);
+                        console.log(`Loaded search data from ${file}`);
+                    }
+                } catch (error) {
+                    console.warn(`Could not load ${file}:`, error);
+                }
+            }
+
+            allSearchItems = allData;
+            console.log(`Total search items loaded: ${allSearchItems.length}`);
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            allSearchItems = [];
+        }
+    }
+
+    function initializeSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+
+        if (!searchInput || !searchSuggestions) {
+            console.error('Search elements not found');
+            return;
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .suggestion-category {
+                font-size: 12px;
+                color: #2a78c6;
+                font-family: 'Minecraft Ten', 'Inter', sans-serif;
+                font-weight: normal;
+            }
+        `;
+        document.head.appendChild(style);
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+
+            if (query.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = allSearchItems.filter(item =>
+                item.title.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            ).slice(0, 8);
+
+            if (matches.length > 0) {
+                searchSuggestions.innerHTML = matches.map(item => `
+                    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                        <div class="suggestion-category">${item.category}</div>
+                        <div class="suggestion-title">${item.title}</div>
+                    </div>
+                `).join('');
+                searchSuggestions.style.display = 'block';
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase().trim();
+                const firstMatch = allSearchItems.find(item =>
+                    item.title.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query)
+                );
+                if (firstMatch) {
+                    navigateToPage(firstMatch.page);
+                }
+            }
+        });
+    }
+
+    function switchVariant(variantNumber) {
+        document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.variant-image').forEach(img => img.classList.remove('active'));
+
+        document.querySelectorAll('.variant-tab')[variantNumber - 1].classList.add('active');
+        document.getElementById('variant' + variantNumber).classList.add('active');
+    }
+
+    function navigateToPage(page) {
+        if (page.startsWith('http')) {
+            window.location.href = page;
+        } else {
+            window.location.href = 'https://potatowolfie.github.io/' + page;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        await loadSearchData();
+        initializeSearch();
+    });
+</script>
+</body>
+</html>
