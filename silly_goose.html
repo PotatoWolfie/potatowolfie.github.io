@@ -336,7 +336,19 @@
 }
 
 .nav-button-icon {
-    display: none;
+    display: inline-block;
+    margin-right: 6px;
+    order: -1;
+}
+
+.nav-button-icon {
+    width: 23px !important;
+    height: 23px !important;
+    border: 2px solid #0a4694 !important;
+    image-rendering: -moz-crisp-edges !important;
+    image-rendering: -webkit-crisp-edges !important;
+    image-rendering: pixelated !important;
+    image-rendering: crisp-edges !important;
 }
 
 @media (max-width: 768px) {
@@ -1493,6 +1505,13 @@ version-item-image-container {
     .versions-header-text {
         font-size: 17px;
     }
+    .nav-button-icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #0a4694;
+        margin-right: 0;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2052,7 +2071,7 @@ a {
 
     <div class="sidebar">
         <div class="sidebar-section stats">
-            <div class="stat-number">13</div>
+            <div class="stat-number">12</div>
             <div class="stat-label">Articles</div>
             <div style="margin: 15px 0;">•</div>
             <div class="stat-number">33</div>
