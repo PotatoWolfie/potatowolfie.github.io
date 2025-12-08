@@ -1981,10 +1981,10 @@ a {
 
     <div class="sidebar">
         <div class="sidebar-section stats">
-            <div class="stat-number">2</div>
-            <div class="stat-label">Active Mods</div>
+            <div class="stat-number">---</div>
+            <div class="stat-label">Total Mods</div>
             <div style="margin: 15px 0;">•</div>
-            <div class="stat-number">50K+</div>
+            <div class="stat-number">---</div>
             <div class="stat-label">Downloads</div>
         </div>
 
@@ -2312,6 +2312,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     await loadSearchData();
     initializeSearch();
     renderNavigation();
+    fetchTotalDownloads();
+    setInterval(fetchTotalDownloads, 5 * 60 * 1000);
 
     window.addEventListener('resize', function() {
         renderNavigation();
@@ -2368,6 +2370,130 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     });
 });
+
+async function fetchTotalDownloads() {
+    try {
+        let totalModrinth = 0;
+        let totalCurseForge = 0;
+        let totalMods = 0;
+
+        try {
+            const modrinthResponse = await fetch('https://api.modrinth.com/v2/user/PotatoWolfie', {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-cache' }
+            });
+
+            if (modrinthResponse.ok) {
+                const userData = await modrinthResponse.json();
+
+                const projectsResponse = await fetch(`https://api.modrinth.com/v2/user/${userData.id}/projects`, {
+                    cache: 'no-store',
+                    headers: { 'Cache-Control': 'no-cache' }
+                });
+
+                if (projectsResponse.ok) {
+                    const projects = await projectsResponse.json();
+                    totalModrinth = projects.reduce((sum, project) => sum + (project.downloads || 0), 0);
+                    totalMods = projects.length;
+                    console.log('Modrinth total downloads:', totalModrinth);
+                    console.log('Total mods:', totalMods);
+                }
+            }
+        } catch (error) {
+            console.warn('Could not fetch Modrinth downloads:', error);
+        }
+
+        const curseforgeProjectIds = [
+            '1334244',
+            '1066894',
+            '940093'
+        ];
+
+        try {
+            const cfPromises = curseforgeProjectIds.map(id =>
+                fetch(`https://api.cfwidget.com/minecraft/mc-mods/${id}`)
+            );
+
+            const results = await Promise.all(cfPromises);
+
+            for (const response of results) {
+                if (response.ok) {
+                    const data = await response.json();
+                    totalCurseForge += data.downloads?.total || 0;
+                }
+            }
+
+            console.log('CurseForge total downloads:', totalCurseForge);
+        } catch (error) {
+            console.warn('Could not fetch CurseForge downloads:', error);
+        }
+
+        const grandTotal = totalModrinth + totalCurseForge;
+
+        console.log('Grand Total:', grandTotal);
+
+        updateTotalDownloads(grandTotal, totalModrinth, totalCurseForge);
+        updateTotalMods(totalMods);
+
+    } catch (error) {
+        console.error('Error fetching total downloads:', error);
+        updateTotalDownloads(null);
+    }
+}
+
+function updateTotalDownloads(total, modrinth, curseforge) {
+    const statsElements = document.querySelectorAll('.stat-label');
+
+    statsElements.forEach(label => {
+        if (label.textContent === 'Downloads') {
+            const statNumber = label.previousElementSibling;
+            if (statNumber && statNumber.classList.contains('stat-number')) {
+                if (total !== null) {
+                    statNumber.textContent = formatNumber(total);
+                    statNumber.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
+                } else {
+                    statNumber.textContent = '---';
+                }
+            }
+        }
+    });
+}
+
+function updateTotalMods(count) {
+    const statsElements = document.querySelectorAll('.stat-label');
+
+    statsElements.forEach(label => {
+        if (label.textContent === 'Active Mods' || label.textContent === 'Total Mods') {
+            const statNumber = label.previousElementSibling;
+            if (statNumber && statNumber.classList.contains('stat-number')) {
+                if (count !== null && count > 0) {
+                    statNumber.textContent = count;
+                    label.textContent = 'Total Mods';
+                } else {
+                    statNumber.textContent = '---';
+                }
+            }
+        }
+    });
+}
+
+function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+    } else if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toLocaleString();
+}
+
+function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+    } else if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toLocaleString();
+}
 
     /*
     Put this in style when E&W
