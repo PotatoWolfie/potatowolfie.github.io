@@ -1129,6 +1129,10 @@ version-item-image-container {
             color: white;
         }
 
+        .stats img {
+            filter: brightness(1.2);
+        }
+
         .stat-number {
             font-size: 28px;
             font-weight: normal;
@@ -1997,11 +2001,11 @@ a {
 
     <div class="sidebar">
         <div class="sidebar-section stats">
+            <div class="stat-number" id="downloadCount">---</div>
+            <div class="stat-label">Downloads</div>
+            <div style="margin: 15px 0;">•</div>
             <div class="stat-number">13</div>
             <div class="stat-label">Articles</div>
-            <div style="margin: 15px 0;">•</div>
-            <div class="stat-number">33</div>
-            <div class="stat-label">Files</div>
         </div>
 
         <div class="sidebar-section">
@@ -2039,52 +2043,51 @@ a {
         </div>
     </div>
 </div>
-
 <script>
     let targetRotation = 0;
     let currentRotation = 0;
     let isArrowAnimating = false;
     let isDropdownAnimating = false;
 
-        let searchData = {};
-let allSearchItems = [];
+    let searchData = {};
+    let allSearchItems = [];
 
-const searchDataFiles = [
-    'search-data-web.json'
-];
+    const searchDataFiles = [
+        'search-data-web.json'
+    ];
 
-async function loadSearchData() {
-    try {
-        const allData = [];
-        const cacheBuster = new Date().getTime();
+    async function loadSearchData() {
+        try {
+            const allData = [];
+            const cacheBuster = new Date().getTime();
 
-        for (const file of searchDataFiles) {
-            try {
-                const response = await fetch(`${file}?v=${cacheBuster}`, {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
+            for (const file of searchDataFiles) {
+                try {
+                    const response = await fetch(`${file}?v=${cacheBuster}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const items = Object.values(data).flat();
+                        allData.push(...items);
+                        console.log(`Loaded search data from ${file}`);
                     }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    const items = Object.values(data).flat();
-                    allData.push(...items);
-                    console.log(`Loaded search data from ${file}`);
+                } catch (error) {
+                    console.warn(`Could not load ${file}:`, error);
                 }
-            } catch (error) {
-                console.warn(`Could not load ${file}:`, error);
             }
-        }
 
-        allSearchItems = allData;
-        console.log(`Total search items loaded: ${allSearchItems.length}`);
-    } catch (error) {
-        console.error('Error loading search data:', error);
-        allSearchItems = [];
+            allSearchItems = allData;
+            console.log(`Total search items loaded: ${allSearchItems.length}`);
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            allSearchItems = [];
+        }
     }
-}
 
     function initializeSearch() {
         const searchInput = document.getElementById('searchInput');
@@ -2218,8 +2221,275 @@ async function loadSearchData() {
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.wiki-button').forEach(button => {
+        button.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        button.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('click', function() {
+            const buttonText = this.querySelector('.wiki-button-name').textContent;
+            if (buttonText === 'Get Web') {
+                window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
+            } else if (buttonText === 'Read More') {
+                window.open('https://potatowolfie.github.io/Web/blocks/spider_web.html', '_blank');
+            }
+        });
+    });
+
+    const navTabs = [
+        { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
+        { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png', active: true },
+        { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png' },
+        { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
+    ];
+
+    let currentPage = 0;
+
+    function getButtonWidth() {
+        let availableWidth;
+
+        if (window.innerWidth <= 768) {
+            const mainContainer = document.querySelector('.main-container');
+            const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
+            const totalMargins = 5 * 2;
+            return (containerWidth - totalMargins) / 6;
+        } else {
+            availableWidth = window.innerWidth - 40;
+            const totalMargins = 7 * 2;
+            return (availableWidth - totalMargins) / 8;
+        }
+    }
+
+    function renderNavigation() {
+        const wrapper = document.getElementById('navWrapper');
+        const buttonWidth = getButtonWidth();
+        const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+
+        wrapper.innerHTML = '';
+
+        let buttons = [];
+
+        if (navTabs.length <= buttonsPerPage) {
+            buttons = navTabs.map(tab => ({
+                type: 'tab',
+                data: tab
+            }));
+        } else {
+            if (currentPage === 0) {
+                for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: navTabs[i] });
+                }
+                buttons.push({ type: 'next' });
+            } else {
+                const firstPageTabs = buttonsPerPage - 1;
+                const otherPageTabs = buttonsPerPage - 2;
+                const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
+
+                const remainingTabs = navTabs.length - startIndex;
+                const isLastPage = remainingTabs <= buttonsPerPage - 1;
+
+                if (isLastPage) {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                } else {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                    buttons.push({ type: 'next' });
+                }
+            }
+        }
+
+        buttons.forEach((button, index) => {
+            const btn = document.createElement('a');
+            btn.className = 'nav-button';
+            btn.style.width = buttonWidth + 'px';
+
+            if (button.type === 'prev') {
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Previous</span>
+                    <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    if (currentPage > 0) {
+                        currentPage--;
+                        renderNavigation();
+                    }
+                };
+            } else if (button.type === 'next') {
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Next</span>
+                    <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    currentPage++;
+                    renderNavigation();
+                };
+            } else {
+                btn.href = button.data.href;
+                btn.innerHTML = `
+                    <span class="nav-button-text">${button.data.text}</span>
+                    <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
+                `;
+                if (button.data.active) {
+                    btn.classList.add('active');
+                }
+            }
+
+            wrapper.appendChild(btn);
+        });
+    }
+
+    async function fetchDownloadCount() {
+        try {
+            let modrinthDownloads = 0;
+            let curseforgeDownloads = 0;
+
+            try {
+                const modrinthResponse = await fetch('https://api.modrinth.com/v2/project/webs', {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (modrinthResponse.ok) {
+                    const modrinthData = await modrinthResponse.json();
+                    modrinthDownloads = modrinthData.downloads || 0;
+                    console.log('Modrinth downloads:', modrinthDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch Modrinth downloads:', error);
+            }
+
+            try {
+                const curseforgeProjectId = '1334244';
+                const cfResponse = await fetch(
+                    `https://api.cfwidget.com/minecraft/mc-mods/${curseforgeProjectId}`
+                );
+
+                if (cfResponse.ok) {
+                    const cfData = await cfResponse.json();
+                    curseforgeDownloads = cfData.downloads?.total || 0;
+                    console.log('CurseForge downloads:', curseforgeDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch CurseForge downloads:', error);
+            }
+            const totalDownloads = modrinthDownloads + curseforgeDownloads;
+            console.log('Total downloads:', totalDownloads);
+            updateDownloadCounter(totalDownloads, modrinthDownloads, curseforgeDownloads);
+
+        } catch (error) {
+            console.error('Error fetching download count:', error);
+            updateDownloadCounter(null);
+        }
+    }
+
+    function updateDownloadCounter(total, modrinth, curseforge) {
+        const countElement = document.getElementById('downloadCount');
+
+        if (!countElement) return;
+
+        if (total !== null) {
+            countElement.innerHTML = formatNumber(total);
+            countElement.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
+            const label = countElement.nextElementSibling;
+            if (label && label.classList.contains('stat-label')) {
+                label.textContent = 'Total Downloads';
+            }
+        } else {
+            countElement.innerHTML = '---';
+        }
+    }
+
+    function initDownloadCounter() {
+        const countElement = document.getElementById('downloadCount');
+        if (countElement) {
+            countElement.innerHTML = '---';
+        }
+    }
+
+    function formatNumber(num) {
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        }
+        return num.toLocaleString();
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+    initDownloadCounter();
+
+    await loadSearchData();
+    initializeSearch();
+
+    renderNavigation();
+
+    const articleCount = await countArticles();
+    updateArticleCounter(articleCount);
+
+    fetchDownloadCount();
+
+    setInterval(fetchDownloadCount, 5 * 60 * 1000);
+        window.addEventListener('resize', function() {
+            renderNavigation();
+        });
+
         document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            item.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+        });
+
+        document.querySelectorAll('.wiki-button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            button.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+
+            button.addEventListener('click', function() {
+                const buttonText = this.querySelector('.wiki-button-name').textContent;
+                if (buttonText === 'Get Web') {
+                    window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
+                } else if (buttonText === 'Read More') {
+                    window.open('https://potatowolfie.github.io/Web/blocks/spider_web.html', '_blank');
+                }
+            });
+        });
+
+        document.querySelectorAll('.version-item').forEach(item => {
             item.addEventListener('mousedown', function() {
                 this.classList.add('pressed');
             });
@@ -2234,198 +2504,23 @@ async function loadSearchData() {
         });
     });
 
-    document.querySelectorAll('.wiki-button').forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        button.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('click', function() {
-            const buttonText = this.querySelector('.wiki-button-name').textContent;
-            if (buttonText === 'Get Web') {
-                window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
-            } else if (buttonText === 'Read More') {
-                window.open('https://potatowolfie.github.io/Web/blocks/spider_web.html', '_blank');
-            }
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', async function() {
-    await loadSearchData();
-    initializeSearch();
-    renderNavigation();
-
-    window.addEventListener('resize', function() {
-        renderNavigation();
-    });
-
-    document.querySelectorAll('.category-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
-
-    document.querySelectorAll('.wiki-button').forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        button.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('click', function() {
-            const buttonText = this.querySelector('.wiki-button-name').textContent;
-            if (buttonText === 'Get Web') {
-                window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
-            } else if (buttonText === 'Read More') {
-                window.open('https://potatowolfie.github.io/Web/blocks/spider_web.html', '_blank');
-            }
-        });
-    });
-
-    document.querySelectorAll('.version-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
-});
-
-const navTabs = [
-    { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png', active: true },
-    { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png' },
-    { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
-];
-
-let currentPage = 0;
-
-function getButtonWidth() {
-    let availableWidth;
-
-    if (window.innerWidth <= 768) {
-        const mainContainer = document.querySelector('.main-container');
-        const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
-        const totalMargins = 5 * 2;
-        return (containerWidth - totalMargins) / 6;
-    } else {
-        availableWidth = window.innerWidth - 40;
-        const totalMargins = 7 * 2;
-        return (availableWidth - totalMargins) / 8;
+    async function countArticles() {
+    if (allSearchItems && allSearchItems.length > 0) {
+        return allSearchItems.length;
     }
+    return 13;
 }
 
-function renderNavigation() {
-    const wrapper = document.getElementById('navWrapper');
-    const buttonWidth = getButtonWidth();
-    const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+function updateArticleCounter(count) {
+    const articleElements = document.querySelectorAll('.stat-label');
 
-    wrapper.innerHTML = '';
-
-    let buttons = [];
-
-    if (navTabs.length <= buttonsPerPage) {
-        buttons = navTabs.map(tab => ({
-            type: 'tab',
-            data: tab
-        }));
-    } else {
-        if (currentPage === 0) {
-            for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
-                buttons.push({ type: 'tab', data: navTabs[i] });
-            }
-            buttons.push({ type: 'next' });
-        } else {
-            const firstPageTabs = buttonsPerPage - 1;
-            const otherPageTabs = buttonsPerPage - 2;
-            const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
-
-            const remainingTabs = navTabs.length - startIndex;
-            const isLastPage = remainingTabs <= buttonsPerPage - 1;
-
-            if (isLastPage) {
-                buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < navTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: navTabs[i] });
-                }
-            } else {
-                buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: navTabs[i] });
-                }
-                buttons.push({ type: 'next' });
+    articleElements.forEach(label => {
+        if (label.textContent === 'Articles') {
+            const statNumber = label.previousElementSibling;
+            if (statNumber && statNumber.classList.contains('stat-number')) {
+                statNumber.textContent = count;
             }
         }
-    }
-
-    buttons.forEach((button, index) => {
-        const btn = document.createElement('a');
-        btn.className = 'nav-button';
-        btn.style.width = buttonWidth + 'px';
-
-        if (button.type === 'prev') {
-            btn.classList.add('nav-arrow');
-            btn.innerHTML = `
-                <span class="nav-button-text">Previous</span>
-                <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
-            `;
-            btn.onclick = (e) => {
-                e.preventDefault();
-                if (currentPage > 0) {
-                    currentPage--;
-                    renderNavigation();
-                }
-            };
-        } else if (button.type === 'next') {
-            btn.classList.add('nav-arrow');
-            btn.innerHTML = `
-                <span class="nav-button-text">Next</span>
-                <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
-            `;
-            btn.onclick = (e) => {
-                e.preventDefault();
-                currentPage++;
-                renderNavigation();
-            };
-        } else {
-            btn.href = button.data.href;
-            btn.innerHTML = `
-                <span class="nav-button-text">${button.data.text}</span>
-                <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
-            `;
-            if (button.data.active) {
-                btn.classList.add('active');
-            }
-        }
-
-        wrapper.appendChild(btn);
     });
 }
 </script>

@@ -2071,11 +2071,11 @@ a {
 
     <div class="sidebar">
         <div class="sidebar-section stats">
+            <div class="stat-number" id="downloadCount">---</div>
+            <div class="stat-label">Downloads</div>
+            <div style="margin: 15px 0;">•</div>
             <div class="stat-number">12</div>
             <div class="stat-label">Articles</div>
-            <div style="margin: 15px 0;">•</div>
-            <div class="stat-number">33</div>
-            <div class="stat-label">Files</div>
         </div>
 
         <div class="sidebar-section">
@@ -2280,8 +2280,360 @@ a {
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    const navTabs = [
+        { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
+        { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
+        { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png', active: true },
+        { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
+    ];
+
+    let currentPage = 0;
+
+    function getButtonWidth() {
+        let availableWidth;
+
+        if (window.innerWidth <= 768) {
+            const mainContainer = document.querySelector('.main-container');
+            const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
+            const totalMargins = 5 * 2;
+            return (containerWidth - totalMargins) / 6;
+        } else {
+            availableWidth = window.innerWidth - 40;
+            const totalMargins = 7 * 2;
+            return (availableWidth - totalMargins) / 8;
+        }
+    }
+
+    function renderNavigation() {
+        const wrapper = document.getElementById('navWrapper');
+        const buttonWidth = getButtonWidth();
+        const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+
+        wrapper.innerHTML = '';
+
+        let buttons = [];
+
+        if (navTabs.length <= buttonsPerPage) {
+            buttons = navTabs.map(tab => ({
+                type: 'tab',
+                data: tab
+            }));
+        } else {
+            if (currentPage === 0) {
+                for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: navTabs[i] });
+                }
+                buttons.push({ type: 'next' });
+            } else {
+                const firstPageTabs = buttonsPerPage - 1;
+                const otherPageTabs = buttonsPerPage - 2;
+                const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
+
+                const remainingTabs = navTabs.length - startIndex;
+                const isLastPage = remainingTabs <= buttonsPerPage - 1;
+
+                if (isLastPage) {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                } else {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                    buttons.push({ type: 'next' });
+                }
+            }
+        }
+
+        buttons.forEach((button, index) => {
+            const btn = document.createElement('a');
+            btn.className = 'nav-button';
+            btn.style.width = buttonWidth + 'px';
+
+            if (button.type === 'prev') {
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Previous</span>
+                    <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    if (currentPage > 0) {
+                        currentPage--;
+                        renderNavigation();
+                    }
+                };
+            } else if (button.type === 'next') {
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Next</span>
+                    <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    currentPage++;
+                    renderNavigation();
+                };
+            } else {
+                btn.href = button.data.href;
+                btn.innerHTML = `
+                    <span class="nav-button-text">${button.data.text}</span>
+                    <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
+                `;
+                if (button.data.active) {
+                    btn.classList.add('active');
+                }
+            }
+
+            wrapper.appendChild(btn);
+        });
+    }
+
+    async function fetchDownloadCount() {
+        try {
+            let modrinthDownloads = 0;
+            let curseforgeDownloads = 0;
+
+            try {
+                const modrinthResponse = await fetch('https://api.modrinth.com/v2/project/silly-goose', {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (modrinthResponse.ok) {
+                    const modrinthData = await modrinthResponse.json();
+                    modrinthDownloads = modrinthData.downloads || 0;
+                    console.log('Modrinth downloads:', modrinthDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch Modrinth downloads:', error);
+            }
+
+            try {
+                const curseforgeProjectId = '1066894';
+                const cfResponse = await fetch(
+                    `https://api.cfwidget.com/minecraft/mc-mods/${curseforgeProjectId}`
+                );
+
+                if (cfResponse.ok) {
+                    const cfData = await cfResponse.json();
+                    curseforgeDownloads = cfData.downloads?.total || 0;
+                    console.log('CurseForge downloads:', curseforgeDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch CurseForge downloads:', error);
+            }
+
+            const totalDownloads = modrinthDownloads + curseforgeDownloads;
+
+            console.log('Total downloads:', totalDownloads);
+
+            updateDownloadCounter(totalDownloads, modrinthDownloads, curseforgeDownloads);
+
+        } catch (error) {
+            console.error('Error fetching download count:', error);
+            updateDownloadCounter(null);
+        }
+    }
+
+    function updateDownloadCounter(total, modrinth, curseforge) {
+        const countElement = document.getElementById('downloadCount');
+
+        if (!countElement) return;
+
+        if (total !== null) {
+            countElement.innerHTML = formatNumber(total);
+            countElement.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
+
+            const label = countElement.nextElementSibling;
+            if (label && label.classList.contains('stat-label')) {
+                label.textContent = 'Total Downloads';
+            }
+        } else {
+            countElement.innerHTML = '---';
+        }
+    }
+
+    function initDownloadCounter() {
+        const countElement = document.getElementById('downloadCount');
+        if (countElement) {
+            countElement.innerHTML = '---';
+        }
+    }
+
+    function formatNumber(num) {
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        }
+        return num.toLocaleString();
+    }
+
+    const honkSounds = [
+        'Silly_Goose/assets/sounds/goose_attack.ogg',
+        'Silly_Goose/assets/sounds/goose_death_1.ogg',
+        'Silly_Goose/assets/sounds/goose_death_2.ogg',
+        'Silly_Goose/assets/sounds/goose_honk_1.ogg',
+        'Silly_Goose/assets/sounds/goose_honk_2.ogg',
+        'Silly_Goose/assets/sounds/goose_honk_3.ogg',
+        'Silly_Goose/assets/sounds/goose_hurt_1.ogg',
+        'Silly_Goose/assets/sounds/goose_hurt_2.ogg'
+    ];
+
+    const preloadedHonks = honkSounds.map(src => {
+        const audio = new Audio(src);
+        audio.preload = 'auto';
+        return audio;
+    });
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let honkCount = 0;
+    let isRaining = false;
+    let rainTimer = null;
+    let rainEndTime = 0;
+
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function createHonkText() {
+        const honkText = document.createElement('div');
+        honkText.className = 'honk-text';
+        honkText.textContent = 'HONK!';
+        honkText.style.left = mouseX + 'px';
+        honkText.style.top = mouseY + 'px';
+        honkText.style.transform = 'translate(-100%, -100%)';
+
+        document.body.appendChild(honkText);
+
+        setTimeout(() => {
+            honkText.remove();
+        }, 1000);
+    }
+
+    function createGeraldRain() {
+        const gerald = document.createElement('img');
+        gerald.src = 'Silly_Goose/assets/wiki/gerald.png';
+        gerald.className = 'gerald-rain';
+        gerald.style.left = Math.random() * window.innerWidth + 'px';
+        gerald.style.top = '-200px';
+        gerald.style.animationDuration = (2 + Math.random() * 3) + 's';
+
+        document.body.appendChild(gerald);
+
+        setTimeout(() => {
+            gerald.remove();
+        }, 5000);
+    }
+
+    function startGeraldRain() {
+        if (isRaining) return;
+
+        isRaining = true;
+        rainEndTime = Date.now() + 12000;
+
+        const rainInterval = setInterval(() => {
+            if (Date.now() >= rainEndTime) {
+                clearInterval(rainInterval);
+                isRaining = false;
+                return;
+            }
+            createGeraldRain();
+        }, 100);
+
+        rainTimer = rainInterval;
+    }
+
+    function playRandomHonk() {
+        const randomIndex = Math.floor(Math.random() * preloadedHonks.length);
+        const honk = preloadedHonks[randomIndex].cloneNode();
+        honk.volume = 0.5;
+        honk.play().catch(err => console.log('Honk playback failed:', err));
+
+        createHonkText();
+
+        honkCount++;
+
+        if (isRaining) {
+            rainEndTime += 100;
+        }
+
+        if (honkCount >= 50 && !isRaining) {
+            honkCount = 0;
+            startGeraldRain();
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key.toLowerCase() === 'g' &&
+            !e.target.matches('input, textarea, [contenteditable="true"]')) {
+            playRandomHonk();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', async function() {
+    initDownloadCounter();
+
+    await loadSearchData();
+    initializeSearch();
+    renderNavigation();
+
+    const articleCount = await countArticles();
+    updateArticleCounter(articleCount);
+
+    fetchDownloadCount();
+
+    setInterval(fetchDownloadCount, 5 * 60 * 1000);
+
+    window.addEventListener('resize', function() {
+        renderNavigation();
+    });
+
         document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            item.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+        });
+
+        document.querySelectorAll('.wiki-button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            button.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+
+            button.addEventListener('click', function() {
+                const buttonText = this.querySelector('.wiki-button-name').textContent;
+                if (buttonText === 'Get Silly Goose') {
+                    window.open('https://www.curseforge.com/minecraft/mc-mods/silly-goose', '_blank');
+                } else if (buttonText === 'Read More') {
+                    window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
+                }
+            });
+        });
+
+        document.querySelectorAll('.version-item').forEach(item => {
             item.addEventListener('mousedown', function() {
                 this.classList.add('pressed');
             });
@@ -2296,304 +2648,45 @@ a {
         });
     });
 
-    document.querySelectorAll('.wiki-button').forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        button.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('click', function() {
-            const buttonText = this.querySelector('.wiki-button-name').textContent;
-            if (buttonText === 'Get Silly Goose') {
-                window.open('https://www.curseforge.com/minecraft/mc-mods/silly-goose', '_blank');
-            } else if (buttonText === 'Read More') {
-                window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
-            }
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', async function() {
-    await loadSearchData();
-    initializeSearch();
-    renderNavigation();
-
-    window.addEventListener('resize', function() {
-        renderNavigation();
-    });
-
-    document.querySelectorAll('.category-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
-
-    document.querySelectorAll('.wiki-button').forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        button.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-
-        button.addEventListener('click', function() {
-            const buttonText = this.querySelector('.wiki-button-name').textContent;
-            if (buttonText === 'Get Silly Goose') {
-                window.open('https://www.curseforge.com/minecraft/mc-mods/silly-goose', '_blank');
-            } else if (buttonText === 'Read More') {
-                window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
-            }
-        });
-    });
-
-    document.querySelectorAll('.version-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
-});
-
-const navTabs = [
-    { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png', active: true },
-    { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
-];
-
-let currentPage = 0;
-
-function getButtonWidth() {
-    let availableWidth;
-
-    if (window.innerWidth <= 768) {
-        const mainContainer = document.querySelector('.main-container');
-        const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
-        const totalMargins = 5 * 2;
-        return (containerWidth - totalMargins) / 6;
-    } else {
-        availableWidth = window.innerWidth - 40;
-        const totalMargins = 7 * 2;
-        return (availableWidth - totalMargins) / 8;
+    async function countArticles() {
+    if (allSearchItems && allSearchItems.length > 0) {
+        return allSearchItems.length;
     }
+    return 12;
 }
 
-function renderNavigation() {
-    const wrapper = document.getElementById('navWrapper');
-    const buttonWidth = getButtonWidth();
-    const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+function updateArticleCounter(count) {
+    const articleElements = document.querySelectorAll('.stat-label');
 
-    wrapper.innerHTML = '';
-
-    let buttons = [];
-
-    if (navTabs.length <= buttonsPerPage) {
-        buttons = navTabs.map(tab => ({
-            type: 'tab',
-            data: tab
-        }));
-    } else {
-        if (currentPage === 0) {
-            for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
-                buttons.push({ type: 'tab', data: navTabs[i] });
-            }
-            buttons.push({ type: 'next' });
-        } else {
-            const firstPageTabs = buttonsPerPage - 1;
-            const otherPageTabs = buttonsPerPage - 2;
-            const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
-
-            const remainingTabs = navTabs.length - startIndex;
-            const isLastPage = remainingTabs <= buttonsPerPage - 1;
-
-            if (isLastPage) {
-                buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < navTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: navTabs[i] });
-                }
-            } else {
-                buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: navTabs[i] });
-                }
-                buttons.push({ type: 'next' });
+    articleElements.forEach(label => {
+        if (label.textContent === 'Articles') {
+            const statNumber = label.previousElementSibling;
+            if (statNumber && statNumber.classList.contains('stat-number')) {
+                statNumber.textContent = count;
             }
         }
-    }
-
-    buttons.forEach((button, index) => {
-        const btn = document.createElement('a');
-        btn.className = 'nav-button';
-        btn.style.width = buttonWidth + 'px';
-
-        if (button.type === 'prev') {
-            btn.classList.add('nav-arrow');
-            btn.innerHTML = `
-                <span class="nav-button-text">Previous</span>
-                <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
-            `;
-            btn.onclick = (e) => {
-                e.preventDefault();
-                if (currentPage > 0) {
-                    currentPage--;
-                    renderNavigation();
-                }
-            };
-        } else if (button.type === 'next') {
-            btn.classList.add('nav-arrow');
-            btn.innerHTML = `
-                <span class="nav-button-text">Next</span>
-                <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
-            `;
-            btn.onclick = (e) => {
-                e.preventDefault();
-                currentPage++;
-                renderNavigation();
-            };
-        } else {
-            btn.href = button.data.href;
-            btn.innerHTML = `
-                <span class="nav-button-text">${button.data.text}</span>
-                <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
-            `;
-            if (button.data.active) {
-                btn.classList.add('active');
-            }
-        }
-
-        wrapper.appendChild(btn);
     });
 }
 
-    const honkSounds = [
-    'Silly_Goose/assets/sounds/goose_attack.ogg',
-    'Silly_Goose/assets/sounds/goose_death_1.ogg',
-    'Silly_Goose/assets/sounds/goose_death_2.ogg',
-    'Silly_Goose/assets/sounds/goose_honk_1.ogg',
-    'Silly_Goose/assets/sounds/goose_honk_2.ogg',
-    'Silly_Goose/assets/sounds/goose_honk_3.ogg',
-    'Silly_Goose/assets/sounds/goose_hurt_1.ogg',
-    'Silly_Goose/assets/sounds/goose_hurt_2.ogg'
-];
-
-const preloadedHonks = honkSounds.map(src => {
-    const audio = new Audio(src);
-    audio.preload = 'auto';
-    return audio;
-});
-
-let mouseX = 0;
-let mouseY = 0;
-let honkCount = 0;
-let isRaining = false;
-let rainTimer = null;
-let rainEndTime = 0;
-
-document.addEventListener('mousemove', function(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-function createHonkText() {
-    const honkText = document.createElement('div');
-    honkText.className = 'honk-text';
-    honkText.textContent = 'HONK!';
-    honkText.style.left = mouseX + 'px';
-    honkText.style.top = mouseY + 'px';
-    honkText.style.transform = 'translate(-100%, -100%)';
-
-    document.body.appendChild(honkText);
-
-    setTimeout(() => {
-        honkText.remove();
-    }, 1000);
+    async function countArticles() {
+    if (allSearchItems && allSearchItems.length > 0) {
+        return allSearchItems.length;
+    }
+    return 12;
 }
 
-function createGeraldRain() {
-    const gerald = document.createElement('img');
-    gerald.src = 'Silly_Goose/assets/wiki/gerald.png';
-    gerald.className = 'gerald-rain';
-    gerald.style.left = Math.random() * window.innerWidth + 'px';
-    gerald.style.top = '-200px';  // Start above the screen
-    gerald.style.animationDuration = (2 + Math.random() * 3) + 's';
+function updateArticleCounter(count) {
+    const articleElements = document.querySelectorAll('.stat-label');
 
-    document.body.appendChild(gerald);
-
-    setTimeout(() => {
-        gerald.remove();
-    }, 5000);
-}
-
-function startGeraldRain() {
-    if (isRaining) return;
-
-    isRaining = true;
-    rainEndTime = Date.now() + 12000;
-
-    const rainInterval = setInterval(() => {
-        if (Date.now() >= rainEndTime) {
-            clearInterval(rainInterval);
-            isRaining = false;
-            return;
+    articleElements.forEach(label => {
+        if (label.textContent === 'Articles') {
+            const statNumber = label.previousElementSibling;
+            if (statNumber && statNumber.classList.contains('stat-number')) {
+                statNumber.textContent = count;
+            }
         }
-        createGeraldRain();
-    }, 100);
-
-    rainTimer = rainInterval;
+    });
 }
-
-function playRandomHonk() {
-    const randomIndex = Math.floor(Math.random() * preloadedHonks.length);
-    const honk = preloadedHonks[randomIndex].cloneNode();
-    honk.volume = 0.5;
-    honk.play().catch(err => console.log('Honk playback failed:', err));
-
-    createHonkText();
-
-    honkCount++;
-
-    if (isRaining) {
-        rainEndTime += 100;
-    }
-
-    if (honkCount >= 50 && !isRaining) {
-        honkCount = 0;
-        startGeraldRain();
-    }
-}
-
-document.addEventListener('keydown', function(e) {
-    if (e.key.toLowerCase() === 'g' &&
-        !e.target.matches('input, textarea, [contenteditable="true"]')) {
-        playRandomHonk();
-    }
-});
 </script>
-
-</body></html>
+</body>
+</html>

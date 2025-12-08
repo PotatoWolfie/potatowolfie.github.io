@@ -358,46 +358,45 @@
         }
 
         .nav-button.nav-arrow img {
-    border: none;
-    width: 35px
-}
+            border: none;
+            width: 35px
+        }
 
         .nav-button img {
-    width: 16px;
-    height: 16px;
-    image-rendering: auto;
-    border: 1px solid #3e3099;
-}
+            width: 16px;
+            height: 16px;
+            image-rendering: auto;
+            border: 1px solid #3e3099;
+        }
 
         .nav-button-text {
             display: inline;
         }
 
         .nav-button-icon {
-    display: inline-block;
-    margin-right: 6px;
-    order: -1;
-}
-
-.nav-button-icon {
-    width: 23px !important;
-    height: 23px !important;
-    border: 2px solid #3e3099 !important;
-    image-rendering: -moz-crisp-edges !important;
-    image-rendering: -webkit-crisp-edges !important;
-    image-rendering: pixelated !important;
-    image-rendering: crisp-edges !important;
-}
-
-        @media (max-width: 768px) {
+            display: inline-block;
+            margin-right: 6px;
+            order: -1;
+        }
 
         .nav-button-icon {
-        display: block;
-        width: 20px;
-        height: 20px;
-        border: 1px solid #0a4694;
-        margin-right: 0;
-    }
+            width: 23px !important;
+            height: 23px !important;
+            border: 2px solid #3e3099 !important;
+            image-rendering: -moz-crisp-edges !important;
+            image-rendering: -webkit-crisp-edges !important;
+            image-rendering: pixelated !important;
+            image-rendering: crisp-edges !important;
+        }
+
+        @media (max-width: 768px) {
+            .nav-button-icon {
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 1px solid #0a4694;
+                margin-right: 0;
+            }
 
             .nav-button {
                 padding: 10px 4px;
@@ -405,86 +404,128 @@
             }
 
             .nav-button img {
-        width: 25px;
-        height: 25px;
-        image-rendering: auto;
-        border: 2px solid #3e3099;
-    }
+                width: 25px;
+                height: 25px;
+                image-rendering: auto;
+                border: 2px solid #3e3099;
+            }
 
             .nav-button-text {
                 display: none;
             }
 
             .nav-button-icon {
-        display: block;
-        width: 20px;
-        height: 20px;
-        border: 1px solid #3e3099;
-    }
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 1px solid #3e3099;
+            }
         }
 
         .main-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 30px auto;
-            background: #262626;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            border-radius: 0px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            padding: 20px;
         }
 
         @media (max-width: 768px) {
             .main-container {
+                grid-template-columns: 1fr;
                 margin: 20px 15px;
-                padding: 25px 20px;
-                max-width: none;
+                padding: 0;
+                gap: 20px;
             }
         }
 
         @media (max-width: 480px) {
             .main-container {
                 margin: 15px 10px;
-                padding: 20px 15px;
-            }
-        }
-
-        .content-wrapper {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper {
-                flex-direction: column;
-                gap: 20px;
             }
         }
 
         .content {
-            flex: 1;
-            min-width: 0;
+            background: #262626;
+            border: none;
+            border-radius: 0;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content {
+                padding: 15px;
+            }
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-section {
+            background: #262626;
+            border: none;
+            border-radius: 0;
+            padding: 20px;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #6348d4, #4a39b3);
+            border-radius: 0;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .stats img {
+            filter: brightness(1.2);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: normal;
+            display: block;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 10px;
         }
 
         .page-title {
             font-family: 'Minecraft Ten', 'Nunito', sans-serif;
             color: #6348d4;
             word-wrap: break-word;
-            font-size: 1.7rem;
+            font-size: 28px;
             margin-bottom: 25px;
             margin-top: 0;
             border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 15px;
         }
 
         @media (max-width: 768px) {
             .page-title {
-                font-size: 1.5rem;
+                font-size: 24px;
                 margin-bottom: 20px;
             }
         }
 
         @media (max-width: 480px) {
             .page-title {
-                font-size: 1.3rem;
+                font-size: 20px;
                 margin-bottom: 15px;
             }
         }
@@ -554,7 +595,7 @@
     <div class="header-content">
         <div class="logo">
             <a href="https://potatowolfie.github.io">
-                <img src="Universe76/wiki/un76_wiki.png" alt="Web Wiki">
+                <img src="Universe76/wiki/un76_wiki.png" alt="Universe 76 Wiki">
             </a>
         </div>
     </div>
@@ -567,14 +608,19 @@
 </div>
 
 <div class="main-container">
-    <div class="content-wrapper">
-        <div class="content">
-            <h1 class="page-title">Universe 76</h1>
+    <div class="content">
+        <h1 class="page-title">Universe 76</h1>
 
-            <div class="content-section">
-                <img src="Universe76/wiki/nothing_to_see_here.png" alt="No Biomes Here" class="biome-image">
-                <div class="biome-text">Universe 76 at the current moment is not being worked on. It is intended in the future that this project is completely remade.</div>
-            </div>
+        <div class="content-section">
+            <img src="Universe76/wiki/nothing_to_see_here.png" alt="No Biomes Here" class="biome-image">
+            <div class="biome-text">Universe 76 at the current moment is not being worked on. It is intended in the future that this project is completely remade.</div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-section stats">
+            <div class="stat-number" id="downloadCount">---</div>
+            <div class="stat-label">Downloads</div>
         </div>
     </div>
 </div>
@@ -607,7 +653,6 @@
     ];
 
     let currentPage = 0;
-    const BUTTONS_PER_PAGE = window.innerWidth <= 768 ? 6 : 8;
 
     function getButtonWidth() {
         let availableWidth;
@@ -673,50 +718,135 @@
             btn.style.width = buttonWidth + 'px';
 
             if (button.type === 'prev') {
-    btn.classList.add('nav-arrow');
-    btn.innerHTML = `
-        <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);">
-        <span class="nav-button-text">Previous</span>
-        <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
-    `;
-    btn.onclick = (e) => {
-        e.preventDefault();
-        if (currentPage > 0) {
-            currentPage--;
-            renderNavigation();
-        }
-    };
-} else if (button.type === 'next') {
-    btn.classList.add('nav-arrow');
-    btn.innerHTML = `
-        <span class="nav-button-text">Next</span>
-        <img src="assets/buttons/next_arrow.png" alt="→">
-        <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
-    `;
-    btn.onclick = (e) => {
-        e.preventDefault();
-        currentPage++;
-        renderNavigation();
-    };
-} else {
-    btn.href = button.data.href;
-    btn.innerHTML = `
-        <span class="nav-button-text">${button.data.text}</span>
-        <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
-    `;
-    if (button.data.active) {
-        btn.classList.add('active');
-    }
-}
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Previous</span>
+                    <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    if (currentPage > 0) {
+                        currentPage--;
+                        renderNavigation();
+                    }
+                };
+            } else if (button.type === 'next') {
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Next</span>
+                    <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    currentPage++;
+                    renderNavigation();
+                };
+            } else {
+                btn.href = button.data.href;
+                btn.innerHTML = `
+                    <span class="nav-button-text">${button.data.text}</span>
+                    <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
+                `;
+                if (button.data.active) {
+                    btn.classList.add('active');
+                }
+            }
 
             wrapper.appendChild(btn);
         });
+    }
+
+    // DOWNLOAD COUNTER - Combines Modrinth + CurseForge
+    async function fetchDownloadCount() {
+        try {
+            let modrinthDownloads = 0;
+            let curseforgeDownloads = 0;
+
+            // Fetch from Modrinth API (Public, no key needed)
+            try {
+                const modrinthResponse = await fetch('https://api.modrinth.com/v2/project/universe-76', {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (modrinthResponse.ok) {
+                    const modrinthData = await modrinthResponse.json();
+                    modrinthDownloads = modrinthData.downloads || 0;
+                    console.log('Modrinth downloads:', modrinthDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch Modrinth downloads:', error);
+            }
+
+            // Fetch from CurseForge using CFWidget (no API key needed!)
+            try {
+                const curseforgeProjectId = '940093';
+                const cfResponse = await fetch(
+                    `https://api.cfwidget.com/minecraft/mc-mods/${curseforgeProjectId}`
+                );
+
+                if (cfResponse.ok) {
+                    const cfData = await cfResponse.json();
+                    curseforgeDownloads = cfData.downloads?.total || 0;
+                    console.log('CurseForge downloads:', curseforgeDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch CurseForge downloads:', error);
+            }
+
+            // Calculate total
+            const totalDownloads = modrinthDownloads + curseforgeDownloads;
+
+            console.log('Total downloads:', totalDownloads);
+
+            // Update the UI
+            updateDownloadCounter(totalDownloads, modrinthDownloads, curseforgeDownloads);
+
+        } catch (error) {
+            console.error('Error fetching download count:', error);
+            updateDownloadCounter(null);
+        }
+    }
+
+    function updateDownloadCounter(total, modrinth, curseforge) {
+        const countElement = document.getElementById('downloadCount');
+
+        if (!countElement) return;
+
+        if (total !== null) {
+            // Display the formatted number
+            countElement.innerHTML = formatNumber(total);
+
+            // Add tooltip showing breakdown
+            countElement.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
+
+            // Update the label
+            const label = countElement.nextElementSibling;
+            if (label && label.classList.contains('stat-label')) {
+                label.textContent = 'Total Downloads';
+            }
+        } else {
+            countElement.textContent = '---';
+        }
+    }
+
+    function formatNumber(num) {
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        }
+        return num.toLocaleString();
     }
 
     document.addEventListener('DOMContentLoaded', async function() {
         await loadSearchData();
         renderNavigation();
 
+        fetchDownloadCount();
+        setInterval(fetchDownloadCount, 5 * 60 * 1000);
         window.addEventListener('resize', function() {
             renderNavigation();
         });
