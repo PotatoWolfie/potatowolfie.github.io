@@ -1010,11 +1010,29 @@
     }
 
     function switchVariant(variantNumber) {
+        const variants = ['temperate', 'cold', 'warm'];
+        const hash = variants[variantNumber - 1];
+
         document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
         document.querySelectorAll('.variant-image').forEach(img => img.classList.remove('active'));
 
         document.querySelectorAll('.variant-tab')[variantNumber - 1].classList.add('active');
         document.getElementById('variant' + variantNumber).classList.add('active');
+
+        window.location.hash = hash;
+    }
+
+    function loadVariantFromHash() {
+        const hash = window.location.hash.substring(1);
+        const variants = {
+        'temperate': 1,
+        'cold': 2,
+        'warm': 3
+        };
+
+        if (variants[hash]) {
+        switchVariant(variants[hash]);
+        }
     }
 
     function navigateToPage(page) {
@@ -1028,7 +1046,9 @@
     document.addEventListener('DOMContentLoaded', async function() {
         await loadSearchData();
         initializeSearch();
+        loadVariantFromHash();
     });
+    window.addEventListener('hashchange', loadVariantFromHash);
 </script>
 </body>
 </html>
