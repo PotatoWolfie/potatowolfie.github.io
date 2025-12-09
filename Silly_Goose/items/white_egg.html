@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goose</title>
+    <title>White Egg</title>
     <link rel="icon" type="image/x-icon" href="../../silly_goose_wiki_favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -552,45 +553,6 @@
             font-family: 'Minecraft Ten', 'Nunito', sans-serif;
         }
 
-        .timeline-icon {
-            width: 35px;
-            height: auto;
-            vertical-align: middle;
-            margin-right: 6px;
-            image-rendering: auto;
-            display: inline-block;
-            object-fit: contain;
-        }
-
-        .timeline-description {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .timeline-icon {
-                width: 18px;
-                height: 18px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .timeline-icon {
-                width: 20px;
-                height: 20px;
-                margin-right: 8px;
-            }
-        }
-
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .timeline-icon {
-                image-rendering: -webkit-optimize-contrast;
-                image-rendering: crisp-edges;
-            }
-        }
-
         .timeline-item {
             display: flex;
             align-items: flex-start;
@@ -646,33 +608,14 @@
             }
         }
 
-        .behavior-box {
-            background: #2e2e2e;
-            border: 2px solid #d4af37;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            box-shadow:
-                inset 2px 2px 0 #3a3a3a,
-                inset -2px -2px 0 #242424;
-        }
-
-        .behavior-title {
-            font-size: 16px;
-            color: #d4af37;
-            font-weight: 600;
-            margin-bottom: 10px;
-            margin-top: 0;
-        }
-
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin: 15px 0;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: 1fr;
                 gap: 10px;
@@ -683,7 +626,6 @@
             background: #2e2e2e;
             border: 2px solid #1a1a1a;
             padding: 12px;
-            border-radius: 4px;
             text-align: center;
             box-shadow:
                 inset 2px 2px 0 #3a3a3a,
@@ -801,113 +743,9 @@
 
     .comparison-table tr {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto auto auto;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 0;
-        margin-bottom: 15px;
-        padding: 0;
-        border: none;
-        background: transparent !important;
-    }
-
-    .comparison-table td {
-        padding: 8px;
-        background: #1a1a1a;
-        border: 1px solid #3a3a3a;
-        display: flex;
-        align-items: center;
-        font-size: 11px;
-    }
-
-    .comparison-table td::before {
-        content: attr(data-label);
-        color: #2a78c6;
-        font-weight: 600;
-        margin-right: 8px;
-    }
-
-    .icon-cell-loot {
-        grid-column: 1;
-        grid-row: 1;
-        width: auto;
-        justify-content: center;
-    }
-
-    .icon-cell-loot::before {
-        content: "";
-        margin-right: 0;
-    }
-
-    .comparison-table td:nth-child(2) {
-    grid-column: 2;
-    grid-row: 1;
-    text-align: left;
-    justify-content: flex-start;
-}
-
-    .comparison-table td:nth-child(3) {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    .comparison-table td:nth-child(4) {
-        grid-column: 2;
-        grid-row: 2;
-    }
-
-    .comparison-table td:nth-child(5) {
-        grid-column: 1;
-        grid-row: 3;
-    }
-
-    .comparison-table td:nth-child(6) {
-        grid-column: 2;
-        grid-row: 3;
-    }
-
-    .comparison-table td:nth-child(7) {
-        grid-column: 1;
-        grid-row: 4;
-    }
-
-    .comparison-table td:nth-child(8) {
-        grid-column: 2;
-        grid-row: 4;
-    }
-
-    .comparison-table td:nth-child(9) {
-        grid-column: 1;
-        grid-row: 5;
-    }
-
-    .comparison-table td:nth-child(10) {
-        grid-column: 2;
-        grid-row: 5;
-    }
-}
-
-@media (max-width: 768px) {
-    .comparison-table {
-        font-size: 12px;
-        border: none;
-        background: transparent;
-    }
-
-    .comparison-table thead {
-        display: none;
-    }
-
-    .comparison-table tbody {
-        display: block;
-        background: transparent;
-    }
-
-    .comparison-table tr {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto auto auto;
-        gap: 0;
-        margin-bottom: 15px;
+        margin-bottom: 0;
         padding: 0;
         border: none;
         background: transparent !important;
@@ -935,7 +773,6 @@
 
     .icon-cell-loot {
         grid-column: 1;
-        grid-row: 1;
     }
 
     .icon-cell-loot::before {
@@ -945,47 +782,22 @@
 
     .comparison-table td:nth-child(2) {
         grid-column: 2;
-        grid-row: 1;
+        justify-content: flex-start;
+        text-align: left;
     }
 
     .comparison-table td:nth-child(3) {
-        grid-column: 1;
-        grid-row: 2;
+        grid-column: 3;
+    }
+}
+
+@media (max-width: 480px) {
+    .comparison-table tr {
+        grid-template-columns: 1fr;
     }
 
-    .comparison-table td:nth-child(4) {
-        grid-column: 2;
-        grid-row: 2;
-    }
-
-    .comparison-table td:nth-child(5) {
-        grid-column: 1;
-        grid-row: 3;
-    }
-
-    .comparison-table td:nth-child(6) {
-        grid-column: 2;
-        grid-row: 3;
-    }
-
-    .comparison-table td:nth-child(7) {
-        grid-column: 1;
-        grid-row: 4;
-    }
-
-    .comparison-table td:nth-child(8) {
-        grid-column: 2;
-        grid-row: 4;
-    }
-
-    .comparison-table td:nth-child(9) {
-        grid-column: 1;
-        grid-row: 5;
-    }
-
-    .comparison-table td:nth-child(10) {
-        grid-column: 2;
-        grid-row: 5;
+    .comparison-table td {
+        grid-column: 1 !important;
     }
 }
     </style>
@@ -1011,212 +823,131 @@
             <div class="toc">
                 <h2>Contents</h2>
                 <ul>
-                    <li><a href="#goose">Goose</a></li>
-                    <li><a href="#spawning">Spawning</a></li>
-                    <li><a href="#loot">Loot</a></li>
-                    <li><a href="#behavior">Behavior</a></li>
-                    <li><a href="#combat">Combat</a></li>
+                    <li><a href="#goose-eggs">White Egg</a></li>
+                    <li><a href="#obtaining">Obtaining</a></li>
+                    <li><a href="#usage">Usage</a></li>
+                    <li><a href="#hatching">Hatching</a></li>
+                    <li><a href="#comparison">Egg Comparison</a></li>
                     <li><a href="#history">History</a></li>
                 </ul>
             </div>
 
             <div class="info-box">
                 <div class="variant-tabs">
-                    <button class="variant-tab active" onclick="switchVariant(1)">Temperate</button>
-                    <button class="variant-tab" onclick="switchVariant(2)">Cold</button>
-                    <button class="variant-tab" onclick="switchVariant(3)">Warm</button>
+                    <button class="variant-tab active" onclick="switchVariant(1)">Normal</button>
+                    <button class="variant-tab" onclick="switchVariant(2)">Big</button>
+                    <button class="variant-tab" onclick="switchVariant(3)">Small</button>
                 </div>
 
-                <img src="temperate_goose_idle.gif" alt="Temperate Goose" class="variant-image active" id="variant1">
-                <img src="cold_goose_idle.gif" alt="Cold Goose" class="variant-image" id="variant2">
-                <img src="warm_goose_idle.gif" alt="Warm Goose" class="variant-image" id="variant3">
+                <img src="assets/items/white_egg.png" alt="White Egg" class="variant-image active" id="variant1">
+                <img src="assets/items/big_white_egg.png" alt="Big White Egg" class="variant-image" id="variant2">
+                <img src="assets/items/small_white_egg.png" alt="Small White Egg" class="variant-image" id="variant3">
 
                 <div class="info-row">
-                    <span class="info-label">Health points</span>
-                    <span class="info-value">10 <img src="assets/sprites/Heart.png" alt="Heart"> × 5</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Behavior</span>
-                    <span class="info-value">Neutral (mostly)<br>Hostile (revenge)</span>
+                    <span class="info-label">Rarity tier</span>
+                    <span class="info-value">Common</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Attack damage</span>
-                    <span class="info-value">3 <img src="assets/sprites/Heart.png" alt="Heart"> × 1.5</span>
+                    <span class="info-label">Renewable</span>
+                    <span class="info-value">Yes</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Speed</span>
-                    <span class="info-value">0.25</span>
+                    <span class="info-label">Stackable</span>
+                    <span class="info-value">Yes (16)</span>
                 </div>
 
                 <div class="info-row">
                     <span class="info-label">Hitbox Size</span>
-                    <span class="info-value">Height: 1.375<br>Width: 0.625</span>
+                    <span class="info-value">Height: 0.25<br>Width: 0.25</span>
                 </div>
             </div>
         </div>
 
         <div class="content">
-            <h1 id="goose" class="page-title">Goose</h1>
+            <h1 id="goose-eggs" class="page-title">White Egg</h1>
 
-            <p><strong>Geese</strong> are semiaquatic neutral mobs that prefer staying near water.
-                They show tendencies to be annoying, can hold grudges against players, and may even pick up swords to use as weapons in hit-and-run attacks.</p>
+            <p><strong>White Eggs</strong> are throwable projectile items that can hatch into baby geese when thrown. There are three variants of white eggs, each associated with a different <a href="../mobs/goose.html">goose</a> variant and found in different biomes.</p>
 
             <div class="content-section">
-                <h2 id="spawning" class="main-header">Spawning</h2>
+                <h2 id="obtaining" class="main-header">Obtaining</h2>
 
-                <div class="mini-header">Natural Spawning</div>
-                <p>Geese naturally spawn in areas near water bodies. They require at least 6 water blocks within a 12-block
-                    horizontal radius and 5-block vertical range to spawn. Geese can spawn on blocks with ice covering water underneath.</p>
-
-                <div class="mini-header">Variants</div>
-                <p>There are three goose variants that spawn based on biome:</p>
+                <div class="mini-header">Egg Laying</div>
+                <p>White eggs are laid by adult geese every 5-10 minutes (6000-12000 ticks). The type of egg laid depends on the goose's variant:</p>
                 <div class="feature-list">
                     <ul>
-                        <li><strong>Temperate Goose:</strong> The standard variant found in temperate biomes</li>
-                        <li><strong>Cold Goose:</strong> Found in cold and snowy biomes, lays large white eggs</li>
-                        <li><strong>Warm Goose:</strong> Found in warm biomes, lays small white eggs</li>
+                        <li><strong>Temperate Geese:</strong> Lay White Eggs</li>
+                        <li><strong>Cold Geese:</strong> Lay Big White Eggs</li>
+                        <li><strong>Warm Geese:</strong> Lay Small White Eggs</li>
                     </ul>
                 </div>
 
-                <div class="mini-header">Family Groups</div>
-                <p>Adult geese have a 30% chance to spawn with 1-3 baby geese nearby during natural spawning, creating small family groups.</p>
+                <div class="mini-header">Natural Sources</div>
+                <p>White eggs can be collected from the ground after adult geese lay them. They appear as item entities and can be picked up like any other item.</p>
             </div>
 
             <div class="content-section">
-                <h2 id="loot" class="main-header">Loot</h2>
-                <p>Upon death, adult geese drop 1 raw goose (or cooked goose if killed while on fire) and 0-2 feathers.</p>
+                <h2 id="usage" class="main-header">Usage</h2>
+
+                <div class="mini-header">As a Projectile</div>
+                <p>All three types of white eggs can be thrown by "using" the item. When thrown, they travel through the air similar to regular chicken eggs and snowballs. Upon impact with an entity or block, the egg has a chance to hatch.</p>
+
+            </div>
+
+            <div class="content-section">
+                <h2 id="hatching" class="main-header">Hatching</h2>
+
+                <div class="mini-header">Hatch Probability</div>
+                <p>When a thrown white egg collides with something, there is a 12.5% chance (1 in 8) that it will hatch. If the egg does hatch, there is an additional 3.125% chance (1 in 32) that 4 baby geese will spawn instead of just 1.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">No Hatch</div>
+                        <div class="stat-value">87.5%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">1 Baby Goose</div>
+                        <div class="stat-value">~12.1%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">4 Baby Geese</div>
+                        <div class="stat-value">~0.4%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 id="comparison" class="main-header">Egg Comparison</h2>
+
+                <p>While all three egg types function identically in terms of mechanics, they differ in their association with goose variants:</p>
 
                 <table class="comparison-table">
                     <thead>
-                    <tr>
-                        <th colspan="2">Item</th>
-                        <th colspan="2">Default</th>
-                        <th colspan="2">Looting I</th>
-                        <th colspan="2">Looting II</th>
-                        <th colspan="2">Looting III</th>
-                    </tr>
-                    <tr>
-                        <th style="width: 50px;">Icon</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Average</th>
-                        <th>Quantity</th>
-                        <th>Average</th>
-                        <th>Quantity</th>
-                        <th>Average</th>
-                        <th>Quantity</th>
-                        <th>Average</th>
-                    </tr>
-                    </thead>
                     <tbody>
                     <tr>
-                        <td class="icon-cell-loot">
-                            <img src="../items/assets/items/raw_goose.png" alt="Raw Goose">
-                        </td>
-                        <td><a href="#">Cooked Goose</a></td>
-                        <td data-label="Default Qty:">1</td>
-                        <td data-label="Default Avg:">1.00</td>
-                        <td data-label="Looting I Qty:">1-2</td>
-                        <td data-label="Looting I Avg:">1.50</td>
-                        <td data-label="Looting II Qty:">1-3</td>
-                        <td data-label="Looting II Avg:">2.00</td>
-                        <td data-label="Looting III Qty:">1-4</td>
-                        <td data-label="Looting III Avg:">2.50</td>
+                        <th>Egg Type</th>
+                        <th>Goose Variant</th>
+                        <th>Biome Type</th>
                     </tr>
                     <tr>
-                        <td style="icon-cell-loot;">
-                            <img src="../items/assets/items/cooked_goose.png" alt="Cooked Goose" style="width: 32px; height: 32px; image-rendering: pixelated;">
-                        </td>
-                        <td><a href="#">Cooked Goose</a></td>
-                        <td>1</td>
-                        <td>1.00</td>
-                        <td>1-2</td>
-                        <td>1.50</td>
-                        <td>1-3</td>
-                        <td>2.00</td>
-                        <td>1-4</td>
-                        <td>2.50</td>
+                        <td>White Egg</td>
+                        <td>Temperate Goose</td>
+                        <td>Temperate</td>
                     </tr>
                     <tr>
-                        <td style="icon-cell-loot;">
-                            <img src="../items/assets/items/feather.png" alt="Feather" style="width: 32px; height: 32px; image-rendering: pixelated;">
-                        </td>
-                        <td><a href="https://minecraft.wiki/w/Feather">Feather</a></td>
-                        <td>0-2</td>
-                        <td>1.00</td>
-                        <td>0-3</td>
-                        <td>1.50</td>
-                        <td>0-4</td>
-                        <td>2.00</td>
-                        <td>0-5</td>
-                        <td>2.50</td>
+                        <td>Big White Egg</td>
+                        <td>Cold Goose</td>
+                        <td>Cold/Snowy</td>
+                    </tr>
+                    <tr>
+                        <td>Small White Egg</td>
+                        <td>Warm Goose</td>
+                        <td>Warm</td>
                     </tr>
                     </tbody>
                 </table>
-
-                <p><em>Note: Cooked goose is dropped instead of raw goose when the goose is killed while on fire or by a weapon with a Fire Aspect enchantment.</em></p>
             </div>
-            <div class="content-section">
-                <h2 id="behavior" class="main-header">Behavior</h2>
-
-                <div class="mini-header">Water Preference</div>
-                <p>Each goose has a randomly assigned preference for either water or land. This preference changes every 4-7 minutes (4800-7200 ticks).
-                    When geese spend 30-60 seconds in their non-preferred environment, they actively seek to return to their preferred habitat.</p>
-
-                <div class="mini-header">Egg Laying</div>
-                <p>Adult geese lay eggs every 5-10 minutes (6000-12000 ticks). The egg type depends on the goose variant:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li><strong>Temperate:</strong> White Egg</li>
-                        <li><strong>Cold:</strong> Big White Egg</li>
-                        <li><strong>Warm:</strong> Small White Egg</li>
-                    </ul>
-                </div>
-
-                <div class="mini-header">Weapon Pickup</div>
-                <p>Adult geese can pick up swords from the ground to use as weapons. Players can trade any type of seeds to convince a goose to
-                    drop its weapon, and the goose won't pick up another sword for 20 seconds after trading.</p>
-            </div>
-
-            <div class="content-section">
-                <h2 id="combat" class="main-header">Combat</h2>
-
-                <div class="mini-header">Hit-and-Run Attacks</div>
-                <p>Geese employ a unique hit-and-run combat strategy when attacking players:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li>Approach the player at 1.5× normal speed</li>
-                        <li>Strike once with their beak or equipped sword</li>
-                        <li>Immediately flee 8-16 blocks away</li>
-                        <li>Wait 5-7 minutes (6000-8400 ticks) before considering another attack</li>
-                        <li>Armed geese are prioritized as attackers over unarmed ones</li>
-                    </ul>
-                </div>
-
-                <div class="mini-header">Death Messages</div>
-                <p>Geese use three different death messages randomly:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li><strong>Goose Bother:</strong> "was bothered to death"</li>
-                        <li><strong>Goose Peck:</strong> "was pecked to death"</li>
-                        <li><strong>Goose Honk:</strong> "was honked at by Goose"</li>
-                    </ul>
-                </div>
-
-                <div class="mini-header">Revenge</div>
-                <p>Geese have a revenge mechanic:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li>When a goose is killed by a player, all geese within 64 blocks remember that player</li>
-                        <li>Geese will remember this player for 2-3 1/3 hours</li>
-                        <li>Geese have a countdown of 60-120 seconds between attack attempts</li>
-                        <li>During revenge attacks, geese strike 2-3 times before fleeing</li>
-                    </ul>
-                </div>
-                </div>
 
             <div class="content-section">
                 <h2 id="history" class="main-header">History</h2>
@@ -1227,7 +958,7 @@
                         <div class="timeline-content">
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
-                                Added Goose
+                                Added White Egg, Big White Egg, and Small White Egg
                             </div>
                         </div>
                     </div>
@@ -1346,7 +1077,7 @@
     }
 
     function switchVariant(variantNumber) {
-        const variants = ['temperate', 'cold', 'warm'];
+        const variants = ['normal', 'big', 'small'];
         const hash = variants[variantNumber - 1];
 
         document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
@@ -1361,13 +1092,13 @@
     function loadVariantFromHash() {
         const hash = window.location.hash.substring(1);
         const variants = {
-        'temperate': 1,
-        'cold': 2,
-        'warm': 3
+            'normal': 1,
+            'big': 2,
+            'small': 3
         };
 
         if (variants[hash]) {
-        switchVariant(variants[hash]);
+            switchVariant(variants[hash]);
         }
     }
 
