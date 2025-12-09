@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goose</title>
+    <title>Goose Meat</title>
     <link rel="icon" type="image/x-icon" href="../../silly_goose_wiki_favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -552,45 +553,6 @@
             font-family: 'Minecraft Ten', 'Nunito', sans-serif;
         }
 
-        .timeline-icon {
-            width: 35px;
-            height: auto;
-            vertical-align: middle;
-            margin-right: 6px;
-            image-rendering: auto;
-            display: inline-block;
-            object-fit: contain;
-        }
-
-        .timeline-description {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .timeline-icon {
-                width: 18px;
-                height: 18px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .timeline-icon {
-                width: 20px;
-                height: 20px;
-                margin-right: 8px;
-            }
-        }
-
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .timeline-icon {
-                image-rendering: -webkit-optimize-contrast;
-                image-rendering: crisp-edges;
-            }
-        }
-
         .timeline-item {
             display: flex;
             align-items: flex-start;
@@ -646,25 +608,6 @@
             }
         }
 
-        .behavior-box {
-            background: #2e2e2e;
-            border: 2px solid #d4af37;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            box-shadow:
-                inset 2px 2px 0 #3a3a3a,
-                inset -2px -2px 0 #242424;
-        }
-
-        .behavior-title {
-            font-size: 16px;
-            color: #d4af37;
-            font-weight: 600;
-            margin-bottom: 10px;
-            margin-top: 0;
-        }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -672,7 +615,7 @@
             margin: 15px 0;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: 1fr;
                 gap: 10px;
@@ -683,7 +626,6 @@
             background: #2e2e2e;
             border: 2px solid #1a1a1a;
             padding: 12px;
-            border-radius: 4px;
             text-align: center;
             box-shadow:
                 inset 2px 2px 0 #3a3a3a,
@@ -729,282 +671,301 @@
         }
 
         .comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #1a1a1a;
-    margin: 20px 0;
-    font-size: 13px;
-    table-layout: fixed;
-}
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a1a1a;
+            margin: 20px 0;
+            font-size: 13px;
+        }
 
-.comparison-table th {
-    background: #2a2a2a;
-    color: #2a78c6;
-    padding: 6px 4px;
-    text-align: center;
-    border: 1px solid #3a3a3a;
-    font-family: 'Minecraft Ten', 'Inter', sans-serif;
-    font-weight: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    font-size: 11px;
-}
+        .comparison-table th {
+            background: #2a2a2a;
+            color: #2a78c6;
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #3a3a3a;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
 
-.comparison-table td {
-    padding: 6px 4px;
-    border: 1px solid #3a3a3a;
-    color: #e6e6e6;
-    vertical-align: middle;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-    text-align: center;
-    font-size: 12px;
-}
+        .comparison-table td {
+            padding: 10px;
+            border: 1px solid #3a3a3a;
+            color: #e6e6e6;
+        }
 
-.comparison-table tr:nth-child(even) {
-    background: #222222;
-}
+        .comparison-table tr:nth-child(even) {
+            background: #222222;
+        }
 
-.icon-cell-loot {
-    width: 8%;
-    text-align: center;
-    padding: 6px 2px;
-}
+        @media (max-width: 768px) {
+            .comparison-table {
+                font-size: 12px;
+            }
 
-.icon-cell-loot img {
-    width: 28px;
-    height: 28px;
-    image-rendering: pixelated;
-}
+            .comparison-table th, .comparison-table td {
+                padding: 8px;
+            }
+        }
 
-.comparison-table td:nth-child(2) {
-    text-align: left;
-    width: 15%;
-}
+        .loot-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a1a1a;
+            margin: 20px 0;
+            font-size: 13px;
+            table-layout: fixed;
+        }
 
-@media (max-width: 768px) {
-    .comparison-table {
-        font-size: 12px;
-        border: none;
-        background: transparent;
-    }
+        .loot-table th {
+            background: #2a2a2a;
+            color: #2a78c6;
+            padding: 6px 4px;
+            text-align: center;
+            border: 1px solid #3a3a3a;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-size: 11px;
+        }
 
-    .comparison-table thead {
-        display: none;
-    }
+        .loot-table td {
+            padding: 6px 4px;
+            border: 1px solid #3a3a3a;
+            color: #e6e6e6;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            text-align: center;
+            font-size: 12px;
+        }
 
-    .comparison-table tbody {
-        display: block;
-        background: transparent;
-    }
+        .loot-table tr:nth-child(even) {
+            background: #222222;
+        }
 
-    .comparison-table tr {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto auto auto;
-        gap: 0;
-        margin-bottom: 15px;
-        padding: 0;
-        border: none;
-        background: transparent !important;
-    }
+        .icon-cell-loot {
+            width: 8%;
+            text-align: center;
+            padding: 6px 2px;
+        }
 
-    .comparison-table td {
-        padding: 8px;
-        background: #1a1a1a;
-        border: 1px solid #3a3a3a;
-        display: flex;
-        align-items: center;
-        font-size: 11px;
-    }
+        .icon-cell-loot img {
+            width: 28px;
+            height: 28px;
+            image-rendering: pixelated;
+        }
 
-    .comparison-table td::before {
-        content: attr(data-label);
-        color: #2a78c6;
-        font-weight: 600;
-        margin-right: 8px;
-    }
-
-    .icon-cell-loot {
-        grid-column: 1;
-        grid-row: 1;
-        width: auto;
-        justify-content: center;
-    }
-
-    .icon-cell-loot::before {
-        content: "";
-        margin-right: 0;
-    }
-
-    .comparison-table td:nth-child(2) {
+        .loot-table td:nth-child(2) {
     grid-column: 2;
     grid-row: 1;
-    text-align: left;
-    justify-content: flex-start;
+    text-align: left !important;
+    justify-content: flex-start !important;
 }
 
-    .comparison-table td:nth-child(3) {
-        grid-column: 1;
-        grid-row: 2;
-    }
+        @media (max-width: 768px) {
+            .loot-table {
+                font-size: 12px;
+                border: none;
+                background: transparent;
+            }
 
-    .comparison-table td:nth-child(4) {
-        grid-column: 2;
-        grid-row: 2;
-    }
+            .loot-table thead {
+                display: none;
+            }
 
-    .comparison-table td:nth-child(5) {
-        grid-column: 1;
-        grid-row: 3;
-    }
+            .loot-table tbody {
+                display: block;
+                background: transparent;
+            }
 
-    .comparison-table td:nth-child(6) {
-        grid-column: 2;
-        grid-row: 3;
-    }
+            .loot-table tr {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto auto auto;
+                gap: 0;
+                margin-bottom: 15px;
+                padding: 0;
+                border: none;
+                background: transparent !important;
+            }
 
-    .comparison-table td:nth-child(7) {
-        grid-column: 1;
-        grid-row: 4;
-    }
+            .loot-table td {
+                padding: 8px;
+                background: #1a1a1a;
+                border: 1px solid #3a3a3a;
+                display: flex;
+                align-items: center;
+                font-size: 11px;
+            }
 
-    .comparison-table td:nth-child(8) {
-        grid-column: 2;
-        grid-row: 4;
-    }
+            .loot-table td::before {
+                content: attr(data-label);
+                color: #2a78c6;
+                font-weight: 600;
+                margin-right: 8px;
+            }
 
-    .comparison-table td:nth-child(9) {
-        grid-column: 1;
-        grid-row: 5;
-    }
+            .icon-cell-loot {
+                grid-column: 1;
+                grid-row: 1;
+                width: auto;
+                justify-content: center;
+            }
 
-    .comparison-table td:nth-child(10) {
-        grid-column: 2;
-        grid-row: 5;
-    }
-}
+            .icon-cell-loot::before {
+                content: "";
+                margin-right: 0;
+            }
 
-@media (max-width: 768px) {
-    .comparison-table {
-        font-size: 12px;
-        border: none;
-        background: transparent;
-    }
+            .loot-table td:nth-child(2) {
+                grid-column: 2;
+                grid-row: 1;
+                text-align: left;
+                justify-content: flex-start;
+            }
 
-    .comparison-table thead {
-        display: none;
-    }
+            .loot-table td:nth-child(3) {
+                grid-column: 1;
+                grid-row: 2;
+            }
 
-    .comparison-table tbody {
-        display: block;
-        background: transparent;
-    }
+            .loot-table td:nth-child(4) {
+                grid-column: 2;
+                grid-row: 2;
+            }
 
-    .comparison-table tr {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto auto auto;
-        gap: 0;
-        margin-bottom: 15px;
-        padding: 0;
-        border: none;
-        background: transparent !important;
-    }
+            .loot-table td:nth-child(5) {
+                grid-column: 1;
+                grid-row: 3;
+            }
 
-    .comparison-table td {
-        padding: 8px;
-        background: #1a1a1a;
-        border: 1px solid #3a3a3a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-size: 11px;
-        width: auto !important;
-        max-width: none !important;
-    }
+            .loot-table td:nth-child(6) {
+                grid-column: 2;
+                grid-row: 3;
+            }
 
-    .comparison-table td::before {
-        content: attr(data-label);
-        color: #2a78c6;
-        font-weight: 600;
-        margin-right: 8px;
-    }
+            .loot-table td:nth-child(7) {
+                grid-column: 1;
+                grid-row: 4;
+            }
 
-    .icon-cell-loot {
-        grid-column: 1;
-        grid-row: 1;
-    }
+            .loot-table td:nth-child(8) {
+                grid-column: 2;
+                grid-row: 4;
+            }
 
-    .icon-cell-loot::before {
-        content: "";
-        margin-right: 0;
-    }
+            .loot-table td:nth-child(9) {
+                grid-column: 1;
+                grid-row: 5;
+            }
 
-    .comparison-table td:nth-child(2) {
-        grid-column: 2;
-        grid-row: 1;
-    }
+            .loot-table td:nth-child(10) {
+                grid-column: 2;
+                grid-row: 5;
+            }
+        }
 
-    .comparison-table td:nth-child(3) {
-        grid-column: 1;
-        grid-row: 2;
-    }
+        .cooking-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a1a1a;
+            margin: 20px 0;
+            font-size: 13px;
+        }
 
-    .comparison-table td:nth-child(4) {
-        grid-column: 2;
-        grid-row: 2;
-    }
+        .cooking-table th {
+            background: #2a2a2a;
+            color: #2a78c6;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #3a3a3a;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
 
-    .comparison-table td:nth-child(5) {
-        grid-column: 1;
-        grid-row: 3;
-    }
+        .cooking-table td {
+            padding: 10px;
+            border: 1px solid #3a3a3a;
+            color: #e6e6e6;
+            text-align: center;
+        }
 
-    .comparison-table td:nth-child(6) {
-        grid-column: 2;
-        grid-row: 3;
-    }
+        .cooking-table tr:nth-child(even) {
+            background: #222222;
+        }
 
-    .comparison-table td:nth-child(7) {
-        grid-column: 1;
-        grid-row: 4;
-    }
+        @media (max-width: 768px) {
+            .cooking-table {
+                font-size: 12px;
+                border: none;
+                background: transparent;
+            }
 
-    .comparison-table td:nth-child(8) {
-        grid-column: 2;
-        grid-row: 4;
-    }
+            .cooking-table thead {
+                display: none;
+            }
 
-    .comparison-table td:nth-child(9) {
-        grid-column: 1;
-        grid-row: 5;
-    }
+            .cooking-table tbody {
+                display: block;
+                background: transparent;
+            }
 
-    .comparison-table td:nth-child(10) {
-        grid-column: 2;
-        grid-row: 5;
-    }
-}
+            .cooking-table tr {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto;
+                gap: 0;
+                margin-bottom: 15px;
+                padding: 0;
+                border: none;
+                background: transparent !important;
+            }
 
-.spawn-egg-container {
-    margin-top: 10px;
-    text-align: center;
-}
+            .cooking-table td {
+                padding: 8px;
+                background: #1a1a1a;
+                border: 1px solid #3a3a3a;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-size: 11px;
+            }
 
-.spawn-egg {
-    width: 36px !important;
-    height: auto !important;
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: crisp-edges;
-    display: inline-block;
-    border: none !important;
-    margin: 0 !important;
-}
+            .cooking-table td::before {
+                content: attr(data-label);
+                color: #2a78c6;
+                font-weight: 600;
+                margin-right: 8px;
+            }
+
+            .cooking-table td:nth-child(1) {
+                grid-column: 1 / -1;
+                grid-row: 1;
+            }
+
+            .cooking-table td:nth-child(2) {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .cooking-table td:nth-child(3) {
+                grid-column: 2;
+                grid-row: 2;
+            }
+        }
+        .cooking-table a {
+            color: #2a78c6;
+            text-decoration: none;
+        }
+
+        .cooking-table a:hover {
+            color: #3e8cda;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -1028,89 +989,52 @@
             <div class="toc">
                 <h2>Contents</h2>
                 <ul>
-                    <li><a href="#goose">Goose</a></li>
-                    <li><a href="#spawning">Spawning</a></li>
-                    <li><a href="#loot">Loot</a></li>
-                    <li><a href="#behavior">Behavior</a></li>
-                    <li><a href="#combat">Combat</a></li>
+                    <li><a href="#goose-meat">Goose Meat</a></li>
+                    <li><a href="#obtaining">Obtaining</a></li>
+                    <li><a href="#usage">Usage</a></li>
+                    <li><a href="#cooking">Cooking</a></li>
                     <li><a href="#history">History</a></li>
                 </ul>
             </div>
 
             <div class="info-box">
                 <div class="variant-tabs">
-                    <button class="variant-tab active" onclick="switchVariant(1)">Temperate</button>
-                    <button class="variant-tab" onclick="switchVariant(2)">Cold</button>
-                    <button class="variant-tab" onclick="switchVariant(3)">Warm</button>
+                    <button class="variant-tab active" onclick="switchVariant(1)">Raw</button>
+                    <button class="variant-tab" onclick="switchVariant(2)">Cooked</button>
                 </div>
 
-                <img src="temperate_goose_idle.gif" alt="Temperate Goose" class="variant-image active" id="variant1">
-                <img src="cold_goose_idle.gif" alt="Cold Goose" class="variant-image" id="variant2">
-                <img src="warm_goose_idle.gif" alt="Warm Goose" class="variant-image" id="variant3">
+                <img src="assets/items/raw_goose.png" alt="Goose" class="variant-image active" id="variant1">
+                <img src="assets/items/cooked_goose.png" alt="Cooked Goose" class="variant-image" id="variant2">
 
-                <div class="spawn-egg-container">
-                    <img src="../items/assets/items/goose_spawn_egg_framed.png" alt="Goose Spawn Egg" class="spawn-egg">
+                <div class="info-row">
+                    <span class="info-label">Rarity tier</span>
+                    <span class="info-value">Common</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Health points</span>
-                    <span class="info-value">10 <img src="assets/sprites/Heart.png" alt="Heart"> × 5</span>
+                    <span class="info-label">Renewable</span>
+                    <span class="info-value">Yes</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Behavior</span>
-                    <span class="info-value">Neutral (mostly)<br>Hostile (revenge)</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Attack damage</span>
-                    <span class="info-value">3 <img src="assets/sprites/Heart.png" alt="Heart"> × 1.5</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Speed</span>
-                    <span class="info-value">0.25</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Hitbox Size</span>
-                    <span class="info-value">Height: 1.375<br>Width: 0.625</span>
+                    <span class="info-label">Stackable</span>
+                    <span class="info-value">Yes (64)</span>
                 </div>
             </div>
         </div>
 
         <div class="content">
-            <h1 id="goose" class="page-title">Goose</h1>
+            <h1 id="goose-meat" class="page-title">Goose Meat</h1>
 
-            <p><strong>Geese</strong> are semiaquatic neutral mobs that prefer staying near water.
-                They show tendencies to be annoying, can hold grudges against players, and may even pick up swords to use as weapons in hit-and-run attacks.</p>
-
-            <div class="content-section">
-                <h2 id="spawning" class="main-header">Spawning</h2>
-
-                <div class="mini-header">Natural Spawning</div>
-                <p>Geese naturally spawn in areas near water bodies. They require at least 6 water blocks within a 12-block
-                    horizontal radius and 5-block vertical range to spawn. Geese can spawn on blocks with ice covering water underneath.</p>
-
-                <div class="mini-header">Variants</div>
-                <p>There are three goose variants that spawn based on biome:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li><strong>Temperate Goose:</strong> The standard variant found in temperate biomes</li>
-                        <li><strong>Cold Goose:</strong> Found in cold and snowy biomes, lays large white eggs</li>
-                        <li><strong>Warm Goose:</strong> Found in warm biomes, lays small white eggs</li>
-                    </ul>
-                </div>
-
-                <div class="mini-header">Family Groups</div>
-                <p>Adult geese have a 30% chance to spawn with 1-3 baby geese nearby during natural spawning, creating small family groups.</p>
-            </div>
+            <p><strong>Goose</strong> is a food item obtained from geese. It can be cooked in a furnace, smoker, or campfire to make <strong>Cooked Goose</strong>.</p>
 
             <div class="content-section">
-                <h2 id="loot" class="main-header">Loot</h2>
-                <p>Upon death, adult geese drop 1 raw goose (or cooked goose if killed while on fire) and 0-2 feathers.</p>
+                <h2 id="obtaining" class="main-header">Obtaining</h2>
 
-                <table class="comparison-table">
+                <div class="mini-header">Mob Loot</div>
+                <p>Adult <a href="../mobs/goose.html">geese</a> drop 1-2 raw goose when killed. The amount is affected by the Looting enchantment.</p>
+
+                <table class="loot-table">
                     <thead>
                     <tr>
                         <th colspan="2">Item</th>
@@ -1135,9 +1059,9 @@
                     <tbody>
                     <tr>
                         <td class="icon-cell-loot">
-                            <img src="../items/assets/items/raw_goose.png" alt="Raw Goose">
+                            <img src="assets/items/raw_goose.png" alt="Raw Goose">
                         </td>
-                        <td><a href="../items/goose.html">Goose</a></td>
+                        <td>Goose</td>
                         <td data-label="Default Qty:">1</td>
                         <td data-label="Default Avg:">1.00</td>
                         <td data-label="Looting I Qty:">1-2</td>
@@ -1147,97 +1071,63 @@
                         <td data-label="Looting III Qty:">1-4</td>
                         <td data-label="Looting III Avg:">2.50</td>
                     </tr>
-                    <tr>
-                        <td style="icon-cell-loot;">
-                            <img src="../items/assets/items/cooked_goose.png" alt="Cooked Goose" style="width: 32px; height: 32px; image-rendering: pixelated;">
-                        </td>
-                        <td><a href="../items/goose.html#cooked">Cooked Goose</a></td>
-                        <td>1</td>
-                        <td>1.00</td>
-                        <td>1-2</td>
-                        <td>1.50</td>
-                        <td>1-3</td>
-                        <td>2.00</td>
-                        <td>1-4</td>
-                        <td>2.50</td>
-                    </tr>
-                    <tr>
-                        <td style="icon-cell-loot;">
-                            <img src="../items/assets/items/feather.png" alt="Feather" style="width: 32px; height: 32px; image-rendering: pixelated;">
-                        </td>
-                        <td><a href="https://minecraft.wiki/w/Feather">Feather</a></td>
-                        <td>0-2</td>
-                        <td>1.00</td>
-                        <td>0-3</td>
-                        <td>1.50</td>
-                        <td>0-4</td>
-                        <td>2.00</td>
-                        <td>0-5</td>
-                        <td>2.50</td>
-                    </tr>
                     </tbody>
                 </table>
 
-                <p><em>Note: Cooked goose is dropped instead of raw goose when the goose is killed while on fire or by a weapon with a Fire Aspect enchantment.</em></p>
-            </div>
-            <div class="content-section">
-                <h2 id="behavior" class="main-header">Behavior</h2>
-
-                <div class="mini-header">Water Preference</div>
-                <p>Each goose has a randomly assigned preference for either water or land. This preference changes every 4-7 minutes (4800-7200 ticks).
-                    When geese spend 30-60 seconds in their non-preferred environment, they actively seek to return to their preferred habitat.</p>
-
-                <div class="mini-header">Egg Laying</div>
-                <p>Adult geese lay eggs every 5-10 minutes (6000-12000 ticks). The egg type depends on the goose variant:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li><strong>Temperate:</strong> White Egg</li>
-                        <li><strong>Cold:</strong> Big White Egg</li>
-                        <li><strong>Warm:</strong> Small White Egg</li>
-                    </ul>
-                </div>
-
-                <div class="mini-header">Weapon Pickup</div>
-                <p>Adult geese can pick up swords from the ground to use as weapons. Players can trade any type of seeds to convince a goose to
-                    drop its weapon, and the goose won't pick up another sword for 20 seconds after trading.</p>
+                <div class="mini-header">Cooking</div>
+                <p>Goose can be cooked into Cooked Goose using various methods. All cooking methods grant 0.35 experience upon completion.</p>
             </div>
 
             <div class="content-section">
-                <h2 id="combat" class="main-header">Combat</h2>
+                <h2 id="usage" class="main-header">Usage</h2>
 
-                <div class="mini-header">Hit-and-Run Attacks</div>
-                <p>Geese employ a unique hit-and-run combat strategy when attacking players:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li>Approach the player at 1.5× normal speed</li>
-                        <li>Strike once with their beak or equipped sword</li>
-                        <li>Immediately flee 8-16 blocks away</li>
-                        <li>Wait 5-7 minutes (6000-8400 ticks) before considering another attack</li>
-                        <li>Armed geese are prioritized as attackers over unarmed ones</li>
-                    </ul>
-                </div>
+                <div class="mini-header">Food</div>
+                <p>Both raw and cooked goose can be eaten by the player to restore hunger and saturation. Cooked goose is significantly more nutritious than raw goose.</p>
 
-                <div class="mini-header">Death Messages</div>
-                <p>Geese use three different death messages randomly:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li><strong>Goose Bother:</strong> "was bothered to death"</li>
-                        <li><strong>Goose Peck:</strong> "was pecked to death"</li>
-                        <li><strong>Goose Honk:</strong> "was honked at by Goose"</li>
-                    </ul>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Goose (Raw)</div>
+                        <div class="stat-value">3 hunger<br>1.2 saturation</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Cooked Goose</div>
+                        <div class="stat-value">7 hunger<br>5.6 saturation</div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="mini-header">Revenge</div>
-                <p>Geese have a revenge mechanic:</p>
-                <div class="feature-list">
-                    <ul>
-                        <li>When a goose is killed by a player, all geese within 64 blocks remember that player</li>
-                        <li>Geese will remember this player for 2-3 1/3 hours</li>
-                        <li>Geese have a countdown of 60-120 seconds between attack attempts</li>
-                        <li>During revenge attacks, geese strike 2-3 times before fleeing</li>
-                    </ul>
-                </div>
-                </div>
+            <div class="content-section">
+                <h2 id="cooking" class="main-header">Cooking Methods</h2>
+
+                <p>Raw goose can be cooked using any heat source that processes food items. Each method has different cooking times but provides the same result.</p>
+
+                <table class="cooking-table">
+                    <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Cooking Time</th>
+                        <th>Experience</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td data-label="Method:"><a href="https://minecraft.wiki/w/Furnace">Furnace</a></td>
+                        <td data-label="Time:">10 seconds</td>
+                        <td data-label="XP:">0.35 XP</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Method:"><a href="https://minecraft.wiki/w/Smoker">Smoker</a></td>
+                        <td data-label="Time:">5 seconds</td>
+                        <td data-label="XP:">0.35 XP</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Method:"><a href="https://minecraft.wiki/w/Campfire">Campfire</a></td>
+                        <td data-label="Time:">30 seconds</td>
+                        <td data-label="XP:">0.35 XP</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="content-section">
                 <h2 id="history" class="main-header">History</h2>
@@ -1248,7 +1138,7 @@
                         <div class="timeline-content">
                             <div class="timeline-version">Version 1.0.0</div>
                             <div class="timeline-description">
-                                Added Goose
+                                Added Goose (raw) and Cooked Goose
                             </div>
                         </div>
                     </div>
@@ -1367,7 +1257,7 @@
     }
 
     function switchVariant(variantNumber) {
-        const variants = ['temperate', 'cold', 'warm'];
+        const variants = ['raw', 'cooked'];
         const hash = variants[variantNumber - 1];
 
         document.querySelectorAll('.variant-tab').forEach(tab => tab.classList.remove('active'));
@@ -1376,19 +1266,26 @@
         document.querySelectorAll('.variant-tab')[variantNumber - 1].classList.add('active');
         document.getElementById('variant' + variantNumber).classList.add('active');
 
+        // Update the restores value
+        const restoresValue = document.getElementById('restoresValue');
+        if (variantNumber === 1) {
+            restoresValue.innerHTML = '3 hunger<br>1.2 saturation';
+        } else {
+            restoresValue.innerHTML = '7 hunger<br>5.6 saturation';
+        }
+
         window.location.hash = hash;
     }
 
     function loadVariantFromHash() {
         const hash = window.location.hash.substring(1);
         const variants = {
-        'temperate': 1,
-        'cold': 2,
-        'warm': 3
+            'raw': 1,
+            'cooked': 2
         };
 
         if (variants[hash]) {
-        switchVariant(variants[hash]);
+            switchVariant(variants[hash]);
         }
     }
 

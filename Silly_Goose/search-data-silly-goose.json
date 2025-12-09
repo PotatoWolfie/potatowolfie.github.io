@@ -12,7 +12,7 @@
         { "title": "Big White Egg", "page": "Silly_Goose/items/white_egg.html#big", "category": "Items" },
         { "title": "Small White Egg", "page": "Silly_Goose/items/white_egg.html#small", "category": "Items" },
         { "title": "Raw Goose", "page": "Silly_Goose/items/goose.html", "category": "Items" },
-        { "title": "Cooked Goose", "page": "Silly_Goose/items/cooked_goose.html", "category": "Items" }
+        { "title": "Cooked Goose", "page": "Silly_Goose/items/goose.html#cooked", "category": "Items" }
     ],
     "Advancements": [
         { "title": "Advancement", "page": "Silly_Goose/advancements.html", "category": "Category" },
