@@ -988,6 +988,23 @@
         grid-row: 5;
     }
 }
+
+.spawn-egg-container {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.spawn-egg {
+    width: 36px !important;
+    height: auto !important;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+    display: inline-block;
+    border: none !important;
+    margin: 0 !important;
+}
     </style>
 </head>
 <body>
@@ -1030,6 +1047,10 @@
                 <img src="temperate_goose_idle.gif" alt="Temperate Goose" class="variant-image active" id="variant1">
                 <img src="cold_goose_idle.gif" alt="Cold Goose" class="variant-image" id="variant2">
                 <img src="warm_goose_idle.gif" alt="Warm Goose" class="variant-image" id="variant3">
+
+                <div class="spawn-egg-container">
+                    <img src="../items/assets/items/goose_spawn_egg_framed.png" alt="Goose Spawn Egg" class="spawn-egg">
+                </div>
 
                 <div class="info-row">
                     <span class="info-label">Health points</span>
