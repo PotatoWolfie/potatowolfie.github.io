@@ -190,6 +190,11 @@ input.invalid {
             border-color: #3453df;
         }
 
+        select:focus {
+            outline: none;
+            border-color: #3453df;
+        }
+
         input[type="text"]::placeholder {
             text-transform: none;
         }
@@ -1531,27 +1536,34 @@ input[type="checkbox"]:checked {
             <div class="section-content">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h2 style="margin-bottom: 0;">Main Mod Configuration</h2>
-                    <div class="undo-redo-controls" style="margin-bottom: 0;">
-                        <button class="minecraft-button undo-redo small" id="undoBtn" onclick="undo()" disabled>
-                            <div class="minecraft-button-left-outline"></div>
-                            <div class="minecraft-button-right-outline"></div>
-                            <div class="minecraft-button-section">
-                                <div class="minecraft-button-name">↶ Undo</div>
-                            </div>
-                            <div class="minecraft-button-dark-strip"></div>
-                            <div class="minecraft-button-bottom-outline"></div>
-                            <div class="minecraft-button-shadow"></div>
-                        </button>
-                        <button class="minecraft-button undo-redo small" id="redoBtn" onclick="redo()" disabled>
-                            <div class="minecraft-button-left-outline"></div>
-                            <div class="minecraft-button-right-outline"></div>
-                            <div class="minecraft-button-section">
-                                <div class="minecraft-button-name">↷ Redo</div>
-                            </div>
-                            <div class="minecraft-button-dark-strip"></div>
-                            <div class="minecraft-button-bottom-outline"></div>
-                            <div class="minecraft-button-shadow"></div>
-                        </button>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="versionSelect" onchange="selectedVersion = this.value; showToast('Version changed to ' + this.value, 'info')"
+                                style="padding: 8px 12px; background: #3a3a3a; border: 2px solid #1a1a1a; color: #e6e6e6; font-size: 13px; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: inset 2px 2px 0 #2a2a2a, inset -2px -2px 0 #4a4a4a;">
+                            <option value="1.21-1.21.10">1.21 - 1.21.10</option>
+                            <option value="1.21.11+">1.21.11+</option>
+                        </select>
+                        <div class="undo-redo-controls" style="margin-bottom: 0;">
+                            <button class="minecraft-button undo-redo small" id="undoBtn" onclick="undo()" disabled>
+                                <div class="minecraft-button-left-outline"></div>
+                                <div class="minecraft-button-right-outline"></div>
+                                <div class="minecraft-button-section">
+                                    <div class="minecraft-button-name">↶ Undo</div>
+                                </div>
+                                <div class="minecraft-button-dark-strip"></div>
+                                <div class="minecraft-button-bottom-outline"></div>
+                                <div class="minecraft-button-shadow"></div>
+                            </button>
+                            <button class="minecraft-button undo-redo small" id="redoBtn" onclick="redo()" disabled>
+                                <div class="minecraft-button-left-outline"></div>
+                                <div class="minecraft-button-right-outline"></div>
+                                <div class="minecraft-button-section">
+                                    <div class="minecraft-button-name">↷ Redo</div>
+                                </div>
+                                <div class="minecraft-button-dark-strip"></div>
+                                <div class="minecraft-button-bottom-outline"></div>
+                                <div class="minecraft-button-shadow"></div>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -1833,6 +1845,7 @@ input[type="checkbox"]:checked {
     let generateAtlases = true;
     let customArmorSlots = {};
     const MAX_UNDO_HISTORY = 20;
+    let selectedVersion = '1.21-1.21.10';
 
     function showToast(message, type = 'info') {
         const container = document.getElementById('toastContainer');
@@ -2836,6 +2849,7 @@ if (customArmors.length > 0) {
 
     if (selectedCustomArmors.length > 0) {
         const vanillaTrimsFolder = zip.folder(`${modId}-VanillaTrims`);
+        const customArmorItemsFolder = zip.folder(`${modId}-CustomArmorItems`);
 
         selectedCustomArmors.forEach(armorType => {
             const slotNames = getArmorSlotNames(armorType);
@@ -2852,6 +2866,16 @@ if (customArmors.length > 0) {
                     };
                     completedOperations++;
                 });
+
+                const selectorModel = createSelectModel(armorType, slotName, modId, customMaterials);
+                const selectorContent = JSON.stringify(selectorModel, null, 2);
+                const selectorFilename = `${armorType}_${slotName}.json`;
+                customArmorItemsFolder.file(selectorFilename, selectorContent);
+                generatedFiles[`${modId}-CustomArmorItems/${selectorFilename}`] = {
+                    category: `${modId}-CustomArmorItems`,
+                    name: selectorFilename,
+                    content: selectorContent
+                };
             });
         });
     }
@@ -2976,11 +3000,22 @@ if (vanillaWithCustomSlots.length > 0) {
     }
 
     if (generateAtlases) {
-        updateProgress(88, 'Generating atlas files...');
-        await new Promise(resolve => setTimeout(resolve, 50));
+    updateProgress(88, 'Generating atlas files...');
+    await new Promise(resolve => setTimeout(resolve, 50));
 
-        const atlasFolder = zip.folder('Atlases');
+    const atlasFolder = zip.folder('Atlases');
 
+    if (selectedVersion === '1.21.11+') {
+        // Generate items.json for 1.21.11+
+        const itemsAtlas = createItemsAtlas(modId);
+        atlasFolder.file('items.json', JSON.stringify(itemsAtlas, null, 2));
+        generatedFiles['Atlases/items.json'] = {
+            category: 'Atlases',
+            name: 'items.json',
+            content: JSON.stringify(itemsAtlas, null, 2)
+        };
+    } else {
+        // Generate blocks.json for 1.21-1.21.10
         const blocksAtlas = createBlocksAtlas(modId);
         atlasFolder.file('blocks.json', JSON.stringify(blocksAtlas, null, 2));
         generatedFiles['Atlases/blocks.json'] = {
@@ -2988,15 +3023,16 @@ if (vanillaWithCustomSlots.length > 0) {
             name: 'blocks.json',
             content: JSON.stringify(blocksAtlas, null, 2)
         };
-
-        const armorTrimsAtlas = createArmorTrimsAtlas(modId);
-        atlasFolder.file('armor_trims.json', JSON.stringify(armorTrimsAtlas, null, 2));
-        generatedFiles['Atlases/armor_trims.json'] = {
-            category: 'Atlases',
-            name: 'armor_trims.json',
-            content: JSON.stringify(armorTrimsAtlas, null, 2)
-        };
     }
+
+    const armorTrimsAtlas = createArmorTrimsAtlas(modId);
+    atlasFolder.file('armor_trims.json', JSON.stringify(armorTrimsAtlas, null, 2));
+    generatedFiles['Atlases/armor_trims.json'] = {
+        category: 'Atlases',
+        name: 'armor_trims.json',
+        content: JSON.stringify(armorTrimsAtlas, null, 2)
+    };
+}
 
     updateProgress(90, 'Creating ZIP file...');
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -3018,6 +3054,10 @@ if (hasCustomArmorWithVanillaTrims && customArmors.length > 0) {
         <strong>${modId}-VanillaTrims/</strong><br>
         <em>Purpose: Vanilla trim material models for your custom armor types (${customArmors.join(', ')})</em><br>
         Extract to: <code>resources/assets/${modId}/models/item/</code><br><br>
+
+        <strong>${modId}-CustomArmorItems/</strong><br>
+        <em>Purpose: Base selector files that enable trim support for your custom armor types (${customArmors.join(', ')})</em><br>
+        Extract to: <code>resources/assets/${modId}/items/</code><br><br>
     `;
 }
 
@@ -3065,12 +3105,13 @@ if (vanillaWithCustomSlots.length > 0) {
 }
 
     if (generateAtlases) {
-        directoryHTML += `
-            <strong>Atlases/</strong><br>
-            <em>Purpose: Atlas definitions for custom trim materials</em><br>
-            Extract to: <code>resources/assets/minecraft/atlases/</code><br><br>
-        `;
-    }
+    const atlasFileName = selectedVersion === '1.21.11+' ? 'items.json' : 'blocks.json';
+    directoryHTML += `
+        <strong>Atlases/</strong><br>
+        <em>Purpose: Atlas definitions for custom trim materials (${atlasFileName} and armor_trims.json for Minecraft ${selectedVersion})</em><br>
+        Extract to: <code>resources/assets/minecraft/atlases/</code><br><br>
+    `;
+}
 
     additionalMods.forEach(mod => {
         if (!mod.modId || !mod.armorTypes || mod.armorTypes.length === 0) return;
@@ -3609,6 +3650,52 @@ function resetSlotNamesToDefault(button) {
     }, 0);
 
     showToast('Reset to defaults', 'info');
+}
+
+function createItemsAtlas(modId) {
+    const atlas = {
+        sources: [
+            {
+                type: "minecraft:directory",
+                prefix: "item/",
+                source: "item"
+            },
+            {
+                type: "minecraft:paletted_permutations",
+                palette_key: "minecraft:trims/color_palettes/trim_palette",
+                permutations: {
+                    amethyst: "minecraft:trims/color_palettes/amethyst",
+                    copper: "minecraft:trims/color_palettes/copper",
+                    copper_darker: "minecraft:trims/color_palettes/copper_darker",
+                    diamond: "minecraft:trims/color_palettes/diamond",
+                    diamond_darker: "minecraft:trims/color_palettes/diamond_darker",
+                    emerald: "minecraft:trims/color_palettes/emerald",
+                    gold: "minecraft:trims/color_palettes/gold",
+                    gold_darker: "minecraft:trims/color_palettes/gold_darker",
+                    iron: "minecraft:trims/color_palettes/iron",
+                    iron_darker: "minecraft:trims/color_palettes/iron_darker",
+                    lapis: "minecraft:trims/color_palettes/lapis",
+                    netherite: "minecraft:trims/color_palettes/netherite",
+                    netherite_darker: "minecraft:trims/color_palettes/netherite_darker",
+                    quartz: "minecraft:trims/color_palettes/quartz",
+                    redstone: "minecraft:trims/color_palettes/redstone",
+                    resin: "minecraft:trims/color_palettes/resin"
+                },
+                textures: [
+                    "minecraft:trims/items/helmet_trim",
+                    "minecraft:trims/items/chestplate_trim",
+                    "minecraft:trims/items/leggings_trim",
+                    "minecraft:trims/items/boots_trim"
+                ]
+            }
+        ]
+    };
+
+    customMaterials.forEach(material => {
+        atlas.sources[1].permutations[material] = `${modId}:trims/color_palettes/${material}`;
+    });
+
+    return atlas;
 }
 
 function createBlocksAtlas(modId) {
@@ -4153,8 +4240,11 @@ function getFileExplanation(path, file) {
     ];
 
     if (filename === 'blocks.json') {
-        return `Registers trim material textures for items (${allMaterials.join(', ')})`;
-    }
+    return `Registers trim material textures for items - for Minecraft 1.21-1.21.10 (${allMaterials.join(', ')})`;
+}
+if (filename === 'items.json') {
+    return `Registers trim material textures for items - for Minecraft 1.21.11+ (${allMaterials.join(', ')})`;
+}
     if (filename === 'armor_trims.json') {
         return `Registers trim material textures for armor entities (${allMaterials.join(', ')})`;
     }
@@ -4177,11 +4267,11 @@ function getFileExplanation(path, file) {
         return `Defines how ${material} trim appears on ${armorType} ${slotType}`;
     }
 
-    if (file.category === 'VanillaItems' || file.category.includes('-ItemModels')) {
-        const armorType = parts[0];
-        const slotType = parts.slice(1).join('_');
-        return `Adds trim material support (${allMaterials.join(', ')}) to ${armorType} ${slotType}`;
-    }
+    if (file.category === 'VanillaItems' || file.category.includes('-ItemModels') || file.category.includes('-CustomArmorItems')) {
+    const armorType = parts[0];
+    const slotType = parts.slice(1).join('_');
+    return `Adds trim material support (${allMaterials.join(', ')}) to ${armorType} ${slotType}`;
+}
 
     return `Generated file related to trim materials (${allMaterials.join(', ')})`;
 }
