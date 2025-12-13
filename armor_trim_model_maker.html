@@ -1540,7 +1540,7 @@ input[type="checkbox"]:checked {
                         <select id="versionSelect" onchange="selectedVersion = this.value; showToast('Version changed to ' + this.value, 'info')"
                                 style="padding: 8px 12px; background: #3a3a3a; border: 2px solid #1a1a1a; color: #e6e6e6; font-size: 13px; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: inset 2px 2px 0 #2a2a2a, inset -2px -2px 0 #4a4a4a;">
                             <option value="1.21-1.21.10">1.21 - 1.21.10</option>
-                            <option value="1.21.11+" selected>1.21.11+</option>
+                            <option value="1.21.11+">1.21.11+</option>
                         </select>
                         <div class="undo-redo-controls" style="margin-bottom: 0;">
                             <button class="minecraft-button undo-redo small" id="undoBtn" onclick="undo()" disabled>
@@ -1845,7 +1845,7 @@ input[type="checkbox"]:checked {
     let generateAtlases = true;
     let customArmorSlots = {};
     const MAX_UNDO_HISTORY = 20;
-    let selectedVersion = '1.21.11+';
+    let selectedVersion = '1.21-1.21.10';
 
     function showToast(message, type = 'info') {
         const container = document.getElementById('toastContainer');
@@ -2999,13 +2999,13 @@ if (vanillaWithCustomSlots.length > 0) {
         });
     }
 
-    if (generateAtlases) {
+        if (generateAtlases) {
     updateProgress(88, 'Generating atlas files...');
     await new Promise(resolve => setTimeout(resolve, 50));
 
     const atlasFolder = zip.folder('Atlases');
 
-    if (selectedVersion === '1.21.11') {
+    if (selectedVersion === '1.21.11+') {
         const itemsAtlas = createItemsAtlas(modId);
         atlasFolder.file('items.json', JSON.stringify(itemsAtlas, null, 2));
         generatedFiles['Atlases/items.json'] = {
