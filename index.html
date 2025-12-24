@@ -1538,6 +1538,33 @@ a {
     }
 }
 
+@media (min-width: 769px) {
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin: 25px 0;
+        width: 100%;
+        justify-items: center;
+    }
+
+    .category-item-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .category-section-title {
+        font-size: 16px;
+        color: #3453df;
+        margin-bottom: 15px;
+        font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        font-weight: normal;
+        text-align: center;
+        width: 100%;
+    }
+}
+
 @media (max-width: 768px) {
   .search-container {
     flex: unset;
@@ -1766,43 +1793,66 @@ a {
             </div>
         </div>
 
-        <h2>Modder's Tools</h2>
         <div class="category-grid">
-            <a href="armor_trim_model_maker.html" class="category-item">
-                <div class="category-top-outline"></div>
-                <div class="category-left-outline"></div>
-                <div class="category-right-outline"></div>
-                <div class="category-top-highlight"></div>
-                <div class="category-image-container">
-                    <img src="assets/helper_tools/buttons/trim_item_models_button.png" alt="Trim Model Maker">
-                </div>
-                <div class="category-image-section"></div>
-                <div class="category-button-section">
-                    <div class="category-name">armor Trim Items</div>
-                </div>
-                <div class="category-dark-strip"></div>
-                <div class="category-bottom-outline"></div>
-                <div class="category-shadow"></div>
-            </a>
-        </div>
-        <h2>Website Related Tools</h2>
-        <div class="category-grid">
-            <a href="html_theme_editor.html" class="category-item">
-                <div class="category-top-outline"></div>
-                <div class="category-left-outline"></div>
-                <div class="category-right-outline"></div>
-                <div class="category-top-highlight"></div>
-                <div class="category-image-container">
-                    <img src="assets/helper_tools/buttons/html_theme_editor_button.png" alt="HTML Theme Editor">
-                </div>
-                <div class="category-image-section"></div>
-                <div class="category-button-section">
-                    <div class="category-name">HTML Theme Editor</div>
-                </div>
-                <div class="category-dark-strip"></div>
-                <div class="category-bottom-outline"></div>
-                <div class="category-shadow"></div>
-            </a>
+            <div class="category-item-wrapper">
+                <h2 class="category-section-title">Modder's Tools</h2>
+                <a href="armor_trim_model_maker.html" class="category-item">
+                    <div class="category-top-outline"></div>
+                    <div class="category-left-outline"></div>
+                    <div class="category-right-outline"></div>
+                    <div class="category-top-highlight"></div>
+                    <div class="category-image-container">
+                        <img src="assets/helper_tools/buttons/trim_item_models_button.png" alt="Trim Model Maker">
+                    </div>
+                    <div class="category-image-section"></div>
+                    <div class="category-button-section">
+                        <div class="category-name">armor Trim Items</div>
+                    </div>
+                    <div class="category-dark-strip"></div>
+                    <div class="category-bottom-outline"></div>
+                    <div class="category-shadow"></div>
+                </a>
+            </div>
+
+            <div class="category-item-wrapper">
+                <h2 class="category-section-title">Website Related Tools</h2>
+                <a href="html_theme_editor.html" class="category-item">
+                    <div class="category-top-outline"></div>
+                    <div class="category-left-outline"></div>
+                    <div class="category-right-outline"></div>
+                    <div class="category-top-highlight"></div>
+                    <div class="category-image-container">
+                        <img src="assets/helper_tools/buttons/html_theme_editor_button.png" alt="HTML Theme Editor">
+                    </div>
+                    <div class="category-image-section"></div>
+                    <div class="category-button-section">
+                        <div class="category-name">HTML Theme Editor</div>
+                    </div>
+                    <div class="category-dark-strip"></div>
+                    <div class="category-bottom-outline"></div>
+                    <div class="category-shadow"></div>
+                </a>
+            </div>
+
+            <div class="category-item-wrapper">
+                <h2 class="category-section-title">Other Mods</h2>
+                <a href="https://earth-and-water.github.io" class="category-item">
+                    <div class="category-top-outline"></div>
+                    <div class="category-left-outline"></div>
+                    <div class="category-right-outline"></div>
+                    <div class="category-top-highlight"></div>
+                    <div class="category-image-container">
+                        <img src="EANDW/eandw_button.png" alt="Web">
+                    </div>
+                    <div class="category-image-section"></div>
+                    <div class="category-button-section">
+                        <div class="category-name">Earth & Water</div>
+                    </div>
+                    <div class="category-dark-strip"></div>
+                    <div class="category-bottom-outline"></div>
+                    <div class="category-shadow"></div>
+                </a>
+            </div>
         </div>
 
         <div class="social-platforms">
@@ -2406,7 +2456,8 @@ async function fetchTotalDownloads() {
         const curseforgeProjectIds = [
             '1334244',
             '1392561',
-            '940093'
+            '940093',
+            '1263951'
         ];
 
         try {
