@@ -65,6 +65,25 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+            border: 2px solid #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #48494a;
+            border: 2px solid #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a5b5c;
+        }
+
 .search-container {
             flex: 1;
             max-width: 500px;
@@ -1799,6 +1818,45 @@ a {
 
         <div class="category-grid">
             <div class="category-item-wrapper">
+                <h2 class="category-section-title">Website Tools</h2>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <a href="html_theme_editor.html" class="category-item">
+                        <div class="category-top-outline"></div>
+                        <div class="category-left-outline"></div>
+                        <div class="category-right-outline"></div>
+                        <div class="category-top-highlight"></div>
+                        <div class="category-image-container">
+                            <img src="assets/helper_tools/buttons/html_theme_editor_button.png" alt="HTML Theme Editor">
+                        </div>
+                        <div class="category-image-section"></div>
+                        <div class="category-button-section">
+                            <div class="category-name">HTML Theme Editor</div>
+                        </div>
+                        <div class="category-dark-strip"></div>
+                        <div class="category-bottom-outline"></div>
+                        <div class="category-shadow"></div>
+                    </a>
+
+                    <a href="texture_viewer.html" class="category-item">
+                        <div class="category-top-outline"></div>
+                        <div class="category-left-outline"></div>
+                        <div class="category-right-outline"></div>
+                        <div class="category-top-highlight"></div>
+                        <div class="category-image-container">
+                            <img src="assets/helper_tools/buttons/texture_viewer_button.png" alt="Texture Viewer">
+                        </div>
+                        <div class="category-image-section"></div>
+                        <div class="category-button-section">
+                            <div class="category-name">Texture Viewer</div>
+                        </div>
+                        <div class="category-dark-strip"></div>
+                        <div class="category-bottom-outline"></div>
+                        <div class="category-shadow"></div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category-item-wrapper">
                 <h2 class="category-section-title">Modder's Tools</h2>
                 <a href="armor_trim_model_maker.html" class="category-item">
                     <div class="category-top-outline"></div>
@@ -1811,26 +1869,6 @@ a {
                     <div class="category-image-section"></div>
                     <div class="category-button-section">
                         <div class="category-name">armor Trim Items</div>
-                    </div>
-                    <div class="category-dark-strip"></div>
-                    <div class="category-bottom-outline"></div>
-                    <div class="category-shadow"></div>
-                </a>
-            </div>
-
-            <div class="category-item-wrapper">
-                <h2 class="category-section-title">Website Tools</h2>
-                <a href="html_theme_editor.html" class="category-item">
-                    <div class="category-top-outline"></div>
-                    <div class="category-left-outline"></div>
-                    <div class="category-right-outline"></div>
-                    <div class="category-top-highlight"></div>
-                    <div class="category-image-container">
-                        <img src="assets/helper_tools/buttons/html_theme_editor_button.png" alt="HTML Theme Editor">
-                    </div>
-                    <div class="category-image-section"></div>
-                    <div class="category-button-section">
-                        <div class="category-name">HTML Theme Editor</div>
                     </div>
                     <div class="category-dark-strip"></div>
                     <div class="category-bottom-outline"></div>
@@ -2549,29 +2587,6 @@ function formatNumber(num) {
     }
     return num.toLocaleString();
 }
-
-    /*
-    Put this in style when E&W
-    <h2>Other Mods</h2>
-        <div class="category-grid">
-            <a href="web.html" class="category-item">
-                <div class="category-top-outline"></div>
-                <div class="category-left-outline"></div>
-                <div class="category-right-outline"></div>
-                <div class="category-top-highlight"></div>
-                <div class="category-image-container">
-                    <img src="assets/web/wiki/buttons/mobs_button.png" alt="Web">
-                </div>
-                <div class="category-image-section"></div>
-                <div class="category-button-section">
-                    <div class="category-name">Web</div>
-                </div>
-                <div class="category-dark-strip"></div>
-                <div class="category-bottom-outline"></div>
-                <div class="category-shadow"></div>
-            </a>
-        </div>
-    */
 </script>
 </body>
 </html>

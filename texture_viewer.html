@@ -1,0 +1,3685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Texture Viewer</title>
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        body {
+            font-family: 'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-image: url('assets/home/background.png');
+            background-color: #2d2d2d;
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: top left;
+            color: #e6e6e6;
+            line-height: 1.4;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+            border: 2px solid #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #48494a;
+            border: 2px solid #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a5b5c;
+        }
+
+        .header {
+            background: rgba(45, 45, 45, 1.0);
+            border-bottom: 3px solid #4a4a4a;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 100;
+            margin-bottom: 20px;
+        }
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .main-wrapper {
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: #262626;
+            border: none;
+            padding: 30px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #3453df;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 15px;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .subtitle {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+        }
+
+        .section h2 {
+            color: #3453df;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .upload-zone {
+            border: 3px dashed #3453df;
+            padding: 30px;
+            text-align: center;
+            background: #1a1a1a;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .upload-zone:hover {
+            background: #242424;
+            border-color: #5a73ff;
+        }
+
+        .upload-zone.dragover {
+            background: #2a2a3a;
+            border-color: #5a73ff;
+        }
+
+        .upload-zone-text {
+            font-size: 16px;
+            color: #3453df;
+            margin-bottom: 5px;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .upload-zone-hint {
+            font-size: 12px;
+            color: #a0a0a0;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .button {
+            background: #3453df;
+            border: 2px solid #3949aa;
+            color: white;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Minecraft Ten', sans-serif;
+            text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
+            box-shadow: inset 2px 2px 0 #4065ec, inset -2px -2px 0 #2c47d1;
+            transition: background 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .button:hover {
+            background: #3949aa;
+        }
+
+        .button-secondary {
+            background: #4a4a4a;
+            border: 2px solid #3a3a3a;
+            box-shadow: inset 2px 2px 0 #5a5a5a, inset -2px -2px 0 #3a3a3a;
+        }
+
+        .button-secondary:hover {
+            background: #5a5a5a;
+        }
+
+        .texture-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(90px, 120px));
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .texture-search {
+            width: 100%;
+            padding: 8px 12px;
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+            color: #e6e6e6;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            margin-top: 15px;
+            box-sizing: border-box;
+        }
+
+        .texture-search:focus {
+            outline: none;
+            border-color: #3453df;
+            background: #252525;
+            box-shadow: 0 0 0 1px #3453df;
+        }
+
+        .texture-search::placeholder {
+            color: #666;
+        }
+
+        .texture-card {
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .texture-card:hover {
+            border-color: #3453df;
+            background: #252545;
+        }
+
+        .texture-card.selected {
+            border-color: #3453df;
+            background: #252545;
+            box-shadow: 0 0 10px rgba(52, 83, 223, 0.5);
+        }
+
+        .texture-card.dragging {
+            opacity: 0.5;
+        }
+
+        .texture-card.drag-over {
+            border-color: #4065ec;
+            background: #2a2a5a;
+        }
+
+        .texture-card-preview {
+            width: 100%;
+            aspect-ratio: 1;
+            background: repeating-conic-gradient(#2a2a2a 0% 25%, #1a1a1a 0% 50%) 50% / 10px 10px;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .texture-card-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .texture-card.selected .texture-card-preview {
+            width: 100%;
+            aspect-ratio: 1;
+        }
+
+        .texture-card-name {
+            color: #e6e6e6;
+            font-size: 10px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .texture-card-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #3453df;
+            color: white;
+            padding: 2px 6px;
+            font-size: 9px;
+            font-family: 'Minecraft Ten', sans-serif;
+            border: 1px solid #2c47d1;
+        }
+
+        .texture-card-badge.static {
+            background: #4a4a4a;
+            border: 1px solid #3a3a3a;
+        }
+
+        .remove-icon {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            cursor: pointer;
+            z-index: 10;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .remove-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .texture-card:hover .remove-icon {
+            display: block;
+        }
+
+        .view-mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .view-mode-label {
+            color: #3453df;
+            font-family: 'Minecraft Ten', sans-serif;
+            font-size: 14px;
+        }
+
+        .view-mode-button {
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            color: #a0a0a0;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Minecraft Ten', sans-serif;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            min-height: 40px;
+        }
+
+        .view-mode-button img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .view-mode-button.active {
+            background: #3453df;
+            border-color: #3949aa;
+            color: white;
+            box-shadow: inset 2px 2px 0 #4065ec, inset -2px -2px 0 #2c47d1;
+        }
+
+        .view-mode-button:hover:not(.active) {
+            background: #3a3a3a;
+        }
+
+        .viewer-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .viewer-grid.mode-1 {
+            grid-template-columns: 1fr;
+        }
+
+        .viewer-grid.mode-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .viewer-grid.mode-4 {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot {
+            padding: 8px;
+            min-height: 350px;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-controls {
+            padding: 8px;
+            font-size: 11px;
+            width: 100%;
+            max-width: 200px;
+            box-sizing: border-box;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-play-btn {
+            min-width: 24px;
+            height: 28px;
+            padding: 4px;
+            font-size: 11px;
+            flex: 1;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-control-row {
+            gap: 4px;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-control-row:has(.viewer-slot-play-btn):not(:has(input)) {
+            display: flex;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-frametime {
+            padding: 3px 4px;
+            font-size: 11px;
+            min-width: 40px;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot canvas {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-interpolate {
+            font-size: 9px;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-interpolate span {
+            white-space: nowrap;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-export-row {
+            justify-content: center;
+        }
+
+        .viewer-slot-timing-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .viewer-slot-timing-label {
+            font-size: 9px;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-timing-label {
+            font-size: 8px;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-control-row {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-frames {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .viewer-grid.mode-4 .viewer-slot-frames input {
+            box-sizing: border-box;
+        }
+
+        .viewer-slot {
+            background: repeating-conic-gradient(#2a2a2a 0% 25%, #1a1a1a 0% 50%) 50% / 20px 20px;
+            border: 2px solid #1a1a1a;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 350px;
+            position: relative;
+        }
+
+        .viewer-slot-canvas-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .viewer-slot canvas {
+            border: 2px solid #3453df;
+            box-shadow: 0 0 20px rgba(52, 83, 223, 0.3);
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .viewer-slot-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(52, 83, 223, 0.9);
+            color: white;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-family: 'Minecraft Ten', sans-serif;
+            border: 1px solid #2c47d1;
+        }
+
+        .viewer-slot-controls {
+            background: #1a1a1a;
+            border: 2px solid #0a0a0a;
+            padding: 12px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .viewer-grid.mode-1 .viewer-slot-controls {
+            max-width: 500px;
+        }
+
+        .viewer-slot-control-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .viewer-slot-play-btn {
+            background: #3453df;
+            border: 2px solid #3949aa;
+            color: white;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Minecraft Ten', sans-serif;
+            text-shadow: 1px 1px 0px rgba(52,63,156,0.8);
+            box-shadow: inset 2px 2px 0 #4065ec, inset -2px -2px 0 #2c47d1;
+            transition: background 0.2s;
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .viewer-slot-play-btn:hover {
+            background: #3949aa;
+        }
+
+        .viewer-slot-frametime {
+            flex: 1;
+            padding: 4px 8px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            color: #e6e6e6;
+            font-family: 'Nunito', sans-serif;
+            font-size: 12px;
+        }
+
+        .viewer-slot-frametime:focus {
+            outline: none;
+            border-color: #3453df;
+            box-shadow: 0 0 0 1px #3453df;
+        }
+
+        .viewer-slot-interpolate {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #cccccc;
+        }
+
+        .viewer-slot-interpolate input[type="checkbox"] {
+            cursor: pointer;
+            width: 14px;
+            height: 14px;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url('assets/buttons/checkbox.png');
+            background-size: 14px 14px;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+            border-radius: 0;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .viewer-slot-interpolate input[type="checkbox"]:checked {
+            background-image: url('assets/buttons/checkboxchecked.png');
+        }
+
+        .viewer-slot-frames {
+            width: 100%;
+        }
+
+        .viewer-slot-frames input {
+            width: 100%;
+            padding: 4px 8px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            color: #e6e6e6;
+            font-family: 'Nunito', sans-serif;
+            font-size: 11px;
+        }
+
+        .viewer-slot-frames input:focus {
+            outline: none;
+            border-color: #3453df;
+            box-shadow: 0 0 0 1px #3453df;
+        }
+
+        .frame-counter {
+            background: #1a1a1a;
+            padding: 8px;
+            text-align: center;
+            color: #3453df;
+            font-family: 'Minecraft Ten', sans-serif;
+            border: 2px solid #0a0a0a;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+
+        .play-all-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .play-icon {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 6px 0 6px 10px;
+            border-color: transparent transparent transparent white;
+            margin-right: 6px;
+        }
+
+        .stop-icon {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: white;
+            margin-right: 6px;
+        }
+
+        .mcmeta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .mcmeta-output-card {
+            background: #1a1a1a;
+            border: 2px solid #0a0a0a;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mcmeta-output-card-header {
+            color: #3453df;
+            font-family: 'Minecraft Ten', sans-serif;
+            font-size: 14px;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mcmeta-output-card-content {
+            color: #e6e6e6;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            white-space: pre;
+            background: #0a0a0a;
+            padding: 8px;
+            margin-bottom: 8px;
+            flex: 1;
+        }
+
+        .mcmeta-card-buttons {
+            display: flex;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .mcmeta-card-buttons .button {
+            font-size: 10px;
+            padding: 4px 10px;
+            margin: 0;
+            flex: 1;
+        }
+
+        .frame-editor {
+            background: #0a0a0a;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .frame-editor-header {
+            color: #a0a0a0;
+            font-size: 11px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .frame-editor-add-btn {
+            background: #3453df;
+            border: 1px solid #2c47d1;
+            color: white;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 10px;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .frame-editor-add-btn:hover {
+            background: #3949aa;
+        }
+
+        .frame-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            min-height: 32px;
+            transition: all 0.2s ease;
+        }
+
+        .frame-timeline.dragging-active .frame-item * {
+            pointer-events: none;
+        }
+
+        .frame-item {
+            background: #2e2e2e;
+            border: 2px solid #3a3a3a;
+            padding: 6px 8px;
+            cursor: move;
+            user-select: none;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            transition: margin 0.2s ease, border 0.2s ease;
+        }
+
+        .frame-item-regular {
+            background: #1e1e2e;
+            border-color: #4a4a5a;
+        }
+
+        .frame-item-custom {
+            background: #2e2e1e;
+            border-color: #5a5a3a;
+        }
+
+        .frame-item-number {
+            color: #3453df;
+            font-weight: bold;
+            font-size: 16px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .frame-item:hover {
+            border-color: #3453df;
+        }
+
+        .frame-item.dragging {
+            opacity: 0.4;
+        }
+
+        .frame-item.drag-over-left {
+            border-left: 3px solid #3453df;
+            margin-left: 20px;
+        }
+
+        .frame-item.drag-over-right {
+            border-right: 3px solid #3453df;
+            margin-right: 20px;
+        }
+
+        .frame-item-index {
+            color: #3453df;
+            font-weight: bold;
+        }
+
+        .frame-item-time {
+            color: #a0a0a0;
+            font-size: 10px;
+        }
+
+        .frame-item-remove {
+            color: #ff5555;
+            cursor: pointer;
+            margin-left: 4px;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .frame-item-remove:hover {
+            color: #ff8888;
+        }
+
+        .frame-item-time-input {
+            min-width: 45px;
+            width: auto;
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            color: #e6e6e6;
+            font-size: 14px;
+            padding: 2px 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .frame-item-time-input:focus {
+            outline: none;
+            border-color: #3453df;
+        }
+
+        .frame-item-index-input {
+            min-width: 55px;
+            width: auto;
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            color: #3453df;
+            font-size: 16px;
+            padding: 4px 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .frame-item-index-input:focus {
+            outline: none;
+            border-color: #3453df;
+        }
+
+        .frame-item-regular-input {
+            background: #1e2a3a;
+            border: 2px solid #3453df;
+            color: #5a73ff;
+            font-size: 18px;
+        }
+
+        .frame-item-regular-input:focus {
+            background: #253545;
+            border-color: #5a73ff;
+        }
+
+        @media (max-width: 1400px) {
+            .viewer-grid.mode-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .viewer-grid.mode-2,
+            .viewer-grid.mode-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #2e2e2e;
+            border: 3px solid #3453df;
+            padding: 30px;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            font-family: 'Minecraft Ten', sans-serif;
+            color: #3453df;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            color: #a0a0a0;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .gif-settings {
+            margin-bottom: 20px;
+        }
+
+        .gif-setting-row {
+            margin-bottom: 15px;
+        }
+
+        .gif-setting-label {
+            color: #e6e6e6;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .gif-setting-input {
+            width: 100%;
+            padding: 8px;
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+            color: #e6e6e6;
+            font-size: 14px;
+        }
+
+        .gif-setting-input:focus {
+            outline: none;
+            border-color: #3453df;
+            box-shadow: 0 0 0 1px #3453df;
+        }
+
+        .gif-setting-row.dimension-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .gif-setting-row.dimension-row > div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gif-preview {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+        }
+
+        .gif-preview img {
+            max-width: 100%;
+            image-rendering: pixelated;
+        }
+
+        .gif-status {
+            text-align: center;
+            color: #a0a0a0;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            padding: 15px 20px;
+            min-width: 250px;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        .toast.success {
+            border-left: 4px solid #3a8b4a;
+        }
+
+        .toast.error {
+            border-left: 4px solid #8b3a3a;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+.edit-icon {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    background: #2e2e2e;
+    border: 1px solid #3453df;
+    display: none;
+    cursor: pointer;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    color: #3453df;
+    font-size: 14px;
+    font-family: 'Minecraft Ten', sans-serif;
+}
+
+.edit-icon:hover {
+    background: #3453df;
+    color: white;
+}
+
+.texture-card:hover .edit-icon {
+    display: flex;
+}
+
+.editor-grid-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+    height: 500px;
+}
+
+.editor-controls {
+    background: #1a1a1a;
+    padding: 15px;
+    border: 2px solid #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.editor-preview-scroll {
+    background: #0a0a0a;
+    border: 2px solid #3a3a3a;
+    padding: 15px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 120px);
+    gap: 10px;
+    align-content: flex-start;
+}
+
+.editor-frame-card {
+    background: #2e2e2e;
+    border: 2px solid #3a3a3a;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    cursor: grab;
+    transition: all 0.2s;
+}
+
+.editor-frame-card:hover {
+    border-color: #3453df;
+    background: #333;
+}
+
+.editor-frame-card.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.editor-frame-card.drag-over {
+    border-color: #5a73ff;
+    background: #3a3a4a;
+    transform: scale(1.05);
+}
+
+.editor-frame-card canvas {
+    border: 2px solid #1a1a1a;
+    background: repeating-conic-gradient(#2a2a2a 0% 25%, #1a1a1a 0% 50%) 50% / 10px 10px;
+    max-width: 110px;
+    height: auto;
+}
+
+.editor-frame-btn {
+    font-size: 10px;
+    padding: 4px 8px;
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    color: #a0a0a0;
+    margin-bottom: 4px;
+}
+
+.input-group input {
+    width: 100%;
+    background: #2e2e2e;
+    border: 1px solid #4a4a4a;
+    color: white;
+    padding: 4px;
+}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io">
+                <img src="assets/home/logo.png" alt="PotatoWolfie">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="container">
+        <h1 class="page-title">Texture Viewer</h1>
+        <p class="subtitle">Import and preview textures with animation support</p>
+
+        <div class="layout-grid">
+            <div>
+                <div class="section">
+                    <h2>Import Textures</h2>
+                    <input type="file" id="fileInput" accept="image/png,.mcmeta" multiple>
+                    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-zone-text">Click or drag textures here</div>
+                        <div class="upload-zone-hint">Supports .png and .mcmeta files</div>
+                    </div>
+                    <button class="button button-secondary" onclick="clearTextures()">Clear All</button>
+
+                    <div style="color: #a0a0a0; font-size: 11px; margin-top: 12px; margin-bottom: 8px; text-align: center;">
+                        Drag textures over each other to combine them into one animation
+                    </div>
+
+                    <input type="text" class="texture-search" id="textureSearch" placeholder="Search textures..." autocomplete="off">
+
+                    <div class="texture-grid" id="textureGrid">
+                        <div style="grid-column: 1/-1; color: #a0a0a0; text-align: center; padding: 20px; font-size: 12px;">
+                            No textures loaded
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="section">
+                    <h2>Texture Viewer</h2>
+
+                    <div class="view-mode-selector">
+                        <span class="view-mode-label">View:</span>
+                        <button class="view-mode-button active" onclick="setViewMode(1)" id="viewBtn1" data-mode="1">
+                            <img src="assets/buttons/view1.png" alt="Single" onerror="this.style.display='none'; this.parentElement.textContent='1x';">
+                        </button>
+                        <button class="view-mode-button" onclick="setViewMode(2)" id="viewBtn2" data-mode="2">
+                            <img src="assets/buttons/view2.png" alt="2x" onerror="this.style.display='none'; this.parentElement.textContent='2x';">
+                        </button>
+                        <button class="view-mode-button" onclick="setViewMode(4)" id="viewBtn4" data-mode="4">
+                            <img src="assets/buttons/view4.png" alt="4x" onerror="this.style.display='none'; this.parentElement.textContent='4x';">
+                        </button>
+                    </div>
+
+                    <div class="view-mode-selector" style="margin-left: 20px;">
+                        <span class="view-mode-label">Timing:</span>
+                        <button class="view-mode-button active" onclick="setTimingMode('frametime')" id="timingBtnFrametime">
+                            Frametime
+                        </button>
+                        <button class="view-mode-button" onclick="setTimingMode('fps')" id="timingBtnFps">
+                            FPS
+                        </button>
+                    </div>
+
+                    <div class="frame-counter" id="frameCounter">No textures loaded</div>
+
+                    <div class="play-all-container" id="playAllContainer" style="display: none;">
+                        <button class="button" onclick="toggleAllAnimations()" id="playAllButton">
+                            <span class="play-icon"></span> Play All
+                        </button>
+                    </div>
+
+                    <div class="viewer-grid mode-1" id="viewerGrid">
+                        <div class="viewer-slot">
+                            <div class="viewer-slot-canvas-container">
+                                <canvas id="textureCanvas0" width="256" height="256"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="mcmetaSection">
+                    <h2>Generated .mcmeta Files</h2>
+                    <div id="mcmetaContainer">
+                        <div style="color: #a0a0a0; font-size: 12px;">No textures selected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let textureGroups = [];
+    let viewMode = 1;
+    let selectedGroupIndices = [];
+    let timingMode = 'frametime';
+
+    let slotStates = [
+        { currentFrame: 0, customFrameIndex: 0, frameProgress: 0, isPlaying: false, interval: null, frametime: 8, fps: 2.5, interpolate: false, customFrames: '' },
+        { currentFrame: 0, customFrameIndex: 0, frameProgress: 0, isPlaying: false, interval: null, frametime: 8, fps: 2.5, interpolate: false, customFrames: '' },
+        { currentFrame: 0, customFrameIndex: 0, frameProgress: 0, isPlaying: false, interval: null, frametime: 8, fps: 2.5, interpolate: false, customFrames: '' },
+        { currentFrame: 0, customFrameIndex: 0, frameProgress: 0, isPlaying: false, interval: null, frametime: 8, fps: 2.5, interpolate: false, customFrames: '' }
+    ];
+
+    let canvases = [null, null, null, null];
+    let contexts = [null, null, null, null];
+    let draggedGroupIndex = null;
+    let pendingMcmetaData = {};
+
+    const initialCanvas = document.getElementById('textureCanvas0');
+    if (initialCanvas) {
+        const ctx = initialCanvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        canvases[0] = initialCanvas;
+        contexts[0] = ctx;
+    }
+
+    document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+
+    const textureSearch = document.getElementById('textureSearch');
+    textureSearch.addEventListener('input', (e) => {
+        updateTextureGrid(e.target.value);
+    });
+
+    const uploadZone = document.getElementById('uploadZone');
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('dragover');
+    });
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+        handleFileSelect({ target: { files: e.dataTransfer.files } });
+    });
+
+    function handleFileSelect(e) {
+        const files = e.target.files;
+
+        for (let file of files) {
+            if (file.type === 'image/png') {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        analyzeAndAddTexture(file.name, img);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else if (file.name.endsWith('.mcmeta')) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const mcmetaData = JSON.parse(event.target.result);
+                        const baseFilename = file.name.replace('.mcmeta', '');
+                        pendingMcmetaData[baseFilename] = mcmetaData;
+
+                        applyMcmetaToTexture(baseFilename, mcmetaData);
+
+                        showToast(`Loaded ${file.name}`, 'success');
+                    } catch (err) {
+                        console.error('Failed to parse mcmeta:', err);
+                        showToast(`Failed to parse ${file.name}`, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        if (e.target.value) e.target.value = '';
+    }
+
+
+    function applyMcmetaToTexture(filename, mcmetaData) {
+        const groupIndex = textureGroups.findIndex(g => g.name === filename);
+        if (groupIndex !== -1) {
+            applyMcmetaToTextureByIndex(groupIndex, mcmetaData);
+        }
+    }
+
+    function applyMcmetaToTextureByIndex(groupIndex, mcmetaData) {
+        const group = textureGroups[groupIndex];
+        if (!group || !mcmetaData.animation) return;
+
+        const animation = mcmetaData.animation;
+
+        if (animation.frametime !== undefined) {
+            group.mcmetaSettings.frametime = animation.frametime;
+            group.mcmetaSettings.fps = frametimeToFps(animation.frametime);
+        }
+
+        if (animation.interpolate !== undefined) {
+            group.mcmetaSettings.interpolate = animation.interpolate;
+        }
+
+        if (animation.frames !== undefined) {
+            if (Array.isArray(animation.frames)) {
+                group.mcmetaSettings.customFrames = JSON.stringify(animation.frames);
+            }
+        }
+
+        selectedGroupIndices.forEach((selectedGroupIndex, slotIndex) => {
+            if (selectedGroupIndex === groupIndex) {
+                loadTextureSettingsToSlot(groupIndex, slotIndex);
+            }
+        });
+
+        updateMcmeta();
+        showToast(`Applied ${group.name}.mcmeta settings`, 'success');
+    }
+
+    function analyzeAndAddTexture(name, img) {
+        const width = img.width;
+        const height = img.height;
+
+        const isAnimated = height > width && height % width === 0;
+        const frameCount = isAnimated ? height / width : 1;
+
+        const frames = [];
+        const frameSize = width;
+
+        for (let i = 0; i < frameCount; i++) {
+            const frameCanvas = document.createElement('canvas');
+            frameCanvas.width = frameSize;
+            frameCanvas.height = frameSize;
+            const frameCtx = frameCanvas.getContext('2d');
+            frameCtx.imageSmoothingEnabled = false;
+            frameCtx.drawImage(img, 0, i * frameSize, frameSize, frameSize, 0, 0, frameSize, frameSize);
+            frames.push({
+                canvas: frameCanvas,
+                width: frameSize,
+                height: frameSize,
+                isCustom: false,
+                originalSourceIndex: i
+            });
+        }
+
+        textureGroups.push({
+            name: name,
+            sourceImage: img,
+            frames: frames,
+            isAnimated: isAnimated,
+            originalWidth: width,
+            originalHeight: height,
+            frameWidth: width,
+            frameHeight: width,
+            mcmetaSettings: {
+                frametime: 8,
+                fps: 2.5,
+                interpolate: false,
+                customFrames: ''
+            }
+        });
+
+        const groupIndex = textureGroups.length - 1;
+        if (pendingMcmetaData[name]) {
+            applyMcmetaToTextureByIndex(groupIndex, pendingMcmetaData[name]);
+            delete pendingMcmetaData[name];
+        }
+        if (selectedGroupIndices.length < viewMode) selectedGroupIndices.push(groupIndex);
+        updateTextureGrid();
+        updateViewers();
+        updatePlayAllButton();
+        updateMcmeta();
+    }
+
+    function updateTextureGrid(searchQuery = '') {
+        const grid = document.getElementById('textureGrid');
+
+        if (textureGroups.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; color: #a0a0a0; text-align: center; padding: 20px; font-size: 12px;">No textures loaded</div>';
+            return;
+        }
+
+        grid.innerHTML = '';
+
+        const query = searchQuery.toLowerCase();
+        let visibleCount = 0;
+
+        textureGroups.forEach((group, index) => {
+            if (query && !group.name.toLowerCase().includes(query)) {
+                return;
+            }
+
+            visibleCount++;
+
+            const card = document.createElement('div');
+            card.className = 'texture-card';
+            if (selectedGroupIndices.includes(index)) {
+                card.classList.add('selected');
+            }
+            card.draggable = true;
+            card.dataset.groupIndex = index;
+
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragover', handleDragOver);
+            card.addEventListener('drop', handleDrop);
+            card.addEventListener('dragleave', handleDragLeave);
+            card.addEventListener('dragend', handleDragEnd);
+
+            card.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-icon')) return;
+                toggleTextureSelection(index);
+            });
+
+            const firstFrame = group.frames[0];
+            const badge = group.isAnimated
+                ? `<div class="texture-card-badge">${group.frames.length}f</div>`
+                : `<div class="texture-card-badge static">1f</div>`;
+
+            card.innerHTML = `
+                <div class="remove-icon" onclick="removeGroup(${index}); event.stopPropagation();">×</div>
+                <div class="edit-icon" onclick="openTextureEditor(${index}); event.stopPropagation();">✎</div>
+                ${badge}
+                <div class="texture-card-preview">
+                    <img src="${firstFrame.canvas.toDataURL()}" alt="${group.name}">
+                </div>
+                <div class="texture-card-name" title="${group.name}">${group.name}</div>
+            `;
+
+            grid.appendChild(card);
+        });
+
+        if (visibleCount === 0 && query) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; color: #a0a0a0; text-align: center; padding: 20px; font-size: 12px;">No textures match your search</div>';
+        }
+    }
+
+    function toggleTextureSelection(index) {
+        const indexPos = selectedGroupIndices.indexOf(index);
+
+        if (viewMode === 1) {
+            if (selectedGroupIndices[0] !== undefined && textureGroups[selectedGroupIndices[0]]) {
+                saveSlotSettingsToTexture(0, selectedGroupIndices[0]);
+            }
+
+            selectedGroupIndices = [index];
+            slotStates[0].currentFrame = 0;
+            slotStates[0].frameProgress = 0;
+
+            loadTextureSettingsToSlot(index, 0);
+        } else {
+            if (indexPos !== -1) {
+                saveSlotSettingsToTexture(indexPos, selectedGroupIndices[indexPos]);
+                selectedGroupIndices.splice(indexPos, 1);
+                slotStates[indexPos].currentFrame = 0;
+                slotStates[indexPos].frameProgress = 0;
+            } else {
+                if (selectedGroupIndices.length < viewMode) {
+                    const slotIndex = selectedGroupIndices.length;
+                    selectedGroupIndices.push(index);
+                    loadTextureSettingsToSlot(index, slotIndex);
+                }
+            }
+        }
+
+        updateTextureGrid();
+        updateViewers();
+        updatePlayAllButton();
+        updateMcmeta();
+    }
+
+    function saveSlotSettingsToTexture(slotIndex, groupIndex) {
+        if (!textureGroups[groupIndex]) return;
+        const state = slotStates[slotIndex];
+        textureGroups[groupIndex].mcmetaSettings = {
+            frametime: state.frametime,
+            fps: state.fps,
+            interpolate: state.interpolate,
+            customFrames: state.customFrames
+        };
+    }
+
+    function loadTextureSettingsToSlot(groupIndex, slotIndex) {
+        if (!textureGroups[groupIndex]) return;
+        const settings = textureGroups[groupIndex].mcmetaSettings;
+        slotStates[slotIndex].frametime = settings.frametime;
+        slotStates[slotIndex].fps = settings.fps;
+        slotStates[slotIndex].interpolate = settings.interpolate;
+        slotStates[slotIndex].customFrames = settings.customFrames;
+
+        const timingInput = document.getElementById(`timing${slotIndex}`);
+        if (timingInput) {
+            timingInput.value = timingMode === 'frametime' ? settings.frametime : settings.fps.toFixed(2);
+        }
+
+        const interpolateCheckbox = document.getElementById(`interpolate${slotIndex}`);
+        if (interpolateCheckbox) {
+            interpolateCheckbox.checked = settings.interpolate;
+        }
+
+        const framesInput = document.getElementById(`frames${slotIndex}`);
+        if (framesInput) {
+            framesInput.value = settings.customFrames || '';
+        }
+    }
+
+    function setViewMode(mode) {
+        viewMode = mode;
+
+        for (let i = 0; i < 4; i++) {
+            stopSlotAnimation(i);
+        }
+
+        document.querySelectorAll('.view-mode-button[data-mode]').forEach(btn => {
+            btn.classList.remove('active');
+            if (parseInt(btn.dataset.mode) === mode) {
+                btn.classList.add('active');
+            }
+        });
+
+        if (selectedGroupIndices.length > viewMode) {
+            selectedGroupIndices = selectedGroupIndices.slice(0, viewMode);
+        }
+
+        const grid = document.getElementById('viewerGrid');
+        grid.className = `viewer-grid mode-${viewMode}`;
+        grid.innerHTML = '';
+
+        const slotCount = viewMode === 1 ? 1 : viewMode;
+        for (let i = 0; i < slotCount; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'viewer-slot';
+            if (viewMode > 1) {
+                slot.innerHTML = `<div class="viewer-slot-label">Slot ${i + 1}</div>`;
+            }
+            const canvas = document.createElement('canvas');
+            canvas.id = `textureCanvas${i}`;
+            canvas.width = 256;
+            canvas.height = 256;
+            slot.appendChild(canvas);
+
+            const controls = document.createElement('div');
+            controls.className = 'viewer-slot-controls';
+
+            if (viewMode === 4) {
+                controls.innerHTML = `
+                    <div class="viewer-slot-control-row">
+                        <button class="viewer-slot-play-btn" onclick="toggleSlotAnimation(${i})" id="playBtn${i}">
+                            <span class="play-icon"></span>
+                        </button>
+                        <button class="viewer-slot-play-btn" onclick="previousFrame(${i})" title="Previous Frame">&lt;</button>
+                        <button class="viewer-slot-play-btn" onclick="nextFrame(${i})" title="Next Frame">&gt;</button>
+                    </div>
+                    <div class="viewer-slot-control-row viewer-slot-timing-row">
+                        <div class="viewer-slot-timing-container">
+                            <label class="viewer-slot-timing-label" id="timingLabel${i}">Frametime</label>
+                            <input type="number" class="viewer-slot-frametime" id="timing${i}" value="8" min="1" step="any"
+                                   placeholder="Frametime" onchange="updateSlotTiming(${i}, this.value)">
+                        </div>
+                        <label class="viewer-slot-interpolate">
+                            <input type="checkbox" id="interpolate${i}" onchange="updateSlotInterpolate(${i}, this.checked)">
+                            <span>Interp</span>
+                        </label>
+                    </div>
+                    <div class="viewer-slot-control-row viewer-slot-frames">
+                        <input type="text" id="frames${i}" placeholder="0,1,2 or [0,1,{&quot;index&quot;:2,&quot;time&quot;:20}]"
+                               autocomplete="off" onchange="updateSlotCustomFrames(${i}, this.value)">
+                    </div>
+                    <div class="viewer-slot-control-row viewer-slot-export-row">
+                        <button class="button" onclick="openGifExportModal(${i})">Export GIF</button>
+                    </div>
+                `;
+            } else {
+                controls.innerHTML = `
+                    <div class="viewer-slot-control-row">
+                        <button class="viewer-slot-play-btn" onclick="toggleSlotAnimation(${i})" id="playBtn${i}">
+                            <span class="play-icon"></span>
+                        </button>
+                        <button class="viewer-slot-play-btn" onclick="previousFrame(${i})" title="Previous Frame">◄</button>
+                        <button class="viewer-slot-play-btn" onclick="nextFrame(${i})" title="Next Frame">►</button>
+                        <div class="viewer-slot-timing-container">
+                            <label class="viewer-slot-timing-label" id="timingLabel${i}">Frametime</label>
+                            <input type="number" class="viewer-slot-frametime" id="timing${i}" value="8" min="1" step="any"
+                                   placeholder="Frametime" onchange="updateSlotTiming(${i}, this.value)">
+                        </div>
+                    </div>
+                    <div class="viewer-slot-control-row">
+                        <label class="viewer-slot-interpolate">
+                            <input type="checkbox" id="interpolate${i}" onchange="updateSlotInterpolate(${i}, this.checked)">
+                            <span>Interpolate</span>
+                        </label>
+                    </div>
+                    <div class="viewer-slot-control-row viewer-slot-frames">
+                        <input type="text" id="frames${i}" placeholder="0,1,2 or [0,1,{&quot;index&quot;:2,&quot;time&quot;:20}]"
+                               autocomplete="off" onchange="updateSlotCustomFrames(${i}, this.value)">
+                    </div>
+                    <div class="viewer-slot-control-row">
+                        <button class="button" onclick="openGifExportModal(${i})">Export GIF</button>
+                    </div>
+                `;
+            }
+            slot.appendChild(controls);
+
+            grid.appendChild(slot);
+
+            canvases[i] = canvas;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+            contexts[i] = ctx;
+
+            const timingInput = document.getElementById(`timing${i}`);
+            if (timingInput) {
+                if (timingMode === 'frametime') {
+                    timingInput.placeholder = 'Frametime';
+                    timingInput.value = slotStates[i].frametime;
+                } else {
+                    timingInput.placeholder = 'FPS';
+                    timingInput.value = slotStates[i].fps.toFixed(2);
+                }
+            }
+
+            const interpolateCheckbox = document.getElementById(`interpolate${i}`);
+            if (interpolateCheckbox) {
+                interpolateCheckbox.checked = slotStates[i].interpolate;
+            }
+
+            updateFramesInputField(i);
+        }
+
+        updateTextureGrid();
+        updateViewers();
+        updatePlayAllButton();
+    }
+
+    function setTimingMode(mode) {
+        timingMode = mode;
+
+        const frametimeBtn = document.getElementById('timingBtnFrametime');
+        const fpsBtn = document.getElementById('timingBtnFps');
+
+        if (frametimeBtn && fpsBtn) {
+            frametimeBtn.classList.remove('active');
+            fpsBtn.classList.remove('active');
+
+            if (mode === 'frametime') {
+                frametimeBtn.classList.add('active');
+            } else {
+                fpsBtn.classList.add('active');
+            }
+        }
+
+        const mcmetaSection = document.getElementById('mcmetaSection');
+        if (mcmetaSection) {
+            mcmetaSection.style.display = mode === 'frametime' ? 'block' : 'none';
+        }
+
+        const slotCount = viewMode === 1 ? 1 : viewMode;
+        for (let i = 0; i < slotCount; i++) {
+            const input = document.getElementById(`timing${i}`);
+            const label = document.getElementById(`timingLabel${i}`);
+            if (input) {
+                if (mode === 'frametime') {
+                    input.placeholder = 'Frametime';
+                    input.value = slotStates[i].frametime;
+                    if (label) label.textContent = 'Frametime';
+                } else {
+                    input.placeholder = 'FPS';
+                    input.value = slotStates[i].fps.toFixed(2);
+                    if (label) label.textContent = 'FPS';
+                }
+            }
+        }
+    }
+
+    function handleDragStart(e) {
+        draggedGroupIndex = parseInt(e.currentTarget.dataset.groupIndex);
+        e.currentTarget.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = 'move';
+
+        const targetIndex = parseInt(e.currentTarget.dataset.groupIndex);
+        if (targetIndex !== draggedGroupIndex) {
+            e.currentTarget.classList.add('drag-over');
+        }
+        return false;
+    }
+
+    function handleDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDragEnd(e) {
+        e.currentTarget.classList.remove('dragging');
+        document.querySelectorAll('.texture-card').forEach(card => {
+            card.classList.remove('drag-over');
+        });
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        e.preventDefault();
+
+        const targetIndex = parseInt(e.currentTarget.dataset.groupIndex);
+        e.currentTarget.classList.remove('drag-over');
+
+        if (draggedGroupIndex !== null && draggedGroupIndex !== targetIndex) {
+            const draggedGroup = textureGroups[draggedGroupIndex];
+            const targetGroup = textureGroups[targetIndex];
+
+            const draggedFrames = draggedGroup.frames.map(frame => ({
+                ...frame,
+                isCustom: true
+            }));
+
+            targetGroup.frames.push(...draggedFrames);
+            targetGroup.isAnimated = true;
+
+            selectedGroupIndices = selectedGroupIndices.map(idx => {
+                if (idx === draggedGroupIndex) return -1;
+                if (idx > draggedGroupIndex) return idx - 1;
+                return idx;
+            }).filter(idx => idx !== -1);
+
+            textureGroups.splice(draggedGroupIndex, 1);
+
+            updateTextureGrid();
+            updateViewers();
+            updatePlayAllButton();
+            updateMcmeta();
+        }
+
+        draggedGroupIndex = null;
+        return false;
+    }
+
+    function removeGroup(index) {
+        textureGroups.splice(index, 1);
+
+        selectedGroupIndices = selectedGroupIndices.map(idx => {
+            if (idx === index) return -1;
+            if (idx > index) return idx - 1;
+            return idx;
+        }).filter(idx => idx !== -1);
+
+        for (let i = 0; i < 4; i++) {
+            stopSlotAnimation(i);
+            slotStates[i].currentFrame = 0;
+            slotStates[i].frameProgress = 0;
+        }
+
+        updateTextureGrid();
+        updateViewers();
+        updatePlayAllButton();
+        updateMcmeta();
+    }
+
+    function clearTextures() {
+        textureGroups = [];
+        selectedGroupIndices = [];
+        for (let i = 0; i < 4; i++) {
+            stopSlotAnimation(i);
+            slotStates[i] = { currentFrame: 0, customFrameIndex: 0, frameProgress: 0, isPlaying: false, interval: null, frametime: 8, fps: 2.5, interpolate: false, customFrames: '' };
+        }
+        updateTextureGrid();
+        updateViewers();
+        updatePlayAllButton();
+        updateMcmeta();
+    }
+
+    function updateViewers() {
+        const slotCount = viewMode === 1 ? 1 : viewMode;
+        const maxSize = viewMode === 4 ? 200 : (viewMode === 2 ? 300 : 500);
+
+        for (let i = 0; i < slotCount; i++) {
+            if (!canvases[i] || !contexts[i]) continue;
+
+            const groupIndex = selectedGroupIndices[i];
+
+            if (groupIndex === undefined || !textureGroups[groupIndex]) {
+                const canvas = canvases[i];
+                const ctx = contexts[i];
+                canvas.width = 256;
+                canvas.height = 256;
+                ctx.fillStyle = '#1a1a1a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#3453df';
+                ctx.font = '80px "Minecraft Ten"';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('+', canvas.width / 2, canvas.height / 2 - 10);
+
+                ctx.fillStyle = '#a0a0a0';
+                ctx.font = '14px Nunito';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillText('Select texture to be previewed', canvas.width / 2, canvas.height / 2 + 60);
+                continue;
+            }
+
+            renderSlot(i, maxSize);
+        }
+
+        updateFrameCounter();
+    }
+
+    function renderSlot(slotIndex, maxSize) {
+        const groupIndex = selectedGroupIndices[slotIndex];
+        const group = textureGroups[groupIndex];
+        if (!group) return;
+
+        const state = slotStates[slotIndex];
+
+        if (state.currentFrame >= group.frames.length) {
+            state.currentFrame = 0;
+        }
+
+        const currentFrame = group.frames[state.currentFrame];
+        if (!currentFrame) return;
+
+        const canvas = canvases[slotIndex];
+        const ctx = contexts[slotIndex];
+
+        const scale = Math.floor(Math.min(maxSize / currentFrame.width, maxSize / currentFrame.height, 16));
+        const displayWidth = currentFrame.width * Math.max(1, scale);
+        const displayHeight = currentFrame.height * Math.max(1, scale);
+
+        canvas.width = displayWidth;
+        canvas.height = displayHeight;
+        ctx.imageSmoothingEnabled = false;
+
+        if (state.interpolate && state.frameProgress > 0 && state.frameProgress < 1 && group.frames.length > 1) {
+            const customFrames = getCustomFramesArray(slotIndex);
+            let nextFrameIndex;
+
+            if (customFrames.length > 0) {
+                const nextSeqIndex = (state.customFrameIndex + 1) % customFrames.length;
+                nextFrameIndex = customFrames[nextSeqIndex].index;
+            } else {
+                nextFrameIndex = (state.currentFrame + 1) % group.frames.length;
+            }
+
+            const nextFrame = group.frames[nextFrameIndex];
+
+            const tempCanvas1 = document.createElement('canvas');
+            tempCanvas1.width = currentFrame.width;
+            tempCanvas1.height = currentFrame.height;
+            const tempCtx1 = tempCanvas1.getContext('2d');
+            tempCtx1.drawImage(currentFrame.canvas, 0, 0);
+            const currentData = tempCtx1.getImageData(0, 0, currentFrame.width, currentFrame.height);
+
+            const tempCanvas2 = document.createElement('canvas');
+            tempCanvas2.width = nextFrame.width;
+            tempCanvas2.height = nextFrame.height;
+            const tempCtx2 = tempCanvas2.getContext('2d');
+            tempCtx2.drawImage(nextFrame.canvas, 0, 0);
+            const nextData = tempCtx2.getImageData(0, 0, nextFrame.width, nextFrame.height);
+
+            const interpolatedData = tempCtx1.createImageData(currentFrame.width, currentFrame.height);
+            for (let i = 0; i < currentData.data.length; i += 4) {
+                const progress = state.frameProgress;
+                interpolatedData.data[i] = currentData.data[i] + (nextData.data[i] - currentData.data[i]) * progress;
+                interpolatedData.data[i + 1] = currentData.data[i + 1] + (nextData.data[i + 1] - currentData.data[i + 1]) * progress;
+                interpolatedData.data[i + 2] = currentData.data[i + 2] + (nextData.data[i + 2] - currentData.data[i + 2]) * progress;
+                interpolatedData.data[i + 3] = currentData.data[i + 3];
+            }
+            tempCtx1.putImageData(interpolatedData, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(tempCanvas1, 0, 0, displayWidth, displayHeight);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(currentFrame.canvas, 0, 0, displayWidth, displayHeight);
+        }
+    }
+
+    function updateFrameCounter() {
+        const counter = document.getElementById('frameCounter');
+
+        if (selectedGroupIndices.length === 0) {
+            counter.textContent = 'No textures selected';
+            return;
+        }
+
+        let text = '';
+        selectedGroupIndices.forEach((groupIndex, slotIndex) => {
+            const group = textureGroups[groupIndex];
+            const state = slotStates[slotIndex];
+            if (viewMode === 1) {
+                text = `${group.name} - Frame ${state.currentFrame + 1}/${group.frames.length}`;
+            } else {
+                if (text) text += ' | ';
+                text += `S${slotIndex + 1}: ${state.currentFrame + 1}/${group.frames.length}`;
+            }
+        });
+
+        counter.textContent = text;
+    }
+
+    function toggleSlotAnimation(slotIndex) {
+        const state = slotStates[slotIndex];
+        if (state.isPlaying) {
+            stopSlotAnimation(slotIndex);
+        } else {
+            startSlotAnimation(slotIndex);
+        }
+    }
+
+    function nextFrame(slotIndex) {
+        const groupIndex = selectedGroupIndices[slotIndex];
+        const group = textureGroups[groupIndex];
+        if (!group) return;
+
+        if (slotStates[slotIndex].isPlaying) {
+            stopSlotAnimation(slotIndex);
+        }
+
+        const state = slotStates[slotIndex];
+        const customFrames = getCustomFramesArray(slotIndex);
+
+        if (customFrames.length > 0) {
+            if (state.customFrameIndex === undefined || state.customFrameIndex === null) {
+                state.customFrameIndex = customFrames.findIndex(f => f.index === state.currentFrame);
+                if (state.customFrameIndex === -1) state.customFrameIndex = 0;
+            }
+            state.customFrameIndex = (state.customFrameIndex + 1) % customFrames.length;
+            state.currentFrame = customFrames[state.customFrameIndex].index;
+        } else {
+            state.currentFrame = (state.currentFrame + 1) % group.frames.length;
+        }
+
+        state.frameProgress = 0;
+        const maxSize = viewMode === 4 ? 200 : (viewMode === 2 ? 300 : 500);
+        renderSlot(slotIndex, maxSize);
+        updateFrameCounter();
+    }
+
+    function previousFrame(slotIndex) {
+        const groupIndex = selectedGroupIndices[slotIndex];
+        const group = textureGroups[groupIndex];
+        if (!group) return;
+
+        if (slotStates[slotIndex].isPlaying) {
+            stopSlotAnimation(slotIndex);
+        }
+
+        const state = slotStates[slotIndex];
+        const customFrames = getCustomFramesArray(slotIndex);
+
+        if (customFrames.length > 0) {
+            if (state.customFrameIndex === undefined || state.customFrameIndex === null) {
+                state.customFrameIndex = customFrames.findIndex(f => f.index === state.currentFrame);
+                if (state.customFrameIndex === -1) state.customFrameIndex = 0;
+            }
+            state.customFrameIndex = (state.customFrameIndex - 1 + customFrames.length) % customFrames.length;
+            state.currentFrame = customFrames[state.customFrameIndex].index;
+        } else {
+            state.currentFrame = (state.currentFrame - 1 + group.frames.length) % group.frames.length;
+        }
+
+        state.frameProgress = 0;
+        const maxSize = viewMode === 4 ? 200 : (viewMode === 2 ? 300 : 500);
+        renderSlot(slotIndex, maxSize);
+        updateFrameCounter();
+    }
+
+    function getCustomFramesArray(slotIndex) {
+        const state = slotStates[slotIndex];
+        if (state.customFrames && state.customFrames.trim()) {
+            try {
+                const parsed = JSON.parse(state.customFrames);
+                if (Array.isArray(parsed)) {
+                    return parsed.map(frame => {
+                        if (typeof frame === 'number') {
+                            return { index: frame, time: null, isCustom: false };
+                        } else if (typeof frame === 'object' && frame.index !== undefined) {
+                            return {
+                                index: frame.index,
+                                time: frame.time || null,
+                                isCustom: frame.isCustom === true
+                            };
+                        }
+                        return null;
+                    }).filter(f => f !== null);
+                }
+            } catch (e) {
+                const numbers = state.customFrames.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+                return numbers.map(n => ({ index: n, time: null, isCustom: false }));
+            }
+        }
+        return [];
+    }
+
+    function startSlotAnimation(slotIndex) {
+        const groupIndex = selectedGroupIndices[slotIndex];
+        const group = textureGroups[groupIndex];
+        if (!group || group.frames.length < 2) return;
+
+        const state = slotStates[slotIndex];
+        state.isPlaying = true;
+
+        const playBtn = document.getElementById(`playBtn${slotIndex}`);
+        if (playBtn) playBtn.innerHTML = '<span class="stop-icon"></span>';
+
+        const customFrames = getCustomFramesArray(slotIndex);
+        if (customFrames.length > 0) {
+            state.customFrameIndex = customFrames.findIndex(f => f.index === state.currentFrame);
+            if (state.customFrameIndex === -1) {
+                state.customFrameIndex = 0;
+                state.currentFrame = customFrames[0].index;
+            }
+        }
+
+        const fps = 60;
+        const msPerUpdate = 1000 / fps;
+
+        state.interval = setInterval(() => {
+            let currentFrametime = state.frametime;
+            if (customFrames.length > 0) {
+                const currentFrameObj = customFrames[state.customFrameIndex];
+                if (currentFrameObj.time !== null) {
+                    currentFrametime = currentFrameObj.time;
+                }
+            }
+
+            const msPerFrame = currentFrametime * 50;
+            const progressPerUpdate = msPerUpdate / msPerFrame;
+
+            state.frameProgress += progressPerUpdate;
+
+            if (state.frameProgress >= 1) {
+                if (customFrames.length > 0) {
+                    state.customFrameIndex = (state.customFrameIndex + 1) % customFrames.length;
+                    state.currentFrame = customFrames[state.customFrameIndex].index;
+                } else {
+                    state.currentFrame = (state.currentFrame + 1) % group.frames.length;
+                }
+                state.frameProgress = 0;
+            }
+
+            const maxSize = viewMode === 4 ? 200 : (viewMode === 2 ? 300 : 500);
+            renderSlot(slotIndex, maxSize);
+            updateFrameCounter();
+        }, msPerUpdate);
+    }
+
+    function stopSlotAnimation(slotIndex) {
+        const state = slotStates[slotIndex];
+        state.isPlaying = false;
+
+        const playBtn = document.getElementById(`playBtn${slotIndex}`);
+        if (playBtn) playBtn.innerHTML = '<span class="play-icon"></span>';
+
+        if (state.interval) {
+            clearInterval(state.interval);
+            state.interval = null;
+        }
+
+        state.frameProgress = 0;
+        const maxSize = viewMode === 4 ? 200 : (viewMode === 2 ? 300 : 500);
+        renderSlot(slotIndex, maxSize);
+    }
+
+    function frametimeToFps(frametime) {
+        const msPerFrame = frametime * 50;
+        return 1000 / msPerFrame;
+    }
+
+    function fpsToFrametime(fps) {
+        const msPerFrame = 1000 / fps;
+        return msPerFrame / 50;
+    }
+
+    function updateSlotTiming(slotIndex, value) {
+        const numValue = parseFloat(value);
+        if (!numValue || numValue <= 0) return;
+
+        if (timingMode === 'frametime') {
+            slotStates[slotIndex].frametime = numValue;
+            slotStates[slotIndex].fps = frametimeToFps(numValue);
+        } else {
+            slotStates[slotIndex].fps = numValue;
+            slotStates[slotIndex].frametime = fpsToFrametime(numValue);
+        }
+
+        const groupIndex = selectedGroupIndices[slotIndex];
+        if (groupIndex !== undefined) {
+            saveSlotSettingsToTexture(slotIndex, groupIndex);
+        }
+
+        if (slotStates[slotIndex].isPlaying) {
+            stopSlotAnimation(slotIndex);
+            startSlotAnimation(slotIndex);
+        }
+
+        updateMcmeta();
+    }
+
+    function updateSlotInterpolate(slotIndex, checked) {
+        slotStates[slotIndex].interpolate = checked;
+
+        const groupIndex = selectedGroupIndices[slotIndex];
+        if (groupIndex !== undefined) {
+            saveSlotSettingsToTexture(slotIndex, groupIndex);
+        }
+
+        updateMcmeta();
+    }
+
+    function updateSlotCustomFrames(slotIndex, value) {
+        let normalizedValue = value.trim();
+
+        if (!normalizedValue) {
+            slotStates[slotIndex].customFrames = '';
+            const groupIndex = selectedGroupIndices[slotIndex];
+            if (groupIndex !== undefined) {
+                saveSlotSettingsToTexture(slotIndex, groupIndex);
+            }
+            updateMcmeta();
+            return;
+        }
+
+        try {
+            let parsed;
+
+            if (normalizedValue.startsWith('[')) {
+                parsed = JSON.parse(normalizedValue);
+            } else {
+                const numbers = normalizedValue.split(',').map(s => s.trim()).filter(s => s);
+                parsed = numbers.map(n => {
+                    const num = parseInt(n);
+                    return isNaN(num) ? null : num;
+                }).filter(n => n !== null);
+            }
+
+            if (!Array.isArray(parsed)) {
+                return;
+            }
+
+            const internalFormat = parsed.map((item, idx) => {
+                if (typeof item === 'number') {
+                    return {
+                        index: item,
+                        time: null,
+                        isCustom: item !== idx
+                    };
+                } else if (typeof item === 'object' && item.index !== undefined) {
+                    return {
+                        index: item.index,
+                        time: item.time || null,
+                        isCustom: true
+                    };
+                }
+                return null;
+            }).filter(f => f !== null);
+
+            slotStates[slotIndex].customFrames = JSON.stringify(internalFormat);
+        } catch (e) {
+            console.error('Failed to parse custom frames:', e);
+            return;
+        }
+
+        const groupIndex = selectedGroupIndices[slotIndex];
+        if (groupIndex !== undefined) {
+            saveSlotSettingsToTexture(slotIndex, groupIndex);
+        }
+
+        updateMcmeta();
+    }
+
+    function updatePlayAllButton() {
+        const container = document.getElementById('playAllContainer');
+        if (selectedGroupIndices.length > 1) {
+            container.style.display = 'flex';
+        } else {
+            container.style.display = 'none';
+        }
+    }
+
+    function toggleAllAnimations() {
+        const anyPlaying = slotStates.some(state => state.isPlaying);
+        const playAllBtn = document.getElementById('playAllButton');
+
+        if (anyPlaying) {
+            for (let i = 0; i < viewMode; i++) {
+                stopSlotAnimation(i);
+            }
+            playAllBtn.innerHTML = '<span class="play-icon"></span> Play All';
+        } else {
+            for (let i = 0; i < viewMode; i++) {
+                if (selectedGroupIndices[i] !== undefined) {
+                    startSlotAnimation(i);
+                }
+            }
+            playAllBtn.innerHTML = '<span class="stop-icon"></span> Stop All';
+        }
+    }
+
+    function updateMcmeta() {
+        const container = document.getElementById('mcmetaContainer');
+
+        if (selectedGroupIndices.length === 0) {
+            container.innerHTML = '<div style="color: #a0a0a0; font-size: 12px;">No textures selected</div>';
+            return;
+        }
+
+        container.innerHTML = '';
+        const grid = document.createElement('div');
+        grid.className = 'mcmeta-grid';
+
+        selectedGroupIndices.forEach((groupIndex, slotIndex) => {
+            const group = textureGroups[groupIndex];
+            if (!group) return;
+
+            const state = slotStates[slotIndex];
+
+            let frames = parseFramesFromState(state, group);
+
+            const mcmeta = {
+                animation: {
+                    frametime: state.frametime,
+                    interpolate: state.interpolate,
+                    frames: frames
+                }
+            };
+
+            if (group.frameWidth && group.frameHeight) {
+                if (group.frameWidth !== group.originalWidth || group.frameHeight !== group.frameWidth) {
+                     mcmeta.animation.width = group.frameWidth;
+                     mcmeta.animation.height = group.frameHeight;
+                }
+            }
+
+            const card = document.createElement('div');
+            card.className = 'mcmeta-output-card';
+
+            const mcmetaText = JSON.stringify(mcmeta, null, 2);
+            const frameEditorHTML = createFrameEditorHTML(slotIndex, groupIndex, state, group);
+
+            card.innerHTML = `
+                <div class="mcmeta-output-card-header" title="${group.name}">${group.name}</div>
+                ${frameEditorHTML}
+                <div class="mcmeta-output-card-content">${mcmetaText}</div>
+                <div class="mcmeta-card-buttons">
+                    <button class="button" onclick="copyMcmetaForGroup(${groupIndex}, ${slotIndex})">Copy</button>
+                    <button class="button button-secondary" onclick="downloadMcmetaForGroup(${groupIndex}, ${slotIndex})">Download</button>
+                </div>
+            `;
+
+            grid.appendChild(card);
+        });
+
+        container.appendChild(grid);
+        attachFrameEditorListeners();
+    }
+
+    function parseFramesFromState(state, group) {
+        let frames;
+        if (state.customFrames && state.customFrames.trim()) {
+            try {
+                const parsed = JSON.parse(state.customFrames);
+                if (Array.isArray(parsed)) {
+                    frames = parsed.map(frame => {
+                        if (typeof frame === 'number') {
+                            return frame;
+                        } else if (typeof frame === 'object' && frame.index !== undefined) {
+                            if (frame.time !== null && frame.time !== undefined) {
+                                return { index: frame.index, time: frame.time };
+                            }
+                            return frame.index;
+                        }
+                        return frame;
+                    });
+                } else {
+                    frames = group.frames.map((_, i) => i);
+                }
+            } catch (e) {
+                frames = state.customFrames.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+            }
+        } else {
+            frames = group.frames.map((_, i) => i);
+        }
+        return frames;
+    }
+
+    function createFrameEditorHTML(slotIndex, groupIndex, state, group) {
+        const framesArray = getCustomFramesArray(slotIndex);
+        const actualFrames = framesArray.length > 0 ? framesArray : group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+
+        let timelineHTML = actualFrames.map((frame, idx) => {
+            const isCustomFrame = frame.isCustom === true || frame.time !== null;
+
+            if (isCustomFrame) {
+                const hasCustomTime = frame.time !== null;
+                const timeDisplay = hasCustomTime
+                    ? `<input type="number" class="frame-item-time-input" value="${frame.time}" min="1" data-slot="${slotIndex}" data-frame-idx="${idx}" onclick="event.stopPropagation()" title="Custom frame time">`
+                    : `<button class="frame-editor-add-btn" style="font-size: 9px; padding: 1px 4px;" onclick="addCustomTimeToFrame(${slotIndex}, ${idx}); event.stopPropagation();" title="Add custom time">+T</button>`;
+
+                return `
+                    <div class="frame-item frame-item-custom" draggable="true" data-slot="${slotIndex}" data-frame-idx="${idx}">
+                        <span style="font-size: 9px; color: #888;">idx:</span>
+                        <input type="number" class="frame-item-index-input" value="${frame.index}" min="0" max="${group.frames.length - 1}" data-slot="${slotIndex}" data-frame-idx="${idx}" data-type="index" onclick="event.stopPropagation()" title="Frame index">
+                        ${timeDisplay}
+                        <span class="frame-item-remove" onclick="removeFrameFromTimeline(${slotIndex}, ${idx}); event.stopPropagation();" title="Remove frame">×</span>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="frame-item frame-item-regular" draggable="true" data-slot="${slotIndex}" data-frame-idx="${idx}">
+                        <input type="number" class="frame-item-index-input frame-item-regular-input" value="${frame.index}" min="0" max="${group.frames.length - 1}" data-slot="${slotIndex}" data-frame-idx="${idx}" data-type="index" data-is-regular="true" onclick="event.stopPropagation()" title="Frame number">
+                        <span class="frame-item-remove" onclick="removeFrameFromTimeline(${slotIndex}, ${idx}); event.stopPropagation();" title="Remove frame">×</span>
+                    </div>
+                `;
+            }
+        }).join('');
+
+        return `
+            <div class="frame-editor">
+                <div class="frame-editor-header" onclick="toggleTimelineEditor(${slotIndex})" style="cursor: pointer;">
+                    <span><span id="timeline-arrow-${slotIndex}">▼</span> Frame Timeline (drag to reorder)</span>
+                    <div style="display: flex; gap: 4px;" onclick="event.stopPropagation();">
+                        <button class="frame-editor-add-btn" onclick="addRegularFrameToTimeline(${slotIndex}, ${groupIndex})" title="Add next sequential frame">+ Frame</button>
+                        <button class="frame-editor-add-btn" onclick="addCustomFrameToTimeline(${slotIndex}, ${groupIndex})" title="Add custom index frame">+ Index</button>
+                    </div>
+                </div>
+                <div class="frame-timeline" data-slot="${slotIndex}" id="timeline-content-${slotIndex}">
+                    ${timelineHTML}
+                </div>
+            </div>
+        `;
+    }
+
+    function addRegularFrameToTimeline(slotIndex, groupIndex) {
+        const group = textureGroups[groupIndex];
+        const state = slotStates[slotIndex];
+
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+        }
+
+        const lastFrame = framesArray[framesArray.length - 1];
+        const nextIndex = (lastFrame ? lastFrame.index + 1 : 0) % group.frames.length;
+        framesArray.push({ index: nextIndex, time: null, isCustom: false });
+
+        state.customFrames = JSON.stringify(framesArray);
+
+        const groupIdx = selectedGroupIndices[slotIndex];
+        if (groupIdx !== undefined) {
+            saveSlotSettingsToTexture(slotIndex, groupIdx);
+        }
+
+        updateMcmeta();
+        updateFramesInputField(slotIndex);
+    }
+
+    function addCustomFrameToTimeline(slotIndex, groupIndex) {
+        const group = textureGroups[groupIndex];
+        const state = slotStates[slotIndex];
+
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+        }
+
+        framesArray.push({ index: 0, time: 8, isCustom: true });
+        state.customFrames = JSON.stringify(framesArray);
+
+        const groupIdx = selectedGroupIndices[slotIndex];
+        if (groupIdx !== undefined) {
+            saveSlotSettingsToTexture(slotIndex, groupIdx);
+        }
+
+        updateMcmeta();
+        updateFramesInputField(slotIndex);
+    }
+
+    function toggleTimelineEditor(slotIndex) {
+        const content = document.getElementById(`timeline-content-${slotIndex}`);
+        const arrow = document.getElementById(`timeline-arrow-${slotIndex}`);
+
+        if (content && arrow) {
+            if (content.style.display === 'none') {
+                content.style.display = 'flex';
+                arrow.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                arrow.textContent = '▶';
+            }
+        }
+    }
+
+    function addCustomTimeToFrame(slotIndex, frameIdx) {
+        const state = slotStates[slotIndex];
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            const groupIndex = selectedGroupIndices[slotIndex];
+            const group = textureGroups[groupIndex];
+            if (group) {
+                framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+            }
+        }
+
+        if (framesArray[frameIdx]) {
+            framesArray[frameIdx].time = state.frametime;
+            state.customFrames = JSON.stringify(framesArray);
+
+            const groupIndex = selectedGroupIndices[slotIndex];
+            if (groupIndex !== undefined) {
+                saveSlotSettingsToTexture(slotIndex, groupIndex);
+            }
+
+            updateMcmeta();
+            updateFramesInputField(slotIndex);
+        }
+    }
+
+    function attachFrameEditorListeners() {
+        const timelines = document.querySelectorAll('.frame-timeline');
+        timelines.forEach(timeline => {
+            const slotIndex = parseInt(timeline.dataset.slot);
+
+            Sortable.create(timeline, {
+                animation: 150,
+                ghostClass: 'dragging',
+                onEnd: function(evt) {
+                    const items = Array.from(timeline.querySelectorAll('.frame-item'));
+                    const newOrder = items.map(item => parseInt(item.dataset.frameIdx));
+
+                    items.forEach((item, newIdx) => {
+                        item.dataset.frameIdx = newIdx;
+                    });
+
+                    const state = slotStates[slotIndex];
+                    let framesArray = getCustomFramesArray(slotIndex);
+
+                    if (framesArray.length === 0) {
+                        const groupIndex = selectedGroupIndices[slotIndex];
+                        const group = textureGroups[groupIndex];
+                        if (group) {
+                            framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+                        }
+                    }
+
+                    const reorderedFrames = newOrder.map(oldIdx => framesArray[oldIdx]);
+                    state.customFrames = JSON.stringify(reorderedFrames);
+
+                    const groupIndex = selectedGroupIndices[slotIndex];
+                    if (groupIndex !== undefined) {
+                        saveSlotSettingsToTexture(slotIndex, groupIndex);
+                    }
+
+                    updateMcmeta();
+                    updateFramesInputField(slotIndex);
+                }
+            });
+        });
+
+        const allInputs = document.querySelectorAll('.frame-item-time-input, .frame-item-index-input');
+        allInputs.forEach(input => {
+            input.addEventListener('change', handleFrameTimeChange);
+            input.addEventListener('input', autoResizeInput);
+            autoResizeInput.call(input);
+        });
+    }
+
+    function autoResizeInput() {
+        const value = this.value || '';
+        const digits = value.length;
+        const baseWidth = this.classList.contains('frame-item-time-input') ? 45 : 55;
+        const charWidth = this.classList.contains('frame-item-time-input') ? 8 : 10;
+        const minDigits = this.classList.contains('frame-item-time-input') ? 2 : 2;
+
+        const calculatedWidth = baseWidth + (Math.max(0, digits - minDigits) * charWidth);
+        this.style.width = calculatedWidth + 'px';
+    }
+
+    function handleFrameTimeChange(e) {
+        const slotIndex = parseInt(e.target.dataset.slot);
+        const frameIdx = parseInt(e.target.dataset.frameIdx);
+        const type = e.target.dataset.type;
+        const isRegular = e.target.dataset.isRegular === 'true';
+        const newValue = parseInt(e.target.value);
+
+        if (type === 'index') {
+            updateFrameIndex(slotIndex, frameIdx, newValue, isRegular);
+        } else {
+            updateFrameTime(slotIndex, frameIdx, newValue);
+        }
+    }
+
+    function updateFrameIndex(slotIndex, frameIdx, newIndex, isRegularFrame = false) {
+        const state = slotStates[slotIndex];
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            const groupIndex = selectedGroupIndices[slotIndex];
+            const group = textureGroups[groupIndex];
+            if (group) {
+                framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+            }
+        }
+
+        if (framesArray[frameIdx] && newIndex >= 0) {
+            framesArray[frameIdx].index = newIndex;
+            if (!isRegularFrame) {
+                framesArray[frameIdx].isCustom = true;
+            } else {
+                framesArray[frameIdx].isCustom = false;
+            }
+            state.customFrames = JSON.stringify(framesArray);
+
+            const groupIndex = selectedGroupIndices[slotIndex];
+            if (groupIndex !== undefined) {
+                saveSlotSettingsToTexture(slotIndex, groupIndex);
+            }
+
+            updateMcmeta();
+            updateFramesInputField(slotIndex);
+        }
+    }
+
+    function addFrameToTimeline(slotIndex, groupIndex) {
+        const group = textureGroups[groupIndex];
+        const state = slotStates[slotIndex];
+
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            framesArray = group.frames.map((_, i) => ({ index: i, time: null }));
+        }
+        framesArray.push({ index: 0, time: null });
+        state.customFrames = JSON.stringify(framesArray);
+
+        const groupIdx = selectedGroupIndices[slotIndex];
+        if (groupIdx !== undefined) {
+            saveSlotSettingsToTexture(slotIndex, groupIdx);
+        }
+
+        updateMcmeta();
+        updateFramesInputField(slotIndex);
+    }
+
+    function removeFrameFromTimeline(slotIndex, frameIdx) {
+        const state = slotStates[slotIndex];
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            const groupIndex = selectedGroupIndices[slotIndex];
+            const group = textureGroups[groupIndex];
+            if (group) {
+                framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+            }
+        }
+
+        if (framesArray.length <= 1) {
+            state.customFrames = '';
+        } else {
+            framesArray.splice(frameIdx, 1);
+            state.customFrames = JSON.stringify(framesArray);
+        }
+
+        const groupIndex = selectedGroupIndices[slotIndex];
+        if (groupIndex !== undefined) {
+            saveSlotSettingsToTexture(slotIndex, groupIndex);
+        }
+
+        updateMcmeta();
+        updateFramesInputField(slotIndex);
+    }
+
+    function reorderFrame(slotIndex, fromIdx, toIdx) {
+        const state = slotStates[slotIndex];
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            const groupIndex = selectedGroupIndices[slotIndex];
+            const group = textureGroups[groupIndex];
+            if (group) {
+                framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+            }
+        }
+
+        if (fromIdx < 0 || fromIdx >= framesArray.length || toIdx < 0 || toIdx >= framesArray.length) {
+            return;
+        }
+
+        const [movedFrame] = framesArray.splice(fromIdx, 1);
+
+        if (movedFrame) {
+            framesArray.splice(toIdx, 0, movedFrame);
+            state.customFrames = JSON.stringify(framesArray);
+
+            const groupIndex = selectedGroupIndices[slotIndex];
+            if (groupIndex !== undefined) {
+                saveSlotSettingsToTexture(slotIndex, groupIndex);
+            }
+
+            updateMcmeta();
+            updateFramesInputField(slotIndex);
+        }
+    }
+
+    function updateFrameTime(slotIndex, frameIdx, newTime) {
+        const state = slotStates[slotIndex];
+        let framesArray = getCustomFramesArray(slotIndex);
+
+        if (framesArray.length === 0) {
+            const groupIndex = selectedGroupIndices[slotIndex];
+            const group = textureGroups[groupIndex];
+            if (group) {
+                framesArray = group.frames.map((_, i) => ({ index: i, time: null, isCustom: false }));
+            }
+        }
+
+        if (framesArray[frameIdx]) {
+            framesArray[frameIdx].time = newTime > 0 ? newTime : null;
+            state.customFrames = JSON.stringify(framesArray);
+
+            const groupIndex = selectedGroupIndices[slotIndex];
+            if (groupIndex !== undefined) {
+                saveSlotSettingsToTexture(slotIndex, groupIndex);
+            }
+
+            updateMcmeta();
+            updateFramesInputField(slotIndex);
+        }
+    }
+
+    function updateFramesInputField(slotIndex) {
+        const framesInput = document.getElementById(`frames${slotIndex}`);
+        if (framesInput) {
+            const state = slotStates[slotIndex];
+            const framesArray = getCustomFramesArray(slotIndex);
+
+            if (framesArray.length === 0) {
+                framesInput.value = '';
+                return;
+            }
+
+            const cleanFrames = framesArray.map(frame => {
+                if (frame.time !== null && frame.time !== undefined) {
+                    return { index: frame.index, time: frame.time };
+                }
+                return frame.index;
+            });
+
+            framesInput.value = JSON.stringify(cleanFrames);
+        }
+    }
+
+    function copyMcmetaForGroup(groupIndex, slotIndex) {
+        const group = textureGroups[groupIndex];
+        if (!group) return;
+
+        const state = slotStates[slotIndex];
+
+        let frames = parseFramesFromState(state, group);
+
+        const mcmeta = {
+            animation: {
+                frametime: state.frametime,
+                interpolate: state.interpolate,
+                frames: frames
+            }
+        };
+
+        if (group.frameWidth && group.frameHeight) {
+            if (group.frameWidth !== group.originalWidth || group.frameHeight !== group.frameWidth) {
+                mcmeta.animation.width = group.frameWidth;
+                mcmeta.animation.height = group.frameHeight;
+            }
+        }
+
+        const text = JSON.stringify(mcmeta, null, 2);
+        navigator.clipboard.writeText(text).then(() => {
+            showToast(`Copied ${group.name} mcmeta to clipboard!`, 'success');
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            showToast('Failed to copy to clipboard', 'error');
+        });
+    }
+
+    function downloadMcmetaForGroup(groupIndex, slotIndex) {
+        const group = textureGroups[groupIndex];
+        if (!group) return;
+
+        const state = slotStates[slotIndex];
+
+        let frames = parseFramesFromState(state, group);
+
+        const mcmeta = {
+            animation: {
+                frametime: state.frametime,
+                interpolate: state.interpolate,
+                frames: frames
+            }
+        };
+
+        if (group.frameWidth && group.frameHeight) {
+            if (group.frameWidth !== group.originalWidth || group.frameHeight !== group.frameWidth) {
+                mcmeta.animation.width = group.frameWidth;
+                mcmeta.animation.height = group.frameHeight;
+            }
+        }
+
+        const text = JSON.stringify(mcmeta, null, 2);
+        const blob = new Blob([text], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+
+        const filename = group.name.replace('.png', '.png.mcmeta');
+
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    let currentGifSlot = null;
+    let generatedGifBlob = null;
+
+    function openGifExportModal(slotIndex) {
+        const groupIndex = selectedGroupIndices[slotIndex];
+        if (groupIndex === undefined || !textureGroups[groupIndex]) {
+            showToast('No texture selected in this slot', 'error');
+            return;
+        }
+
+        currentGifSlot = slotIndex;
+        const group = textureGroups[groupIndex];
+        const state = slotStates[currentGifSlot];
+
+        const defaultSize = group.frames[0].width * 8;
+        document.getElementById('gifWidth').value = defaultSize;
+        document.getElementById('gifHeight').value = defaultSize;
+
+        document.getElementById('gifModal').classList.add('active');
+        document.getElementById('gifPreview').style.display = 'none';
+        document.getElementById('downloadBtn').style.display = 'none';
+        document.getElementById('gifStatus').textContent = 'Click "Generate GIF" to create animation';
+        generatedGifBlob = null;
+        cancelGifGeneration = false;
+    }
+
+    function closeGifModal() {
+        cancelGifGeneration = true;
+        document.getElementById('gifModal').classList.remove('active');
+        currentGifSlot = null;
+        generatedGifBlob = null;
+    }
+
+    let generatedExportGifBlob = null;
+    let cancelGifGeneration = false;
+
+async function generateGif() {
+        if (currentGifSlot === null) return;
+
+        const groupIndex = selectedGroupIndices[currentGifSlot];
+        const group = textureGroups[groupIndex];
+        if (!group) return;
+
+        const state = slotStates[currentGifSlot];
+        const width = parseInt(document.getElementById('gifWidth').value) || 128;
+        const height = parseInt(document.getElementById('gifHeight').value) || 128;
+        const recordingFps = parseInt(document.getElementById('gifRecordingFps').value) || 50;
+
+        const customFrames = getCustomFramesArray(currentGifSlot);
+
+        let frameSequence;
+        if (customFrames.length > 0) {
+            frameSequence = customFrames.map(f => ({
+                index: f.index,
+                time: f.time !== null ? f.time : state.frametime
+            }));
+        } else {
+            frameSequence = group.frames.map((_, i) => ({
+                index: i,
+                time: state.frametime
+            }));
+        }
+
+        const generateBtn = document.getElementById('generateBtn');
+        const statusEl = document.getElementById('gifStatus');
+
+        generateBtn.disabled = true;
+        generateBtn.textContent = 'Generating...';
+        statusEl.textContent = 'Loading GIF encoder...';
+
+        try {
+            const { GIFEncoder, quantize, applyPalette } = await import('https://cdn.jsdelivr.net/npm/gifenc@1.0.3/dist/gifenc.esm.js');
+
+            if (cancelGifGeneration) {
+                statusEl.textContent = 'Generation cancelled';
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate GIF';
+                return;
+            }
+
+            statusEl.textContent = `Generating GIF (${recordingFps} FPS)...`;
+
+            const exportBlob = await generateGifAtFps(group, frameSequence, width, height, recordingFps, state.interpolate, GIFEncoder);
+
+            if (cancelGifGeneration || !exportBlob) {
+                statusEl.textContent = 'Generation cancelled';
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate GIF';
+                return;
+            }
+
+            generatedExportGifBlob = exportBlob;
+            generatedGifBlob = exportBlob;
+
+            const previewUrl = URL.createObjectURL(exportBlob);
+            document.getElementById('gifPreviewImage').src = previewUrl;
+            document.getElementById('gifPreview').style.display = 'block';
+            document.getElementById('downloadBtn').style.display = 'inline-block';
+
+            statusEl.textContent = `GIF generated!`;
+            generateBtn.disabled = false;
+            generateBtn.textContent = 'Generate GIF';
+
+        } catch (error) {
+            console.error('Error generating GIF:', error);
+            statusEl.textContent = 'Error: ' + error.message;
+            generateBtn.disabled = false;
+            generateBtn.textContent = 'Generate GIF';
+        }
+    }
+
+async function generateGifAtFps(group, frameSequence, width, height, recordingFps, interpolate, GIFEncoder) {
+        const delayInCentiseconds = Math.round(100 / recordingFps);
+        const gifFrameDelay = delayInCentiseconds * 10;
+
+        const gif = GIFEncoder();
+
+        let totalGifFramesGenerated = 0;
+        const statusEl = document.getElementById('gifStatus');
+
+        for (let i = 0; i < frameSequence.length; i++) {
+            if (cancelGifGeneration) {
+                return null;
+            }
+
+            const currentFrameInfo = frameSequence[i];
+            const nextFrameInfo = frameSequence[(i + 1) % frameSequence.length];
+            const currentTexIdx = currentFrameInfo.index;
+            const nextTexIdx = nextFrameInfo.index;
+            const durationMs = currentFrameInfo.time * 50;
+            const msPerGifFrame = 1000 / recordingFps;
+            const framesForThisStep = Math.max(1, Math.round(durationMs / msPerGifFrame));
+
+            for (let step = 0; step < framesForThisStep; step++) {
+                if (cancelGifGeneration) {
+                    return null;
+                }
+
+                const progress = interpolate ? (step / framesForThisStep) : 0;
+
+                const canvas = createFrameCanvas(
+                    group.frames[currentTexIdx],
+                    group.frames[nextTexIdx],
+                    progress,
+                    width,
+                    height
+                );
+
+                const ctx = canvas.getContext('2d');
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                const palette = customQuantize(data, true);
+                const index = customApplyPalette(data, palette, true);
+
+                gif.writeFrame(index, width, height, {
+                    palette,
+                    delay: gifFrameDelay,
+                    transparent: true
+                });
+
+                totalGifFramesGenerated++;
+
+                if (totalGifFramesGenerated % 10 === 0) {
+                    statusEl.textContent = `Generating... Frame ${totalGifFramesGenerated}`;
+                    await new Promise(resolve => setTimeout(resolve, 0));
+                }
+            }
+        }
+
+        gif.finish();
+        const buffer = gif.bytesView();
+        return new Blob([buffer], { type: 'image/gif' });
+    }
+
+    function customQuantize(data, hasTransparency) {
+        const palette = hasTransparency ? [[0, 0, 0]] : [];
+        const counter = hasTransparency ? [100] : [];
+
+        for (let i = 0; i < data.length; i += 4) {
+            if (data[i + 3] < 127) continue;
+
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+
+            const match = palette.findIndex((color, idx) =>
+                color[0] === r && color[1] === g && color[2] === b &&
+                (idx !== 0 || !hasTransparency)
+            );
+
+            if (match === -1) {
+                palette.push([r, g, b]);
+                counter.push(1);
+            } else {
+                counter[match]++;
+            }
+
+            if (palette.length > 256) break;
+        }
+
+        let threshold = 4;
+        while (palette.length > 256) {
+            for (let i = counter.length - 1; i > 0; i--) {
+                if (counter[i] < threshold) {
+                    palette.splice(i, 1);
+                    counter.splice(i, 1);
+                }
+            }
+            threshold *= 1.5;
+            if (threshold > 50) break;
+        }
+
+        return palette;
+    }
+
+    function customApplyPalette(data, palette, hasTransparency) {
+        const array = new Uint8Array(data.length / 4);
+
+        for (let i = 0; i < array.length; i++) {
+            if (data[i * 4 + 3] < 127) {
+                array[i] = 0;
+                continue;
+            }
+
+            const r = data[i * 4];
+            const g = data[i * 4 + 1];
+            const b = data[i * 4 + 2];
+
+            const match = palette.findIndex((color, idx) =>
+                color[0] === r && color[1] === g && color[2] === b &&
+                (idx !== 0 || !hasTransparency)
+            );
+
+            if (match !== -1) {
+                array[i] = match;
+            } else {
+                let minDist = Infinity;
+                let closest = 0;
+
+                for (let j = hasTransparency ? 1 : 0; j < palette.length; j++) {
+                    const dist = Math.pow(palette[j][0] - r, 2) +
+                                 Math.pow(palette[j][1] - g, 2) +
+                                 Math.pow(palette[j][2] - b, 2);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closest = j;
+                    }
+                }
+
+                array[i] = closest;
+            }
+        }
+
+        return array;
+    }
+
+    function createFrameCanvas(frame1, frame2, progress, width, height) {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+
+        if (frame2 && progress > 0) {
+            const tempCanvas1 = document.createElement('canvas');
+            tempCanvas1.width = frame1.width;
+            tempCanvas1.height = frame1.height;
+            const tempCtx1 = tempCanvas1.getContext('2d');
+            tempCtx1.drawImage(frame1.canvas, 0, 0);
+            const data1 = tempCtx1.getImageData(0, 0, frame1.width, frame1.height);
+
+            const tempCanvas2 = document.createElement('canvas');
+            tempCanvas2.width = frame2.width;
+            tempCanvas2.height = frame2.height;
+            const tempCtx2 = tempCanvas2.getContext('2d');
+            tempCtx2.drawImage(frame2.canvas, 0, 0);
+            const data2 = tempCtx2.getImageData(0, 0, frame2.width, frame2.height);
+
+            const interpolated = tempCtx1.createImageData(frame1.width, frame1.height);
+            for (let i = 0; i < data1.data.length; i += 4) {
+                interpolated.data[i] = data1.data[i] + (data2.data[i] - data1.data[i]) * progress;
+                interpolated.data[i + 1] = data1.data[i + 1] + (data2.data[i + 1] - data1.data[i + 1]) * progress;
+                interpolated.data[i + 2] = data1.data[i + 2] + (data2.data[i + 2] - data1.data[i + 2]) * progress;
+                interpolated.data[i + 3] = data1.data[i + 3];
+            }
+            tempCtx1.putImageData(interpolated, 0, 0);
+            ctx.drawImage(tempCanvas1, 0, 0, width, height);
+        } else {
+            ctx.drawImage(frame1.canvas, 0, 0, width, height);
+        }
+
+        return canvas;
+    }
+
+    function downloadGif() {
+        if (!generatedExportGifBlob) return;
+
+        const groupIndex = selectedGroupIndices[currentGifSlot];
+        const group = textureGroups[groupIndex];
+        const filename = group.name.replace('.png', '.gif');
+
+        const url = URL.createObjectURL(generatedExportGifBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+
+    updateViewers();
+    updateMcmeta();
+    setViewMode(1);
+
+    setTimeout(() => {
+        setTimingMode('frametime');
+    }, 100);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const gifModal = document.getElementById('gifModal');
+            const editorModal = document.getElementById('editorModal');
+
+            if (gifModal && gifModal.classList.contains('active')) {
+                closeGifModal();
+            } else if (editorModal && editorModal.classList.contains('active')) {
+                closeEditorModal();
+            }
+        }
+    });
+
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast ${type} show`;
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    let currentEditorIndex = null;
+
+    function openTextureEditor(index) {
+        currentEditorIndex = index;
+        const group = textureGroups[index];
+        if (!group) return;
+
+        document.getElementById('editFrameWidth').value = group.frameWidth;
+        document.getElementById('editFrameHeight').value = group.frameHeight;
+        document.getElementById('editorOriginalDim').textContent = `${group.originalWidth}x${group.originalHeight}px`;
+
+        renderEditorFrames(group.frames);
+
+        document.getElementById('editorModal').classList.add('active');
+    }
+
+    function closeEditorModal() {
+        document.getElementById('editorModal').classList.remove('active');
+        currentEditorIndex = null;
+    }
+
+    function renderEditorFrames(frames) {
+        const container = document.getElementById('editorFrameGrid');
+        container.innerHTML = '';
+
+        frames.forEach((frame, idx) => {
+            const div = document.createElement('div');
+            div.className = 'editor-frame-card';
+            div.draggable = true;
+            div.dataset.index = idx;
+
+            const canvas = document.createElement('canvas');
+            const maxPreviewSize = 100;
+            const scale = Math.min(maxPreviewSize / frame.width, maxPreviewSize / frame.height);
+            canvas.width = frame.width * scale;
+            canvas.height = frame.height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(frame.canvas, 0, 0, canvas.width, canvas.height);
+
+            const label = document.createElement('span');
+            label.style.fontSize = '10px';
+            label.style.color = '#888';
+            label.textContent = `#${idx}${frame.isCustom ? ' (Custom)' : ''}`;
+            div.appendChild(label);
+
+            div.appendChild(canvas);
+
+            const btnContainer = document.createElement('div');
+            btnContainer.style.display = 'flex';
+            btnContainer.style.flexDirection = 'column';
+            btnContainer.style.gap = '5px';
+            btnContainer.style.width = '100%';
+
+            const extractBtn = document.createElement('button');
+            extractBtn.className = 'button button-secondary editor-frame-btn';
+            extractBtn.textContent = 'Extract';
+            extractBtn.onclick = () => extractFrameAsTexture(idx);
+            btnContainer.appendChild(extractBtn);
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'button button-secondary editor-frame-btn';
+            removeBtn.textContent = 'Remove';
+            removeBtn.onclick = () => removeFrame(idx);
+            btnContainer.appendChild(removeBtn);
+
+            div.appendChild(btnContainer);
+
+            container.appendChild(div);
+        });
+
+        if (container.children.length > 0) {
+            Sortable.create(container, {
+                animation: 150,
+                ghostClass: 'dragging',
+                onEnd: function(evt) {
+                    if (currentEditorIndex === null) return;
+                    const group = textureGroups[currentEditorIndex];
+
+                    const items = Array.from(container.querySelectorAll('.editor-frame-card'));
+                    const newOrder = items.map(item => parseInt(item.dataset.index));
+                    const reorderedFrames = newOrder.map(oldIdx => group.frames[oldIdx]);
+                    group.frames = reorderedFrames;
+
+                    renderEditorFrames(group.frames);
+                    updateTextureGrid();
+                    updateViewers();
+                    updateMcmeta();
+                    showToast('Frames reordered', 'success');
+                }
+            });
+        }
+    }
+
+    function previewReframe() {
+        // did not feel like it
+    }
+
+    function applyReframe() {
+        if (currentEditorIndex === null) return;
+
+        const group = textureGroups[currentEditorIndex];
+        const newW = parseInt(document.getElementById('editFrameWidth').value);
+        const newH = parseInt(document.getElementById('editFrameHeight').value);
+
+        if (!newW || !newH || newW <= 0 || newH <= 0) {
+            showToast('Invalid dimensions', 'error');
+            return;
+        }
+
+        const img = group.sourceImage;
+
+        const savedMcmetaSettings = { ...group.mcmetaSettings };
+
+        const cols = Math.floor(img.width / newW);
+        const rows = Math.floor(img.height / newH);
+        const sourceFrameMap = new Map();
+
+        const oldFrameHeight = group.frameHeight;
+
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+                const canvas = document.createElement('canvas');
+                canvas.width = newW;
+                canvas.height = newH;
+                const ctx = canvas.getContext('2d');
+                ctx.imageSmoothingEnabled = false;
+
+                ctx.drawImage(
+                    img,
+                    x * newW, y * newH, newW, newH,
+                    0, 0, newW, newH
+                );
+
+                const yPixel = y * newH;
+                const originalIndex = Math.floor(yPixel / oldFrameHeight);
+
+                if (!sourceFrameMap.has(originalIndex)) {
+                    sourceFrameMap.set(originalIndex, []);
+                }
+
+                sourceFrameMap.get(originalIndex).push({
+                    canvas: canvas,
+                    width: newW,
+                    height: newH,
+                    isCustom: false,
+                    originalSourceIndex: originalIndex
+                });
+            }
+        }
+
+        if (sourceFrameMap.size === 0) {
+            showToast('Dimensions too large for image', 'error');
+            return;
+        }
+
+        function sliceCustomFrame(customFrame, frameWidth, frameHeight) {
+            const frames = [];
+            const cols = Math.floor(customFrame.canvas.width / frameWidth);
+            const rows = Math.floor(customFrame.canvas.height / frameHeight);
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = frameWidth;
+                    canvas.height = frameHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.imageSmoothingEnabled = false;
+
+                    ctx.drawImage(
+                        customFrame.canvas,
+                        x * frameWidth, y * frameHeight, frameWidth, frameHeight,
+                        0, 0, frameWidth, frameHeight
+                    );
+
+                    frames.push({
+                        canvas: canvas,
+                        width: frameWidth,
+                        height: frameHeight,
+                        isCustom: true
+                    });
+                }
+            }
+            return frames;
+        }
+
+        const newFrames = [];
+        const insertedIndices = new Set();
+
+        for (let i = 0; i < group.frames.length; i++) {
+            const currentFrame = group.frames[i];
+
+            if (currentFrame.isCustom) {
+                const slicedCustomFrames = sliceCustomFrame(currentFrame, newW, newH);
+                newFrames.push(...slicedCustomFrames);
+            } else {
+                const originalIndex = currentFrame.originalSourceIndex;
+                if (sourceFrameMap.has(originalIndex) && !insertedIndices.has(originalIndex)) {
+                    const newVersions = sourceFrameMap.get(originalIndex);
+                    newFrames.push(...newVersions);
+                    insertedIndices.add(originalIndex);
+                }
+            }
+        }
+
+        sourceFrameMap.forEach((frames, originalIndex) => {
+            if (!insertedIndices.has(originalIndex)) {
+                newFrames.push(...frames);
+            }
+        });
+
+        group.frames = newFrames;
+        group.frameWidth = newW;
+        group.frameHeight = newH;
+        group.isAnimated = newFrames.length > 1;
+        group.mcmetaSettings = savedMcmetaSettings;
+
+        renderEditorFrames(newFrames);
+        updateTextureGrid();
+        updateViewers();
+        updateMcmeta();
+
+        const customCount = newFrames.filter(f => f.isCustom).length;
+        showToast(`Reframed to ${newFrames.length} frames (${customCount} custom)`, 'success');
+    }
+
+    function extractFrameAsTexture(frameIdx) {
+        if (currentEditorIndex === null) return;
+        const parentGroup = textureGroups[currentEditorIndex];
+        const frame = parentGroup.frames[frameIdx];
+
+        const newCanvas = document.createElement('canvas');
+        newCanvas.width = frame.width;
+        newCanvas.height = frame.height;
+        const ctx = newCanvas.getContext('2d');
+        ctx.drawImage(frame.canvas, 0, 0);
+
+        const newName = `${parentGroup.name}_frame${frameIdx}`;
+        const sourceImg = new Image();
+        sourceImg.src = newCanvas.toDataURL();
+
+        textureGroups.push({
+            name: newName,
+            sourceImage: sourceImg,
+            frames: [{
+                canvas: newCanvas,
+                width: frame.width,
+                height: frame.height,
+                isCustom: false,
+                originalSourceIndex: 0
+            }],
+            isAnimated: false,
+            originalWidth: frame.width,
+            originalHeight: frame.height,
+            frameWidth: frame.width,
+            frameHeight: frame.height,
+            mcmetaSettings: { frametime: 8, fps: 2.5, interpolate: false, customFrames: '' }
+        });
+
+        parentGroup.frames.splice(frameIdx, 1);
+
+        if (parentGroup.frames.length === 0) {
+            showToast('Cannot extract the last frame!', 'error');
+            parentGroup.frames.push(frame);
+            return;
+        }
+
+        parentGroup.isAnimated = parentGroup.frames.length > 1;
+
+        renderEditorFrames(parentGroup.frames);
+        updateTextureGrid();
+        updateViewers();
+        updateMcmeta();
+        showToast(`Extracted ${newName}`, 'success');
+    }
+
+    function removeFrame(frameIdx) {
+        if (currentEditorIndex === null) return;
+        const parentGroup = textureGroups[currentEditorIndex];
+
+        if (parentGroup.frames.length <= 1) {
+            showToast('Cannot remove the last frame!', 'error');
+            return;
+        }
+
+        parentGroup.frames.splice(frameIdx, 1);
+
+        parentGroup.isAnimated = parentGroup.frames.length > 1;
+
+        renderEditorFrames(parentGroup.frames);
+        updateTextureGrid();
+        updateViewers();
+        updateMcmeta();
+        showToast('Frame removed', 'success');
+    }
+
+    function downloadModifiedTexture() {
+        if (currentEditorIndex === null) return;
+        const group = textureGroups[currentEditorIndex];
+
+        const stripCanvas = document.createElement('canvas');
+        stripCanvas.width = group.frameWidth;
+        stripCanvas.height = group.frameHeight * group.frames.length;
+        const ctx = stripCanvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+
+        group.frames.forEach((frame, i) => {
+            ctx.drawImage(frame.canvas, 0, i * group.frameHeight);
+        });
+
+        const link = document.createElement('a');
+        link.download = `modified_${group.name}.png`;
+        link.href = stripCanvas.toDataURL('image/png');
+        link.click();
+    }
+
+    function showAddFrameFromTexture() {
+        const selector = document.getElementById('addFrameTextureSelector');
+        if (selector.style.display === 'none') {
+            selector.style.display = 'block';
+            populateAddFrameTextureList();
+        } else {
+            selector.style.display = 'none';
+        }
+    }
+
+    function populateAddFrameTextureList() {
+        const list = document.getElementById('addFrameTextureList');
+        list.innerHTML = '';
+
+        textureGroups.forEach((group, idx) => {
+            if (idx === currentEditorIndex) return;
+
+            const item = document.createElement('div');
+            item.style.cssText = 'padding: 8px; cursor: pointer; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 8px;';
+            item.onmouseover = () => item.style.background = '#2a2a2a';
+            item.onmouseout = () => item.style.background = 'transparent';
+            item.onclick = () => addFrameFromTexture(idx);
+
+            const preview = document.createElement('canvas');
+            preview.width = 32;
+            preview.height = 32;
+            preview.style.cssText = 'border: 1px solid #3a3a3a; image-rendering: pixelated;';
+            const ctx = preview.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(group.frames[0].canvas, 0, 0, 32, 32);
+
+            const name = document.createElement('span');
+            name.textContent = group.name;
+            name.style.cssText = 'color: #e6e6e6; font-size: 11px;';
+
+            item.appendChild(preview);
+            item.appendChild(name);
+            list.appendChild(item);
+        });
+    }
+
+    function filterAddFrameTextures() {
+        const search = document.getElementById('addFrameSearch').value.toLowerCase();
+        const items = document.querySelectorAll('#addFrameTextureList > div');
+
+        items.forEach(item => {
+            const name = item.querySelector('span').textContent.toLowerCase();
+            item.style.display = name.includes(search) ? 'flex' : 'none';
+        });
+    }
+
+    function addFrameFromTexture(sourceIdx) {
+        if (currentEditorIndex === null) return;
+        const currentGroup = textureGroups[currentEditorIndex];
+        const sourceGroup = textureGroups[sourceIdx];
+        const sourceFrame = sourceGroup.frames[0];
+        const newCanvas = document.createElement('canvas');
+        newCanvas.width = sourceFrame.width;
+        newCanvas.height = sourceFrame.height;
+        const ctx = newCanvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(sourceFrame.canvas, 0, 0);
+
+        currentGroup.frames.push({
+            canvas: newCanvas,
+            width: sourceFrame.width,
+            height: sourceFrame.height,
+            isCustom: true,
+            originalSourceIndex: currentGroup.frames.length
+        });
+
+        currentGroup.isAnimated = currentGroup.frames.length > 1;
+        renderEditorFrames(currentGroup.frames);
+        updateTextureGrid();
+        updateViewers();
+        updateMcmeta();
+        showToast(`Added frame from ${sourceGroup.name}`, 'success');
+
+        document.getElementById('addFrameTextureSelector').style.display = 'none';
+    }
+
+    function addFrameFromFile(event) {
+        if (currentEditorIndex === null) return;
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const currentGroup = textureGroups[currentEditorIndex];
+
+                const newCanvas = document.createElement('canvas');
+                newCanvas.width = img.width;
+                newCanvas.height = img.height;
+                const ctx = newCanvas.getContext('2d');
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(img, 0, 0);
+
+                currentGroup.frames.push({
+                    canvas: newCanvas,
+                    width: img.width,
+                    height: img.height,
+                    isCustom: true,
+                    originalSourceIndex: currentGroup.frames.length
+                });
+
+                currentGroup.isAnimated = currentGroup.frames.length > 1;
+                renderEditorFrames(currentGroup.frames);
+                updateTextureGrid();
+                updateViewers();
+                updateMcmeta();
+                showToast('Frame added from file', 'success');
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        event.target.value = '';
+    }
+
+
+</script>
+
+<div class="modal-overlay" id="gifModal" onclick="if(event.target === this) closeGifModal()">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeGifModal()">×</button>
+        <div class="modal-header">Export Animation as GIF</div>
+
+        <div class="gif-settings">
+            <div class="gif-setting-row dimension-row">
+                <div>
+                    <label class="gif-setting-label">Width (pixels)</label>
+                    <input type="number" class="gif-setting-input" id="gifWidth" value="128" min="1" max="2048">
+                </div>
+                <div>
+                    <label class="gif-setting-label">Height (pixels)</label>
+                    <input type="number" class="gif-setting-input" id="gifHeight" value="128" min="1" max="2048">
+                </div>
+            </div>
+            <div class="gif-setting-row">
+                <label class="gif-setting-label">Recording FPS (smoothness)</label>
+                <input type="number" class="gif-setting-input" id="gifRecordingFps" value="50" min="1" max="50" step="1">
+            </div>
+        </div>
+
+        <div class="gif-status" id="gifStatus">Click "Generate GIF" to create animation</div>
+
+        <div class="gif-preview" id="gifPreview" style="display: none;">
+            <img id="gifPreviewImage" src="" alt="GIF Preview">
+        </div>
+
+        <div class="modal-buttons">
+            <button class="button" onclick="generateGif()" id="generateBtn">Generate GIF</button>
+            <button class="button" onclick="downloadGif()" id="downloadBtn" style="display: none;">Download GIF</button>
+            <button class="button button-secondary" onclick="closeGifModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="editorModal" onclick="if(event.target === this) closeEditorModal()">
+    <div class="modal-content" style="max-width: 900px; width: 95%;">
+        <button class="modal-close" onclick="closeEditorModal()">×</button>
+        <div class="modal-header">Texture Editor</div>
+
+        <div class="editor-grid-container">
+            <div class="editor-controls">
+                <h3 style="color: #3453df; font-family: 'Minecraft Ten'; font-size: 16px;">Reframe Source</h3>
+                <p style="font-size: 12px; color: #888; margin-bottom: 8px;">
+                    Change how the original image is sliced. Use this for spritesheets or non-square frames.
+                </p>
+                <p style="font-size: 12px; color: #a0a0a0; margin-bottom: 5px;">
+                    Note: Reframing resets custom order of frames and adds back extracted textures.
+                </p>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 3px;">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Frame Width</label>
+                        <input type="number" id="editFrameWidth" onchange="previewReframe()">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Frame Height</label>
+                        <input type="number" id="editFrameHeight" onchange="previewReframe()">
+                    </div>
+                </div>
+
+                <div style="font-size: 10px; color: #a0a0a0; margin-bottom: 5px;">
+                    Original: <span id="editorOriginalDim"></span>
+                </div>
+
+                <button class="button" onclick="applyReframe()" style="margin-bottom: 8px;">Apply Reframe</button>
+
+                <hr style="border: 0; border-top: 1px solid #3a3a3a; margin: 5px 0;">
+
+                <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                    <button class="button" style="flex: 1; font-size: 10px; padding: 6px;" onclick="showAddFrameFromTexture()">+ Texture</button>
+                    <button class="button" style="flex: 1; font-size: 10px; padding: 6px;" onclick="document.getElementById('addFrameFileInput').click()">+ File</button>
+                </div>
+                <input type="file" id="addFrameFileInput" accept="image/png" style="display: none;" onchange="addFrameFromFile(event)">
+
+                <div id="addFrameTextureSelector" style="display: none; margin-bottom: 5px;">
+                    <input type="text" id="addFrameSearch" placeholder="Search..."
+                           style="width: 100%; padding: 4px; background: #1a1a1a; border: 1px solid #3a3a3a; color: #e6e6e6; font-size: 10px; margin-bottom: 5px;"
+                           oninput="filterAddFrameTextures()">
+                    <div id="addFrameTextureList" style="max-height: 150px; overflow-y: auto; background: #0a0a0a; border: 1px solid #3a3a3a; padding: 3px;">
+                    </div>
+                </div>
+
+                <button class="button button-secondary" style="font-size: 10px; padding: 6px; width: 100%;" onclick="downloadModifiedTexture()">Download Strip (.png)</button>
+            </div>
+
+            <div class="editor-preview-scroll" id="editorFrameGrid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+</body>
+</html>
