@@ -3610,15 +3610,9 @@ width: 120px;
             }
         };
     }
-    // ============ POSITIONAL UV ATLAS FOR MERGED MESHES ============
-    /**
-     * Creates a texture atlas for a single merged rectangular mesh face.
-     * The atlas contains all block textures at their exact positions.
-     */
     async function createMeshAtlas(mesh, blocks, palette, allZips) {
         const { pos, size: meshSize, face, dim } = mesh;
 
-        // Determine atlas dimensions based on the face direction
         let atlasWidth, atlasHeight;
         switch(face) {
             case 'north':
@@ -3645,18 +3639,14 @@ width: 120px;
         ctx.imageSmoothingEnabled = false;
         ctx.clearRect(0, 0, atlasWidth, atlasHeight);
 
-        // Find all blocks that contribute to this mesh face
         const relevantBlocks = [];
 
         for (const block of blocks) {
             const blockPos = block.pos || [0, 0, 0];
 
-            // Check if this block is within the mesh bounds
             let inBounds = false;
 
-            // Block must be at the correct depth position for this face
             if (blockPos[dim] === pos[dim]) {
-                // Check if block is within the 2D rectangle
                 const axes = [0, 1, 2].filter(i => i !== dim);
                 const u = axes[0];
                 const v = axes[1];
@@ -3672,7 +3662,6 @@ width: 120px;
             }
         }
 
-        // Draw each block's texture at its position in the atlas
         for (const block of relevantBlocks) {
             const blockPos = block.pos || [0, 0, 0];
             const stateIndex = block.state || 0;
@@ -3695,7 +3684,6 @@ width: 120px;
 
             let textures = resolveTextures(modelData);
 
-            // Get texture for this specific face
             const mcElement = modelData.elements?.[0];
             if (!mcElement) continue;
 
@@ -3716,11 +3704,9 @@ width: 120px;
             const tex = await findTexture(texturePath, allZips);
             if (!tex) continue;
 
-            // Load texture image
             const blob = await tex.file.async('blob');
             const img = await createImageBitmap(blob);
 
-            // Calculate position in atlas (relative to mesh origin)
             let atlasX, atlasY;
 
             switch(face) {
@@ -3741,11 +3727,9 @@ width: 120px;
                     break;
             }
 
-            // Draw the texture (handle potential animation frames by using first frame)
             ctx.drawImage(img, atlasX, atlasY, 16, 16);
         }
 
-        // Convert canvas to blob
         const atlasBlob = await new Promise(resolve => {
             canvas.toBlob(blob => resolve(blob), 'image/png');
         });
@@ -3753,14 +3737,8 @@ width: 120px;
         return atlasBlob;
     }
 
-    // ============ GREEDY MESHING ALGORITHM ============
-    /**
-     * Greedy meshing algorithm to merge adjacent blocks with same texture into larger quads
-     * This dramatically reduces the number of cubes for large structures
-     */
     async function createOptimizedMesh(blocks, palette, size, allZips) {
-        // First pass: identify which blocks are simple cubes vs complex models
-        const blockComplexity = new Map(); // blockName -> isSimpleCube
+        const blockComplexity = new Map();
 
         for (const block of blocks) {
             const stateIndex = block.state || 0;
@@ -3786,7 +3764,6 @@ width: 120px;
 
             const modelData = await resolveModel(variant.model, allZips);
             if (!modelData || !modelData.elements || modelData.elements.length !== 1) {
-                // Complex model (multiple elements or no elements)
                 blockComplexity.set(blockName, false);
                 continue;
             }
@@ -3795,14 +3772,12 @@ width: 120px;
             const from = element.from || [0, 0, 0];
             const to = element.to || [16, 16, 16];
 
-            // Check if it's a full cube
             const isFullCube = from[0] === 0 && from[1] === 0 && from[2] === 0 &&
                                to[0] === 16 && to[1] === 16 && to[2] === 16;
 
             blockComplexity.set(blockName, isFullCube);
         }
 
-        // Create a 3D grid to store block data
         const grid = new Array(size[0]);
         for (let x = 0; x < size[0]; x++) {
             grid[x] = new Array(size[1]);
@@ -3811,7 +3786,6 @@ width: 120px;
             }
         }
 
-        // Populate grid with block data
         for (const block of blocks) {
             const pos = block.pos || [0, 0, 0];
             const stateIndex = block.state || 0;
@@ -3829,7 +3803,6 @@ width: 120px;
             };
         }
 
-        // Track which voxels have been processed
         const processed = new Array(size[0]);
         for (let x = 0; x < size[0]; x++) {
             processed[x] = new Array(size[1]);
@@ -3840,7 +3813,6 @@ width: 120px;
 
         const meshes = [];
 
-        // Process each axis (X, Y, Z) and each direction (positive, negative)
         const axes = [
             { dim: 0, u: 1, v: 2, normal: [1, 0, 0], face: 'east', oppFace: 'west' },   // +X
             { dim: 0, u: 1, v: 2, normal: [-1, 0, 0], face: 'west', oppFace: 'east' },  // -X
@@ -3854,15 +3826,12 @@ width: 120px;
             const { dim, u, v, normal, face, oppFace } = axis;
             const positive = normal[dim] > 0;
 
-            // Sweep along the dimension
             for (let d = 0; d < size[dim]; d++) {
-                // Create a mask for this slice
                 const mask = new Array(size[u]);
                 for (let i = 0; i < size[u]; i++) {
                     mask[i] = new Array(size[v]).fill(null);
                 }
 
-                // Build the mask
                 for (let i = 0; i < size[u]; i++) {
                     for (let j = 0; j < size[v]; j++) {
                         const pos = [0, 0, 0];
@@ -3873,16 +3842,14 @@ width: 120px;
                         const [x, y, z] = pos;
                         const block = grid[x]?.[y]?.[z];
 
-                        if (!block || !block.isSimpleCube) continue; // Only merge simple cubes
+                        if (!block || !block.isSimpleCube) continue;
 
-                        // Check if this face should be rendered
                         const neighborPos = [x, y, z];
                         neighborPos[dim] += positive ? 1 : -1;
 
                         const [nx, ny, nz] = neighborPos;
                         const neighbor = grid[nx]?.[ny]?.[nz];
 
-                        // Only render if neighbor is air or out of bounds
                         if (!neighbor || (nx < 0 || ny < 0 || nz < 0 || nx >= size[0] || ny >= size[1] || nz >= size[2])) {
                             mask[i][j] = {
                                 blockName: block.name,
@@ -3893,14 +3860,12 @@ width: 120px;
                     }
                 }
 
-                // Generate meshes from mask using greedy algorithm
                 for (let i = 0; i < size[u]; i++) {
                     for (let j = 0; j < size[v]; j++) {
                         if (!mask[i][j]) continue;
 
                         const blockData = mask[i][j];
 
-                        // Compute width (along u axis)
                         let width = 1;
                         while (i + width < size[u] &&
                                mask[i + width][j] &&
@@ -3909,7 +3874,6 @@ width: 120px;
                             width++;
                         }
 
-                        // Compute height (along v axis)
                         let height = 1;
                         let done = false;
                         while (j + height < size[v] && !done) {
@@ -3924,7 +3888,6 @@ width: 120px;
                             if (!done) height++;
                         }
 
-                        // Create the merged quad
                         const quadPos = [0, 0, 0];
                         quadPos[dim] = d;
                         quadPos[u] = i;
@@ -3941,10 +3904,9 @@ width: 120px;
                             blockName: blockData.blockName,
                             properties: blockData.properties,
                             normal: normal,
-                            dim: dim  // Store which dimension this face is perpendicular to
+                            dim: dim
                         });
 
-                        // Clear the mask for processed area
                         for (let di = 0; di < width; di++) {
                             for (let dj = 0; dj < height; dj++) {
                                 mask[i + di][j + dj] = null;
@@ -3968,7 +3930,7 @@ width: 120px;
         const blockTypeCounts = {};
         const usedTexturesLocal = new Map();
         const blockTypeToTextureLocal = new Map();
-        const atlasTextures = []; // Store atlas blobs for packaging
+        const atlasTextures = [];
 
         updateProgress(35, `Optimizing ${meshes.length} merged faces...`);
         await new Promise(resolve => setTimeout(resolve, 50));
@@ -3976,23 +3938,19 @@ width: 120px;
         let processedMeshes = 0;
         let atlasIndex = 0;
 
-        // Process merged meshes with positional atlases
         for (const mesh of meshes) {
             try {
                 const { pos, size: meshSize, face, blockName, properties, dim } = mesh;
 
-                // Create positional atlas for this merged mesh
                 const atlasBlob = await createMeshAtlas(mesh, blocks, palette, allZips);
                 const atlasPath = `atlas_${atlasIndex}`;
                 atlasTextures.push({ path: atlasPath, blob: atlasBlob });
                 atlasIndex++;
 
-                // Store this "texture" for later use
                 usedTexturesLocal.set(atlasPath, { file: { async: async () => atlasBlob }, blob: atlasBlob });
 
                 const simpleName = blockName.replace(/^[^:]+:/, '');
 
-                // Track first texture found for this block type
                 if (!blockTypeToTextureLocal.has(simpleName)) {
                     blockTypeToTextureLocal.set(simpleName, atlasPath);
                 }
@@ -4010,7 +3968,6 @@ width: 120px;
                 blockTypeCounts[simpleName]++;
                 const blockNumber = blockTypeCounts[simpleName];
 
-                // Create blockbench element as a rectangular prism
                 const from = [pos[0] * 16, pos[1] * 16, pos[2] * 16];
                 const to = [
                     (pos[0] + meshSize[0]) * 16,
@@ -4020,7 +3977,6 @@ width: 120px;
 
                 const bbFaces = {};
 
-                // Calculate UV coordinates - map to the entire atlas (0,0 to width,height)
                 let atlasWidth, atlasHeight;
                 switch(face) {
                     case 'north':
@@ -4040,7 +3996,6 @@ width: 120px;
                         break;
                 }
 
-                // UVs span the entire atlas
                 bbFaces[face] = {
                     texture: atlasPath,
                     uv: [0, 0, atlasWidth, atlasHeight]
@@ -4072,7 +4027,6 @@ width: 120px;
         updateProgress(60, 'Processing complex blocks...');
         await new Promise(resolve => setTimeout(resolve, 50));
 
-        // Process complex blocks (stairs, slabs, etc.) individually with original conversion
         let processedComplex = 0;
         const complexBlocks = blocks.filter(block => {
             const stateIndex = block.state || 0;
@@ -4111,7 +4065,6 @@ width: 120px;
                 blockTypeCounts[simpleName]++;
                 const blockNumber = blockTypeCounts[simpleName];
 
-                // Process each variant (original code for individual blocks)
                 for (let partIndex = 0; partIndex < variants.length; partIndex++) {
                     const variant = variants[partIndex];
                     const modelData = variant ? await resolveModel(variant.model, allZips) : null;
@@ -4366,7 +4319,6 @@ width: 120px;
             updateProgress(30, 'Analyzing structure...');
             await new Promise(resolve => setTimeout(resolve, 100));
 
-            // Check if greedy meshing is enabled
             const useGreedyMesh = document.getElementById('greedyMeshCheckbox')?.checked || false;
 
             const blockbenchModel = {
@@ -4392,10 +4344,9 @@ width: 120px;
 
             usedTextures = new Map();
             let blockTypeToTexture = new Map();
-            let atlasTextures = []; // For optimized mode
+            let atlasTextures = [];
 
             if (useGreedyMesh) {
-                // Use optimized greedy meshing
                 showToast('Using mesh optimization...', 'info', { duration: 2000 });
                 const optimizedResult = await convertStructureOptimized(blocks, palette, size, allZips);
                 blockbenchModel.elements = optimizedResult.elements;
@@ -4404,7 +4355,6 @@ width: 120px;
                 blockTypeToTexture = optimizedResult.blockTypeToTexture;
                 atlasTextures = optimizedResult.atlasTextures || [];
             } else {
-                // Use original block-by-block conversion
                 const blockGroups = {};
                 const blockTypeCounts = {};
                 let processedBlocks = 0;
@@ -4586,7 +4536,7 @@ for (let partIndex = 0; partIndex < variants.length; partIndex++) {
                 }
             }
             blockbenchModel.groups = Object.values(blockGroups);
-            } // End of else block for non-optimized conversion
+            }
 
             blockbenchModel.outliner = blockbenchModel.groups.map((_, i) => i);
             blockbenchModel.textures = [];
@@ -4596,7 +4546,6 @@ for (let partIndex = 0; partIndex < variants.length; partIndex++) {
             outputZip.file(`${structureName}.json`, JSON.stringify(blockbenchModel, null, 2));
             let textureCount = 0;
 
-            // Package atlas textures (from optimized mode)
             for (const atlas of atlasTextures) {
                 try {
                     outputZip.file(`generated_atlases/${atlas.path}.png`, atlas.blob);
@@ -4606,10 +4555,8 @@ for (let partIndex = 0; partIndex < variants.length; partIndex++) {
                 }
             }
 
-            // Package regular textures
             for (const [path, tex] of usedTextures) {
                 try {
-                    // Skip atlas textures (they're already packaged above)
                     if (path.startsWith('atlas_')) continue;
 
                     const blob = await tex.file.async('blob');
@@ -5152,19 +5099,16 @@ if (faceData.uv) {
     let u2 = uv[2] / 16;
     let v2 = uv[3] / 16;
 
-    // Handle UV rotation (0, 90, 180, 270 degrees)
     const rotation = faceData.rotation || 0;
 
     if (uvAttr && uvAttr.array.length > faceUVIndex * 2 + 7) {
-        // Default UV coordinates for each corner (before rotation)
         let corners = [
-            [u1, v1], // bottom-left
-            [u2, v1], // bottom-right
+            [u1, v1],
+            [u2, v1],
             [u1, v2],
             [u2, v2]
         ];
 
-        // Rotate UV coordinates
         if (rotation === 90) {
             corners = [
                 [u1, v2],
