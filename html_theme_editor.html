@@ -852,6 +852,191 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             margin-top: 5px;
         }
 
+        .theme-mapping-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 8px 0 10px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #1a1a1a;
+            user-select: none;
+        }
+
+        .theme-mapping-header:hover .theme-mapping-caret {
+            color: #5a73ff;
+        }
+
+        .theme-mapping-preview {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow: hidden;
+        }
+
+        .theme-mapping-swatch {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .theme-mapping-arrow-icon {
+            color: #555;
+            font-size: 12px;
+        }
+
+        .theme-mapping-preview-label {
+            font-size: 11px;
+            color: #777;
+            font-family: 'Courier New', monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+
+        .theme-mapping-caret {
+            font-size: 11px;
+            color: #3453df;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .theme-mapping-caret.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .theme-mapping-body {
+            overflow: hidden;
+            transition: max-height 0.25s ease, opacity 0.25s ease;
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        .theme-mapping-body.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .color-picker-dropdown-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .color-picker-dropdown-btn {
+            width: 100%;
+            padding: 8px 10px;
+            background: #1a1a1a;
+            border: 2px solid #0a0a0a;
+            color: #e6e6e6;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 6px;
+            transition: border-color 0.15s;
+        }
+
+        .color-picker-dropdown-btn:hover {
+            border-color: #3453df;
+        }
+
+        .color-picker-dropdown-btn .btn-swatch {
+            width: 22px;
+            height: 22px;
+            border: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .color-picker-dropdown-btn .btn-caret {
+            margin-left: auto;
+            font-size: 10px;
+            color: #888;
+        }
+
+        .color-picker-dropdown-menu {
+            position: absolute;
+            top: calc(100% - 4px);
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border: 2px solid #3453df;
+            z-index: 9999;
+            max-height: 260px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+        }
+
+        .color-picker-dropdown-menu.open {
+            display: block;
+        }
+
+        .color-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+            font-size: 13px;
+            color: #e6e6e6;
+            font-family: 'Courier New', monospace;
+        }
+
+        .color-dropdown-item:hover {
+            background: #2a2a2a;
+        }
+
+        .color-dropdown-item.selected {
+            background: #1e2a50;
+            color: #7a93ff;
+        }
+
+        .color-dropdown-item .item-swatch {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .color-dropdown-item .item-label {
+            flex: 1;
+        }
+
+        .color-dropdown-item .item-usage {
+            font-size: 11px;
+            color: #666;
+            margin-left: auto;
+        }
+
+        .color-dropdown-divider {
+            height: 1px;
+            background: #2a2a2a;
+            margin: 2px 0;
+        }
+
+        .color-dropdown-custom-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #111;
+            border-bottom: 1px solid #2a2a2a;
+            cursor: pointer;
+            font-size: 13px;
+            color: #a0a0a0;
+        }
+
+        .color-dropdown-custom-row:hover {
+            background: #1a1a2a;
+            color: #e6e6e6;
+        }
+
         .theme-panel-actions {
             padding: 20px;
             background: #2e2e2e;
@@ -887,18 +1072,243 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
                 margin-left: 0;
             }
         }
+
+        .palette-fab-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: none;
+            user-select: none;
+            background: none;
+            padding: 0;
+            z-index: 200;
+        }
+
+        .palette-fab-left-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .palette-fab-right-outline {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 5;
+            transition: transform 0.15s ease;
+        }
+
+        .palette-fab-section {
+            flex: 1;
+            background: #48494a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 1px 1px 0 #6c6d6d, inset -1px -1px 0 #5b5c5c;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.15s ease;
+            margin: 0 2px;
+            margin-bottom: 0;
+            border-top: 2px solid #1e1e1e;
+        }
+
+        .palette-fab-dark-strip {
+            height: 8px;
+            background: #3b3c3c;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            margin: 0 2px;
+            margin-top: 0;
+        }
+
+        .palette-fab-bottom-outline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1e1e1e;
+            z-index: 5;
+        }
+
+        .palette-fab-shadow {
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #1a1a1a;
+            z-index: 1;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .palette-fab-text {
+            color: white;
+            font-size: 26px;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        .palette-fab-button.pressed .palette-fab-section {
+            transform: translateY(6px);
+        }
+
+        .palette-fab-button.pressed .palette-fab-left-outline,
+        .palette-fab-button.pressed .palette-fab-right-outline {
+            transform: translateY(6px);
+        }
+
+        .palette-fab-button.pressed .palette-fab-dark-strip,
+        .palette-fab-button.pressed .palette-fab-shadow {
+            transform: translateY(3px);
+            opacity: 0;
+        }
+
+        .palette-fab-button:hover .palette-fab-section {
+            background: #414242;
+        }
+
+        .palette-fab-button:hover .palette-fab-dark-strip {
+            background: #323333;
+        }
+
+        .palette-side-panel {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 350px;
+            background: #262626;
+            border-right: 3px solid #4a4a4a;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 2500;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .palette-side-panel.show {
+            transform: translateX(0);
+        }
+
+        .palette-side-panel-header {
+            background: #2e2e2e;
+            padding: 20px;
+            border-bottom: 2px solid #1a1a1a;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .palette-side-panel-title {
+            font-size: 18px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', sans-serif;
+        }
+
+        .palette-side-panel-close {
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 4px;
+        }
+
+        .palette-side-panel-close:hover {
+            color: #e6e6e6;
+        }
+
+        .palette-side-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .palette-side-panel-body .palette-input {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 2px solid #0a0a0a;
+            color: #e6e6e6;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .palette-side-panel-body .button-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .palette-side-panel-body .button-row .minecraft-button,
+        .palette-side-panel-body .button-row .minecraft-button.small {
+            width: 100%;
+        }
+
+        .palette-side-panel-subtitle {
+            font-size: 13px;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
 <div class="theme-panel" id="themePanel">
     <div class="theme-panel-header">
         <button class="theme-panel-close" onclick="closeThemePanel()">×</button>
-        <div class="theme-panel-title" id="themePanelTitle">Imported Theme</div>
-        <div class="theme-panel-subtitle" id="themePanelSubtitle">0 color mappings</div>
+        <div class="theme-panel-title" id="themePanelTitle">My Color Palette</div>
+        <div class="theme-panel-subtitle" id="themePanelSubtitle">Create or import a palette</div>
     </div>
     <div class="theme-panel-content" id="themePanelContent">
+        <div id="themePanelLanding">
+            <input type="text" class="palette-input" id="paletteSideName" placeholder="Palette name (e.g., 'Dark Theme')" value="My Color Palette" autocomplete="off" style="width:100%; margin-bottom:12px;">
+            <button class="minecraft-button small" onclick="createNewPalette()" style="width:100%; margin-bottom:10px;">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Create Palette</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+            <button class="minecraft-button small" onclick="document.getElementById('paletteInput').click()" style="width:100%;">
+                <div class="minecraft-button-left-outline"></div>
+                <div class="minecraft-button-right-outline"></div>
+                <div class="minecraft-button-section">
+                    <div class="minecraft-button-name">Import Palette</div>
+                </div>
+                <div class="minecraft-button-dark-strip"></div>
+                <div class="minecraft-button-bottom-outline"></div>
+                <div class="minecraft-button-shadow"></div>
+            </button>
+        </div>
+        <div id="themePanelMappings" style="display:none;"></div>
     </div>
-    <div class="theme-panel-actions">
+    <div class="theme-panel-actions" id="themePanelActions" style="display:none;">
         <button class="minecraft-button success" onclick="applyThemeToHTML()" style="width: 100%; margin-bottom: 10px;">
             <div class="minecraft-button-left-outline"></div>
             <div class="minecraft-button-right-outline"></div>
@@ -913,7 +1323,7 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
             <div class="minecraft-button-left-outline"></div>
             <div class="minecraft-button-right-outline"></div>
             <div class="minecraft-button-section">
-                <div class="minecraft-button-name">Export Modified Theme</div>
+                <div class="minecraft-button-name">Export Palette</div>
             </div>
             <div class="minecraft-button-dark-strip"></div>
             <div class="minecraft-button-bottom-outline"></div>
@@ -931,245 +1341,245 @@ input[type="text"]::-webkit-credentials-auto-fill-button {
     </div>
 </div>
 <div class="main-wrapper" id="mainWrapper">
-<div class="container">
-    <h1 class="page-title">HTML Style Editor</h1>
+    <div class="container">
+        <h1 class="page-title">HTML Style Editor</h1>
 
-    <div class="section">
-        <h2>Upload HTML File</h2>
-        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-            <div style="font-size: 48px; margin-bottom: 10px;">📄</div>
-            <div style="font-size: 18px; color: #3453df; margin-bottom: 5px;">Click or drag HTML file here</div>
-            <div style="font-size: 14px; color: #a0a0a0;">Supports .html files</div>
-        </div>
-        <input type="file" id="fileInput" accept=".html,.htm">
-        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #1a1a1a;">
-            <div style="font-size: 16px; color: #3453df; margin-bottom: 10px; font-family: 'Minecraft Ten', sans-serif;">Or Import from URL</div>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)"
-                       style="flex: 1; padding: 12px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 14px;" autocomplete="off">
-                <button class="minecraft-button small" onclick="loadFromURL()">
-                    <div class="minecraft-button-left-outline"></div>
-                    <div class="minecraft-button-right-outline"></div>
-                    <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Load URL</div>
-                    </div>
-                    <div class="minecraft-button-dark-strip"></div>
-                    <div class="minecraft-button-bottom-outline"></div>
-                    <div class="minecraft-button-shadow"></div>
-                </button>
+        <div class="section">
+            <h2>Upload HTML File</h2>
+            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                <div style="font-size: 48px; margin-bottom: 10px;">📄</div>
+                <div style="font-size: 18px; color: #3453df; margin-bottom: 5px;">Click or drag HTML file here</div>
+                <div style="font-size: 14px; color: #a0a0a0;">Supports .html files</div>
             </div>
-            <div style="margin-top: 10px; font-size: 12px; color: #888;">
-                Note: Due to CORS restrictions, some websites may not be accessible. Works best with sites that allow cross-origin requests. Connection errors may occur.
-            </div>
-        </div>
-    </div>
-
-    <div id="statsSection" style="display: none;">
-        <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-number" id="elementCount">0</div>
-                <div class="stat-label">Elements Found</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="colorCount">0</div>
-                <div class="stat-label">Colors Detected</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="uniqueColorCount">0</div>
-                <div class="stat-label">Unique Colors</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="modifiedCount">0</div>
-                <div class="stat-label">Modified</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section" id="bulkColorsSection" style="display: none;">
-        <div class="section-header">
-            <h2>Color Groups</h2>
-            <button class="collapse-toggle" onclick="toggleSection('bulkColors')">
-                <span id="bulkColorsToggle">▼ Collapse</span>
-            </button>
-        </div>
-        <div class="section-content" id="bulkColorsContent">
-            <div class="bulk-colors-note">
-                Editing one color updates all instances of that color across the entire file.
-            </div>
-            <div id="bulkColorList" class="color-grid"></div>
-        </div>
-    </div>
-
-    <!-- Add this new section in the container, after the bulkColorsSection and before the "Styled Elements" section -->
-    <div class="section theme-panel-mobile-section" id="themePanelMobileSection" style="display: none;">
-        <div class="section-header">
-            <h2>Imported Theme</h2>
-            <button class="collapse-toggle" onclick="toggleSection('themePanelMobile')">
-                <span id="themePanelMobileToggle">▼ Collapse</span>
-            </button>
-        </div>
-        <div class="section-content" id="themePanelMobileContent">
-            <div id="themePanelMobileContentInner"></div>
-            <div class="button-row" style="margin-top: 15px;">
-                <button class="minecraft-button success" onclick="applyThemeToHTML()" style="width: 100%;">
-                    <div class="minecraft-button-left-outline"></div>
-                    <div class="minecraft-button-right-outline"></div>
-                    <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Apply to Current HTML</div>
-                    </div>
-                    <div class="minecraft-button-dark-strip"></div>
-                    <div class="minecraft-button-bottom-outline"></div>
-                    <div class="minecraft-button-shadow"></div>
-                </button>
-            </div>
-            <div class="button-row">
-                <button class="minecraft-button small" onclick="exportModifiedTheme()" style="width: 100%;">
-                    <div class="minecraft-button-left-outline"></div>
-                    <div class="minecraft-button-right-outline"></div>
-                    <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Export Modified Theme</div>
-                    </div>
-                    <div class="minecraft-button-dark-strip"></div>
-                    <div class="minecraft-button-bottom-outline"></div>
-                    <div class="minecraft-button-shadow"></div>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-header">
-            <h2>Styled Elements</h2>
-            <button class="collapse-toggle" onclick="toggleSection('styledElements')">
-                <span id="styledElementsToggle">▼ Collapse</span>
-            </button>
-        </div>
-        <div class="section-content" id="styledElementsContent">
-            <div class="search-bar">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search by element selector or color (e.g., '.button' or '#3453df')..." oninput="filterElements()" autocomplete="off">
-            </div>
-            <div class="button-row" id="globalActions" style="display: none;">
-                <button class="minecraft-button small" onclick="collapseAll()">
-                    <div class="minecraft-button-left-outline"></div>
-                    <div class="minecraft-button-right-outline"></div>
-                    <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Collapse All</div>
-                    </div>
-                    <div class="minecraft-button-dark-strip"></div>
-                    <div class="minecraft-button-bottom-outline"></div>
-                    <div class="minecraft-button-shadow"></div>
-                </button>
-                <button class="minecraft-button small" onclick="expandAll()">
-                    <div class="minecraft-button-left-outline"></div>
-                    <div class="minecraft-button-right-outline"></div>
-                    <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Expand All</div>
-                    </div>
-                    <div class="minecraft-button-dark-strip"></div>
-                    <div class="minecraft-button-bottom-outline"></div>
-                    <div class="minecraft-button-shadow"></div>
-                </button>
-                <button class="minecraft-button small" onclick="resetAll()">
-                    <div class="minecraft-button-left-outline"></div>
-                    <div class="minecraft-button-right-outline"></div>
-                    <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Reset All</div>
-                    </div>
-                    <div class="minecraft-button-dark-strip"></div>
-                    <div class="minecraft-button-bottom-outline"></div>
-                    <div class="minecraft-button-shadow"></div>
-                </button>
-            </div>
-            <div id="elementList" class="element-list">
-                <div class="no-file-message">Upload an HTML file to begin editing styles</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section" id="downloadSection" style="display: none;">
-        <h2>Download & Palette</h2>
-        <div class="button-row">
-            <button class="minecraft-button success" onclick="downloadFile()">
-                <div class="minecraft-button-left-outline"></div>
-                <div class="minecraft-button-right-outline"></div>
-                <div class="minecraft-button-section">
-                    <div class="minecraft-button-name">Download Modified HTML</div>
+            <input type="file" id="fileInput" accept=".html,.htm">
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #1a1a1a;">
+                <div style="font-size: 16px; color: #3453df; margin-bottom: 10px; font-family: 'Minecraft Ten', sans-serif;">Or Import from URL</div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)"
+                           style="flex: 1; padding: 12px; background: #1a1a1a; border: 2px solid #0a0a0a; color: #e6e6e6; font-size: 14px;" autocomplete="off">
+                    <button class="minecraft-button small" onclick="loadFromURL()">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Load URL</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
                 </div>
-                <div class="minecraft-button-dark-strip"></div>
-                <div class="minecraft-button-bottom-outline"></div>
-                <div class="minecraft-button-shadow"></div>
-            </button>
-            <button class="minecraft-button" onclick="showPreview()">
-                <div class="minecraft-button-left-outline"></div>
-                <div class="minecraft-button-right-outline"></div>
-                <div class="minecraft-button-section">
-                    <div class="minecraft-button-name">Preview Changes</div>
+                <div style="margin-top: 10px; font-size: 12px; color: #888;">
+                    Note: Due to CORS restrictions, some websites may not be accessible. Works best with sites that allow cross-origin requests. Connection errors may occur.
                 </div>
-                <div class="minecraft-button-dark-strip"></div>
-                <div class="minecraft-button-bottom-outline"></div>
-                <div class="minecraft-button-shadow"></div>
-            </button>
+            </div>
         </div>
 
-        <div class="palette-section">
-            <h3 style="color: #3453df; font-family: 'Minecraft Ten', sans-serif; margin-bottom: 15px;">Color Palette</h3>
-            <input type="text" class="palette-input" id="paletteName" placeholder="Palette name (e.g., 'Dark Theme')" value="My Color Palette" autocomplete="off">
+        <div id="statsSection" style="display: none;">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number" id="elementCount">0</div>
+                    <div class="stat-label">Elements Found</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="colorCount">0</div>
+                    <div class="stat-label">Colors Detected</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="uniqueColorCount">0</div>
+                    <div class="stat-label">Unique Colors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="modifiedCount">0</div>
+                    <div class="stat-label">Modified</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="bulkColorsSection" style="display: none;">
+            <div class="section-header">
+                <h2>Color Groups</h2>
+                <button class="collapse-toggle" onclick="toggleSection('bulkColors')">
+                    <span id="bulkColorsToggle">▼ Collapse</span>
+                </button>
+            </div>
+            <div class="section-content" id="bulkColorsContent">
+                <div class="bulk-colors-note">
+                    Editing one color updates all instances of that color across the entire file.
+                </div>
+                <div id="bulkColorList" class="color-grid"></div>
+            </div>
+        </div>
+
+        <div class="section theme-panel-mobile-section" id="themePanelMobileSection" style="display: none;">
+            <div class="section-header">
+                <h2>Imported Theme</h2>
+                <button class="collapse-toggle" onclick="toggleSection('themePanelMobile')">
+                    <span id="themePanelMobileToggle">▼ Collapse</span>
+                </button>
+            </div>
+            <div class="section-content" id="themePanelMobileContent">
+                <div id="themePanelMobileContentInner"></div>
+                <div class="button-row" style="margin-top: 15px;">
+                    <button class="minecraft-button success" onclick="applyThemeToHTML()" style="width: 100%;">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Apply to Current HTML</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+                <div class="button-row">
+                    <button class="minecraft-button small" onclick="exportModifiedTheme()" style="width: 100%;">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Export Modified Theme</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Styled Elements</h2>
+                <button class="collapse-toggle" onclick="toggleSection('styledElements')">
+                    <span id="styledElementsToggle">▼ Collapse</span>
+                </button>
+            </div>
+            <div class="section-content" id="styledElementsContent">
+                <div class="search-bar">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search by element selector or color (e.g., '.button' or '#3453df')..." oninput="filterElements()" autocomplete="off">
+                </div>
+                <div class="button-row" id="globalActions" style="display: none;">
+                    <button class="minecraft-button small" onclick="collapseAll()">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Collapse All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button small" onclick="expandAll()">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Expand All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button small" onclick="resetAll()">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Reset All</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+                <div id="elementList" class="element-list">
+                    <div class="no-file-message">Upload an HTML file to begin editing styles</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="downloadSection" style="display: none;">
+            <h2>Download & Palette</h2>
             <div class="button-row">
-                <button class="minecraft-button small" onclick="exportPalette()">
+                <button class="minecraft-button success" onclick="downloadFile()">
                     <div class="minecraft-button-left-outline"></div>
                     <div class="minecraft-button-right-outline"></div>
                     <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Export Palette</div>
+                        <div class="minecraft-button-name">Download Modified HTML</div>
                     </div>
                     <div class="minecraft-button-dark-strip"></div>
                     <div class="minecraft-button-bottom-outline"></div>
                     <div class="minecraft-button-shadow"></div>
                 </button>
-                <button class="minecraft-button small" onclick="document.getElementById('paletteInput').click()">
+                <button class="minecraft-button" onclick="showPreview()">
                     <div class="minecraft-button-left-outline"></div>
                     <div class="minecraft-button-right-outline"></div>
                     <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">Import Palette</div>
-                    </div>
-                    <div class="minecraft-button-dark-strip"></div>
-                    <div class="minecraft-button-bottom-outline"></div>
-                    <div class="minecraft-button-shadow"></div>
-                </button>
-                <button class="minecraft-button small" onclick="reopenThemePanel()" id="reopenThemeBtn" style="display: none;">
-                    <div class="minecraft-button-left-outline"></div>
-                    <div class="minecraft-button-right-outline"></div>
-                    <div class="minecraft-button-section">
-                        <div class="minecraft-button-name">View Loaded Theme</div>
+                        <div class="minecraft-button-name">Preview Changes</div>
                     </div>
                     <div class="minecraft-button-dark-strip"></div>
                     <div class="minecraft-button-bottom-outline"></div>
                     <div class="minecraft-button-shadow"></div>
                 </button>
             </div>
-            <input type="file" id="paletteInput" accept=".json,.palette.json" style="display: none;">
+
+            <div class="palette-section">
+                <h3 style="color: #3453df; font-family: 'Minecraft Ten', sans-serif; margin-bottom: 15px;">Color Palette</h3>
+                <input type="text" class="palette-input" id="paletteName" placeholder="Palette name (e.g., 'Dark Theme')" value="My Color Palette" autocomplete="off">
+                <div class="button-row">
+                    <button class="minecraft-button small" onclick="exportPalette()">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Export Palette</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                    <button class="minecraft-button small" onclick="document.getElementById('paletteInput').click()">
+                        <div class="minecraft-button-left-outline"></div>
+                        <div class="minecraft-button-right-outline"></div>
+                        <div class="minecraft-button-section">
+                            <div class="minecraft-button-name">Import Palette</div>
+                        </div>
+                        <div class="minecraft-button-dark-strip"></div>
+                        <div class="minecraft-button-bottom-outline"></div>
+                        <div class="minecraft-button-shadow"></div>
+                    </button>
+                </div>
+                <input type="file" id="paletteInput" accept=".json,.palette.json" style="display: none;">
+            </div>
         </div>
     </div>
-</div>
 
-<div class="toast" id="toast"></div>
-
-<div class="processing-overlay" id="processingOverlay">
-    <div class="processing-box">
-        <div class="processing-text">Processing large file...</div>
-        <div class="processing-spinner"></div>
-        <div class="chunk-progress" id="chunkProgress">Please wait...</div>
-    </div>
-</div>
-
-<div class="preview-overlay" id="previewOverlay">
-    <div class="preview-container">
-        <div class="preview-header">
-            <div class="preview-title">Preview</div>
-            <button class="preview-close" onclick="closePreview()">×</button>
+    <div class="palette-fab-button" id="paletteFabBtn" onclick="openPalettePanel()">
+        <div class="palette-fab-left-outline"></div>
+        <div class="palette-fab-right-outline"></div>
+        <div class="palette-fab-section">
+            <div class="palette-fab-text">🎨</div>
         </div>
-        <iframe class="preview-iframe" id="previewIframe"></iframe>
+        <div class="palette-fab-dark-strip"></div>
+        <div class="palette-fab-bottom-outline"></div>
+        <div class="palette-fab-shadow"></div>
     </div>
-</div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="processing-overlay" id="processingOverlay">
+        <div class="processing-box">
+            <div class="processing-text">Processing large file...</div>
+            <div class="processing-spinner"></div>
+            <div class="chunk-progress" id="chunkProgress">Please wait...</div>
+        </div>
+    </div>
+
+    <div class="preview-overlay" id="previewOverlay">
+        <div class="preview-container">
+            <div class="preview-header">
+                <div class="preview-title">Preview</div>
+                <button class="preview-close" onclick="closePreview()">×</button>
+            </div>
+            <iframe class="preview-iframe" id="previewIframe"></iframe>
+        </div>
+    </div>
 
 </div>
 <script>
@@ -2437,6 +2847,10 @@ function showThemePanel(theme) {
     panel.classList.add('show');
     document.getElementById('mainWrapper').classList.add('main-content-shifted');
 
+    document.getElementById('themePanelLanding').style.display = 'none';
+    document.getElementById('themePanelMappings').style.display = 'block';
+    document.getElementById('themePanelActions').style.display = 'block';
+
     const mobileSection = document.getElementById('themePanelMobileSection');
     if (mobileSection) {
         mobileSection.style.display = '';
@@ -2455,6 +2869,175 @@ function closeThemePanel() {
         mobileSection.classList.remove('show');
         mobileSection.style.display = 'none';
     }
+}
+
+const collapsedMappings = new Set();
+
+function toggleMappingCollapse(index) {
+    const body = document.getElementById('mapping-body-' + index);
+    const caret = document.getElementById('mapping-caret-' + index);
+    if (!body || !caret) return;
+    if (collapsedMappings.has(index)) {
+        collapsedMappings.delete(index);
+        body.classList.remove('collapsed');
+        caret.classList.remove('collapsed');
+    } else {
+        collapsedMappings.add(index);
+        body.classList.add('collapsed');
+        caret.classList.add('collapsed');
+    }
+}
+
+function getImportedColors() {
+    const seen = new Map();
+    styleElements.forEach(el => {
+        el.colors.forEach(c => {
+            try {
+                const hex = normalizeColor(c.original || c.value).toLowerCase();
+                if (hex && hex !== '#000000' || c.original || c.value) {
+                    const key = (c.original || c.value).toLowerCase().replace(/\s+/g,'');
+                    seen.set(key, (seen.get(key) || 0) + 1);
+                }
+            } catch(e){}
+        });
+    });
+    return Array.from(seen.entries())
+        .sort((a,b) => b[1] - a[1])
+        .map(([color, count]) => ({ color, count }));
+}
+
+function toggleColorDropdown(wrapperEl) {
+    const menu = wrapperEl.querySelector('.color-picker-dropdown-menu');
+    const isOpen = menu.classList.contains('open');
+    document.querySelectorAll('.color-picker-dropdown-menu.open').forEach(m => m.classList.remove('open'));
+    if (!isOpen) {
+        menu.classList.add('open');
+        setTimeout(() => {
+            const handler = (e) => {
+                if (!wrapperEl.contains(e.target)) {
+                    menu.classList.remove('open');
+                    document.removeEventListener('click', handler);
+                }
+            };
+            document.addEventListener('click', handler);
+        }, 0);
+    }
+}
+
+function selectDropdownColor(index, colorValue, wrapperEl) {
+    const menu = wrapperEl.querySelector('.color-picker-dropdown-menu');
+    menu.classList.remove('open');
+
+    if (colorValue === '__custom__') {
+        const picker = wrapperEl.closest('.theme-color-mapping').querySelector('.theme-new-color-picker');
+        if (picker) picker.click();
+        return;
+    }
+
+    updateThemeColor(index, colorValue);
+}
+
+function buildOriginalColorDropdownHTML(index, currentColor) {
+    const importedColors = getImportedColors();
+    const normalizedCurrent = currentColor.toLowerCase().replace(/\s+/g,'');
+
+    let itemsHTML = `
+        <div class="color-dropdown-custom-row" onclick="selectOriginalDropdownColor(${index}, '__custom__', this.closest('.color-picker-dropdown-wrapper'))">
+            <span style="font-size:16px;"></span> Custom color…
+        </div>
+        <div class="color-dropdown-divider"></div>
+    `;
+
+    if (importedColors.length === 0) {
+        itemsHTML += `<div class="color-dropdown-item" style="color:#666; font-style:italic;">No colors imported yet</div>`;
+    } else {
+        importedColors.forEach(({color, count}) => {
+            const isSelected = color === normalizedCurrent ? 'selected' : '';
+            let hexForSwatch = '#888';
+            try { hexForSwatch = normalizeColor(color); } catch(e){}
+            itemsHTML += `
+                <div class="color-dropdown-item ${isSelected}" onclick="selectOriginalDropdownColor(${index}, '${color}', this.closest('.color-picker-dropdown-wrapper'))">
+                    <div class="item-swatch" style="background:${hexForSwatch};"></div>
+                    <span class="item-label">${color}</span>
+                    <span class="item-usage">${count}×</span>
+                </div>
+            `;
+        });
+    }
+
+    let btnHex = '#888';
+    try { btnHex = normalizeColor(currentColor); } catch(e){}
+
+    return `
+        <div class="color-picker-dropdown-wrapper" onclick="event.stopPropagation()">
+            <div class="color-picker-dropdown-btn" onclick="toggleColorDropdown(this.closest('.color-picker-dropdown-wrapper'))">
+                <div class="btn-swatch" style="background:${btnHex};"></div>
+                <span>${currentColor}</span>
+                <span class="btn-caret">▼</span>
+            </div>
+            <div class="color-picker-dropdown-menu">
+                ${itemsHTML}
+            </div>
+        </div>
+    `;
+}
+
+function selectOriginalDropdownColor(index, colorValue, wrapperEl) {
+    const menu = wrapperEl.querySelector('.color-picker-dropdown-menu');
+    menu.classList.remove('open');
+
+    if (colorValue === '__custom__') {
+        const picker = wrapperEl.closest('.theme-color-mapping').querySelector('.theme-orig-color-picker');
+        if (picker) picker.click();
+        return;
+    }
+
+    updateThemeOriginalColor(index, colorValue);
+}
+
+function buildColorDropdownHTML(index, currentColor) {
+    const importedColors = getImportedColors();
+    const normalizedCurrent = currentColor.toLowerCase().replace(/\s+/g,'');
+
+    let itemsHTML = `
+        <div class="color-dropdown-custom-row" onclick="selectDropdownColor(${index}, '__custom__', this.closest('.color-picker-dropdown-wrapper'))">
+            <span style="font-size:16px;">✏️</span> Custom color…
+        </div>
+        <div class="color-dropdown-divider"></div>
+    `;
+
+    if (importedColors.length === 0) {
+        itemsHTML += `<div class="color-dropdown-item" style="color:#666; font-style:italic;">No colors imported yet</div>`;
+    } else {
+        importedColors.forEach(({color, count}) => {
+            const isSelected = color === normalizedCurrent ? 'selected' : '';
+            let hexForSwatch = '#888';
+            try { hexForSwatch = normalizeColor(color); } catch(e){}
+            itemsHTML += `
+                <div class="color-dropdown-item ${isSelected}" onclick="selectDropdownColor(${index}, '${color}', this.closest('.color-picker-dropdown-wrapper'))">
+                    <div class="item-swatch" style="background:${hexForSwatch};"></div>
+                    <span class="item-label">${color}</span>
+                    <span class="item-usage">${count}×</span>
+                </div>
+            `;
+        });
+    }
+
+    let btnHex = '#888';
+    try { btnHex = normalizeColor(currentColor); } catch(e){}
+
+    return `
+        <div class="color-picker-dropdown-wrapper" onclick="event.stopPropagation()">
+            <div class="color-picker-dropdown-btn" onclick="toggleColorDropdown(this.closest('.color-picker-dropdown-wrapper'))">
+                <div class="btn-swatch" style="background:${btnHex};"></div>
+                <span>${currentColor}</span>
+                <span class="btn-caret">▼</span>
+            </div>
+            <div class="color-picker-dropdown-menu">
+                ${itemsHTML}
+            </div>
+        </div>
+    `;
 }
 
 function renderThemePanel() {
@@ -2478,11 +3061,22 @@ function renderThemePanel() {
         const uniqueKey = Date.now() + index;
 
         return `
-        <div class="theme-color-mapping">
+        <div class="theme-color-mapping" id="mapping-card-${index}">
+            <div class="theme-mapping-header" onclick="toggleMappingCollapse(${index})">
+                <div class="theme-mapping-preview">
+                    <div class="theme-mapping-swatch" style="background:${mapping.original};"></div>
+                    <span class="theme-mapping-arrow-icon">→</span>
+                    <div class="theme-mapping-swatch" style="background:${mapping.new};"></div>
+                    <span class="theme-mapping-preview-label">${mapping.original} → ${mapping.new}</span>
+                </div>
+                <span class="theme-mapping-caret ${collapsedMappings.has(index) ? 'collapsed' : ''}" id="mapping-caret-${index}">▼</span>
+            </div>
+            <div class="theme-mapping-body ${collapsedMappings.has(index) ? 'collapsed' : ''}" id="mapping-body-${index}">
             <div class="theme-color-label">Original Color</div>
+            ${buildOriginalColorDropdownHTML(index, mapping.original)}
             <div class="theme-color-row">
                 <div class="theme-color-box" style="background: ${mapping.original};"></div>
-                <input type="color" value="${normalizeColor(mapping.original)}"
+                <input type="color" class="theme-orig-color-picker" value="${normalizeColor(mapping.original)}"
                        onchange="updateThemeOriginalColor(${index}, this.value)"
                        style="width: 50px; height: 40px;"
                        key="${uniqueKey}-orig-color">
@@ -2495,9 +3089,10 @@ function renderThemePanel() {
             <div class="theme-arrow">↓</div>
 
             <div class="theme-color-label">New Color</div>
+            ${buildColorDropdownHTML(index, mapping.new)}
             <div class="theme-color-row">
                 <div class="theme-color-box" style="background: ${mapping.new};"></div>
-                <input type="color" value="${normalizeColor(mapping.new)}"
+                <input type="color" class="theme-new-color-picker" value="${normalizeColor(mapping.new)}"
                        onchange="updateThemeColor(${index}, this.value)"
                        style="width: 50px; height: 40px;"
                        key="${uniqueKey}-new-color">
@@ -2518,6 +3113,7 @@ function renderThemePanel() {
                 <div class="minecraft-button-bottom-outline"></div>
                 <div class="minecraft-button-shadow"></div>
             </button>
+            </div>
         </div>
     `;
     }).join('');
@@ -2535,8 +3131,8 @@ function renderThemePanel() {
         </button>
     `;
 
-    const content = document.getElementById('themePanelContent');
-    document.getElementById('themePanelTitle').textContent = currentTheme.paletteName || 'Imported Theme';
+    const content = document.getElementById('themePanelMappings');
+    document.getElementById('themePanelTitle').textContent = currentTheme.paletteName || 'My Color Palette';
     document.getElementById('themePanelSubtitle').textContent = `${currentTheme.colorMappings.length} color mappings`;
     content.innerHTML = mappingsHTML + addButtonHTML;
 
@@ -2656,12 +3252,15 @@ function exportModifiedTheme() {
 
     function reopenThemePanel() {
     if (!currentTheme) {
-        showToast('No theme loaded. Import a palette first.', 'error');
+        openPalettePanel();
         return;
     }
     const panel = document.getElementById('themePanel');
     panel.classList.add('show');
     document.getElementById('mainWrapper').classList.add('main-content-shifted');
+    document.getElementById('themePanelLanding').style.display = 'none';
+    document.getElementById('themePanelMappings').style.display = 'block';
+    document.getElementById('themePanelActions').style.display = 'block';
     renderThemePanel();
 }
 
@@ -2706,12 +3305,16 @@ function removeThemeMapping(index) {
         currentTheme.totalColors = currentTheme.colorMappings.length;
 
         if (currentTheme.colorMappings.length === 0) {
-            closeThemePanel();
             currentTheme = null;
             themeHistory = [];
             themeHistoryIndex = -1;
             const reopenBtn = document.getElementById('reopenThemeBtn');
             if (reopenBtn) reopenBtn.style.display = 'none';
+            document.getElementById('themePanelLanding').style.display = 'block';
+            document.getElementById('themePanelMappings').style.display = 'none';
+            document.getElementById('themePanelActions').style.display = 'none';
+            document.getElementById('themePanelTitle').textContent = 'My Color Palette';
+            document.getElementById('themePanelSubtitle').textContent = 'Create or import a palette';
             showToast('All mappings removed', 'success');
         } else {
             renderThemePanel();
@@ -2719,6 +3322,36 @@ function removeThemeMapping(index) {
         }
     }
 }
+
+function openPalettePanel() {
+    const panel = document.getElementById('themePanel');
+    panel.classList.add('show');
+    document.getElementById('mainWrapper').classList.add('main-content-shifted');
+}
+
+function createNewPalette() {
+    const sideName = document.getElementById('paletteSideName');
+    const name = (sideName && sideName.value.trim()) || 'My Color Palette';
+
+    const emptyTheme = {
+        paletteName: name,
+        createdDate: new Date().toISOString().split('T')[0],
+        totalColors: 0,
+        colorMappings: []
+    };
+
+    showThemePanel(emptyTheme);
+    showToast(`Palette "${name}" created!`, 'success');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const fab = document.getElementById('paletteFabBtn');
+    if (fab) {
+        fab.addEventListener('mousedown', function() { this.classList.add('pressed'); });
+        fab.addEventListener('mouseup', function() { this.classList.remove('pressed'); });
+        fab.addEventListener('mouseleave', function() { this.classList.remove('pressed'); });
+    }
+});
 </script>
 </body>
 </html>
