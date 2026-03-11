@@ -1,0 +1,565 @@
+[
+  {
+    "triggers": [
+      "hello",
+      "hi",
+      "hey",
+      "howdy",
+      "howdy partner"
+    ],
+    "responses": [
+      "Howdy, partner.",
+      "Well, hey there.",
+      "wassup",
+      "hey",
+      "arlo here, though you can call me desperado because you probably haven't downloaded my mod"
+    ]
+  },
+  {
+    "triggers": [
+      "france"
+    ],
+    "responses": [
+      "wee wee",
+      "HAUGH HAUGH HAUGH, but french",
+      "what is that?"
+    ]
+  },
+  {
+    "triggers": [
+      "cactus"
+    ],
+    "responses": [
+      "Arlo?",
+      "Yes.",
+      "I like that."
+    ]
+  },
+  {
+    "triggers": [
+      "who are you"
+    ],
+    "responses": [
+      "The name's Arlo. Arlo the Cactus. Though the label above me wants to call me Desktop Desperado."
+    ]
+  },
+  {
+    "triggers": [
+      "arlo"
+    ],
+    "responses": [
+      "Yeah, that's me. Just.. a cactus.",
+      "............yeah"
+    ]
+  },
+  {
+    "triggers": [
+      "game"
+    ],
+    "responses": [
+      "They aren't GAMES. They're sophisticated PUZZLES."
+    ]
+  },
+  {
+    "triggers": [
+      "trap"
+    ],
+    "responses": [
+      "You gotta box it in real good."
+    ]
+  },
+  {
+    "triggers": [
+      "hat"
+    ],
+    "responses": [
+      "One of my finest accessories.",
+      "I like hats.",
+      "Don't take my hat from me. I *will* die.",
+      "I need my hat to survive ya know. Just thought I'd let you know that."
+    ]
+  },
+  {
+    "triggers": [
+      "bye",
+      "goodbye"
+    ],
+    "responses": [
+      "oh okay bye bye",
+      "uhhhhh okay, DONT FORGET TO DOWNLOAD MY MOD"
+    ]
+  },
+  {
+    "triggers": [
+      "help"
+    ],
+    "responses": [
+      "Can't help ya. Try again.",
+      "I don't know. (Copyright of Merl.)"
+    ]
+  },
+  {
+    "triggers": [
+      "thanks",
+      "thank you"
+    ],
+    "responses": [
+      "Don't mention it. Or actually, do mention it. Tell all your friends.",
+      "Much obliged. You owe me now though,",
+      "It's kinda my thing.. ya know. Being cool and helping."
+    ]
+  },
+  {
+    "triggers": [
+      "cool",
+      "nice"
+    ],
+    "responses": [
+      "I know.",
+      "Yep.",
+      "They call me Arlo the cool cactus. So of course it's cool."
+    ]
+  },
+  {
+    "triggers": [
+      "bad"
+    ],
+    "responses": [
+      "Could be worse.",
+      "Whatchu callin bad, huh?",
+      "bad? aw man"
+    ]
+  },
+  {
+    "triggers": [
+      "why"
+    ],
+    "responses": [
+      "Why not?",
+      "Yes.",
+      "41."
+    ]
+  },
+  {
+    "triggers": [
+      "konami"
+    ],
+    "responses": [
+      "Oh I LOVE the Konami Code. up up down down left right left right b a START.",
+      "Konami code? Make sure you know how to use that. :D",
+      "The Konami code is a staple in this society, HONESTLY."
+    ]
+  },
+  {
+    "triggers": [
+      "ad"
+    ],
+    "responses": [
+      "Every ad you close makes me stronger.",
+      "Ads are what brought you here, to remind you."
+    ]
+  },
+  {
+    "triggers": [
+      "popup"
+    ],
+    "responses": [
+      "Those are just ambiance.",
+      "hot singles in your area"
+    ]
+  },
+  {
+    "triggers": [
+      "music"
+    ],
+    "responses": [
+      "Music? MUSIC? There ain't NO jukebox out here in the desert.",
+      "Is this the part where the one song that might play when you fight sans plays?"
+    ]
+  },
+  {
+    "triggers": [
+      "potato"
+    ],
+    "responses": [
+      "MMmmmmmmmmMMMMMMMmmmm. I can't really eat, but like.. they're still cool.",
+      "POTATO",
+      "Potato Update 2024?"
+    ]
+  },
+  {
+    "triggers": [
+      "website"
+    ],
+    "responses": [
+      "You're on it. The website, I mean."
+    ]
+  },
+  {
+    "triggers": [
+      "weather"
+    ],
+    "responses": [
+      "Hot. Always hot. It's the desert."
+    ]
+  },
+  {
+    "triggers": [
+      "what"
+    ],
+    "responses": [
+      "Exactly.",
+      "Yes."
+    ]
+  },
+  {
+    "triggers": [
+      "how"
+    ],
+    "responses": [
+      "Carefully."
+    ]
+  },
+  {
+    "triggers": [
+      "how are you",
+      "how art thou"
+    ],
+    "responses": [
+      "Pretty good. Could be worse",
+      "Could be worse.",
+      "I'm doing LOVELY on this day."
+    ]
+  },
+  {
+    "triggers": [
+      "who"
+    ],
+    "responses": [
+      "Good question.",
+      "idk"
+    ]
+  },
+  {
+    "triggers": [
+      "when"
+    ],
+    "responses": [
+      "Eventually.",
+      "Probably later??",
+      "Be patient."
+    ]
+  },
+  {
+    "triggers": [
+      "where"
+    ],
+    "responses": [
+      "Out west.",
+      "On the WESTERN SIDE"
+    ]
+  },
+  {
+    "triggers": [
+      "ok",
+      "okay",
+      "oki"
+    ],
+    "responses": [
+      "Yeppers.",
+      "Mhm."
+    ]
+  },
+  {
+    "triggers": [
+      "yes"
+    ],
+    "responses": [
+      "That's what I figured.",
+      "You're right."
+    ]
+  },
+  {
+    "triggers": [
+      "no"
+    ],
+    "responses": [
+      "Shucks.",
+      "Fair enough.",
+      "DANG IT."
+    ]
+  },
+  {
+    "triggers": [
+      "lol",
+      "haha",
+      "ha"
+    ],
+    "responses": [
+      "I don't laugh. I don't have a mouth.",
+      "I'd laugh with you if I could."
+    ]
+  },
+  {
+    "triggers": [
+      "idk",
+      "i don't know",
+      "i dont know",
+      "i dunno"
+    ],
+    "responses": [
+      "Neither do I.",
+      "Well I don't know either."
+    ]
+  },
+  {
+    "triggers": [
+      "hmm",
+      "hm"
+    ],
+    "responses": [
+      "Take your time.",
+      "I believe in you. Do your 'hmms' and proceed with your lovely life."
+    ]
+  },
+  {
+    "triggers": [
+      "test",
+      "testing"
+    ],
+    "responses": [
+      "Passed."
+    ]
+  },
+  {
+    "triggers": [
+      "uh"
+    ],
+    "responses": [
+      "Go on."
+    ]
+  },
+  {
+    "triggers": [
+      "um"
+    ],
+    "responses": [
+      "Whenever you're ready man."
+    ]
+  },
+  {
+    "triggers": [
+      "water"
+    ],
+    "responses": [
+      "Pff. Water is for weaklings. I only need it ONCE every couple of weeks."
+    ]
+  },
+  {
+    "triggers": [
+      "please"
+    ],
+    "responses": [
+      "Thank you for using your manners."
+    ]
+  },
+  {
+    "triggers": [
+      "sorry"
+    ],
+    "responses": [
+      "I don't accept your apology.",
+      "I accept your apology humbly."
+    ]
+  },
+  {
+    "triggers": [
+      "wow"
+    ],
+    "responses": [
+      "wow."
+    ]
+  },
+  {
+    "triggers": [
+      "awesome"
+    ],
+    "responses": [
+      "I've seen awesomer.",
+      "Bubblez is awesomer"
+    ]
+  },
+  {
+    "triggers": [
+      "random"
+    ],
+    "responses": [
+      "Nothing's random. The desert has a plan."
+    ]
+  },
+  {
+    "triggers": [
+      "bubblez",
+      "bubblez705",
+      "bub",
+      "bubz",
+      "bubz705"
+    ],
+    "responses": [
+      "Did I hear Bubblez? Bubblez? The bubbly man?",
+      "I LOVE Bubblez.",
+      "Speaking of bubz, you should subscribe to him :D https://www.youtube.com/@bubblez705"
+    ]
+  },
+  {
+    "triggers": [
+      "potatowolfie",
+      "pw",
+      "dirt boy"
+    ],
+    "responses": [
+      "PotatoWolfie? That guy isn't even involved in what you're trying to do."
+    ]
+  },
+  {
+    "triggers": [
+      "corruptwolfie"
+    ],
+    "responses": [
+      "You weren't supposed to know the name CorruptWolfie yet. I don't really care though. Good job."
+    ]
+  },
+  {
+    "triggers": [
+      "cw",
+      "egotistical idiot"
+    ],
+    "responses": [
+      "CW? Is that you? Heh, no, you're not him. He's just a copied piece of media, idiot."
+    ]
+  },
+  {
+    "triggers": [
+      "kilo"
+    ],
+    "responses": [
+      "WHYYYYYYYYYYYYY??!?! ;-;",
+      "NOOOOOOOOOOO"
+    ]
+  },
+  {
+    "triggers": [
+      "is lb dead?"
+    ],
+    "responses": [
+      "idk, haven't checked the box in a while",
+      "Ask Schrödinger."
+    ]
+  },
+  {
+    "triggers": [
+      "download",
+      "mod"
+    ],
+    "responses": [
+      "D- D- DOWNLOAD? AS IN DOWNLOAD ARLO??? would you rly rly wanna download me??? https://modrinth.com/mod/arlo-the-little-guy"
+    ]
+  },
+  {
+    "triggers": [
+      "what the fuck is a kilogram??",
+      "what is a kilogram??"
+    ],
+    "responses": [
+      "WHAT EVEN IS A KILOMETTEERRRRRRR",
+      "as a cactus, i refuse to scream at you violently about the metric system, well, maybe."
+    ]
+  },
+  {
+    "triggers": [
+      "is kilo dead?"
+    ],
+    "responses": [
+      "CURSED BE THEE. I DON'T KNOW AND I WANT TO KNOW.",
+      "idk, haven't checked the chat logs in a while."
+    ]
+  },
+  {
+    "triggers": [
+      "fuck","fucks","fucked","fucking","fucker","motherfucker","motherfuckers","mf",
+      "fuuuck","fuuuuck","fuuuuuuck","f*ck","f**k","fu*k",
+      "shit","shits","shitty","shithead","shitface","bullshit",
+      "shiiiit","shiiit","sh*t","s**t",
+      "bitch","bitches","bitchy","son of a bitch","sob",
+      "b!tch","biatch",
+      "ass","asses","asshole","assholes","dumbass","jackass","badass",
+      "smartass","asshat","asswipe",
+      "damn","dammit","damnit","goddamn","goddammit","godd*mn",
+      "hell","hells","what the hell","wtf","wth",
+      "piss","pissed","pissing","piss off",
+      "bastard","bastards",
+      "crap","crappy",
+      "dipshit","dipshits",
+      "dick","dicks","dickhead",
+      "cunt","cunts",
+      "twat","twats",
+      "slut","sluts",
+      "whore","whores",
+      "retard","retarded"
+    ],
+    "responses": [
+      "me too actually",
+      "what made you so angry that you felt like using PROFANITY in MY chat? GOSH."
+    ]
+  },
+  {
+    "triggers": [
+      "what is a cactus?"
+    ],
+    "responses": [
+      "Me.",
+      "https://en.wikipedia.org/wiki/Cactus"
+    ]
+  },
+  {
+    "triggers": [
+      "kill yourself",
+      "kill urself",
+      "kill ur self",
+      "kill your self",
+      "go kill yourself",
+      "just kill yourself",
+      "you should kill yourself",
+      "why dont you kill yourself",
+      "why don't you kill yourself",
+      "kys",
+      "k.y.s",
+      "k/y/s",
+      "k1ll yourself",
+      "ki11 yourself",
+      "k!ll yourself",
+      "k*ll yourself",
+      "k**l yourself",
+      "ky$",
+      "go die",
+      "just die",
+      "you should die",
+      "why dont you just die",
+      "why don't you just die",
+      "die",
+      "d1e",
+      "d!e",
+      "off yourself",
+      "end yourself",
+      "end it",
+      "unalive yourself",
+      "nobody would miss you",
+      "the world would be better without you"
+    ],
+    "responses": [
+      "HEY. STAWP. THATS NOT NICE.",
+      "no",
+      "i do NOT tolerate this behavior, bucko"
+    ]
+  }
+]

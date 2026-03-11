@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Universe 76 Wiki</title>
+    <link rel="icon" type="image/x-icon" href="un76fav.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('assets/font/minecraft.woff2') format('woff2'),
+                 url('assets/font/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                 url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        body {
+            background: url('Universe76/wiki/background.png');
+            background-color: #2d2d2d;
+            background-repeat: repeat;
+            background-position: top left;
+            font-family: 'Nunito', 'Inter', sans-serif;
+            color: #e6e6e6;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(45, 45, 45, 1.0);
+            border-bottom: 3px solid #4a4a4a;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            position: static;
+        }
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 15px;
+                gap: 10px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 10px;
+                gap: 8px;
+            }
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                margin: 10px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                height: 50px;
+            }
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                margin: 0 10px;
+                max-width: none;
+                flex: 1;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-container {
+                margin: 0 5px;
+                min-width: 0;
+            }
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: none;
+            color: #e6e6e6;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .search-box:focus {
+            outline: 2px solid #8b4513;
+            outline-offset: -2px;
+        }
+
+        @media (max-width: 480px) {
+            .search-box {
+                padding: 10px 12px;
+                font-size: 16px;
+            }
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            border-top: none;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow:
+                inset 2px 2px 0 #3a3a3a,
+                inset -2px -2px 0 #242424;
+        }
+
+        @media (max-width: 768px) {
+            .search-suggestions {
+                max-height: 250px;
+                left: -2px;
+                right: -2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-suggestions {
+                max-height: 200px;
+                border-radius: 0 0 4px 4px;
+            }
+        }
+
+        .search-suggestion {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #3a3a3a;
+            color: #cccccc;
+            min-height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            .search-suggestion {
+                padding: 12px 15px;
+                min-height: 50px;
+            }
+        }
+
+        .search-suggestion:hover {
+            background: #4f5a75;
+        }
+
+        @media (hover: none) {
+            .search-suggestion:hover {
+                background: transparent;
+            }
+            .search-suggestion:active {
+                background: #4f5a75;
+            }
+            .search-suggestion:active .suggestion-title {
+                color: #8b4513;
+            }
+        }
+
+        .search-suggestion:hover .suggestion-title {
+            color: #8b4513;
+        }
+
+        .search-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-category {
+            font-size: 12px;
+            color: #8b4513;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            margin-top: 2px;
+            font-family: 'Nunito', sans-serif;
+            color: #cccccc;
+        }
+
+        @media (max-width: 480px) {
+            .suggestion-category {
+                font-size: 11px;
+            }
+            .suggestion-title {
+                font-size: 15px;
+                margin-top: 3px;
+            }
+        }
+
+        .search-suggestions::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .search-suggestions::-webkit-scrollbar-track {
+            background: #242424;
+        }
+
+        .search-suggestions::-webkit-scrollbar-thumb {
+            background: #4f5a75;
+            border-radius: 4px;
+        }
+
+        .search-suggestions::-webkit-scrollbar-thumb:hover {
+            background: #5a6580;
+        }
+
+        .search-suggestions {
+            scrollbar-width: thin;
+            scrollbar-color: #4f5a75 #242424;
+        }
+
+        .nav-tabs {
+            background: rgba(51, 51, 51, 0.9);
+            border-bottom: 2px solid #4a4a4a;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .nav-scroll-wrapper {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .nav-scroll-wrapper {
+                width: 100%;
+                justify-content: flex-start;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 10px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .nav-scroll-wrapper {
+                padding: 0 20px;
+            }
+        }
+
+        .nav-button {
+            background: #6348d4;
+            border: 2px solid #4a39b3;
+            border-bottom: none;
+            margin-right: 2px;
+            cursor: pointer;
+            font-size: 14px;
+            color: white;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: 6000;
+            text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
+            box-shadow:
+                inset 2px 2px 0 #7354e3,
+                inset -2px -2px 0 #5640c5;
+            text-decoration: none;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 20px;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .nav-button:last-child {
+            margin-right: 0;
+        }
+
+        .nav-button:hover {
+            background: #4a39b3;
+        }
+
+        .nav-button.active {
+            background: #4a39b3;
+        }
+
+        .nav-button.hidden {
+            display: none;
+        }
+
+        .nav-button.nav-arrow img {
+            border: none;
+            width: 35px
+        }
+
+        .nav-button img {
+            width: 16px;
+            height: 16px;
+            image-rendering: auto;
+            border: 1px solid #3e3099;
+        }
+
+        .nav-button-text {
+            display: inline;
+        }
+
+        .nav-button-icon {
+            display: inline-block;
+            margin-right: 6px;
+            order: -1;
+        }
+
+        .nav-button-icon {
+            width: 23px !important;
+            height: 23px !important;
+            border: 2px solid #3e3099 !important;
+            image-rendering: -moz-crisp-edges !important;
+            image-rendering: -webkit-crisp-edges !important;
+            image-rendering: pixelated !important;
+            image-rendering: crisp-edges !important;
+        }
+
+        @media (max-width: 768px) {
+            .nav-button-icon {
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 1px solid #0a4694;
+                margin-right: 0;
+            }
+
+            .nav-button {
+                padding: 10px 4px;
+                font-size: 11px;
+            }
+
+            .nav-button img {
+                width: 25px;
+                height: 25px;
+                image-rendering: auto;
+                border: 2px solid #3e3099;
+            }
+
+            .nav-button-text {
+                display: none;
+            }
+
+            .nav-button-icon {
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 1px solid #3e3099;
+            }
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                margin: 20px 15px;
+                padding: 0;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                margin: 15px 10px;
+            }
+        }
+
+        .content {
+            background: #262626;
+            border: none;
+            border-radius: 0;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content {
+                padding: 15px;
+            }
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-section {
+            background: #262626;
+            border: none;
+            border-radius: 0;
+            padding: 20px;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #6348d4, #4a39b3);
+            border-radius: 0;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .stats img {
+            filter: brightness(1.2);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: normal;
+            display: block;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .page-title {
+            font-family: 'Minecraft Ten', 'Nunito', sans-serif;
+            color: #6348d4;
+            word-wrap: break-word;
+            font-size: 28px;
+            margin-bottom: 25px;
+            margin-top: 0;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+        }
+
+        .content-section {
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-section {
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-section {
+                margin-bottom: 20px;
+            }
+        }
+
+        .biome-image {
+            width: 90%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #4a4a4a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .biome-text {
+            text-align: center;
+            font-size: 18px;
+            color: #cccccc;
+            margin: 20px 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        @media (max-width: 480px) {
+            .biome-text {
+                font-size: 16px;
+            }
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 480px) {
+            p {
+                margin: 0 0 12px 0;
+            }
+        }
+
+        h1, h2,
+        .page-title {
+            font-family: 'Minecraft Ten', 'Inter', sans-serif !important;
+        }
+
+        html {
+            scroll-padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io">
+                <img src="Universe76/wiki/un76_wiki.png" alt="Universe 76 Wiki">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="nav-tabs">
+    <div class="nav-scroll-wrapper" id="navWrapper">
+        <!-- Buttons will be dynamically generated here -->
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content">
+        <h1 class="page-title">Universe 76</h1>
+
+        <div class="content-section">
+            <img src="Universe76/wiki/nothing_to_see_here.png" alt="No Biomes Here" class="biome-image">
+            <div class="biome-text">Universe 76 at the current moment is not being worked on. It is intended in the future that this project is completely remade.</div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-section stats">
+            <div class="stat-number" id="downloadCount">---</div>
+            <div class="stat-label">Downloads</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let searchData = {};
+    let allSearchItems = [];
+
+    async function loadSearchData() {
+        try {
+            const response = await fetch('search-data.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            searchData = await response.json();
+            allSearchItems = Object.values(searchData).flat();
+            console.log('Search data loaded successfully');
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            searchData = {};
+            allSearchItems = [];
+        }
+    }
+
+    const navTabs = [
+        { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
+        { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
+        { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png' },
+        { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png', active: true }
+    ];
+
+    let currentPage = 0;
+
+    function getButtonWidth() {
+        let availableWidth;
+
+        if (window.innerWidth <= 768) {
+            const mainContainer = document.querySelector('.main-container');
+            const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
+            const totalMargins = 5 * 2;
+            return (containerWidth - totalMargins) / 6;
+        } else {
+            availableWidth = window.innerWidth - 40;
+            const totalMargins = 7 * 2;
+            return (availableWidth - totalMargins) / 8;
+        }
+    }
+
+    function renderNavigation() {
+        const wrapper = document.getElementById('navWrapper');
+        const buttonWidth = getButtonWidth();
+        const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+
+        wrapper.innerHTML = '';
+
+        let buttons = [];
+
+        if (navTabs.length <= buttonsPerPage) {
+            buttons = navTabs.map(tab => ({
+                type: 'tab',
+                data: tab
+            }));
+        } else {
+            if (currentPage === 0) {
+                for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: navTabs[i] });
+                }
+                buttons.push({ type: 'next' });
+            } else {
+                const firstPageTabs = buttonsPerPage - 1;
+                const otherPageTabs = buttonsPerPage - 2;
+                const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
+
+                const remainingTabs = navTabs.length - startIndex;
+                const isLastPage = remainingTabs <= buttonsPerPage - 1;
+
+                if (isLastPage) {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                } else {
+                    buttons.push({ type: 'prev' });
+                    for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
+                        buttons.push({ type: 'tab', data: navTabs[i] });
+                    }
+                    buttons.push({ type: 'next' });
+                }
+            }
+        }
+
+        buttons.forEach((button, index) => {
+            const btn = document.createElement('a');
+            btn.className = 'nav-button';
+            btn.style.width = buttonWidth + 'px';
+
+            if (button.type === 'prev') {
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Previous</span>
+                    <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    if (currentPage > 0) {
+                        currentPage--;
+                        renderNavigation();
+                    }
+                };
+            } else if (button.type === 'next') {
+                btn.classList.add('nav-arrow');
+                btn.innerHTML = `
+                    <span class="nav-button-text">Next</span>
+                    <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
+                `;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    currentPage++;
+                    renderNavigation();
+                };
+            } else {
+                btn.href = button.data.href;
+                btn.innerHTML = `
+                    <span class="nav-button-text">${button.data.text}</span>
+                    <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
+                `;
+                if (button.data.active) {
+                    btn.classList.add('active');
+                }
+            }
+
+            wrapper.appendChild(btn);
+        });
+    }
+
+    // DOWNLOAD COUNTER - Combines Modrinth + CurseForge
+    async function fetchDownloadCount() {
+        try {
+            let modrinthDownloads = 0;
+            let curseforgeDownloads = 0;
+
+            // Fetch from Modrinth API (Public, no key needed)
+            try {
+                const modrinthResponse = await fetch('https://api.modrinth.com/v2/project/universe-76', {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (modrinthResponse.ok) {
+                    const modrinthData = await modrinthResponse.json();
+                    modrinthDownloads = modrinthData.downloads || 0;
+                    console.log('Modrinth downloads:', modrinthDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch Modrinth downloads:', error);
+            }
+
+            // Fetch from CurseForge using CFWidget (no API key needed!)
+            try {
+                const curseforgeProjectId = '940093';
+                const cfResponse = await fetch(
+                    `https://api.cfwidget.com/minecraft/mc-mods/${curseforgeProjectId}`
+                );
+
+                if (cfResponse.ok) {
+                    const cfData = await cfResponse.json();
+                    curseforgeDownloads = cfData.downloads?.total || 0;
+                    console.log('CurseForge downloads:', curseforgeDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch CurseForge downloads:', error);
+            }
+
+            // Calculate total
+            const totalDownloads = modrinthDownloads + curseforgeDownloads;
+
+            console.log('Total downloads:', totalDownloads);
+
+            // Update the UI
+            updateDownloadCounter(totalDownloads, modrinthDownloads, curseforgeDownloads);
+
+        } catch (error) {
+            console.error('Error fetching download count:', error);
+            updateDownloadCounter(null);
+        }
+    }
+
+    function updateDownloadCounter(total, modrinth, curseforge) {
+        const countElement = document.getElementById('downloadCount');
+
+        if (!countElement) return;
+
+        if (total !== null) {
+            // Display the formatted number
+            countElement.innerHTML = formatNumber(total);
+
+            // Add tooltip showing breakdown
+            countElement.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
+
+            // Update the label
+            const label = countElement.nextElementSibling;
+            if (label && label.classList.contains('stat-label')) {
+                label.textContent = 'Total Downloads';
+            }
+        } else {
+            countElement.textContent = '---';
+        }
+    }
+
+    function formatNumber(num) {
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        }
+        return num.toLocaleString();
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        await loadSearchData();
+        renderNavigation();
+
+        fetchDownloadCount();
+        setInterval(fetchDownloadCount, 5 * 60 * 1000);
+        window.addEventListener('resize', function() {
+            renderNavigation();
+        });
+    });
+</script>
+</body>
+</html>

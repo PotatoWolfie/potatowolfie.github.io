@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arlo's Little Ad</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                 url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-image: url('assets/home/background.png');
+            background-color: #2d2d2d;
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: top left;
+            color: #e6e6e6;
+            min-height: 100vh;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        a { color: #3453df; text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: #5a73ff; text-decoration: underline; }
+        a:visited { color: #3453df; }
+        a:active { color: #2a42bf; }
+
+        .header {
+            background: rgba(45, 45, 45, 1.0);
+            border-bottom: 3px solid #4a4a4a;
+            padding: 15px 0;
+            position: relative;
+            z-index: 200;
+            margin-bottom: 20px;
+        }
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            color: #3453df;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+            line-height: 1;
+        }
+
+        .page-subtitle {
+            font-size: 12px;
+            color: #666;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .logo { height: 60px; width: auto; }
+        .logo img { height: 100%; width: auto; object-fit: contain; }
+
+        .main-wrapper { padding: 20px; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #262626;
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424;
+            pointer-events: none;
+        }
+
+        .section-content { position: relative; z-index: 1; }
+
+        .section h2 {
+            color: #3453df;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .puzzle-entry { margin-bottom: 30px; }
+        .puzzle-entry:last-child { margin-bottom: 0; }
+
+        .puzzle-label {
+            font-size: 11px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .puzzle-label::before {
+            content: '';
+            display: inline-block;
+            width: 6px; height: 6px;
+            background: #3453df;
+        }
+
+        .puzzle-name {
+            font-size: 22px;
+            color: #e6e6e6;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+            margin-bottom: 14px;
+        }
+
+        .game-container {
+            background: #363640;
+            border: 2px solid #1a1a1a;
+            box-shadow: inset 1px 1px 0 #444455, inset -1px -1px 0 #22222a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        .game-container canvas { cursor: pointer; max-width: 100%; }
+
+        .cactus-game-wrapper {
+            position: relative;
+            display: inline-block;
+            line-height: 0;
+        }
+
+        .arlo-cactus-icon {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            width: 31px;
+            height: 31px;
+            transform: translate(-50%, -50%);
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            opacity: 1;
+            filter: none;
+            transition: none;
+        }
+        .cactus-game-wrapper canvas { display: block; }
+
+        .game-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .minecraft-button {
+            cursor: pointer; height: 45px; display: inline-flex;
+            flex-direction: column; position: relative; overflow: hidden;
+            border: none; user-select: none; background: none; padding: 0; min-width: 150px;
+        }
+        .minecraft-button-left-outline {
+            position: absolute; top: 0; left: 0; width: 2px; bottom: 0;
+            background: #1e1e1e; z-index: 5; transition: transform 0.15s ease;
+        }
+        .minecraft-button-right-outline {
+            position: absolute; top: 0; right: 0; width: 2px; bottom: 0;
+            background: #1e1e1e; z-index: 5; transition: transform 0.15s ease;
+        }
+        .minecraft-button-section {
+            flex: 1; background: #48494a; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 1px 1px 0 #6c6d6d, inset -1px -1px 0 #5b5c5c;
+            z-index: 2; transition: transform 0.15s ease, background 0.1s;
+            margin: 0 2px; border-top: 2px solid #1e1e1e;
+        }
+        .minecraft-button-dark-strip {
+            height: 8px; background: #3b3c3c; z-index: 2;
+            transition: transform 0.15s ease, opacity 0.15s ease; margin: 0 2px;
+        }
+        .minecraft-button-bottom-outline {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+            background: #1e1e1e; z-index: 5;
+        }
+        .minecraft-button-shadow {
+            position: absolute; bottom: -3px; left: 0; right: 0; height: 3px;
+            background: #1a1a1a; z-index: 1;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .minecraft-button-name {
+            font-size: 15px; color: #fff;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif; font-weight: normal;
+            position: relative; z-index: 2; white-space: nowrap;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.8); padding: 0 30px;
+        }
+        .minecraft-button.pressed .minecraft-button-section { transform: translateY(6px); }
+        .minecraft-button.pressed .minecraft-button-left-outline,
+        .minecraft-button.pressed .minecraft-button-right-outline { transform: translateY(6px); }
+        .minecraft-button.pressed .minecraft-button-dark-strip,
+        .minecraft-button.pressed .minecraft-button-shadow { transform: translateY(3px); opacity: 0; }
+        .minecraft-button:hover .minecraft-button-section { background: #414242; }
+        .minecraft-button:hover .minecraft-button-dark-strip { background: #323333; }
+
+        .hat-btn-wrapper { position: relative; width: 50px; height: 58px; }
+
+        #hatBtn {
+            position: absolute; width: 100%; height: 100%; padding: 0;
+            background: transparent; border: none; cursor: pointer;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        .hat-hex-bg {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: #5a4a3a; transition: background 0.1s;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        #hatBtn:hover .hat-hex-bg { background: #6a5a4a; }
+        #hatBtn.active .hat-hex-bg { background: rgba(241, 196, 15, 0.4); }
+
+        #hatBtn img.hat-icon {
+            width: 34px; height: 34px; object-fit: contain;
+            pointer-events: none; position: relative; z-index: 1;
+        }
+
+        .hat-btn-outline {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+        }
+        .hat-btn-outline polygon { stroke: #8b6a3a; }
+        #hatBtn.active ~ .hat-btn-outline polygon { stroke: #f1c40f; }
+
+        .hat-count {
+            position: absolute; bottom: 8px; right: 12px; font-size: 12px;
+            font-weight: bold; color: #fff; pointer-events: none; z-index: 2;
+            text-shadow: 0 0 3px #000, 0 0 3px #000;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .hat-control { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+
+        .hat-label { font-size: 14px; font-weight: bold; color: #aaa; font-family: 'Nunito', sans-serif; }
+
+        .xp-popup {
+            position: fixed;
+            background: #ece9d8;
+            border: 2px solid #0054e3;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 0 #fff;
+            z-index: 9000;
+            min-width: 260px;
+            max-width: 320px;
+            font-family: 'Tahoma', 'Arial', sans-serif;
+            font-size: 12px;
+            color: #000;
+            animation: popIn 0.15s ease;
+            user-select: none;
+        }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .xp-titlebar {
+            background: linear-gradient(to bottom, #0058e8, #003fc0);
+            color: #fff; padding: 4px 6px;
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 11px; font-weight: bold; font-family: 'Tahoma', sans-serif;
+            cursor: move; gap: 6px;
+        }
+        .xp-title-text { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; }
+        .xp-title-icon {
+            width: 14px; height: 14px; background: #ffcc00; border-radius: 2px;
+            font-size: 9px; display: flex; align-items: center; justify-content: center;
+            color: #000; font-weight: bold; flex-shrink: 0;
+        }
+        .xp-close-btn {
+            width: 18px; height: 18px;
+            background: linear-gradient(to bottom, #f0a000, #c06000);
+            border: 1px solid #7a3000; color: #fff; font-size: 11px; font-weight: bold;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4); flex-shrink: 0;
+        }
+        .xp-close-btn:hover { background: linear-gradient(to bottom, #ff3030, #cc0000); border-color: #880000; }
+        .xp-body { padding: 12px; background: #ece9d8; }
+        .xp-body .xp-ad-image { width: 100%; display: block; image-rendering: auto; margin-bottom: 8px; }
+        .xp-ad-text { padding: 4px 0; font-size: 12px; color: #000; line-height: 1.4; }
+        .xp-ad-link { color: #0000ee; text-decoration: underline; cursor: pointer; font-size: 11px; }
+
+        .desperado-panel {
+            position: fixed; top: 0; right: -420px;
+            width: 400px; height: 100vh;
+            background: #2e2e2e; border-left: 2px solid #1a1a1a;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424, -4px 0 20px rgba(0,0,0,0.5);
+            z-index: 5000; display: flex; flex-direction: column;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .desperado-panel.open { right: 0; }
+
+        .desperado-scene {
+            flex-shrink: 0;
+            height: 33.333%;
+            position: relative;
+            background: #1a1a26;
+            border-bottom: 2px solid #1a1a1a;
+            overflow: hidden;
+        }
+
+        .desperado-scene-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: bottom center;
+            image-rendering: pixelated;
+        }
+
+        .desperado-scene-character {
+            position: absolute;
+            bottom: 0;
+            left: 65%;
+            transform: translateX(-50%);
+            height: 107%;
+            width: auto;
+            image-rendering: pixelated;
+            transition: opacity 0.15s ease;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .desperado-scene-character.hat-swap {
+            animation: hatSwap 0.3s steps(1, end);
+        }
+
+        @keyframes hatSwap {
+            0%   { opacity: 1; }
+            40%  { opacity: 0; }
+            60%  { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .desperado-header {
+            padding: 20px; border-bottom: 2px solid #1a1a1a; background: #262626;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .desperado-title {
+            color: #3453df; font-size: 20px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif; font-weight: normal;
+        }
+        .desperado-close {
+            background: none; border: none; color: #888;
+            font-size: 18px; cursor: pointer; padding: 4px 8px; transition: color 0.2s;
+        }
+        .desperado-close:hover { color: #e6e6e6; }
+
+        .desperado-messages {
+            flex: 1; overflow-y: auto; padding: 15px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .desperado-messages::-webkit-scrollbar { width: 6px; }
+        .desperado-messages::-webkit-scrollbar-track { background: #1a1a1a; }
+        .desperado-messages::-webkit-scrollbar-thumb { background: #3453df; }
+
+        .msg-bubble {
+            max-width: 85%; padding: 10px 14px; font-size: 14px; line-height: 1.5;
+            color: #e6e6e6; border: 2px solid #1a1a1a; font-family: 'Nunito', sans-serif;
+        }
+        .msg-user {
+            align-self: flex-end; background: #3453df;
+            box-shadow: inset 1px 1px 0 #5a73ff, inset -1px -1px 0 #2a42cf;
+        }
+        .msg-ai {
+            align-self: flex-start; background: #3a3a3a;
+            box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #2a2a2a;
+        }
+        .msg-sender {
+            font-size: 11px; font-weight: 700; margin-bottom: 4px;
+            text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .desperado-input-area {
+            padding: 12px 15px 6px 15px; border-top: 2px solid #1a1a1a; background: #262626;
+            display: flex; gap: 10px; align-items: flex-end;
+        }
+        .desperado-input {
+            flex: 1; padding: 10px; background: #3a3a3a; border: 2px solid #1a1a1a;
+            color: #e6e6e6; font-size: 14px; font-family: 'Nunito', sans-serif;
+            box-shadow: inset 2px 2px 0 #2a2a2a, inset -2px -2px 0 #4a4a4a;
+            resize: none; min-height: 44px; max-height: 100px;
+        }
+        .desperado-input:focus { outline: none; border-color: #3453df; }
+
+        .desperado-send-btn {
+            height: 44px; width: 44px; background: #3453df; border: 2px solid #1a1a1a;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 1px 1px 0 #5a73ff, inset -1px -1px 0 #2a42cf;
+            flex-shrink: 0; transition: background 0.1s; font-size: 18px; color: #fff;
+        }
+        .desperado-send-btn:hover { background: #4a63ef; }
+        .desperado-send-btn:active { background: #2a42cf; }
+        .desperado-send-btn img { width: 26px; height: auto; image-rendering: pixelated; }
+
+        .desperado-disclaimer {
+            padding: 6px 15px 12px 15px; background: #262626;
+            font-size: 11px; color: #555; font-family: 'Nunito', sans-serif;
+            text-align: center; font-style: italic; line-height: 1.4;
+        }
+
+        .desperado-btn {
+            position: fixed; bottom: 30px; right: 30px; width: 64px; height: 64px;
+            cursor: pointer; display: flex; flex-direction: column;
+            overflow: hidden; border: none; user-select: none; background: none; padding: 0; z-index: 4999;
+        }
+        .desperado-btn-left-outline {
+            position: absolute; top: 0; left: 0; width: 2px; bottom: 0;
+            background: #1e1e1e; z-index: 5; transition: transform 0.15s ease;
+        }
+        .desperado-btn-right-outline {
+            position: absolute; top: 0; right: 0; width: 2px; bottom: 0;
+            background: #1e1e1e; z-index: 5; transition: transform 0.15s ease;
+        }
+        .desperado-btn-section {
+            flex: 1; background: #48494a; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 1px 1px 0 #6c6d6d, inset -1px -1px 0 #5b5c5c;
+            z-index: 2; transition: transform 0.15s ease, background 0.1s;
+            margin: 0 2px; border-top: 2px solid #1e1e1e;
+        }
+        .desperado-btn-dark-strip {
+            height: 8px; background: #3b3c3c; z-index: 2;
+            transition: transform 0.15s ease, opacity 0.15s ease; margin: 0 2px;
+        }
+        .desperado-btn-bottom-outline {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: #1e1e1e; z-index: 5;
+        }
+        .desperado-btn-shadow {
+            position: absolute; bottom: -3px; left: 0; right: 0; height: 3px;
+            background: #1a1a1a; z-index: 1; transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .desperado-btn.pressed .desperado-btn-section { transform: translateY(6px); }
+        .desperado-btn.pressed .desperado-btn-left-outline,
+        .desperado-btn.pressed .desperado-btn-right-outline { transform: translateY(6px); }
+        .desperado-btn.pressed .desperado-btn-dark-strip,
+        .desperado-btn.pressed .desperado-btn-shadow { transform: translateY(3px); opacity: 0; }
+        .desperado-btn:hover .desperado-btn-section { background: #414242; }
+        .desperado-btn:hover .desperado-btn-dark-strip { background: #323333; }
+        .desperado-btn-section img { width: 46px; height: auto; image-rendering: pixelated; }
+
+        .konami-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.94); z-index: 10000;
+            align-items: center; justify-content: center;
+        }
+        .konami-overlay.show { display: flex; animation: fadeIn 0.25s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .konami-menu { display: flex; flex-direction: column; align-items: center; gap: 36px; }
+        .konami-inputs { display: flex; gap: 18px; }
+
+        .konami-letter-input {
+            width: 90px; height: 110px;
+            background: #111; border: 3px solid #2a2a2a;
+            color: #e6e6e6; font-size: 58px; font-weight: bold;
+            font-family: 'Minecraft Ten', 'Inter', monospace;
+            text-align: center; text-transform: uppercase;
+            caret-color: transparent; outline: none;
+            box-shadow: inset 2px 2px 0 #080808, inset -2px -2px 0 #1e1e1e;
+            transition: border-color 0.15s;
+        }
+        .konami-letter-input:focus  { border-color: #444; }
+        .konami-letter-input.filled { border-color: #3453df; color: #3453df; }
+
+        .konami-enter-btn {
+            padding: 16px 60px; background: #1a1a1a; border: 2px solid #2a2a2a;
+            color: #3a3a3a; font-size: 15px; cursor: not-allowed; letter-spacing: 3px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+        .konami-enter-btn.ready {
+            background: #0d1f0d; border-color: #1e6b1e; color: #3dff3d;
+            cursor: pointer; box-shadow: 0 0 14px rgba(61,255,61,0.25);
+        }
+        .konami-enter-btn.ready:hover { background: #142814; box-shadow: 0 0 24px rgba(61,255,61,0.4); }
+
+        @keyframes wrongFlashBtn {
+            0%   { background: #0d1f0d; border-color: #1e6b1e; color: #3dff3d; box-shadow: 0 0 14px rgba(61,255,61,0.25); }
+            20%  { background: #2a0000; border-color: #ff3333; color: #ff3333; box-shadow: 0 0 18px rgba(255,50,50,0.55); }
+            60%  { background: #2a0000; border-color: #ff3333; color: #ff3333; box-shadow: 0 0 18px rgba(255,50,50,0.55); }
+            100% { background: #0d1f0d; border-color: #1e6b1e; color: #3dff3d; box-shadow: 0 0 14px rgba(61,255,61,0.25); }
+        }
+        @keyframes wrongFlashInput {
+            0%   { border-color: #3453df; color: #3453df; box-shadow: none; }
+            20%  { border-color: #ff3333; color: #ff4444; box-shadow: 0 0 12px rgba(255,50,50,0.4); }
+            60%  { border-color: #ff3333; color: #ff4444; box-shadow: 0 0 12px rgba(255,50,50,0.4); }
+            100% { border-color: #3453df; color: #3453df; box-shadow: none; }
+        }
+        .konami-wrong .konami-enter-btn {
+            animation: wrongFlashBtn 0.75s ease forwards;
+        }
+        .konami-wrong .konami-letter-input.filled {
+            animation: wrongFlashInput 0.75s ease forwards;
+        }
+
+        .konami-win {
+            display: none; flex-direction: column; align-items: center;
+            justify-content: flex-start; padding-top: 8vh; gap: 28px; text-align: center;
+            width: 100%; height: 100%;
+        }
+        .konami-win.show { display: flex; animation: fadeIn 0.5s ease; }
+        .konami-win-close {
+            position: fixed; top: 16px; right: 16px;
+            background: #1a1a1a; border: 2px solid #333;
+            color: #888; font-size: 18px; cursor: pointer;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10001; transition: color 0.15s, border-color 0.15s;
+        }
+        .konami-win-close:hover { color: #e6e6e6; border-color: #666; }
+        .konami-win-gif { max-width: 720px; width: 100%; image-rendering: pixelated; padding: 0 16px; box-sizing: border-box; }
+        .konami-win-link {
+            font-size: 20px; color: #3dff3d;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            text-decoration: none; letter-spacing: 2px; animation: winPulse 2s infinite;
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+        .konami-win-link:hover { color: #7dff7d; text-decoration: none; }
+        @keyframes winPulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+        .code-strip {
+            display: flex; gap: 10px; justify-content: center; margin-bottom: 22px;
+        }
+        .code-cell {
+            width: 38px; height: 46px; background: #151515; border: 2px solid #222;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #2a2a2a;
+            font-family: 'Minecraft Ten', 'Inter', monospace;
+            box-shadow: inset 1px 1px 0 #1c1c1c, inset -1px -1px 0 #0e0e0e;
+            transition: all 0.4s; user-select: none;
+        }
+        .code-cell.revealed {
+            color: #3453df; border-color: #3453df;
+            box-shadow: inset 1px 1px 0 #4a63ef, inset -1px -1px 0 #2040c0, 0 0 10px rgba(52,83,223,0.3);
+        }
+
+        .grid-game-hint {
+            font-size: 12px; color: #555; font-style: italic;
+            font-family: 'Nunito', sans-serif; text-align: center;
+        }
+        .grid-wrapper { position: relative; width: 100%; display: flex; justify-content: center; }
+        .grid-board {
+            display: grid;
+            grid-template-columns: repeat(10, var(--g2-cell, 42px));
+            grid-template-rows:    repeat(10, var(--g2-cell, 42px));
+            gap: 2px; outline: none; cursor: default;
+            position: relative;
+        }
+        .grid-cell {
+            width: var(--g2-cell, 42px); height: var(--g2-cell, 42px);
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .grid-cell[data-type="empty"]  { background: #28283a; }
+        .grid-cell[data-type="start"]  { background: #ffffff; }
+        .grid-cell[data-type="exit"]   { background: #ffffff; outline: 2px solid #aaaaaa; box-shadow: 0 0 8px rgba(255,255,255,0.45); }
+        .grid-cell[data-type="red"]    { background: #FF4040; }
+        .grid-cell[data-type="yellow"] { background: #FFFF80; }
+        .grid-cell[data-type="blue"]   { background: #4040FF; }
+        .grid-cell[data-type="green"]  { background: #40C040; }
+        .grid-cell[data-type="orange"] { background: #FFC14A; }
+        .grid-cell[data-type="pink"]   { background: #FFC0C0; }
+        .grid-cell[data-type="purple"] { background: #C000C0; }
+
+        .grid-player {
+            position: absolute;
+            width: var(--g2-player-size, 34px); height: var(--g2-player-size, 34px);
+            pointer-events: none; image-rendering: pixelated; z-index: 2;
+        }
+
+        .grid-player-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            pointer-events: none;
+            z-index: 10;
+            overflow: visible;
+        }
+        .grid-player-overlay .grid-player {
+            position: absolute;
+            transition: left 0.09s ease, top 0.09s ease;
+            will-change: left, top;
+        }
+        .grid-piranha {
+            display: block;
+            width: 100%; height: 100%;
+            pointer-events: none; image-rendering: pixelated;
+            animation: piranhaJump 1.4s linear forwards;
+        }
+        .grid-monster {
+            display: block;
+            width: 100%; height: 100%;
+            pointer-events: none; image-rendering: pixelated;
+            animation: monsterRise 0.55s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+        @keyframes piranhaJump {
+            0%   { transform: translateY(100%); animation-timing-function: cubic-bezier(0.1, 0.8, 0.3, 1); }
+            45%  { transform: translateY(0);    animation-timing-function: linear; }
+            70%  { transform: translateY(0);    animation-timing-function: cubic-bezier(0.6, 0, 1, 0.6); }
+            100% { transform: translateY(100%); }
+        }
+        @keyframes monsterRise {
+            0%   { transform: translateY(100%); }
+            100% { transform: translateY(0); }
+        }
+        .grid-result-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .grid-result-overlay img {
+            max-width: 80%; max-height: 80%;
+            image-rendering: pixelated;
+        }
+
+        .typing-indicator { display: flex; align-items: center; gap: 5px; padding: 12px 14px; }
+        .typing-dot {
+            width: 7px; height: 7px; background: #888;
+            border-radius: 50%; animation: typingBounce 1.2s infinite;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        .panel-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4); z-index: 4998; display: none;
+        }
+        .panel-overlay.show { display: block; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #3453df; }
+        ::-webkit-scrollbar-thumb:hover { background: #4a63ef; }
+
+        @media (max-width: 768px) {
+            .desperado-panel { width: 100%; right: -100%; }
+            .desperado-btn { bottom: 15px; right: 15px; width: 50px; height: 50px; }
+            .container { padding: 20px; }
+        }
+
+        .virtual-controller {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .dpad {
+            display: grid;
+            grid-template-columns: 44px 44px 44px;
+            grid-template-rows:    44px 44px 44px;
+            gap: 3px;
+        }
+        .dpad-btn {
+            width: 44px; height: 44px;
+            background: #3a3a4a; border: 2px solid #1a1a1a;
+            box-shadow: inset 1px 1px 0 #505060, inset -1px -1px 0 #2a2a3a;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            user-select: none; transition: background 0.04s, transform 0.04s;
+            padding: 0;
+        }
+        .dpad-btn:hover   { background: #4a4a5e; }
+        .dpad-btn:active,
+        .dpad-btn.pressed { background: #2a2a3a; transform: scale(0.93); box-shadow: inset 2px 2px 0 #1a1a2a; }
+        .dpad-btn img { width: 28px; height: 28px; image-rendering: pixelated; pointer-events: none; }
+
+        .dpad-up    { grid-column: 2; grid-row: 1; }
+        .dpad-left  { grid-column: 1; grid-row: 2; }
+        .dpad-center{ grid-column: 2; grid-row: 2; background: #2a2a3a; cursor: default; pointer-events: none; }
+        .dpad-right { grid-column: 3; grid-row: 2; }
+        .dpad-down  { grid-column: 2; grid-row: 3; }
+
+        .face-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .face-btn-row { display: flex; gap: 6px; }
+
+        .face-btn {
+            width: 44px; height: 44px;
+            border: 2px solid #1a1a1a; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 17px; font-weight: bold; font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            user-select: none; transition: background 0.04s, transform 0.04s;
+            box-shadow: inset 1px 1px 0 rgba(255,255,255,0.15), inset -1px -1px 0 rgba(0,0,0,0.4);
+        }
+        .face-btn:active,
+        .face-btn.pressed { transform: scale(0.93); filter: brightness(0.8); }
+        .face-btn img { width: 28px; height: 28px; image-rendering: pixelated; pointer-events: none; }
+
+        .face-btn-a { background: #cc2222; color: #fff; border-radius: 0; }
+        .face-btn-a:hover { background: #e03333; }
+
+        .face-btn-b { background: #2255cc; color: #fff; border-radius: 0; }
+        .face-btn-b:hover { background: #3366e0; }
+
+        .start-btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .start-btn {
+            width: 64px; height: 44px;
+            background: #3a3a4a; border: 2px solid #1a1a1a;
+            box-shadow: inset 1px 1px 0 #505060, inset -1px -1px 0 #2a2a3a;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            user-select: none; transition: background 0.04s, transform 0.04s;
+            padding: 0;
+        }
+        .start-btn:hover   { background: #4a4a5e; }
+        .start-btn:active,
+        .start-btn.pressed { background: #2a2a3a; transform: scale(0.93); box-shadow: inset 2px 2px 0 #1a1a2a; }
+        .start-btn img { width: 40px; height: 28px; image-rendering: pixelated; pointer-events: none; object-fit: contain; }
+
+        .ctrl-label {
+            font-size: 11px; color: #555;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            text-align: center; letter-spacing: 1px; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-content">
+        <div class="header-left">
+            <div class="page-title">Arlo's Little Ad</div>
+            <div class="page-subtitle">a little corner of the internet</div>
+        </div>
+        <div class="logo">
+            <a href="https://potatowolfie.github.io">
+                <img src="assets/home/logo.png" alt="PotatoWolfie">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="container">
+
+        <div class="section">
+            <div class="section-content">
+                <h2>Puzzles</h2>
+                <div class="code-strip" id="codeStrip">
+                    <span class="code-cell">_</span>
+                    <span class="code-cell">_</span>
+                    <span class="code-cell">_</span>
+                    <span class="code-cell">_</span>
+                </div>
+
+                <div class="puzzle-entry">
+                    <div class="puzzle-label">Puzzle #1</div>
+                    <div class="puzzle-name">Trap the Cactus</div>
+
+                    <div class="game-container">
+                        <div class="cactus-game-wrapper">
+                            <canvas id="gameCanvas"></canvas>
+                            <img id="arloCactusIcon"
+                                 class="arlo-cactus-icon"
+                                 src="Arlo_The_Little_Guy/little_ad/icons/arlo_trap_the_cactus.png"
+                                 alt="cactus"
+                                 style="display:none;">
+                        </div>
+                        <div class="game-controls">
+                            <button class="minecraft-button" id="retryBtn" style="min-width: 120px;">
+                                <div class="minecraft-button-left-outline"></div>
+                                <div class="minecraft-button-right-outline"></div>
+                                <div class="minecraft-button-section">
+                                    <span class="minecraft-button-name">Retry</span>
+                                </div>
+                                <div class="minecraft-button-dark-strip"></div>
+                                <div class="minecraft-button-bottom-outline"></div>
+                                <div class="minecraft-button-shadow"></div>
+                            </button>
+                            <div class="hat-control">
+                                <div class="hat-btn-wrapper">
+                                    <button id="hatBtn">
+                                        <div class="hat-hex-bg"></div>
+                                        <img class="hat-icon" src="Arlo_The_Little_Guy/little_ad/icons/bowler_hat.png" alt="Hat">
+                                    </button>
+                                    <svg class="hat-btn-outline" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+                                        <polygon points="50,2 98,31 98,85 50,114 2,85 2,31" fill="none" stroke="#8b6a3a" stroke-width="4"/>
+                                    </svg>
+                                    <span class="hat-count">3</span>
+                                </div>
+                                <span class="hat-label">Hats</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="puzzle-entry" style="margin-top: 30px;">
+                    <div class="puzzle-label">Puzzle #2</div>
+                    <div class="puzzle-name">Multicolor Tile Puzzle</div>
+                    <div class="game-container">
+                        <div class="grid-game-hint">Ask Arlo about the tiles.</div>
+                        <div class="grid-wrapper">
+                            <div class="grid-board" id="gridBoard" tabindex="0">
+                                <div class="grid-player-overlay" id="gridPlayerOverlay">
+                                    <img class="grid-player" id="gridPlayerImg" src="Arlo_The_Little_Guy/little_ad/icons/arlo_trap_the_cactus.png" alt="" onerror="this.style.display='none'">
+                                </div>
+                            </div>
+                            <div class="grid-result-overlay" id="gridResultOverlay" style="display:none;">
+                                <img id="gridResultImg" src="" alt="">
+                            </div>
+                        </div>
+                        <button class="minecraft-button" id="gridRetryBtn" style="min-width: 120px;">
+                            <div class="minecraft-button-left-outline"></div>
+                            <div class="minecraft-button-right-outline"></div>
+                            <div class="minecraft-button-section">
+                                <span class="minecraft-button-name">Retry</span>
+                            </div>
+                            <div class="minecraft-button-dark-strip"></div>
+                            <div class="minecraft-button-bottom-outline"></div>
+                            <div class="minecraft-button-shadow"></div>
+                        </button>
+
+                        <div class="virtual-controller" id="virtualController">
+
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                                <div class="dpad">
+                                    <div></div>
+                                    <button class="dpad-btn dpad-up"    id="dpadUp"    aria-label="Up">
+                                        <img src="Arlo_The_Little_Guy/little_ad/games/controller/dpad_up.png"    alt="▲" onerror="this.outerHTML='▲'">
+                                    </button>
+                                    <div></div>
+                                    <button class="dpad-btn dpad-left"  id="dpadLeft"  aria-label="Left">
+                                        <img src="Arlo_The_Little_Guy/little_ad/games/controller/dpad_left.png"  alt="◀" onerror="this.outerHTML='◀'">
+                                    </button>
+                                    <div class="dpad-btn dpad-center"></div>
+                                    <button class="dpad-btn dpad-right" id="dpadRight" aria-label="Right">
+                                        <img src="Arlo_The_Little_Guy/little_ad/games/controller/dpad_right.png" alt="▶" onerror="this.outerHTML='▶'">
+                                    </button>
+                                    <div></div>
+                                    <button class="dpad-btn dpad-down"  id="dpadDown"  aria-label="Down">
+                                        <img src="Arlo_The_Little_Guy/little_ad/games/controller/dpad_down.png"  alt="▼" onerror="this.outerHTML='▼'">
+                                    </button>
+                                    <div></div>
+                                </div>
+                                <span class="ctrl-label">D-Pad</span>
+                            </div>
+
+                            <div class="start-btn-wrapper">
+                                <button class="start-btn" id="ctrlStart" aria-label="Start (Konami Code)">
+                                    <img src="Arlo_The_Little_Guy/little_ad/games/controller/start.png" alt="START" onerror="this.outerHTML='<span style=&quot;font-size:11px;color:#aaa;font-family:Minecraft Ten,sans-serif;letter-spacing:1px;&quot;>START</span>'">
+                                </button>
+                                <span class="ctrl-label">START</span>
+                            </div>
+
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                                <div class="face-buttons">
+                                    <div class="face-btn-row">
+                                        <button class="face-btn face-btn-b" id="ctrlB" aria-label="B">
+                                            <img src="Arlo_The_Little_Guy/little_ad/games/controller/btn.png" alt="B" onerror="this.outerHTML='B'">
+                                        </button>
+                                        <button class="face-btn face-btn-a" id="ctrlA" aria-label="A">
+                                            <img src="Arlo_The_Little_Guy/little_ad/games/controller/btn.png" alt="A" onerror="this.outerHTML='A'">
+                                        </button>
+                                    </div>
+                                </div>
+                                <span class="ctrl-label">b / a</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel-overlay" id="panelOverlay" onclick="closeDesperado()"></div>
+
+<div class="desperado-panel" id="desperadoPanel">
+    <div class="desperado-header">
+        <span class="desperado-title">Desktop Desperado</span>
+        <button class="desperado-close" onclick="closeDesperado()">✕</button>
+    </div>
+    <div class="desperado-scene" id="desperadoScene">
+        <img class="desperado-scene-bg" id="desperadoSceneBg" src="Arlo_The_Little_Guy/little_ad/desperado/scenery.png" alt="">
+        <img class="desperado-scene-character" id="desperadoCharacter" src="Arlo_The_Little_Guy/little_ad/desperado/bowler.png" alt="Desperado">
+    </div>
+    <div class="desperado-messages" id="desperadoMessages">
+        <div class="msg-bubble msg-ai">
+            <div class="msg-sender">Desperado</div>
+            Howdy. Say something. Or don't. I don't really care. :D
+        </div>
+    </div>
+    <div class="desperado-input-area">
+        <textarea class="desperado-input" id="desperadoInput" rows="1"
+                  placeholder="Try saying something like: 'hello'"></textarea>
+        <button class="desperado-send-btn" id="desperadoSend" onclick="sendDesperadoMessage()">
+            <img src="Arlo_The_Little_Guy/little_ad/games/controller/dpad_right.png" alt="Send" onerror="this.outerHTML='➤'">
+        </button>
+    </div>
+    <div class="desperado-disclaimer">
+        This is not a real AI. This is based on pre-generated responses.
+    </div>
+</div>
+
+<button class="desperado-btn" id="desperadoBtn" onclick="toggleDesperado()">
+    <div class="desperado-btn-left-outline"></div>
+    <div class="desperado-btn-right-outline"></div>
+    <div class="desperado-btn-section">
+        <img src="Arlo_The_Little_Guy/little_ad/icons/chat.png" alt="Desperado" onerror="this.outerHTML='Chat'">
+    </div>
+    <div class="desperado-btn-dark-strip"></div>
+    <div class="desperado-btn-bottom-outline"></div>
+    <div class="desperado-btn-shadow"></div>
+</button>
+
+<div class="konami-overlay" id="konamiOverlay">
+    <div class="konami-menu" id="konamiMenu">
+        <button class="konami-win-close" onclick="closeKonami()">✕</button>
+        <div class="konami-inputs">
+            <input class="konami-letter-input" id="ki0" maxlength="1" autocomplete="off" spellcheck="false">
+            <input class="konami-letter-input" id="ki1" maxlength="1" autocomplete="off" spellcheck="false">
+            <input class="konami-letter-input" id="ki2" maxlength="1" autocomplete="off" spellcheck="false">
+            <input class="konami-letter-input" id="ki3" maxlength="1" autocomplete="off" spellcheck="false">
+        </div>
+        <button class="konami-enter-btn" id="konamiEnterBtn" disabled>ENTER</button>
+    </div>
+    <div class="konami-win" id="konamiWin">
+        <button class="konami-win-close" onclick="closeKonami()">✕</button>
+        <img class="konami-win-gif" src="Arlo_The_Little_Guy/little_ad/you_win.png" alt="">
+        <a class="konami-win-link" href="YOUTUBE_LINK_WHEN_UPLOADED" target="_blank" rel="noopener">click here.</a>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    const COLOR_HEX_EMPTY_FILL    = '#4a4a5e';
+    const COLOR_HEX_EMPTY_STROKE  = '#5e5e72';
+    const COLOR_HEX_BLOCKED_FILL  = '#22222e';
+    const COLOR_HEX_BLOCKED_STROKE= '#18181f';
+    const COLOR_CACTUS_FILL       = '#295e34';
+    const COLOR_CACTUS_STROKE     = '#1a3e23';
+    const COLOR_HAT_FILL = '#2e2e48';
+    const COLOR_HAT_STROKE = '#3453df';
+
+    const HAT_IMAGE_POOL = [
+        'Arlo_The_Little_Guy/little_ad/icons/bowler_hat.png',
+        'Arlo_The_Little_Guy/little_ad/icons/cowboy_hat.png',
+        'Arlo_The_Little_Guy/little_ad/icons/straw_hat.png',
+        'Arlo_The_Little_Guy/little_ad/icons/sun_hat.png',
+        'Arlo_The_Little_Guy/little_ad/icons/top_hat.png',
+        'Arlo_The_Little_Guy/little_ad/icons/tricorn.png',
+        'Arlo_The_Little_Guy/little_ad/icons/bucket.png',
+        'Arlo_The_Little_Guy/little_ad/icons/cactus_flower.png',
+        'Arlo_The_Little_Guy/little_ad/icons/crown.png'
+    ];
+
+    const DESPERADO_CHARACTER_IMAGES = [
+        'Arlo_The_Little_Guy/little_ad/desperado/bowler.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/cowboy.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/straw_hat.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/sun_hat.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/top_hat.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/tricorn.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/bucket.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/cactus_flower.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/crown.png',
+        'Arlo_The_Little_Guy/little_ad/desperado/no_hat.png',
+    ];
+    const _preloadedCharImgs = DESPERADO_CHARACTER_IMAGES.map(src => { const i = new Image(); i.src = src; return i; });
+
+    const GRID_SIZE      = 11;
+    const HEX_RADIUS     = 25;
+    const HEX_WIDTH      = Math.sqrt(3) * HEX_RADIUS;
+    const HEX_HEIGHT     = 2 * HEX_RADIUS;
+    const INITIAL_BLOCKED= 8;
+    const CANVAS_PADDING = 30;
+
+    const canvas      = document.getElementById('gameCanvas');
+    const ctx         = canvas.getContext('2d');
+    const retryBtn    = document.getElementById('retryBtn');
+    const hatBtn      = document.getElementById('hatBtn');
+    const hatCountSpan= document.querySelector('.hat-count');
+
+    canvas.width  = GRID_SIZE * HEX_WIDTH  + HEX_WIDTH  / 2 + CANVAS_PADDING * 2;
+    canvas.height = GRID_SIZE * HEX_HEIGHT * 0.75 + HEX_HEIGHT * 0.25 + CANVAS_PADDING * 2;
+
+    const gameOverTrappedImg = new Image(); gameOverTrappedImg.src = 'Arlo_The_Little_Guy/little_ad/games/trapped.png';
+    const gameOverEscapedImg = new Image(); gameOverEscapedImg.src = 'Arlo_The_Little_Guy/little_ad/games/escaped.png';
+
+    const cactusImg = new Image(); cactusImg.src = 'Arlo_The_Little_Guy/little_ad/icons/arlo_trap_the_cactus.png';
+    const hatImgs   = HAT_IMAGE_POOL.map(src => { const i = new Image(); i.src = src; return i; });
+    cactusImg.onload = () => draw();
+    hatImgs.forEach(i => i.onload = () => draw());
+
+    function getCanvasScale() {
+        const r = canvas.getBoundingClientRect();
+        return { scaleX: canvas.width / r.width, scaleY: canvas.height / r.height };
+    }
+
+    let tiles = [], inBoundsTiles = new Set();
+    let cactusPos = { row: Math.floor(GRID_SIZE/2), col: Math.floor(GRID_SIZE/2) };
+    let animProgress = 0, isAnimating = false, animStart = null, animEnd = null;
+    let gameOver = false, game1Result = null, game1Handled = false, hatsRemaining = 3, hatPlacementMode = false;
+    let hatPositions = [], cactusBoostMoves = 0, boostDir = null;
+
+    function generateShape() {
+        const cx = Math.floor(GRID_SIZE/2), cy = Math.floor(GRID_SIZE/2);
+        const base = 5.5 + Math.random();
+        const v = Array.from({length:8}, () => 0.7 + Math.random()*0.6);
+        inBoundsTiles.clear();
+        for (let r=0; r<GRID_SIZE; r++) {
+            for (let c=0; c<GRID_SIZE; c++) {
+                const dx=c-cx, dy=r-cy, d=Math.sqrt(dx*dx+dy*dy);
+                const ai = Math.floor(((Math.atan2(dy,dx)+Math.PI)/(2*Math.PI))*8)%8;
+                if (d <= base*v[ai]) inBoundsTiles.add(`${r},${c}`);
+            }
+        }
+    }
+
+    function initGrid() {
+        tiles = [];
+        for (let r=0; r<GRID_SIZE; r++) for (let c=0; c<GRID_SIZE; c++) tiles.push({row:r,col:c,blocked:false});
+        generateShape();
+        const ci = Math.floor(GRID_SIZE/2)*GRID_SIZE + Math.floor(GRID_SIZE/2);
+        const valid = tiles.map((_,i)=>i).filter(i => inBoundsTiles.has(`${tiles[i].row},${tiles[i].col}`) && i!==ci);
+        const bs = new Set();
+        while (bs.size < INITIAL_BLOCKED && valid.length) bs.add(valid[Math.floor(Math.random()*valid.length)]);
+        tiles.forEach((t,i) => { if (bs.has(i)) t.blocked=true; });
+    }
+
+    const isInBounds = (r,c) => inBoundsTiles.has(`${r},${c}`);
+
+    function isAtEdge(r,c) {
+        if (!isInBounds(r,c)) return false;
+        return getNeighbors(r,c).some(n => !isInBounds(n.row,n.col));
+    }
+
+    function getHexPos(row,col) {
+        return {
+            x: col*HEX_WIDTH + (row%2===1?HEX_WIDTH/2:0) + HEX_WIDTH/2 + CANVAS_PADDING,
+            y: row*HEX_HEIGHT*0.75 + HEX_RADIUS + CANVAS_PADDING
+        };
+    }
+
+    function getNeighbors(row,col) {
+        const odd = row%2===1;
+        return (odd
+            ? [{row:row-1,col},{row:row-1,col:col+1},{row,col:col-1},{row,col:col+1},{row:row+1,col},{row:row+1,col:col+1}]
+            : [{row:row-1,col:col-1},{row:row-1,col},{row,col:col-1},{row,col:col+1},{row:row+1,col:col-1},{row:row+1,col}]
+        ).filter(p => p.row>=0&&p.row<GRID_SIZE&&p.col>=0&&p.col<GRID_SIZE);
+    }
+
+    function bfs(start, goalFn, bs) {
+        const q=[[start]], vis=new Set([`${start.row},${start.col}`]);
+        while (q.length) {
+            const path=q.shift(), cur=path[path.length-1];
+            if (goalFn(cur)) return path;
+            for (const n of getNeighbors(cur.row,cur.col)) {
+                const k=`${n.row},${n.col}`;
+                if (!vis.has(k)&&!bs.has(k)&&isInBounds(n.row,n.col)) { vis.add(k); q.push([...path,n]); }
+            }
+        }
+        return null;
+    }
+
+    function pathBetween(a,b,bs) { return bfs(a,n=>n.row===b.row&&n.col===b.col,bs); }
+    function distToEdge(pos,bs) { const p=bfs(pos,n=>isAtEdge(n.row,n.col),bs); return p?p.length-1:Infinity; }
+    function distBetween(a,b) { const p=pathBetween(a,b,blockedSet()); return p?p.length-1:Infinity; }
+
+    function countWalls(pos) {
+        return getNeighbors(pos.row,pos.col).filter(n=>{ const t=tiles.find(t=>t.row===n.row&&t.col===n.col); return t&&t.blocked; }).length;
+    }
+
+    function nextMove(pos, bs) {
+        let target=null;
+        if (hatPositions.length>0 && countWalls(pos)<=2) {
+            let best=null, bd=Infinity;
+            for (const h of hatPositions) { const d=distBetween(pos,h); if (d<bd){bd=d;best=h;} }
+            if (best && bd!==Infinity && bd*0.7 < distToEdge(pos,bs)) target=best;
+        }
+        if (target) { const p=pathBetween(pos,target,bs); if (p&&p.length>1) return p[1]; }
+        const p=bfs(pos,n=>isAtEdge(n.row,n.col),bs);
+        return p?p[1]||p[0]:null;
+    }
+
+    function getDir(from,to) { return getNeighbors(from.row,from.col).findIndex(n=>n.row===to.row&&n.col===to.col); }
+    function getNextDir(pos,dir,bs) {
+        const nb=getNeighbors(pos.row,pos.col);
+        if (dir>=0&&dir<nb.length) { const n=nb[dir]; if (isInBounds(n.row,n.col)&&!bs.has(`${n.row},${n.col}`)) return n; }
+        return null;
+    }
+
+    function blockedSet() { return new Set(tiles.filter(t=>t.blocked).map(t=>`${t.row},${t.col}`)); }
+
+    const ease = t => t<0.5?2*t*t:-1+(4-2*t)*t;
+
+    function animate() {
+        if (!isAnimating) return;
+        animProgress += 0.08;
+        if (animProgress>=1){animProgress=1;isAnimating=false;}
+        draw();
+        if (isAnimating) requestAnimationFrame(animate);
+    }
+
+    function startAnim(from,to) {
+        animStart=getHexPos(from.row,from.col);
+        animEnd=getHexPos(to.row,to.col);
+        animProgress=0; isAnimating=true; animate();
+    }
+
+    function drawHex(x,y,r,fill,stroke) {
+        ctx.beginPath();
+        for (let i=0;i<6;i++){const a=(Math.PI/3)*i-Math.PI/2; i===0?ctx.moveTo(x+r*Math.cos(a),y+r*Math.sin(a)):ctx.lineTo(x+r*Math.cos(a),y+r*Math.sin(a));}
+        ctx.closePath(); ctx.fillStyle=fill; ctx.fill(); ctx.strokeStyle=stroke; ctx.lineWidth=2; ctx.stroke();
+    }
+
+    function drawImg(img,x,y,size) {
+        if (!img||!img.complete||!img.naturalWidth) return;
+        ctx.drawImage(img,x-size/2,y-size/2,size,size);
+    }
+
+    function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        tiles.forEach(tile => {
+            if (!isInBounds(tile.row,tile.col)) return;
+            const p = getHexPos(tile.row,tile.col);
+            const isCactus = tile.row===cactusPos.row&&tile.col===cactusPos.col;
+            const hat = hatPositions.find(h=>tile.row===h.row&&tile.col===h.col);
+
+            if (isCactus && !isAnimating) {
+                drawHex(p.x,p.y,HEX_RADIUS,COLOR_CACTUS_FILL,COLOR_CACTUS_STROKE);
+            } else if (hat) {
+                drawHex(p.x,p.y,HEX_RADIUS,COLOR_HAT_FILL,COLOR_HAT_STROKE);
+                if (hatImgs.length) drawImg(hatImgs[hat.imgIndex%hatImgs.length],p.x,p.y,HEX_RADIUS*1.15);
+            } else {
+                drawHex(p.x,p.y,HEX_RADIUS,tile.blocked?COLOR_HEX_BLOCKED_FILL:COLOR_HEX_EMPTY_FILL,tile.blocked?COLOR_HEX_BLOCKED_STROKE:COLOR_HEX_EMPTY_STROKE);
+            }
+        });
+
+        if (isAnimating&&animStart&&animEnd) {
+            const t=ease(animProgress);
+            const x=animStart.x+(animEnd.x-animStart.x)*t, y=animStart.y+(animEnd.y-animStart.y)*t;
+            drawHex(x,y,HEX_RADIUS,COLOR_CACTUS_FILL,COLOR_CACTUS_STROKE);
+            updateCactusOverlay(x, y);
+        } else {
+            const sp = getHexPos(cactusPos.row, cactusPos.col);
+            updateCactusOverlay(sp.x, sp.y);
+        }
+
+        if (gameOver) {
+            if (_cactusOverlayEl) _cactusOverlayEl.style.display = 'none';
+            ctx.fillStyle='rgba(0,0,0,0.0)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            const trapped=getNeighbors(cactusPos.row,cactusPos.col).every(n=>{const t=tiles.find(t=>t.row===n.row&&t.col===n.col);return !t||t.blocked||!isInBounds(n.row,n.col);});
+            const resultImg = trapped ? gameOverTrappedImg : gameOverEscapedImg;
+            if (resultImg && resultImg.complete && resultImg.naturalWidth) {
+                const maxW = canvas.width * 0.8, maxH = canvas.height * 0.8;
+                const scale = Math.min(maxW / resultImg.naturalWidth, maxH / resultImg.naturalHeight);
+                const imgW = resultImg.naturalWidth * scale, imgH = resultImg.naturalHeight * scale;
+                ctx.drawImage(resultImg, canvas.width/2 - imgW/2, canvas.height/2 - imgH/2, imgW, imgH);
+            }
+        }
+    }
+
+    const _cactusOverlayEl = document.getElementById('arloCactusIcon');
+    function updateCactusOverlay(canvasX, canvasY) {
+        if (!_cactusOverlayEl) return;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = rect.width  / canvas.width;
+        const scaleY = rect.height / canvas.height;
+        _cactusOverlayEl.style.left    = (canvasX * scaleX) + 'px';
+        _cactusOverlayEl.style.top     = (canvasY * scaleY) + 'px';
+        _cactusOverlayEl.style.display = '';
+        const iconPx = HEX_RADIUS * 1.25 * Math.min(scaleX, scaleY);
+        _cactusOverlayEl.style.width  = iconPx + 'px';
+        _cactusOverlayEl.style.height = iconPx + 'px';
+    }
+
+    function tileAt(cx,cy) {
+        let best=null,bd=Infinity;
+        tiles.forEach(t=>{ if(!isInBounds(t.row,t.col))return; const p=getHexPos(t.row,t.col),d=Math.sqrt((p.x-cx)**2+(p.y-cy)**2); if(d<bd&&d<HEX_RADIUS*1.2){bd=d;best=t;} });
+        return best;
+    }
+
+    function moveCactus(bs,cb) {
+        const movesToMake = cactusBoostMoves>0?2:1; let idx=0;
+        function exec() {
+            if (idx>=movesToMake) {
+                if (cactusBoostMoves>0){cactusBoostMoves--;if(!cactusBoostMoves)boostDir=null;}
+                cb&&cb(); return;
+            }
+            const prev={...cactusPos};
+            const valid=getNeighbors(cactusPos.row,cactusPos.col).filter(n=>isInBounds(n.row,n.col)&&!bs.has(`${n.row},${n.col}`));
+            if (!valid.length){gameOver=true;game1Result='win';setTimeout(onGame1End,200);draw();cb&&cb();return;}
+            let nxt=null;
+            if (cactusBoostMoves>0&&boostDir!==null){nxt=getNextDir(cactusPos,boostDir,bs);if(!nxt){nxt=nextMove(cactusPos,bs);boostDir=null;cactusBoostMoves=0;}}
+            else nxt=nextMove(cactusPos,bs);
+            if (!nxt) nxt=valid[Math.floor(Math.random()*valid.length)];
+            if (idx===0&&cactusBoostMoves>0&&boostDir===null) boostDir=getDir(prev,nxt);
+            cactusPos=nxt;
+            const hi=hatPositions.findIndex(h=>h.row===cactusPos.row&&h.col===cactusPos.col);
+            if (hi!==-1){hatPositions.splice(hi,1);if(idx===movesToMake-1){cactusBoostMoves=Math.floor(Math.random()*2)+2;boostDir=null;}}
+            if (isAtEdge(nxt.row,nxt.col)) { gameOver=true; game1Result='loss'; setTimeout(onGame1End,400); }
+            startAnim(prev,cactusPos);
+            setTimeout(()=>{idx++;if(!gameOver)exec();else cb&&cb();},300);
+        }
+        exec();
+    }
+
+    canvas.addEventListener('click', e => {
+        if (gameOver||isAnimating) return;
+        const rect=canvas.getBoundingClientRect(), sc=getCanvasScale();
+        const cx=(e.clientX-rect.left)*sc.scaleX, cy=(e.clientY-rect.top)*sc.scaleY;
+        const tile=tileAt(cx,cy); if (!tile) return;
+        const {row,col}=tile;
+
+        if (hatPlacementMode) {
+            if (row===cactusPos.row&&col===cactusPos.col) return;
+            if (tiles.find(t=>t.row===row&&t.col===col).blocked) return;
+            if (hatPositions.some(h=>h.row===row&&h.col===col)) return;
+            const imgIndex = hatImgs.length ? Math.floor(Math.random()*hatImgs.length) : 0;
+            hatPositions.push({row,col,imgIndex});
+            hatPlacementMode=false; hatBtn.classList.remove('active');
+            hatsRemaining--; hatCountSpan.textContent=hatsRemaining;
+            moveCactus(blockedSet()); return;
+        }
+
+        const idx=row*GRID_SIZE+col;
+        if (tiles[idx].blocked||(row===cactusPos.row&&col===cactusPos.col)) return;
+        if (hatPositions.some(h=>row===h.row&&col===h.col)) return;
+        tiles[idx].blocked=true; moveCactus(blockedSet());
+    });
+
+    hatBtn.addEventListener('click',()=>{
+        if (gameOver) return;
+        if (hatPlacementMode){hatPlacementMode=false;hatBtn.classList.remove('active');}
+        else if (hatsRemaining>0){hatPlacementMode=true;hatBtn.classList.add('active');}
+    });
+
+    retryBtn.addEventListener('click',()=>{
+        cactusPos={row:Math.floor(GRID_SIZE/2),col:Math.floor(GRID_SIZE/2)};
+        gameOver=false;game1Result=null;game1Handled=false;hatsRemaining=3;hatPlacementMode=false;hatPositions=[];
+        cactusBoostMoves=0;boostDir=null;isAnimating=false;animProgress=0;
+        hatCountSpan.textContent=3;hatBtn.classList.remove('active');
+        initGrid();draw();
+    });
+
+    document.querySelectorAll('.minecraft-button').forEach(b=>{
+        b.addEventListener('mousedown',function(){this.classList.add('pressed');});
+        b.addEventListener('mouseup',function(){this.classList.remove('pressed');});
+        b.addEventListener('mouseleave',function(){this.classList.remove('pressed');});
+    });
+    const despBtn=document.getElementById('desperadoBtn');
+    despBtn.addEventListener('mousedown',function(){this.classList.add('pressed');});
+    despBtn.addEventListener('mouseup',function(){this.classList.remove('pressed');});
+    despBtn.addEventListener('mouseleave',function(){this.classList.remove('pressed');});
+
+    initGrid(); draw();
+
+    const TEXT_ADS = [
+        {title:'You won a prize!', body:'Click here to claim your FREE laptop!', link:'https://en.wikipedia.org/wiki/Laptop'},
+        {title:'Warning!', body:'Your computer has 47 viruses. Click OK to fix!', link:'https://youtu.be/XwmCGFqBQQI?si=8Cqn4Z6YfWqOOM9W'},
+        {title:'HOT SINGLES', body:'Hot singles in your area want to meet you!', link:'https://www.youtube.com/@bubblez705'},
+        {title:'Congratulations!', body:"You are the 1,000,000th visitor! Claim your reward!", link:'https://youtu.be/EWxFMUik4mQ?si=52lmsTMMHWrOrl18'},
+        {title:'System Alert', body:'Your Adobe Flash Player is out of date. Update now!', link:'https://modrinth.com/mod/arlo-the-little-guy'},
+        {title:'FREE Download!', body:'Download our toolbar and get faster searches!', link:'https://modrinth.com/mod/arlo-the-little-guy'},
+        {title:'Special Offer', body:'Refinance your home loan NOW! Rates as low as 0%!', link:'https://en.wikipedia.org/wiki/Konami_Code'},
+        {title:"You're a winner!", body:'You have been selected for an exclusive survey! $500 gift card!', link:'https://en.wikipedia.org/wiki/Konami_Code'},
+        {title:'Yippie Kiy Yaoi!', body:'See men kissing today for FREE!', link: 'https://www.youtube.com/@bubblez705'},
+        {title:'Hot Moms in Your Area!', body:'It\'s your mom, actually.', link: 'https://minecraft.wiki/w/Pig'},
+        {title:'It was me, Barry.', body:'I pissed your pants.', link: 'https://en.wikipedia.org/wiki/Urination'},
+    ];
+
+    const IMAGE_ADS = [
+        {title:'Amazing Deal!', img:'Arlo_The_Little_Guy/little_ad/ads/ad1.png', link:'#'},
+        {title:"Don't Miss Out!", img:'Arlo_The_Little_Guy/little_ad/ads/ad2.png', link:'#'},
+        {title:'Limited Time Only!', img:'Arlo_The_Little_Guy/little_ad/ads/ad3.png', link:'#'},
+    ];
+
+    let popupCount = 0;
+
+    function spawnPopup() {
+        const useImage = IMAGE_ADS.length > 0 && Math.random() < 0.4;
+        let title, bodyHTML;
+        if (useImage) {
+            const ad = IMAGE_ADS[Math.floor(Math.random()*IMAGE_ADS.length)];
+            title = ad.title;
+            const href = ad.link || '#';
+            bodyHTML = `<a href="${href}" target="_blank" rel="noopener noreferrer"><img class="xp-ad-image" src="${ad.img}" alt="Ad"></a><div><a class="xp-ad-link" href="${href}" target="_blank" rel="noopener noreferrer">Click here &raquo;</a></div>`;
+        } else {
+            const ad = TEXT_ADS[Math.floor(Math.random()*TEXT_ADS.length)];
+            title = ad.title;
+            const href = ad.link || '#';
+            bodyHTML = `<div class="xp-ad-text">${ad.body}</div><div><a class="xp-ad-link" href="${href}" target="_blank" rel="noopener noreferrer">Click here to learn more &raquo;</a></div>`;
+        }
+        const pid = `popup-${++popupCount}`;
+        const popup = document.createElement('div');
+        popup.className='xp-popup'; popup.id=pid;
+        popup.innerHTML=`
+            <div class="xp-titlebar" id="tb-${pid}">
+                <div class="xp-title-text"><div class="xp-title-icon">!</div><span>${title}</span></div>
+                <div class="xp-close-btn" onclick="document.getElementById('${pid}').remove()">✕</div>
+            </div>
+            <div class="xp-body">${bodyHTML}</div>`;
+        const mg=20,pw=315,ph=130;
+        popup.style.left = (mg + Math.random()*(Math.max(mg,window.innerWidth-pw-mg)-mg)) + 'px';
+        popup.style.top  = (80 + Math.random()*(Math.max(80,window.innerHeight-ph-80)-80)) + 'px';
+        document.body.appendChild(popup);
+        makeDraggable(popup, document.getElementById('tb-'+pid));
+        setTimeout(()=>popup.remove(), 25000);
+    }
+
+    function makeDraggable(el,handle) {
+        let sx,sy,sl,st;
+        handle.addEventListener('mousedown',e=>{
+            sx=e.clientX;sy=e.clientY;sl=parseInt(el.style.left)||0;st=parseInt(el.style.top)||0;
+            const mv=e=>{el.style.left=(sl+e.clientX-sx)+'px';el.style.top=(st+e.clientY-sy)+'px';};
+            const up=()=>{document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);};
+            document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);e.preventDefault();
+        });
+    }
+
+    setTimeout(()=>{ spawnPopup(); setInterval(spawnPopup, 30000+Math.random()*30000); }, 5000);
+
+    let desperadoResponses = null;
+    let desperadoEvents    = null;
+    let currentCharacterSrc = 'desperado_bowler.png';
+    let lastDesperadoOutput = null;
+    let lastDesperadoIntent = null;
+    lastDesperadoIntent = "Howdy. Say something. Or don't. I don't really care. :D";
+
+    const HARDCODED_EVENTS = [
+
+    ];
+
+    Promise.all([
+        fetch('arlo-responses.json?v='+Date.now()).then(r=>r.json()).catch(()=>({})),
+        fetch('arlo-events.json?v='+Date.now()).then(r=>r.json()).catch(()=>[])
+    ]).then(([responses, events]) => {
+        desperadoResponses = responses;
+        desperadoEvents    = events;
+        updatePlaceholder();
+    });
+
+    function clean(str) {
+        return str.toLowerCase().replace(/[^a-z0-9\s]/g,'').trim();
+    }
+
+    function scoreTrigger(input, trigger) {
+        const ci = clean(input);
+        const ct = clean(trigger);
+        if (!ct) return 0;
+        if (ci === ct) return 1000;
+        if (ci.includes(ct)) {
+            return 100 + (ct.length / ci.length) * 100;
+        }
+        const iWords = new Set(ci.split(/\s+/));
+        const tWords = ct.split(/\s+/);
+        const matches = tWords.filter(w => iWords.has(w)).length;
+        if (matches === 0) return 0;
+        return (matches / tWords.length) * 50;
+    }
+
+    function bestMatch(input) {
+        let best = null;
+        let bestScore = 0;
+
+        if (lastDesperadoIntent) {
+            const allEvents = [...HARDCODED_EVENTS, ...(desperadoEvents||[])];
+            for (const ev of allEvents) {
+                if (ev.type !== 'response_to_previous') continue;
+                if (!ev.if_previous_was || !ev.triggers) continue;
+                if (clean(lastDesperadoIntent) !== clean(ev.if_previous_was)) continue;
+                for (const trigger of ev.triggers) {
+                    const score = scoreTrigger(input, trigger);
+                    if (score > bestScore) { bestScore = score; best = { type: 'event', data: ev }; }
+                }
+            }
+            if (bestScore >= 50) return best;
+        }
+
+        bestScore = 0; best = null;
+
+        const allEvents = [...HARDCODED_EVENTS, ...(desperadoEvents||[])];
+        for (const ev of allEvents) {
+            if (ev.type === 'response_to_previous' || !ev.triggers) continue;
+            for (const trigger of ev.triggers) {
+                const score = scoreTrigger(input, trigger);
+                if (score > bestScore) { bestScore = score; best = { type: 'event', data: ev }; }
+            }
+        }
+
+        if (desperadoResponses && Array.isArray(desperadoResponses)) {
+            for (const entry of desperadoResponses) {
+                const triggers = Array.isArray(entry.triggers) ? entry.triggers : [entry.triggers];
+                for (const trigger of triggers) {
+                    const score = scoreTrigger(input, trigger);
+                    if (score > bestScore) { bestScore = score; best = { type: 'simple', data: entry }; }
+                }
+            }
+        }
+
+        return bestScore > 0 ? best : null;
+    }
+
+    function getRandomKey() {
+        const sources = [];
+        if (desperadoResponses) {
+            if (Array.isArray(desperadoResponses)) {
+                desperadoResponses.forEach(entry => {
+                    if (entry.triggers?.length) sources.push(entry.triggers[0]);
+                });
+            } else {
+                sources.push(...Object.keys(desperadoResponses));
+            }
+        }
+        const allEvents = [...HARDCODED_EVENTS, ...(desperadoEvents||[])];
+        allEvents.forEach(ev => { if (ev.triggers?.length) sources.push(ev.triggers[0]); });
+        if (!sources.length) return 'hello';
+        return sources[Math.floor(Math.random()*sources.length)];
+    }
+
+    function updatePlaceholder() {
+        const inp = document.getElementById('desperadoInput');
+        if (inp) inp.placeholder = `Try saying something like: '${getRandomKey()}'`;
+    }
+
+    function fireEffects(effects) {
+        if (!effects?.length) return;
+        for (const fx of effects) {
+
+            if (fx.type === 'audio') {
+                const isYouTube = /youtube\.com|youtu\.be/.test(fx.src);
+
+                if (isYouTube) {
+                    let old = document.getElementById('desp-yt-frame');
+                    if (old) old.remove();
+                    const frame = document.createElement('iframe');
+                    frame.id = 'desp-yt-frame';
+                    frame.src = fx.src;
+                    frame.width = '0'; frame.height = '0';
+                    frame.style.cssText = 'position:fixed;bottom:-200px;left:-200px;opacity:0;pointer-events:none;';
+                    frame.allow = 'autoplay';
+                    document.body.appendChild(frame);
+
+                } else {
+                    let old = document.getElementById('desp-sfx');
+                    if (old) { old.pause(); old.remove(); }
+                    const audio = document.createElement('audio');
+                    audio.id  = 'desp-sfx';
+                    audio.src = fx.src;
+                    audio.volume = (fx.volume != null) ? Math.max(0, Math.min(1, fx.volume)) : 1.0;
+                    audio.style.cssText = 'position:fixed;bottom:-200px;left:-200px;';
+                    document.body.appendChild(audio);
+                    audio.play().catch(()=>{});
+                    audio.addEventListener('ended', () => audio.remove());
+                }
+            }
+
+            if (fx.type === 'hat_change') {
+                const char = document.getElementById('desperadoCharacter');
+                if (!char) continue;
+                currentCharacterSrc = fx.image;
+                char.src = fx.image;
+            }
+
+            if (fx.type === 'random_hat_change') {
+                const char = document.getElementById('desperadoCharacter');
+                if (!char) continue;
+                const pool = Array.isArray(fx.images) && fx.images.length ? fx.images : [currentCharacterSrc];
+                const available = pool.filter(img => img !== currentCharacterSrc);
+                const pick = (available.length ? available : pool)[Math.floor(Math.random() * (available.length ? available.length : pool.length))];
+                currentCharacterSrc = pick;
+                char.src = pick;
+            }
+
+            if (fx.type === 'scene_change') {
+                const bg = document.querySelector('.desperado-scene-bg');
+                if (!bg) continue;
+                bg.classList.add('scene-fading');
+                setTimeout(() => { bg.src = fx.image; bg.classList.remove('scene-fading'); }, 400);
+            }
+
+            if (fx.type === 'random_scene_change') {
+                const bg = document.querySelector('.desperado-scene-bg');
+                if (!bg) continue;
+                const pool = Array.isArray(fx.images) && fx.images.length ? fx.images : [];
+                if (!pool.length) continue;
+                const available = pool.filter(img => !bg.src.endsWith(img));
+                const pick = (available.length ? available : pool)[Math.floor(Math.random() * (available.length || pool.length))];
+                bg.classList.add('scene-fading');
+                setTimeout(() => { bg.src = pick; bg.classList.remove('scene-fading'); }, 400);
+            }
+
+            if (fx.type === 'weather') {
+                const bg = document.querySelector('.desperado-scene-bg');
+                if (!bg) continue;
+                const prev = bg.src;
+                bg.classList.add('scene-fading');
+                setTimeout(() => { bg.src = fx.image; bg.classList.remove('scene-fading'); }, 400);
+                if (fx.duration_ms) {
+                    setTimeout(() => {
+                        bg.classList.add('scene-fading');
+                        setTimeout(() => { bg.src = prev; bg.classList.remove('scene-fading'); }, 400);
+                    }, fx.duration_ms);
+                }
+            }
+
+            if (fx.type === 'sunrise' || fx.type === 'sunset') {
+                const bg = document.querySelector('.desperado-scene-bg');
+                if (!bg) continue;
+                const prev = bg.src;
+                bg.classList.add('scene-fading');
+                setTimeout(() => { bg.src = fx.image; bg.classList.remove('scene-fading'); }, 400);
+                if (fx.duration_ms) {
+                    setTimeout(() => {
+                        bg.classList.add('scene-fading');
+                        setTimeout(() => { bg.src = prev; bg.classList.remove('scene-fading'); }, 400);
+                    }, fx.duration_ms);
+                }
+            }
+
+            if (fx.type === 'screen_shake') {
+                const target = fx.target === 'panel'
+                    ? document.getElementById('desperadoPanel')
+                    : document.body;
+                if (!target) continue;
+                target.classList.remove('screen-shaking');
+                void target.offsetWidth;
+                target.classList.add('screen-shaking');
+                target.addEventListener('animationend', () => target.classList.remove('screen-shaking'), { once: true });
+            }
+
+            if (fx.type === 'ad_barrage') {
+                const count   = fx.count      ?? 5;
+                const stagger = fx.stagger_ms ?? 120;
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => spawnPopup(), i * stagger);
+                }
+            }
+
+            if (fx.type === 'specific_ad_barrage') {
+                const ads     = Array.isArray(fx.ads) && fx.ads.length ? fx.ads : [];
+                if (!ads.length) continue;
+                const count   = fx.count      ?? ads.length;
+                const stagger = fx.stagger_ms ?? 120;
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const ad  = ads[i % ads.length];
+                        const pid = `popup-${++popupCount}`;
+                        const popup = document.createElement('div');
+                        popup.className = 'xp-popup'; popup.id = pid;
+                        let bodyHTML;
+                        if (ad.img) {
+                            const href = ad.link || '#';
+                            bodyHTML = `<a href="${href}" target="_blank" rel="noopener noreferrer"><img class="xp-ad-image" src="${ad.img}" alt="Ad"></a><div><a class="xp-ad-link" href="${href}" target="_blank" rel="noopener noreferrer">Click here &raquo;</a></div>`;
+                        } else {
+                            const href = ad.link || '#';
+                            bodyHTML = `<div class="xp-ad-text">${ad.body ?? ''}</div><div><a class="xp-ad-link" href="${href}" target="_blank" rel="noopener noreferrer">Click here to learn more &raquo;</a></div>`;
+                        }
+                        popup.innerHTML = `
+                            <div class="xp-titlebar" id="tb-${pid}">
+                                <div class="xp-title-text"><div class="xp-title-icon">!</div><span>${ad.title ?? 'Ad'}</span></div>
+                                <div class="xp-close-btn" onclick="document.getElementById('${pid}').remove()">✕</div>
+                            </div>
+                            <div class="xp-body">${bodyHTML}</div>`;
+                        const mg=20, pw=315, ph=130;
+                        popup.style.left = (mg + Math.random()*(Math.max(mg,window.innerWidth-pw-mg)-mg)) + 'px';
+                        popup.style.top  = (80 + Math.random()*(Math.max(80,window.innerHeight-ph-80)-80)) + 'px';
+                        document.body.appendChild(popup);
+                        makeDraggable(popup, document.getElementById('tb-'+pid));
+                        setTimeout(() => popup.remove(), 25000);
+                    }, i * stagger);
+                }
+            }
+        }
+    }
+
+    function toggleDesperado() {
+        const p=document.getElementById('desperadoPanel'), o=document.getElementById('panelOverlay');
+        p.classList.contains('open')
+            ? (p.classList.remove('open'), o.classList.remove('show'))
+            : (p.classList.add('open'),    o.classList.add('show'));
+    }
+    function closeDesperado() {
+        document.getElementById('desperadoPanel').classList.remove('open');
+        document.getElementById('panelOverlay').classList.remove('show');
+    }
+
+    function addMsg(text, isUser) {
+        if (!isUser) lastDesperadoOutput = text;
+        const msgs = document.getElementById('desperadoMessages');
+        const b = document.createElement('div');
+        b.className = `msg-bubble ${isUser ? 'msg-user' : 'msg-ai'}`;
+        const s = document.createElement('div');
+        s.className = 'msg-sender';
+        s.textContent = isUser ? 'You' : 'Desperado';
+        b.appendChild(s);
+
+        const urlRx = /(https?:\/\/[^\s]+)/g;
+        text.split(urlRx).forEach(part => {
+            if (/^https?:\/\//.test(part)) {
+                const a = document.createElement('a');
+                a.href = part; a.textContent = part;
+                a.target = '_blank'; a.rel = 'noopener noreferrer';
+                b.appendChild(a);
+            } else {
+                b.appendChild(document.createTextNode(part));
+            }
+        });
+
+        msgs.appendChild(b);
+        msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function addTyping() {
+        const msgs = document.getElementById('desperadoMessages');
+        const b = document.createElement('div');
+        b.className = 'msg-bubble msg-ai'; b.id = 'typing-ind';
+        b.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+        msgs.appendChild(b); msgs.scrollTop = msgs.scrollHeight; return b;
+    }
+
+    let desperadoBusy = false;
+
+    function setDesperadoBusy(busy) {
+        desperadoBusy = busy;
+        const inp = document.getElementById('desperadoInput');
+        const btn = document.getElementById('desperadoSend');
+        if (inp) inp.disabled = busy;
+        if (btn) btn.disabled = busy;
+    }
+
+    async function sendDesperadoMessage() {
+        if (desperadoBusy) return;
+        const inp = document.getElementById('desperadoInput');
+        const text = inp.value.trim(); if (!text) return;
+        inp.value = ''; updatePlaceholder();
+        addMsg(text, true);
+
+        setDesperadoBusy(true);
+        try {
+            const typing = addTyping();
+            await new Promise(r => setTimeout(r, 700 + Math.random()*800));
+            typing.remove();
+
+            const match = bestMatch(text);
+            if (match) {
+                if (match.type === 'event') {
+                    const ev = match.data;
+                    const responses = ev.responses || [{ text: '...', effects: [] }];
+                    const line = responses[Math.floor(Math.random() * responses.length)];
+
+                    if (line.type === 'string_of_messages') {
+                        const msgs = Array.isArray(line.messages) ? line.messages : [];
+                        for (let i = 0; i < msgs.length; i++) {
+                            if (i > 0) {
+                                const t2 = addTyping();
+                                await new Promise(r => setTimeout(r, 500 + Math.random()*600));
+                                t2.remove();
+                            }
+                            const m = msgs[i];
+                            const mText    = typeof m === 'string' ? m : m.text;
+                            const mEffects = typeof m === 'string' ? [] : (m.effects || []);
+                            addMsg(mText, false);
+                            fireEffects(mEffects);
+                        }
+                        fireEffects(line.effects || []);
+                        const lastMsg = msgs[msgs.length - 1];
+                        lastDesperadoIntent = typeof lastMsg === 'string' ? lastMsg : lastMsg.text;
+                        return;
+                    }
+
+                    const lineText    = typeof line === 'string' ? line : line.text;
+                    const lineEffects = typeof line === 'string' ? []   : (line.effects || []);
+                    addMsg(lineText, false);
+                    fireEffects(lineEffects);
+                    lastDesperadoIntent = lineText;
+                    return;
+                }
+
+                if (match.type === 'simple') {
+                    const entry = match.data;
+                    const responses = Array.isArray(entry.responses) ? entry.responses : [entry.responses];
+                    const text2 = responses[Math.floor(Math.random() * responses.length)];
+                    addMsg(text2, false);
+                    lastDesperadoIntent = text2;
+                    return;
+                }
+            }
+
+            addMsg('Iconic Catchphrase. Can you try saying something else?', false);
+            lastDesperadoIntent = null;
+        } finally {
+            setDesperadoBusy(false);
+        }
+    }
+
+    document.getElementById('desperadoInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!desperadoBusy) sendDesperadoMessage(); }
+    });
+    document.getElementById('desperadoInput').addEventListener('input', function() {
+        if (!this.value) updatePlaceholder();
+    });
+
+    const SECRET_CODE = Array.from({length:4}, () => String.fromCharCode(65 + Math.floor(Math.random()*26)));
+    console.log('%c[DEV] Secret Code: ' + SECRET_CODE.join(''), 'color:#3453df;font-size:20px;font-weight:bold;background:#111;padding:6px 12px;border-radius:4px;');
+
+    const revealedSet   = new Set();
+    let game1LostOnce   = false;
+    let game1WonOnce    = false;
+    let g2DiedOnce      = false;
+    let g2WonOnce       = false;
+
+    function revealLetter() {
+        const pool = [0,1,2,3].filter(i => !revealedSet.has(i));
+        if (!pool.length) return;
+        revealedSet.add(pool[Math.floor(Math.random()*pool.length)]);
+        updateCodeDisplay();
+        if (revealedSet.size === 4) {
+            setTimeout(() => triggerSystemEvent('all_letters_unlocked'), 1400);
+        }
+    }
+
+    function updateCodeDisplay() {
+        const strip = document.getElementById('codeStrip');
+        if (!strip) return;
+        strip.innerHTML = SECRET_CODE.map((l,i) =>
+            `<span class="code-cell${revealedSet.has(i)?' revealed':''}">${revealedSet.has(i)?l:'_'}</span>`
+        ).join('');
+    }
+
+    function onGame1End() {
+        if (game1Result==='loss' && !game1LostOnce) { game1LostOnce=true; revealLetter(); }
+        if (game1Result==='win'  && !game1WonOnce)  {
+            game1WonOnce=true; revealLetter();
+            setTimeout(triggerBeatTrapEvent, 1200);
+        }
+    }
+
+    function triggerSystemEvent(triggerKey) {
+        const allEvents = [...HARDCODED_EVENTS, ...(desperadoEvents||[])];
+        const ev = allEvents.find(e => e.triggers && e.triggers.includes(triggerKey));
+        if (!ev) return;
+
+        document.getElementById('desperadoPanel').classList.add('open');
+        document.getElementById('panelOverlay').classList.add('show');
+
+        const responses = ev.responses || [{ text: '...', effects: [] }];
+const line = responses[Math.floor(Math.random() * responses.length)];
+
+setTimeout(async () => {
+    if (line.type === 'string_of_messages') {
+        const msgs = Array.isArray(line.messages) ? line.messages : [];
+        for (let i = 0; i < msgs.length; i++) {
+            const typing = addTyping();
+            await new Promise(r => setTimeout(r, 900 + Math.random()*600));
+            typing.remove();
+            const m = msgs[i];
+            const mText    = typeof m === 'string' ? m : m.text;
+            const mEffects = typeof m === 'string' ? [] : (m.effects || []);
+            addMsg(mText, false);
+            fireEffects(mEffects);
+        }
+        fireEffects(line.effects || []);
+        lastDesperadoIntent = (() => { const last = msgs[msgs.length - 1]; return typeof last === 'string' ? last : last.text; })();
+    } else {
+        const typing = addTyping();
+        await new Promise(r => setTimeout(r, 900 + Math.random()*600));
+        typing.remove();
+        const lineText    = typeof line === 'string' ? line : line.text;
+        const lineEffects = typeof line === 'string' ? []   : (line.effects || []);
+        addMsg(lineText, false);
+        fireEffects(lineEffects);
+        lastDesperadoIntent = lineText;
+    }
+}, 400);
+    }
+
+    function triggerBeatTilesEvent() {
+        if (g2WonOnce) triggerSystemEvent('beat_tiles');
+    }
+
+    function triggerBeatTrapEvent() {
+        if (game1WonOnce) triggerSystemEvent('beat_trap');
+    }
+
+    const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a','Enter'];
+    let ki=0;
+
+    function feedKonami(key) {
+        if (key === KONAMI[ki]) {
+            ki++;
+            if (ki === KONAMI.length) { ki = 0; openKonami(); }
+        } else {
+            ki = (key === KONAMI[0]) ? 1 : 0;
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.target===document.getElementById('desperadoInput')) return;
+        if (e.target.classList.contains('konami-letter-input')) return;
+        feedKonami(e.key);
+    });
+
+    function openKonami() {
+        const overlay = document.getElementById('konamiOverlay');
+        document.getElementById('konamiMenu').style.display = 'flex';
+        document.getElementById('konamiWin').classList.remove('show');
+        document.getElementById('konamiWin').style.animation = '';
+        [0,1,2,3].forEach(i => {
+            const inp = document.getElementById('ki'+i);
+            inp.value = ''; inp.classList.remove('filled');
+        });
+        const btn = document.getElementById('konamiEnterBtn');
+        btn.disabled = true; btn.classList.remove('ready');
+        overlay.classList.add('show');
+        setTimeout(() => document.getElementById('ki0').focus(), 60);
+    }
+
+    function closeKonami() { document.getElementById('konamiOverlay').classList.remove('show'); }
+    document.getElementById('konamiOverlay').addEventListener('click', e => { if (e.target===e.currentTarget) closeKonami(); });
+
+    [0,1,2,3].forEach(idx => {
+        const inp = document.getElementById('ki'+idx);
+        inp.addEventListener('input', () => {
+            inp.value = inp.value.replace(/[^a-zA-Z]/g,'').toUpperCase().slice(-1);
+            inp.classList.toggle('filled', inp.value.length===1);
+            if (inp.value.length===1 && idx<3) document.getElementById('ki'+(idx+1)).focus();
+            const allFilled = [0,1,2,3].every(i => document.getElementById('ki'+i).value.length===1);
+            const btn = document.getElementById('konamiEnterBtn');
+            btn.disabled = !allFilled;
+            btn.classList.toggle('ready', allFilled);
+        });
+        inp.addEventListener('keydown', e => {
+            if (e.key==='Backspace' && !inp.value && idx>0) document.getElementById('ki'+(idx-1)).focus();
+            if (e.key==='Enter') { e.stopPropagation(); document.getElementById('konamiEnterBtn').click(); }
+        });
+    });
+
+    document.getElementById('konamiEnterBtn').addEventListener('click', () => {
+        const guess = [0,1,2,3].map(i => document.getElementById('ki'+i).value).join('');
+        if (guess === SECRET_CODE.join('')) {
+            document.getElementById('konamiMenu').style.display = 'none';
+            const konamiWin = document.getElementById('konamiWin');
+            konamiWin.style.animation = 'none';
+            konamiWin.classList.add('show');
+        } else {
+            const inputs = document.querySelector('.konami-inputs');
+            inputs.classList.remove('screen-shaking');
+            void inputs.offsetWidth;
+            inputs.classList.add('screen-shaking');
+            inputs.addEventListener('animationend', () => inputs.classList.remove('screen-shaking'), {once:true});
+            const menu = document.getElementById('konamiMenu');
+            menu.classList.remove('konami-wrong');
+            void menu.offsetWidth;
+            menu.classList.add('konami-wrong');
+            setTimeout(() => menu.classList.remove('konami-wrong'), 800);
+        }
+    });
+
+    const G2 = 10;
+
+    let g2Grid   = [];
+    let g2Player = {r:0, c:0};
+    let g2Smelly = false;
+    let g2Dead   = false;
+    let g2Won    = false;
+    let g2Moving = false;
+
+    function g2GenGrid() {
+        const grid = [];
+        for (let r=0; r<G2; r++) {
+            grid.push([]);
+            for (let c=0; c<G2; c++) {
+                if (r===0   && c===0)     { grid[r].push('start'); continue; }
+                if (r===G2-1 && c===G2-1) { grid[r].push('exit');  continue; }
+                const roll = Math.random();
+                if      (roll < 0.28) grid[r].push('red');
+                else if (roll < 0.38) grid[r].push('yellow');
+                else if (roll < 0.48) grid[r].push('blue');
+                else if (roll < 0.56) grid[r].push('green');
+                else if (roll < 0.64) grid[r].push('orange');
+                else if (roll < 0.72) grid[r].push('purple');
+                else if (roll < 0.86) grid[r].push('pink');
+                else                  grid[r].push('pink');
+            }
+        }
+
+        const safe = t => t==='pink' || t==='purple' || t==='start' || t==='exit';
+
+        function bfsSafePath() {
+            const vis  = Array.from({length:G2}, ()=>Array(G2).fill(false));
+            const prev = Array.from({length:G2}, ()=>Array(G2).fill(null));
+            const q    = [[0,0]]; vis[0][0]=true;
+            const dirs=[[-1,0],[1,0],[0,-1],[0,1]];
+            while (q.length) {
+                const [r,c]=q.shift();
+                if (r===G2-1&&c===G2-1) {
+                    const path=[]; let cr=r,cc=c;
+                    while (cr!==0||cc!==0){path.push([cr,cc]);[cr,cc]=prev[cr][cc];}
+                    path.push([0,0]);
+                    path.reverse();
+                    return path;
+                }
+                for (const [dr,dc] of dirs) {
+                    const nr=r+dr,nc=c+dc;
+                    if (nr>=0&&nr<G2&&nc>=0&&nc<G2&&!vis[nr][nc]&&safe(grid[nr][nc])){
+                        vis[nr][nc]=true; prev[nr][nc]=[r,c]; q.push([nr,nc]);
+                    }
+                }
+            }
+            return null;
+        }
+
+        let path = bfsSafePath();
+
+        if (!path) {
+            let cr=0, cc=0;
+            const visited = new Set(['0,0']);
+            while (cr!==G2-1||cc!==G2-1) {
+                const goDown  = cr < G2-1;
+                const goRight = cc < G2-1;
+                let dr=0, dc=0;
+                const r2 = Math.random();
+                if (goDown && goRight) {
+                    const remR = G2-1-cr, remC = G2-1-cc;
+                    if (r2 < 0.55) { dr = remR >= remC ? 1 : 0; dc = remR >= remC ? 0 : 1; }
+                    else           { dr = remR >= remC ? 0 : 1; dc = remR >= remC ? 1 : 0; }
+                }
+                else if (goDown)  { dr=1; }
+                else              { dc=1; }
+                cr+=dr; cc+=dc;
+                const key=`${cr},${cc}`;
+                if (!visited.has(key)) {
+                    visited.add(key);
+                    if (grid[cr][cc]!=='exit') {
+                        grid[cr][cc] = Math.random() < 0.3 ? 'purple' : 'pink';
+                    }
+                }
+            }
+            path = bfsSafePath();
+        }
+
+        return grid;
+    }
+
+    function g2Init() {
+        g2CalcCellSize();
+        g2Grid    = g2GenGrid();
+        g2Player  = {r:0, c:0};
+        g2Smelly  = false;
+        g2Dead    = false;
+        g2Won     = false;
+        g2Moving  = false;
+        const resultOverlay = document.getElementById('gridResultOverlay');
+        if (resultOverlay) resultOverlay.style.display = 'none';
+        const img = document.getElementById('gridPlayerImg');
+        if (img) {
+            img.style.transition = 'none';
+            void img.offsetWidth;
+        }
+        g2Render();
+        if (img) {
+            requestAnimationFrame(() => { img.style.transition = ''; });
+        }
+        g2Status('Use arrow keys to move.');
+        document.getElementById('gridBoard').focus();
+    }
+
+    let G2_STEP = 44;
+    let G2_PLAYER_OFFSET = 4;
+
+    function g2CalcCellSize() {
+        const board = document.getElementById('gridBoard');
+        const wrapper = board.parentElement;
+        const available = wrapper.clientWidth;
+        const cell = Math.floor((available - 18) / 10);
+        const clamped = Math.max(24, Math.min(cell, 48));
+        G2_STEP = clamped + 2;
+        G2_PLAYER_OFFSET = Math.round(clamped * 0.1);
+        board.style.setProperty('--g2-cell', clamped + 'px');
+        const playerSize = Math.round(clamped * 0.82);
+        document.documentElement.style.setProperty('--g2-player-size', playerSize + 'px');
+    }
+
+    function g2PlayerPos(r, c) {
+        return { left: c * G2_STEP + G2_PLAYER_OFFSET, top: r * G2_STEP + G2_PLAYER_OFFSET };
+    }
+
+    function g2UpdatePlayerImg() {
+        const img = document.getElementById('gridPlayerImg');
+        if (!img) return;
+        img.src = g2Dead ? 'Arlo_The_Little_Guy/little_ad/icons/dead_arlo.png' : (g2Smelly ? 'Arlo_The_Little_Guy/little_ad/icons/arlo_orange.png' : 'Arlo_The_Little_Guy/little_ad/icons/arlo_trap_the_cactus.png');
+        img.onerror = () => { img.style.display = 'none'; };
+        img.style.display = '';
+        const pos = g2PlayerPos(g2Player.r, g2Player.c);
+        img.style.left = pos.left + 'px';
+        img.style.top  = pos.top  + 'px';
+    }
+
+    function g2Render() {
+        const board = document.getElementById('gridBoard');
+        const overlay = document.getElementById('gridPlayerOverlay');
+        board.innerHTML = '';
+        if (overlay) board.appendChild(overlay);
+        for (let r=0; r<G2; r++) {
+            for (let c=0; c<G2; c++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                cell.dataset.type = g2Grid[r][c];
+                board.appendChild(cell);
+            }
+        }
+        g2UpdatePlayerImg();
+    }
+
+    function g2Status(msg, cls='') {
+        if (cls === 'danger') {
+            const overlay = document.getElementById('gridResultOverlay');
+            const img = document.getElementById('gridResultImg');
+            if (overlay && img) {
+                img.src = 'Arlo_The_Little_Guy/little_ad/games/dead.png';
+                overlay.style.display = 'flex';
+            }
+        } else if (cls === 'win') {
+            const overlay = document.getElementById('gridResultOverlay');
+            const img = document.getElementById('gridResultImg');
+            if (overlay && img) {
+                img.src = 'Arlo_The_Little_Guy/little_ad/games/good_escaped.png';
+                overlay.style.display = 'flex';
+            }
+        }
+    }
+
+    function g2CellEl(r, c) {
+        return document.getElementById('gridBoard').children[r*G2+c+1];
+    }
+
+    function g2ShowPiranha(r, c) {
+        return new Promise(res => {
+            const overlay = document.getElementById('gridPlayerOverlay');
+            if (overlay) {
+                const clip = document.createElement('div');
+                clip.style.cssText = 'position:absolute;overflow:hidden;pointer-events:none;z-index:5;';
+                clip.style.width  = G2_STEP - 2 + 'px';
+                clip.style.height = G2_STEP - 2 + 'px';
+                clip.style.left = (c * G2_STEP) + 'px';
+                clip.style.top  = (r * G2_STEP) + 'px';
+                const img = document.createElement('img');
+                img.className = 'grid-piranha';
+                img.src = 'Arlo_The_Little_Guy/little_ad/icons/piranha.png';
+                img.onerror = () => { img.textContent='fish'; };
+                clip.appendChild(img);
+                overlay.appendChild(clip);
+                setTimeout(() => { if (clip.parentNode) clip.parentNode.removeChild(clip); }, 1500);
+            }
+            setTimeout(res, 1350);
+        });
+    }
+
+    function g2ShowMonster(r, c) {
+        return new Promise(res => {
+            const overlay = document.getElementById('gridPlayerOverlay');
+            if (overlay) {
+                const clip = document.createElement('div');
+                clip.style.cssText = 'position:absolute;overflow:hidden;pointer-events:none;z-index:5;';
+                clip.style.width  = G2_STEP - 2 + 'px';
+                clip.style.height = G2_STEP - 2 + 'px';
+                clip.style.left = (c * G2_STEP) + 'px';
+                clip.style.top  = (r * G2_STEP) + 'px';
+                const img = document.createElement('img');
+                img.className = 'grid-monster';
+                img.src = 'Arlo_The_Little_Guy/little_ad/icons/monster.png';
+                img.onerror = () => { img.src = ''; img.textContent = 'monster'; };
+                clip.appendChild(img);
+                overlay.appendChild(clip);
+                setTimeout(() => { if (clip.parentNode) clip.parentNode.removeChild(clip); }, 800);
+            }
+            setTimeout(res, 700);
+        });
+    }
+
+    async function g2Slide(startR, startC, dr, dc) {
+        let cr=startR, cc=startC;
+        while (true) {
+            const nr=cr+dr, nc=cc+dc;
+            if (nr<0||nr>=G2||nc<0||nc>=G2) break;
+            const type = g2Grid[nr][nc];
+            if (type==='red') break;
+            cr=nr; cc=nc;
+            g2Player={r:cr, c:cc};
+            g2UpdatePlayerImg();
+            await new Promise(res=>setTimeout(res,110));
+            if (type!=='purple') { await g2ApplyEffect(cr,cc,dr,dc,true); break; }
+        }
+    }
+
+    async function g2ApplyEffect(r, c, dr, dc, slidFromPurple=false) {
+        if (g2Dead||g2Won) return;
+        const type = g2Grid[r][c];
+        if (type==='yellow') {
+            g2Dead=true; g2UpdatePlayerImg(); g2Status('Zapped.','danger');
+            if (!g2DiedOnce) { g2DiedOnce=true; setTimeout(revealLetter,800); }
+            return;
+        }
+        if (type==='orange' && !g2Smelly) {
+            g2Smelly=true; g2UpdatePlayerImg(); g2Status('You smell like oranges now.','warning');
+        }
+        if (type==='blue') {
+            const dirs=[[-1,0],[1,0],[0,-1],[0,1]];
+            const nearElectric = dirs.some(([dr,dc]) => {
+                const nr=r+dr, nc=c+dc;
+                return nr>=0&&nr<G2&&nc>=0&&nc<G2&&g2Grid[nr][nc]==='yellow';
+            });
+            if (nearElectric) {
+                g2Dead=true; g2UpdatePlayerImg(); g2Status('Electrocuted in the water!','danger');
+                if (!g2DiedOnce) { g2DiedOnce=true; setTimeout(revealLetter,800); }
+                return;
+            }
+        }
+        if (type==='blue' && g2Smelly && !slidFromPurple) {
+            g2UpdatePlayerImg();
+            await g2ShowPiranha(r,c);
+            g2Dead=true; g2UpdatePlayerImg(); g2Status('A piranha got you.','danger');
+            if (!g2DiedOnce) { g2DiedOnce=true; setTimeout(revealLetter,800); }
+            return;
+        }
+        if (type==='blue' && g2Smelly && slidFromPurple) {
+            g2Status('The soap smell kept the piranhas away.','warning');
+        }
+        if (type==='green') {
+            g2UpdatePlayerImg();
+            await g2ShowMonster(r, c);
+            g2Dead=true; g2UpdatePlayerImg(); g2Status('A monster got you.', 'danger');
+            if (!g2DiedOnce) { g2DiedOnce=true; setTimeout(revealLetter, 800); }
+            return;
+        }
+        if (type==='exit') {
+            g2Won=true; g2Status('You made it.','win');
+            if (!g2WonOnce) {
+                g2WonOnce=true;
+                setTimeout(revealLetter,600);
+                setTimeout(triggerBeatTilesEvent, 1200);
+            }
+        }
+    }
+
+    async function g2Move(dr, dc) {
+        if (g2Dead||g2Won||g2Moving) return;
+        const nr=g2Player.r+dr, nc=g2Player.c+dc;
+        if (nr<0||nr>=G2||nc<0||nc>=G2) return;
+        const type=g2Grid[nr][nc];
+        if (type==='red') return;
+        g2Moving=true;
+        g2Player={r:nr,c:nc};
+        if (type==='purple') {
+            g2UpdatePlayerImg();
+            await g2Slide(nr,nc,dr,dc);
+        } else {
+            g2UpdatePlayerImg();
+            await g2ApplyEffect(nr,nc,dr,dc);
+        }
+        g2Moving=false;
+    }
+
+    document.getElementById('gridBoard').addEventListener('keydown', async e => {
+        const map={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]};
+        if (!map[e.key]) return;
+        e.preventDefault();
+        await g2Move(...map[e.key]);
+    });
+
+    document.getElementById('gridRetryBtn').addEventListener('click', () => {
+        g2Init();
+        document.querySelectorAll('.minecraft-button').forEach(b=>b.classList.remove('pressed'));
+        document.getElementById('gridBoard').focus();
+    });
+
+    g2Init();
+
+    (function() {
+        const board = document.getElementById('gridBoard');
+        if (!board) return;
+        const ro = new ResizeObserver(() => {
+            g2CalcCellSize();
+            g2UpdatePlayerImg();
+        });
+        ro.observe(board.parentElement);
+    })();
+</script>
+<script>
+    (function() {
+        function ctrlPress(btn, fn) {
+            btn.classList.add('pressed');
+            setTimeout(() => btn.classList.remove('pressed'), 60);
+            fn();
+        }
+
+        const DPAD_KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a','Enter'];
+        const dpadHistory = [];
+
+        function recordDpad(key) {
+            dpadHistory.push(key);
+            if (dpadHistory.length > DPAD_KONAMI.length) dpadHistory.shift();
+            if (dpadHistory.length === DPAD_KONAMI.length && dpadHistory.every((k, i) => k === DPAD_KONAMI[i])) {
+                openKonami();
+            }
+        }
+
+        const dpadMap = {
+            dpadUp:    [-1,  0, 'ArrowUp'],
+            dpadDown:  [ 1,  0, 'ArrowDown'],
+            dpadLeft:  [ 0, -1, 'ArrowLeft'],
+            dpadRight: [ 0,  1, 'ArrowRight'],
+        };
+        Object.entries(dpadMap).forEach(([id, [dr, dc, arrowKey]]) => {
+            const btn = document.getElementById(id);
+            let holdTimer = null;
+            let isTouching = false;
+
+            function onPress(e) {
+                e.preventDefault();
+                if (e.type === 'mousedown' && isTouching) return;
+                recordDpad(arrowKey);
+                if (holdTimer) return;
+                btn.classList.add('pressed');
+                g2Move(dr, dc);
+                holdTimer = setInterval(() => g2Move(dr, dc), 80);
+            }
+            function onRelease() {
+                btn.classList.remove('pressed');
+                clearInterval(holdTimer);
+                holdTimer = null;
+            }
+
+            btn.addEventListener('touchstart',  (e) => { isTouching = true; onPress(e); },   { passive: false });
+            btn.addEventListener('touchend',    (e) => { onRelease(); setTimeout(() => isTouching = false, 300); });
+            btn.addEventListener('touchcancel', (e) => { onRelease(); setTimeout(() => isTouching = false, 300); });
+            btn.addEventListener('mousedown',   onPress);
+            btn.addEventListener('mouseup',     onRelease);
+            btn.addEventListener('mouseleave',  onRelease);
+        });
+
+        document.getElementById('ctrlA').addEventListener('click', () => {
+            ctrlPress(document.getElementById('ctrlA'), () => recordDpad('a'));
+        });
+        document.getElementById('ctrlB').addEventListener('click', () => {
+            ctrlPress(document.getElementById('ctrlB'), () => recordDpad('b'));
+        });
+
+        document.getElementById('ctrlStart').addEventListener('click', () => {
+            const btn = document.getElementById('ctrlStart');
+            btn.classList.add('pressed');
+            setTimeout(() => btn.classList.remove('pressed'), 150);
+            recordDpad('Enter');
+
+            cactusPos = { row: Math.floor(GRID_SIZE/2), col: Math.floor(GRID_SIZE/2) };
+            gameOver = false; game1Result = null; game1Handled = false;
+            hatsRemaining = 3; hatPlacementMode = false; hatPositions = [];
+            cactusBoostMoves = 0; boostDir = null; isAnimating = false; animProgress = 0;
+            hatCountSpan.textContent = 3; hatBtn.classList.remove('active');
+            initGrid(); draw();
+
+            const gridResultOverlay = document.getElementById('gridResultOverlay');
+            if (gridResultOverlay) gridResultOverlay.style.display = 'none';
+
+            g2Dead = true; g2Won = true;
+
+            const DURATION   = 5000;
+            const START_WAIT = 500;
+            const END_WAIT   = 30;
+            const start = performance.now();
+
+            function renderShuffleBoard(grid) {
+                const board = document.getElementById('gridBoard');
+                const overlay = document.getElementById('gridPlayerOverlay');
+                board.innerHTML = '';
+                if (overlay) board.appendChild(overlay);
+                for (let r = 0; r < G2; r++) {
+                    for (let c = 0; c < G2; c++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'grid-cell';
+                        cell.dataset.type = grid[r][c];
+                        board.appendChild(cell);
+                    }
+                }
+            }
+
+            const curseRoll = Math.random() < 0.0001;
+
+            function g2GenCursedGrid() {
+                const grid = [];
+                for (let r = 0; r < G2; r++) {
+                    grid.push([]);
+                    for (let c = 0; c < G2; c++) {
+                        grid[r].push('red');
+                    }
+                }
+                for (let r = 0; r < G2; r++) grid[r][0] = 'pink';
+                for (let c = 0; c < G2; c++) grid[G2-1][c] = 'pink';
+                grid[0][0] = 'start';
+                grid[G2-1][G2-1] = 'exit';
+                return grid;
+            }
+
+            function scheduleNext(elapsed) {
+                const t = Math.min(elapsed / DURATION, 1);
+                const interval = START_WAIT * Math.pow(END_WAIT / START_WAIT, t);
+
+                if (elapsed >= DURATION) {
+                    if (curseRoll) {
+                        g2Grid = g2GenCursedGrid();
+                        g2Player = {r:0, c:0};
+                        g2Smelly = false;
+                        g2Dead   = false;
+                        g2Won    = false;
+                        g2Moving = false;
+                        g2DiedOnce = false;
+                        g2Render();
+                        g2Status('Use arrow keys to move.');
+                    } else {
+                        g2Init();
+                    }
+                    document.getElementById('gridBoard').focus();
+                    return;
+                }
+
+                renderShuffleBoard(g2GenGrid());
+
+                setTimeout(() => scheduleNext(performance.now() - start), interval);
+            }
+
+            scheduleNext(0);
+        });
+    })();
+</script>
+<script>
+    (function() {
+        const hour = new Date().getHours();
+        const sceneMap = {
+            sunrise: 'Arlo_The_Little_Guy/little_ad/desperado/scenery_sunrise.png',
+            day: 'Arlo_The_Little_Guy/little_ad/desperado/scenery.png',
+            sunset: 'Arlo_The_Little_Guy/little_ad/desperado/scenery_sunset.png',
+            night: 'Arlo_The_Little_Guy/little_ad/desperado/scenery_night.png',
+        };
+        let scene;
+        if (hour >= 5  && hour <= 8)  scene = sceneMap.sunrise;
+        else if (hour >= 9  && hour <= 18) scene = sceneMap.day;
+        else if (hour >= 19 && hour <= 20) scene = sceneMap.sunset;
+        else scene = sceneMap.night;
+
+        if (scene !== sceneMap.day) {
+            const bg = document.getElementById('desperadoSceneBg');
+            if (bg) bg.src = scene;
+        }
+    })();
+</script>

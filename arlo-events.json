@@ -1,0 +1,577 @@
+[
+  {
+    "triggers": [
+      "rick",
+      "rick astley",
+      "astley",
+      "rickroll",
+      "rickrolled",
+      "rickrolld",
+      "rickroll'd"
+    ],
+    "responses": [
+      {
+        "text": "I recognize that name.",
+        "effects": [
+          {
+            "type": "audio",
+            "src": "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&start=0"
+          }
+        ]
+      },
+      {
+        "text": "I can't help you with that. I've found a source on the web if you want to learn more. https://youtu.be/AyOqGRjVtls?si=Eh0Wj_suf6l2boNI",
+        "effects": []
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "change hat",
+      "change your hat",
+      "bad hat",
+      "dislike your hat",
+      "terrible hat"
+    ],
+    "responses": [
+      {
+        "text": "What? Do you not like my hat??",
+        "effects": [
+          {
+            "type": "random_hat_change",
+            "images": [
+              "Arlo_The_Little_Guy/little_ad/desperado/bowler.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/cowboy.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/tricorn.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/straw_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/top_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/bucket.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/cactus_flower.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/sun_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/crown.png"
+            ]
+          },
+          {
+            "type": "audio",
+            "src": "Arlo_The_Little_Guy/little_ad/sfx/hat_swap.mp3"
+          }
+        ]
+      },
+      {
+        "text": "I thought my hat was stylish...",
+        "effects": [
+          {
+            "type": "random_hat_change",
+            "images": [
+              "Arlo_The_Little_Guy/little_ad/desperado/bowler.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/cowboy.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/tricorn.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/straw_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/top_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/bucket.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/cactus_flower.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/sun_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/crown.png"
+            ]
+          },
+          {
+            "type": "audio",
+            "src": "Arlo_The_Little_Guy/little_ad/sfx/hat_swap.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "beat_tiles"
+    ],
+    "responses": [
+      {
+        "text": "HUMAN!! I AM SO PROUD OF YOU!",
+        "effects": []
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "beat_trap"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "Arlo didn't deserve nun o that man",
+          "why'd you do that ;-;"
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "surprise me",
+      "random hat",
+      "new hat"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "I GOTCHU Bro",
+          "NEW HAT."
+        ],
+        "effects": [
+          {
+            "type": "random_hat_change",
+            "images": [
+              "Arlo_The_Little_Guy/little_ad/desperado/bowler.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/cowboy.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/tricorn.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/straw_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/top_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/bucket.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/cactus_flower.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/sun_hat.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/crown.png"
+            ]
+          },
+          {
+            "type": "audio",
+            "src": "Arlo_The_Little_Guy/little_ad/sfx/hat_swap.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "no hat",
+      "remove hat",
+      "remove your hat",
+      "take off your hat",
+      "take hat off",
+      "remove thy hat"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "W- WHAT?",
+          "NO HAT????"
+        ],
+        "effects": [
+          {
+            "type": "random_hat_change",
+            "images": [
+              "Arlo_The_Little_Guy/little_ad/desperado/no_hat.png"
+            ]
+          },
+          {
+            "type": "audio",
+            "src": "Arlo_The_Little_Guy/little_ad/sfx/hat_swap.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "take me somewhere",
+      "somewhere else",
+      "change the scenery",
+      "change scene",
+      "change scenery",
+      "new scene",
+      "new scenery",
+      "different scene",
+      "different scenery"
+    ],
+    "responses": [
+      {
+        "text": "Sure man. Best I can give you is changing the time. I don't have the time to move to an entirely new place.",
+        "effects": [
+          {
+            "type": "random_scene_change",
+            "images": [
+              "Arlo_The_Little_Guy/little_ad/desperado/scenery.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/scenery_night.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/scenery_sunrise.png",
+              "Arlo_The_Little_Guy/little_ad/desperado/scenery_sunset.png"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "sunrise",
+      "good morning",
+      "morning"
+    ],
+    "responses": [
+      {
+        "text": "good day",
+        "effects": [
+          {
+            "type": "sunrise",
+            "image": "Arlo_The_Little_Guy/little_ad/desperado/scenery_sunrise.png"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "sunset",
+      "dusk",
+      "evening"
+    ],
+    "responses": [
+      {
+        "text": "anothah one bites the dust",
+        "effects": [
+          {
+            "type": "sunset",
+            "image": "Arlo_The_Little_Guy/little_ad/desperado/scenery_sunset.png"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "night",
+      "go to sleep",
+      "lights out",
+      "goodnight"
+    ],
+    "responses": [
+      {
+        "text": "oki nighty night now",
+        "effects": [
+          {
+            "type": "scene_change",
+            "image": "Arlo_The_Little_Guy/little_ad/desperado/scenery_night.png"
+          }
+        ]
+      },
+      {
+        "text": "HONK SHOOOO HONK SHOOOOOOO",
+        "effects": [
+          {
+            "type": "scene_change",
+            "image": "Arlo_The_Little_Guy/little_ad/desperado/scenery_night.png"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "give me ads",
+      "give ads",
+      "more ads",
+      "ad barrage",
+      "spam me"
+    ],
+    "responses": [
+      {
+        "text": "You asked for it.",
+        "effects": [
+          {
+            "type": "ad_barrage",
+            "count": 123,
+            "stagger_ms": 50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "arlo ad",
+      "show me arlo",
+      "advertise arlo",
+      "play your ad",
+      "play me your ad",
+      "play ad"
+    ],
+    "responses": [
+      {
+        "text": "Allow me.",
+        "effects": [
+          {
+            "type": "specific_ad_barrage",
+            "count": 16,
+            "stagger_ms": 200,
+            "ads": [
+              {
+                "title": "Trap your Arlo today!",
+                "body": "Trap the cactus. It's free. It's right here. What are you waiting for?"
+              },
+              {
+                "title": "Arlo's Little Ad",
+                "body": "The best little ad on the web. Probably."
+              },
+              {
+                "title": "The Sentient Cactus says:",
+                "body": "Stay here. This website is all you could possibly need."
+              },
+              {
+                "title": "Limited Time Offer!",
+                "body": "Talk to Desperado. He's lonely. Don't tell him I said that."
+              },
+              {
+                "title": "DOWNLOAD ARLO TODAY ! !",
+                "body": "Talk to Desperado about downloading your own Arlo TODAY! It's FREE!"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "howdy",
+      "yeehaw",
+      "yee haw"
+    ],
+    "responses": [
+      {
+        "text": "Now that's what I like to hear.",
+        "effects": []
+      },
+      {
+        "text": "yee haw partner",
+        "effects": []
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "tile",
+      "tiles",
+      "rules",
+      "how do i play",
+      "explain tiles",
+      "what do the colors mean",
+      "color",
+      "colors",
+      "colour",
+      "colours"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "IT'S THE HUMAN!",
+          "YOU'RE GONNA LOVE THIS PUZZLE!",
+          "IT WAS MADE BY THE GREAT DR. ALPHYS!",
+          "YOU SEE THESE TILES!?",
+          "ONCE I THROW THIS SWITCH...",
+          "THEY WILL BEGIN TO CHANGE COLOR!",
+          "EACH COLOR HAS A DIFFERENT FUNCTION!",
+          "RED TILES ARE IMPASSABLE!",
+          "YOU CANNOT WALK ON THEM!",
+          "YELLOW TILES ARE ELECTRIC!",
+          "THEY WILL ELECTROCUTE YOU!",
+          "GREEN TILES ARE ALARM TILES!",
+          "IF YOU STEP ON THEM...",
+          "YOU WILL HAVE TO FIGHT A MONSTER!",
+          "ORANGE TILES ARE ORANGE-SCENTED.",
+          "THEY WILL MAKE YOU SMELL DELICIOUS!",
+          "BLUE TILES ARE WATER TILES.",
+          "SWIM THROUGH IF YOU LIKE, BUT...",
+          "IF YOU SMELL LIKE ORANGES!",
+          "THE PIRAHNAS WILL BITE YOU.",
+          "ALSO, IF A BLUE TILE IS NEXT TO A,",
+          "YELLOW TILE, THE WATER WILL ALSO ZAP YOU!",
+          "PURPLE TILES ARE SLIPPERY!",
+          "YOU WILL SLIDE TO THE NEXT TILE!",
+          "HOWEVER, THE SLIPPERY SOAP...",
+          "SMELLS LIKE LEMONS!",
+          "WHICH PIRAHNAS DO NOT LIKE!",
+          "PURPLE AND BLUE ARE OK!",
+          "FINALLY, PINK TILES.",
+          "THEY DON'T DO ANYTHING.",
+          "STEP ON THEM ALL YOU LIKE.",
+          "HOW WAS THAT!? UNDERSTAND???"
+        ]
+      }
+    ]
+  },
+  {
+    "_comment": "response_to_previous — if the user says no after the tile explanation ends",
+    "type": "response_to_previous",
+    "if_previous_was": "HOW WAS THAT!? UNDERSTAND???",
+    "triggers": [
+      "no",
+      "nope",
+      "nah",
+      "not really",
+      "i don't understand",
+      "i dont understand",
+      "no i don't",
+      "no i dont",
+      "not at all",
+      "what",
+      "huh",
+      "confused",
+      "no idea",
+      "still confused"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "OKAY... I GUESS I'LL REPEAT MYSELF...",
+          "RED TILES ARE IMPASSABLE.",
+          "YELLOW TILES ARE ELECTRIC AND DANGEROUS.",
+          "BLUE TILES MAKE YOU FIGHT A MONSTER.",
+          "GREEN TILES ARE WATER TILES.",
+          "ORANGE TILES ARE ORANGE SCENTED.",
+          "IF YOU STEP ON ORANGE, DON'T STEP ON GREEN.",
+          "BROWN TILES ARE...",
+          "WAIT!!! THERE ARE NO BROWN TILES...",
+          "PURPLE TILES SMELL LIKE LEMONS...",
+          "WHY DON'T THE YELLOW ONES SMELL LEMONY?",
+          "UM...",
+          "WAIT!! DID I MIX UP GREEN AND BLUE!?",
+          "THE BLUE ONES ARE WATER ONES!",
+          "PINK TILES...",
+          "I DON'T... REMEMBER???",
+          "WAIT!!!",
+          "THOSE ONES DON'T DO ANYTHING.",
+          "OKAY! DO YOU UNDERSTAND BETTER NOW!?"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "response_to_previous",
+    "if_previous_was": "OKAY! DO YOU UNDERSTAND BETTER NOW!?",
+    "triggers": [
+      "no",
+      "nope",
+      "nah",
+      "not really",
+      "i don't understand",
+      "i dont understand",
+      "no i don't",
+      "no i dont",
+      "not at all",
+      "what",
+      "huh",
+      "confused",
+      "no idea",
+      "still confused"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "OKAY... I GUESS I'LL REPEAT MYSELF...",
+          "RED TILES ARE IMPASSABLE.",
+          "YELLOW TILES ARE ELECTRIC AND DANGEROUS.",
+          "BLUE TILES MAKE YOU FIGHT A MONSTER.",
+          "GREEN TILES ARE WATER TILES.",
+          "ORANGE TILES ARE ORANGE SCENTED.",
+          "IF YOU STEP ON ORANGE, DON'T STEP ON GREEN.",
+          "BROWN TILES ARE...",
+          "WAIT!!! THERE ARE NO BROWN TILES...",
+          "PURPLE TILES SMELL LIKE LEMONS...",
+          "WHY DON'T THE YELLOW ONES SMELL LEMONY?",
+          "UM...",
+          "WAIT!! DID I MIX UP GREEN AND BLUE!?",
+          "THE BLUE ONES ARE WATER ONES!",
+          "PINK TILES...",
+          "I DON'T... REMEMBER???",
+          "WAIT!!!",
+          "THOSE ONES DON'T DO ANYTHING.",
+          "OKAY! DO YOU UNDERSTAND BETTER NOW!?"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "response_to_previous",
+    "if_previous_was": "I recognize that name.",
+    "triggers": [
+      "who is he",
+      "who is rick",
+      "who",
+      "who is that",
+      "who's that",
+      "who's he"
+    ],
+    "responses": [
+      {
+        "text": "You fr?",
+        "effects": []
+      },
+      {
+        "text": "I feel as though you should know the answer to that question.. I mean.. LISTEN to your headphones.. or speaker.",
+        "effects": []
+      }
+    ]
+  },
+  {
+    "type": "response_to_previous",
+    "if_previous_was": "Howdy. Say something. Or don't. I don't really care. :D",
+    "triggers": [
+      "something",
+      "something or don't i don't really care"
+    ],
+    "responses": [
+      {
+        "text": "...",
+        "effects": []
+      },
+      {
+        "text": "...I hate you. Not really, but you know what I mean.",
+        "effects": []
+      },
+      {
+        "text": "That is NOT what I meant broskie.",
+        "effects": []
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "all_letters_unlocked"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "Have you ever heard of the...",
+          "Konami code?",
+          "If I were you, personally, I would punch it in. Now."
+        ]
+      }
+    ]
+  },
+  {
+    "type": "response_to_previous",
+    "if_previous_was": "If I were you, personally, I would punch it in. Now.",
+    "triggers": [
+      "why",
+      "what"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "I won't force you.. but..",
+          "You know how I interrupted your video?",
+          "Well.. I assume you did all this in a hope that you'd get the rest of that video.",
+          "And ya know, if that isn't what you came to this website for.. you don't really have to do that.",
+          "But like.. there is a fun little message for you if you do it anyway."
+        ]
+      }
+    ]
+  }
+]
