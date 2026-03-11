@@ -686,6 +686,7 @@
         @media (max-width: 768px) {
             .desperado-panel { width: 100%; right: -100%; }
             .desperado-btn { bottom: 15px; right: 15px; width: 50px; height: 50px; }
+            .desperado-btn-section img { width: 36px; }
             .container { padding: 20px; }
         }
 
@@ -1375,7 +1376,7 @@
 
     let desperadoResponses = null;
     let desperadoEvents    = null;
-    let currentCharacterSrc = 'desperado_bowler.png';
+    let currentCharacterSrc = 'Arlo_The_Little_Guy/little_ad/desperado/bowler.png';
     let lastDesperadoOutput = null;
     let lastDesperadoIntent = null;
     lastDesperadoIntent = "Howdy. Say something. Or don't. I don't really care. :D";
@@ -2134,16 +2135,17 @@ setTimeout(async () => {
 
     async function g2Slide(startR, startC, dr, dc) {
         let cr=startR, cc=startC;
-        while (true) {
+        // Keep sliding while the cell we're currently on is purple
+        while (g2Grid[cr][cc]==='purple') {
             const nr=cr+dr, nc=cc+dc;
             if (nr<0||nr>=G2||nc<0||nc>=G2) break;
-            const type = g2Grid[nr][nc];
-            if (type==='red') break;
+            const nextType = g2Grid[nr][nc];
+            if (nextType==='red') break;
             cr=nr; cc=nc;
             g2Player={r:cr, c:cc};
             g2UpdatePlayerImg();
             await new Promise(res=>setTimeout(res,110));
-            if (type!=='purple') { await g2ApplyEffect(cr,cc,dr,dc,true); break; }
+            if (nextType!=='purple') { await g2ApplyEffect(cr,cc,dr,dc,true); break; }
         }
     }
 
@@ -2277,10 +2279,13 @@ setTimeout(async () => {
                 if (holdTimer) return;
                 btn.classList.add('pressed');
                 g2Move(dr, dc);
-                holdTimer = setInterval(() => g2Move(dr, dc), 80);
+                holdTimer = setTimeout(() => {
+                    holdTimer = setInterval(() => g2Move(dr, dc), 80);
+                }, 350);
             }
             function onRelease() {
                 btn.classList.remove('pressed');
+                clearTimeout(holdTimer);
                 clearInterval(holdTimer);
                 holdTimer = null;
             }
