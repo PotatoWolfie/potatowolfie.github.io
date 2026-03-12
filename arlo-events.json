@@ -403,7 +403,6 @@
     ]
   },
   {
-    "_comment": "response_to_previous — if the user says no after the tile explanation ends",
     "type": "response_to_previous",
     "if_previous_was": "HOW WAS THAT!? UNDERSTAND???",
     "triggers": [
@@ -573,5 +572,78 @@
         ]
       }
     ]
-  }
+  },
+  {
+    "type": "response_to_previous",
+    "if_previous_was": "Is this the part where the one song that might play when you fight sans plays?",
+    "triggers": [
+      "yea",
+      "yes",
+      "yeah",
+      "yup",
+      "yeppers",
+      "do it",
+      "play it",
+      "play",
+      "play the song",
+      "song",
+      "you should",
+      "absolutely",
+      "please do",
+      "mhm",
+      "song that might play when you fight sans"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "Really? That was a joke you know.",
+          "Sure. Whatever."
+        ],
+        "effects": [
+          {
+            "type": "audio",
+            "src": "https://www.youtube.com/embed/47GvY9rOMUs?autoplay=1&start=0&end=4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "despacito",
+      "minecraftcito"
+    ],
+    "responses": [
+      {
+        "text": "*gulp*",
+        "effects": [
+          {
+            "type": "audio",
+            "src": "https://www.youtube.com/embed/UJNDH_it9Io?autoplay=1&start=0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+  "triggers": [
+    "fire"
+  ],
+  "responses": [
+    {
+      "type": "string_of_messages",
+      "messages": [
+        "F- F- FIRE???",
+        "Wait actually I know smth for this"
+      ],
+      "effects": [
+        {
+          "type": "audio",
+          "src": "https://www.youtube.com/embed/eFTLKWw542g?autoplay=1&start=47&end=50"
+        }
+      ]
+    }
+  ]
+}
 ]

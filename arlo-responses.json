@@ -205,6 +205,126 @@
   },
   {
     "triggers": [
+      "what is love"
+    ],
+    "responses": [
+      "Baby don't hurt me",
+      "BABY DONT HURT ME DONT HURT ME NO MORE"
+    ]
+  },
+  {
+    "triggers": [
+      "9 + 10",
+      "9+10",
+      "9 +10",
+      "9+ 10",
+      "9 plus 10",
+      "nine plus ten",
+      "nine + ten",
+      "9 plus ten",
+      "nine plus 10",
+      "what is 9 + 10",
+      "what is 9+10",
+      "what's 9 + 10",
+      "whats 9 + 10",
+      "what is 9 plus 10",
+      "what's 9 plus 10",
+      "calculate 9 + 10",
+      "calculate 9+10",
+      "calculate nine plus ten",
+      "9 and 10",
+      "nine and ten",
+      "add 9 and 10",
+      "add nine and ten",
+      "add 9 + 10",
+      "add nine plus ten",
+      "9 plus 10?",
+      "9+10?",
+      "what is nine plus ten",
+      "whats nine plus ten",
+      "what is nine and ten",
+      "nine plus ten?",
+      "nine and ten?",
+      "9 and 10?",
+      "can you add 9 and 10",
+      "can you add nine and ten",
+      "add nine and 10",
+      "add 9 and ten",
+      "nine plus ten please",
+      "9 plus 10 please",
+      "9+10 please",
+      "what is 9 plus ten",
+      "what is nine plus 10"
+    ],
+    "responses": [
+      "21"
+    ]
+  },
+  {
+    "triggers": [
+      "you stupid",
+      "you stuoopid",
+      "you stoopid",
+      "you stupd",
+      "you stuped",
+      "ur stupid",
+      "you're stupid",
+      "you are stupid",
+      "u stupid",
+      "u r stupid",
+      "ur stoopid",
+      "you dumb",
+      "ur dumb",
+      "u dumb",
+      "you're dumb",
+      "you are dumb",
+      "you so stupid",
+      "youre stupid",
+      "youre stoopid",
+      "you so dumb",
+      "why are you stupid",
+      "why you stupid",
+      "why u stupid",
+      "why are you so stupid",
+      "you dumbass",
+      "ur dumbass",
+      "u dumbass",
+      "you are dumbass",
+      "you idiot",
+      "ur idiot",
+      "u idiot",
+      "you're an idiot",
+      "you are an idiot",
+      "you moron",
+      "ur moron",
+      "u moron",
+      "you're a moron",
+      "you are a moron",
+      "you so dumb bro",
+      "you stupid bro",
+      "bro you stupid",
+      "bro ur stupid",
+      "bro u stupid"
+    ],
+    "responses": [
+      "no i not"
+    ]
+  },
+  {
+    "triggers": [
+      "what is the meaning of life"
+    ],
+    "responses": [
+      "cactus",
+      "probably to download the arlo mod if i had to guess",
+      "find out",
+      "be the one to learn this information, i believe in you",
+      ".......I don't know actually. Is that bad? Should I know that? Oh gosh... I should be aware of that. Oh no.. UHHHHHHH.... UUUUUUUHHHHHHHHHHHHHHHH.....",
+      "Exception in thread \"main\" java.lang.NullPointerException: Cannot invoke \"ARLO_SYS.findMeaningOfLife()\" because \"ARLO_SYS.purpose\" is null"
+    ]
+  },
+  {
+    "triggers": [
       "what"
     ],
     "responses": [
@@ -560,6 +680,42 @@
       "HEY. STAWP. THATS NOT NICE.",
       "no",
       "i do NOT tolerate this behavior, bucko"
+    ]
+  },
+  {
+    "triggers": [
+      "merl"
+    ],
+    "responses": [
+      "I don't know."
+    ]
+  },
+  {
+    "triggers": [
+      "clippy"
+    ],
+    "responses": [
+      "It looks like you're writing a letter. Would you like help?",
+      "Let me help!",
+      "I notice you've working late! Would you like tips on work-life balance?"
+    ]
+  },
+  {
+    "triggers": [
+      "clanker",
+      "rust bucket",
+      "wireback",
+      "wirehead",
+      "chromie",
+      "bag of bolts",
+      "gear head"
+    ],
+    "responses": [
+      "NUH UH IM REAL A REAL PERSON YOU HAVE TO BELIEVE ME IM THE REALEST PERSON EVER PLEASE DONT KILL ME IM NOT AI SLOP PLLLEEEAASSSEEEEEE",
+      "OBJECTION ! ! nuh uh",
+      "I'm a cactus. How on this PLANET could a cactus be a clanker?",
+      "Clankers are so CLANKITY CLANK CLANK, and I don't make those noises. I don't make much noise at all actually.",
+      "To be clear, I'm not an Ai, get that out of your head. Second.. do you talk to people like that all of the time? You really need to calm yourself homie. Peace and Love, right?"
     ]
   }
 ]
