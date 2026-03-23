@@ -17,6 +17,41 @@
   },
   {
     "triggers": [
+      "hint",
+      "hints",
+      "give me a hint",
+      "can i get a hint",
+      "can you give me a hint",
+      "i need a hint",
+      "i want a hint",
+      "please give me a hint",
+      "just give me a hint",
+      "hint please",
+      "any hints",
+      "got any hints",
+      "got a hint",
+      "stuck",
+      "i'm stuck",
+      "im stuck",
+      "i need help",
+      "i need a clue",
+      "give me a clue",
+      "any clues",
+      "clue",
+      "can i have a hint",
+      "could i get a hint",
+      "would you give me a hint"
+    ],
+    "responses": [
+      "Well if I were you, PERSONALLY, I would try playing the games first.",
+      "There are rewards to losers.",
+      "Winners always receive awards, you know.",
+      "Just remember to not be a sore loser because there ARE participation rewards",
+      "Winning sounds like a fun concept."
+    ]
+  },
+  {
+    "triggers": [
       "france"
     ],
     "responses": [
@@ -522,6 +557,8 @@
       "bubblez",
       "bubblez705",
       "bub",
+      "bubby",
+      "corrupybubby",
       "bubz",
       "bubz705"
     ],
@@ -555,7 +592,7 @@
       "egotistical idiot"
     ],
     "responses": [
-      "CW? Is that you? Heh, no, you're not him. He's just a copied piece of media, idiot."
+      "CW? Is that you? Heh, no, you're not him. CW is basically what happens when you copy and paste something. It's technically the same, but its surroundings might not be."
     ]
   },
   {

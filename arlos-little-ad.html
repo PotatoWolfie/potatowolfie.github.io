@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://potatowolfie.github.io">
+    <meta property="og:title" content="Arlo's Little Ad">
+    <meta property="og:description" content="Welcome to Arlo the Little Guy's advertisement!">
+    <meta property="og:image" content="https://potatowolfie.github.io/Arlo_The_Little_Guy/assets/keyart/arlo_the_little_guy.png">
+    <meta property="og:image:width" content="2047">
+    <meta property="og:image:height" content="1078">
+    <meta property="og:site_name" content="Arlo the Little Guy">
+    <meta name="theme-color" content="#3453df">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://potatowolfie.github.io">
+    <meta name="twitter:title" content="Arlo's Little Ad">
+    <meta property="og:description" content="Welcome to Arlo the Little Guy's advertisement!">
+    <meta name="twitter:image" content="https://potatowolfie.github.io/assets/home/logo.png">
     <title>Arlo's Little Ad</title>
+    <link rel="icon" type="image/x-icon" href="bowler_hat.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         @font-face {
             font-family: 'Minecraft Ten';
@@ -320,7 +337,9 @@
         .xp-body { padding: 12px; background: #ede0c0; }
         .xp-body .xp-ad-image { width: 100%; display: block; image-rendering: auto; margin-bottom: 8px; }
         .xp-ad-text { padding: 4px 0; font-size: 12px; color: #000; line-height: 1.4; }
-        .xp-ad-link { color: #0000ee; text-decoration: underline; cursor: pointer; font-size: 11px; }
+        .xp-ad-link { color: #0000ee; text-decoration: underline; cursor: pointer; font-size: 11px; transition: none; }
+        .xp-ad-link:visited { color: #0000ee; }
+        .xp-ad-link:hover { color: #3939ff !important; text-decoration: underline; transition: none; }
 
         .desperado-panel {
             position: fixed; top: 0; right: -420px;
@@ -981,7 +1000,7 @@
     <div class="konami-win" id="konamiWin">
         <button class="konami-win-close" onclick="closeKonami()">✕</button>
         <img class="konami-win-gif" src="Arlo_The_Little_Guy/little_ad/you_win.png" alt="">
-        <a class="konami-win-link" href="YOUTUBE_LINK_WHEN_UPLOADED" target="_blank" rel="noopener">click here.</a>
+        <a class="konami-win-link" href="https://youtu.be/e1eRan7zYmE?si=7i4fxvhnfmhpB1Yl" target="_blank" rel="noopener">click here.</a>
     </div>
 </div>
 
@@ -1326,21 +1345,61 @@
     ];
 
     const IMAGE_ADS = [
-        {title:'Amazing Deal!', img:'Arlo_The_Little_Guy/little_ad/ads/ad1.png', link:'#'},
-        {title:"Don't Miss Out!", img:'Arlo_The_Little_Guy/little_ad/ads/ad2.png', link:'#'},
-        {title:'Limited Time Only!', img:'Arlo_The_Little_Guy/little_ad/ads/ad3.png', link:'#'},
+        {title:'Talk NOW', img:'Arlo_The_Little_Guy/little_ad/ads/ad1.png', link:'https://modrinth.com/mod/arlo-the-little-guy'},
+        {title:"Trust your good pals, nothing ever wrong happened from that", img:'Arlo_The_Little_Guy/little_ad/ads/ad2.png', link:'https://www.youtube.com/watch?v=J9IHTIMw9-E'},
+        {title:'Limited Time Only!', img:'Arlo_The_Little_Guy/little_ad/ads/ad3.png', link:'https://www.youtube.com/@bubblez705'},
+        {title:'ITS FREE', img:'Arlo_The_Little_Guy/little_ad/ads/ad4.png', link:'https://modrinth.com/mod/arlo-the-little-guy'},
+    ];
+
+    const NESTED_ADS = [
+        {title:'NO MORE ADS?',
+        body:'Want a break from the ads?',
+        link:'https://youtu.be/7SJFaPySF_0?si=jn5yeNovW5KVTZNg', innerTitle:'YES ADS',
+        innerBody:"Too bad.",
+        innerLink:'https://youtu.be/7SJFaPySF_0?si=jn5yeNovW5KVTZNg'}
     ];
 
     let popupCount = 0;
 
+    function spawnNestedPopup(ad) {
+        const pid = `popup-${++popupCount}`;
+        const popup = document.createElement('div');
+        popup.className = 'xp-popup'; popup.id = pid;
+        const innerHref = ad.innerLink || '#';
+        const bodyHTML = `<div class="xp-ad-text">${ad.innerBody}</div><div><a class="xp-ad-link" href="${innerHref}" target="_blank" rel="noopener noreferrer">Click here to learn more &raquo;</a></div>`;
+        popup.innerHTML = `
+            <div class="xp-titlebar" id="tb-${pid}">
+                <div class="xp-title-text"><div class="xp-title-icon">!</div><span>${ad.innerTitle}</span></div>
+                <div class="xp-close-btn" onclick="document.getElementById('${pid}').remove()">✕</div>
+            </div>
+            <div class="xp-body">${bodyHTML}</div>`;
+        const mg=20, pw=315, ph=130;
+        popup.style.left = (mg + Math.random()*(Math.max(mg,window.innerWidth-pw-mg)-mg)) + 'px';
+        popup.style.top  = (80 + Math.random()*(Math.max(80,window.innerHeight-ph-80)-80)) + 'px';
+        document.body.appendChild(popup);
+        makeDraggable(popup, document.getElementById('tb-'+pid));
+        setTimeout(() => popup.remove(), 25000);
+    }
+
     function spawnPopup() {
-        const useImage = IMAGE_ADS.length > 0 && Math.random() < 0.4;
+        const roll = Math.random();
+        const useImage = IMAGE_ADS.length > 0 && roll < 0.15;
+        const useNested = !useImage && roll < 0.20;
         let title, bodyHTML;
         if (useImage) {
             const ad = IMAGE_ADS[Math.floor(Math.random()*IMAGE_ADS.length)];
             title = ad.title;
             const href = ad.link || '#';
             bodyHTML = `<a href="${href}" target="_blank" rel="noopener noreferrer"><img class="xp-ad-image" src="${ad.img}" alt="Ad"></a><div><a class="xp-ad-link" href="${href}" target="_blank" rel="noopener noreferrer">Click here &raquo;</a></div>`;
+        } else if (useNested) {
+            const ad = NESTED_ADS[Math.floor(Math.random()*NESTED_ADS.length)];
+            title = ad.title;
+            const nestedId = `nested-link-${++popupCount}`;
+            bodyHTML = `<div class="xp-ad-text">${ad.body}</div><div><a class="xp-ad-link" id="${nestedId}" href="javascript:void(0)">Click here to learn more &raquo;</a></div>`;
+            setTimeout(() => {
+                const el = document.getElementById(nestedId);
+                if (el) el.addEventListener('click', () => { spawnNestedPopup(ad); });
+            }, 0);
         } else {
             const ad = TEXT_ADS[Math.floor(Math.random()*TEXT_ADS.length)];
             title = ad.title;
@@ -1758,7 +1817,6 @@
     });
 
     const SECRET_CODE = Array.from({length:4}, () => String.fromCharCode(65 + Math.floor(Math.random()*26)));
-    console.log('%c[DEV] Secret Code: ' + SECRET_CODE.join(''), 'color:#3db82e;font-size:20px;font-weight:bold;background:#5a3810;padding:6px 12px;border-radius:4px;');
 
     const revealedSet   = new Set();
     let game1LostOnce   = false;
@@ -2137,7 +2195,6 @@ setTimeout(async () => {
 
     async function g2Slide(startR, startC, dr, dc) {
         let cr=startR, cc=startC;
-        // Keep sliding while the cell we're currently on is purple
         while (g2Grid[cr][cc]==='purple') {
             const nr=cr+dr, nc=cc+dc;
             if (nr<0||nr>=G2||nc<0||nc>=G2) break;
@@ -2237,9 +2294,13 @@ setTimeout(async () => {
     (function() {
         const board = document.getElementById('gridBoard');
         if (!board) return;
+        let roTimer = null;
         const ro = new ResizeObserver(() => {
-            g2CalcCellSize();
-            g2UpdatePlayerImg();
+            cancelAnimationFrame(roTimer);
+            roTimer = requestAnimationFrame(() => {
+                g2CalcCellSize();
+                g2UpdatePlayerImg();
+            });
         });
         ro.observe(board.parentElement);
     })();
