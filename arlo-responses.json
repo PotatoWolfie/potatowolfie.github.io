@@ -680,6 +680,26 @@
   },
   {
     "triggers": [
+      "are you real"
+    ],
+    "responses": [
+      "Uh.. depends who you ask. Some people hate me and won't put a hat on me.",
+      "I mean.. I could be. You won't know.",
+      "To be real, or not to be real, questions of life."
+    ]
+  },
+  {
+    "triggers": [
+      "are you ai"
+    ],
+    "responses": [
+      "NO. I AM NOT AI. STOP ASKING, I'VE BEEN ASKED SO MANY TIMES. I'VE HAD ENOUGH.",
+      "Nope. Not Ai.",
+      "I don't prefer to be grouped with the slop.."
+    ]
+  },
+  {
+    "triggers": [
       "kill yourself",
       "kill urself",
       "kill ur self",
