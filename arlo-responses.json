@@ -24,6 +24,8 @@
       "can you give me a hint",
       "i need a hint",
       "i want a hint",
+      "help",
+      "help me",
       "please give me a hint",
       "just give me a hint",
       "hint please",
@@ -122,15 +124,6 @@
     "responses": [
       "oh okay bye bye",
       "uhhhhh okay, DONT FORGET TO DOWNLOAD MY MOD"
-    ]
-  },
-  {
-    "triggers": [
-      "help"
-    ],
-    "responses": [
-      "Can't help ya. Try again.",
-      "I don't know. (Copyright of Merl.)"
     ]
   },
   {
