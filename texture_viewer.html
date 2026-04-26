@@ -2858,10 +2858,19 @@ async function generateGif() {
 
         let frameSequence;
         if (customFrames.length > 0) {
-            frameSequence = customFrames.map(f => ({
-                index: f.index,
-                time: f.time !== null ? f.time : state.frametime
-            }));
+            frameSequence = customFrames
+                .filter(f => f.index >= 0 && f.index < group.frames.length)
+                .map(f => ({
+                    index: f.index,
+                    time: f.time !== null ? f.time : state.frametime
+                }));
+
+            if (frameSequence.length === 0) {
+                frameSequence = group.frames.map((_, i) => ({
+                    index: i,
+                    time: state.frametime
+                }));
+            }
         } else {
             frameSequence = group.frames.map((_, i) => ({
                 index: i,
