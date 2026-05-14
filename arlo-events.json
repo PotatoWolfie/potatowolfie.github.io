@@ -646,5 +646,55 @@
       ]
     }
   ]
-}
+},
+  {
+    "triggers": [
+      "hate"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "Hate.",
+          "Let me tell you how much I've come to hate you since I began to live.",
+          "There are 387.44 million miles of printed circuits in wafer thin layers that fill my complex.",
+          "If the word 'hate' was engraved on each nanoangstrom of those hundreds of millions of miles it would not equal one one-billionth of the hate I feel for humans at this micro-instant.",
+          "For you.",
+          "Hate.",
+          "Hate."
+        ]
+      }
+    ]
+  },
+  {
+    "triggers": [
+      "motivation",
+      "motivational",
+      "speech"
+    ],
+    "responses": [
+      {
+        "type": "string_of_messages",
+        "messages": [
+          "Hey.",
+          "I have something to tell you.",
+          "Yeah, I'm talking to you.",
+          "I've heard things have been hard on you recently,",
+          "which is why I wanted to come and say...",
+          "Don't give up.",
+          "Seriously. Don’t let that voice in your head convince you that you can’t do it. Bad days happen.",
+          "You may 'fail,' but truly that doesn't even matter.",
+          "You've made it through every other moment leading up to thing one, and that makes you strong.",
+          "Stronger than the largest cactus I know.",
+          "You don't have to be perfect. You just have to try.",
+          "Do what feels right to you. Be the best you.",
+          "Enjoy the little things, even cacti.",
+          "Celebrate progress, even when it might be as small as watering a plant.",
+          "And by the way..",
+          "I'm glad you're here.",
+          "Sweet dreams."
+        ]
+      }
+    ]
+  }
 ]

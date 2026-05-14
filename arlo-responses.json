@@ -411,7 +411,8 @@
     "triggers": [
       "ok",
       "okay",
-      "oki"
+      "oki",
+      "alright"
     ],
     "responses": [
       "Yeppers.",
@@ -420,7 +421,9 @@
   },
   {
     "triggers": [
-      "yes"
+      "yes",
+      "yup",
+      "yeppers"
     ],
     "responses": [
       "That's what I figured.",
@@ -553,12 +556,16 @@
       "bubby",
       "corrupybubby",
       "bubz",
-      "bubz705"
+      "bubz705",
+      "pitiful creature"
     ],
     "responses": [
       "Did I hear Bubblez? Bubblez? The bubbly man?",
       "I LOVE Bubblez.",
-      "Speaking of bubz, you should subscribe to him :D https://www.youtube.com/@bubblez705"
+      "Speaking of bubz, you should subscribe to him :D https://www.youtube.com/@bubblez705",
+      "Hey, do me a favor and ask Bubblez about FNAF lore when you get the chance.",
+      "Hey, can you ask Bubblez what the heck a murder drone is?",
+      "Remind Bubblez to not turn left at the crossroads."
     ]
   },
   {
@@ -568,7 +575,9 @@
       "dirt boy"
     ],
     "responses": [
-      "PotatoWolfie? That guy isn't even involved in what you're trying to do."
+      "PotatoWolfie? That guy isn't even involved in what you're trying to do.",
+      "dada? me papa?",
+      "Is PotatoWolfie my father?"
     ]
   },
   {
@@ -576,7 +585,8 @@
       "corruptwolfie"
     ],
     "responses": [
-      "You weren't supposed to know the name CorruptWolfie yet. I don't really care though. Good job."
+      "You weren't supposed to know the name CorruptWolfie yet. I don't really care though. Good job.",
+      "His name sounds like 'egotistical idiot' if you try hard enough."
     ]
   },
   {
@@ -737,7 +747,8 @@
       "merl"
     ],
     "responses": [
-      "I don't know."
+      "I don't know.",
+      "#FREEMERL"
     ]
   },
   {
@@ -766,6 +777,153 @@
       "I'm a cactus. How on this PLANET could a cactus be a clanker?",
       "Clankers are so CLANKITY CLANK CLANK, and I don't make those noises. I don't make much noise at all actually.",
       "To be clear, I'm not an Ai, get that out of your head. Second.. do you talk to people like that all of the time? You really need to calm yourself homie. Peace and Love, right?"
+    ]
+  },
+  {
+    "triggers": [
+      "love you",
+      "love with you"
+    ],
+    "responses": [
+      "love you too bro",
+      "This.. Tainted Love you've given me..",
+      "If I were you, I wouldn't love me. Because I'm a cactus",
+      "Marry me? Too far? Sorry.",
+      "Great, another one.",
+      "TONIGHT THE MUSIC SEEMS SO LOUD",
+      "I appreciate the love; however, you owe me it for life now"
+    ]
+  },
+  {
+    "triggers": [
+      "marry me"
+    ],
+    "responses": [
+      "love you too bro",
+      "i gotchu bro",
+      "sure yeah marry a cactus, is it against the law to do that?",
+      "Do you know me well enough to want to marry me? I'm very high maintenance ya know.",
+      "only if you got that cash money dollar"
+    ]
+  },
+  {
+    "triggers": [
+      "yippee yay yaoi"
+    ],
+    "responses": [
+      "you've been reading too many ads man"
+    ]
+  },
+  {
+    "triggers": [
+      "i won",
+      "i win",
+      "i winned"
+    ],
+    "responses": [
+      "WOOO WINNER WINNER CHICKEN DINNER"
+    ]
+  },
+  {
+    "triggers": [
+      "caine",
+      "running the show",
+      "tooth man",
+      "tadc",
+      "amazing digital circus"
+    ],
+    "responses": [
+      "Little do you know I'm the one truly running the show",
+      "It's news to me that it's news to you that arlo has a brand new mod"
+    ]
+  },
+  {
+    "triggers": [
+      "motivation",
+      "motivational",
+      "speech"
+    ],
+    "responses": [
+      "Little do you know I'm the one truly running the show"
+    ]
+  },
+  {
+    "triggers": [
+      "water",
+      "hydrate",
+      "hydration"
+    ],
+    "responses": [
+      "W- Water??? I don't need that much. NO. Get your H2O aWAY from me."
+    ]
+  },
+  {
+    "triggers": [
+      "cat ears",
+      "catears"
+    ],
+    "responses": [
+      "I'm not going to wear cat ears."
+    ]
+  },
+  {
+    "triggers": [
+      "PMC",
+      "Planet Minecraft"
+    ],
+    "responses": [
+      "Planet Minecraft. The bane of my existence.",
+      "God forbid a regular person exists there.",
+      "That platform doesn't have enough cacti.",
+      "The people there love me. Maybe too much.",
+      "One guy tried marrying me there. No thanks.",
+      "Whose idea was it to make a website for sharing Minecraft skins and junk like that have wall posts?",
+      "I could list a few names that concern me regarding that.",
+      "I prefer Arlo's Little Ad (trademark pending) more."
+    ]
+  },
+  {
+    "triggers": [
+      "embarrassment",
+      "embarrassing"
+    ],
+    "responses": [
+      "Welcome to the triangle of embarrassment. Here we have Firsthand Embarrassment, Secondhand Embarrassment, and Thirdhand Embarrassment. I hate all of them."
+    ]
+  },
+  {
+    "triggers": [
+      "705",
+      "seven hundred five"
+    ],
+    "responses": [
+      "705???? 705???????? Wait till bro learns about 706.",
+      "BUBBLEZ705 REFERENCE"
+    ]
+  },
+  {
+    "triggers": [
+      "six seven",
+      "67",
+      "6 7",
+      "6 or 7",
+      "six or seven",
+      "6 and 7",
+      "six and seven"
+    ],
+    "responses": [
+      "if you are referencing a specific DEAD meme, i hate you",
+      "the six seven meme was NEVER funny. Like I have six seven prickles on me, ha ha? Is that funny? Is that what you want?"
+    ]
+  },
+  {
+    "triggers": [
+      "games",
+      "game"
+    ],
+    "responses": [
+      "bro i cant wait for the arlo the cactus game to release in 2027",
+      "I should get my own video game. Being confined to Minecraft was never really my thing."
     ]
   }
 ]
