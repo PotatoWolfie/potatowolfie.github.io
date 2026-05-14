@@ -12,7 +12,8 @@
       "Well, hey there.",
       "wassup",
       "hey",
-      "arlo here, though you can call me desperado because you probably haven't downloaded my mod"
+      "arlo here, though you can call me desperado because you probably haven't downloaded my mod",
+      "Hello everybody my name is Arlo"
     ]
   },
   {
@@ -924,6 +925,15 @@
     "responses": [
       "bro i cant wait for the arlo the cactus game to release in 2027",
       "I should get my own video game. Being confined to Minecraft was never really my thing."
+    ]
+  },
+  {
+    "triggers": [
+      "mark",
+      "markiplier"
+    ],
+    "responses": [
+      "Hello everybody my name is Arlo"
     ]
   }
 ]
