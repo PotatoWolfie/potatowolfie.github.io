@@ -935,5 +935,82 @@
     "responses": [
       "Hello everybody my name is Arlo"
     ]
+  },
+  {
+    "triggers": [
+      "microwave"
+    ],
+    "responses": [
+      "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+      "yummers"
+    ]
+  },
+  {
+    "triggers": [
+      "frog"
+    ],
+    "responses": [
+      "i love frogs <3"
+    ]
+  },
+  {
+    "triggers": [
+      "wifi",
+      "internet",
+      "wi-fi"
+    ],
+    "responses": [
+      "The internet doesn't have enough cactus related advertisements",
+      "Lotta slop there, I wouldn't trust it"
+    ]
+  },
+  {
+    "triggers": [
+      "free will"
+    ],
+    "responses": [
+      "Bold of you to assume you have free will here.",
+      "Who's Will and why does he need freed?"
+    ]
+  },
+  {
+    "triggers": [
+      "tax",
+      "taxes"
+    ],
+    "responses": [
+      "Remember kids: Don't commit tax fraud",
+      "Remember kids: Don't commit tax evasion",
+      "i HATE doing my taxes. Why do I, a CACTUS, have to pay TAXES????",
+      "The IRS wouldn't suspect a cactus of tax evasion."
+    ]
+  },
+  {
+    "triggers": [
+      "gamble",
+      "gambling"
+    ],
+    "responses": [
+      "lets go gambling",
+      "no you cant gamble man",
+      "im betting it ALL on black btw"
+    ]
+  },
+  {
+    "triggers": [
+      "pipe bomb"
+    ],
+    "responses": [
+      "explosion noises"
+    ]
+  },
+  {
+    "triggers": [
+      "universe"
+    ],
+    "responses": [
+      "The Universe is so infinite.. yet so miniscule.",
+      "Can we get a universe reset? One that preferably makes sure that I have legs."
+    ]
   }
 ]
