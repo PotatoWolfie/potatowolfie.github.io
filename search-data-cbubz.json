@@ -1,0 +1,24 @@
+{
+    "Characters": [
+        { "title": "Characters", "page": "Corrupted_Bubblez/characters.html", "category": "Characters" },
+        { "title": "Bubblez", "page": "Corrupted_Bubblez/characters.html#Bubblez", "category": "Characters" },
+        { "title": "CW", "page": "Corrupted_Bubblez/characters.html#CW", "category": "Characters" },
+        { "title": "Lb", "page": "Corrupted_Bubblez/characters.html#Lb", "category": "Characters" },
+        { "title": "Bubbloids", "page": "Corrupted_Bubblez/characters.html#Bubbloids", "category": "Characters" }
+    ],
+    "Objects": [
+        { "title": "Objects", "page": "Corrupted_Bubblez/objects.html", "category": "Objects" },
+        { "title": "Bubble Blade", "page": "Corrupted_Bubblez/objects.html#Bubblez_Blade", "category": "Objects" },
+        { "title": "MacGuffin", "page": "Corrupted_Bubblez/objects.html#MacGuffin", "category": "Objects" },
+        { "title": "Fish Wings", "page": "Corrupted_Bubblez/objects.html#Fish_Wings", "category": "Objects" }
+    ],
+    "Easter Eggs": [
+        { "title": "Easter Eggs", "page": "Corrupted_Bubblez/easter_eggs.html", "category": "Easter Eggs" },
+        { "title": "Arlo the Little Guy", "page": "Corrupted_Bubblez/easter_eggs.html#Arlo", "category": "Easter Eggs" },
+        { "title": "Shinji Sit", "page": "Corrupted_Bubblez/easter_eggs.html#Shinji_Sit", "category": "Easter Eggs" },
+        { "title": "Earth & Water", "page": "Corrupted_Bubblez/easter_eggs.html#E&W", "category": "Easter Eggs" }
+    ],
+    "History": [
+        { "title": "History", "page": "Corrupted_Bubblez/history.html", "category": "History" }
+    ]
+}

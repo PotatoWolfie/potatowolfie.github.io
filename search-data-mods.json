@@ -5,6 +5,9 @@
         { "title": "Silly Goose", "page": "silly_goose.html", "category": "Mods" },
         { "title": "Universe 76", "page": "universe76.html", "category": "Mods" }
     ],
+    "Animations": [
+        { "title": "Corrupted Bubblez", "page": "corrupted_bubblez.html", "category": "Animations" }
+    ],
     "Tools": [
         { "title": "Armor Trim Model Maker", "page": "armor_trim_model_maker.html", "category": "Modding Tools" },
         { "title": "HTML Theme Editor", "page": "html_theme_editor.html", "category": "Website Tools" }

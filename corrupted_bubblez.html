@@ -3,22 +3,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://potatowolfie.github.io">
-    <meta property="og:title" content="Silly Goose Wiki">
-    <meta property="og:description" content="The Silly Goose Wiki is the Wiki for the Minecraft mod, Silly Goose! All information you could possibly need is probably here!">
-    <meta property="og:image" content="https://potatowolfie.github.io/Silly_Goose/assets/wiki/silly_goose_wiki.png">
-    <meta property="og:image:width" content="2006">
-    <meta property="og:image:height" content="736">
-    <meta property="og:site_name" content="Silly Goose Wiki">
-    <meta name="theme-color" content="#8b4513">
+    <meta property="og:url" content="https://potatowolfie.github.io/corrupted_bubblez">
+    <meta property="og:title" content="Corrupted Bubblez Wiki">
+    <meta property="og:description" content="The Corrupted Bubblez Wiki is the Wiki for the short film, Corrupted Bubblez! All information you could possibly need is probably here!">
+    <meta property="og:image" content="https://potatowolfie.github.io/Corrupted_Bubblez/assets/wiki/cbubz_wiki.png">
+    <meta property="og:image:width" content="2048">
+    <meta property="og:image:height" content="634">
+    <meta property="og:site_name" content="Corrupted Bubblez Wiki">
+    <meta name="theme-color" content="#6d5cff">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://potatowolfie.github.io">
-    <meta name="twitter:title" content="Silly Goose Wiki">
-    <meta name="twitter:description" content="The Silly Goose Wiki is the Wiki for the Minecraft mod, Silly Goose! All information you could possibly need is probably here!">
-    <meta name="twitter:image" content="https://potatowolfie.github.io/Silly_Goose/assets/wiki/silly_goose_wiki.png">
-    <title>Silly Goose Wiki</title>
-    <link rel="icon" type="image/x-icon" href="silly_goose_wiki_favicon.ico">
+    <meta name="twitter:url" content="https://potatowolfie.github.io/corrupted_bubblez">
+    <meta name="twitter:title" content="Corrupted Bubblez Wiki">
+    <meta name="twitter:description" content="The Corrupted Bubblez Wiki is the Wiki for the short film, Corrupted Bubblez! All information you could possibly need is probably here!">
+    <meta name="twitter:image" content="https://potatowolfie.github.io/Corrupted_Bubblez/assets/wiki/cbubz_wiki.png">
+    <title>Corrupted Bubblez Wiki</title>
+    <link rel="icon" type="image/x-icon" href="corrupted_bubblez_ico.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
 
         body {
             font-family: 'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-image: url('Silly_Goose/assets/wiki/background.png');
+            background-image: url('Corrupted_Bubblez/assets/wiki/background.png');
             background-color: #2d2d2d;
             background-size: auto;
             background-repeat: repeat;
@@ -64,17 +64,6 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
-        @keyframes geraldFall {
-    0% {
-        transform: translateY(-200px) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(calc(100vh + 200px)) rotate(360deg);
-        opacity: 0.7;
-    }
-}
 
         ::-webkit-scrollbar {
             width: 12px;
@@ -94,38 +83,6 @@
             background: #5a5b5c;
         }
 
-.gerald-rain {
-    position: fixed;
-    width: auto;
-    height: 64px;
-    pointer-events: none;
-    z-index: 9998;
-    animation: geraldFall linear forwards;
-}
-
-        .honk-text {
-    position: fixed;
-    font-family: 'Minecraft Ten', 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: normal;
-    color: #ffffff;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
-    pointer-events: none;
-    z-index: 9999;
-    animation: honkRise 1s ease-out forwards;
-}
-
-@keyframes honkRise {
-    0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-50px) scale(1.2);
-    }
-}
-
 .search-container {
             flex: 1;
             max-width: 500px;
@@ -138,7 +95,7 @@
     padding: 8px 12px;
     background: #3a3a3a;
     border: none;
-    color: #e6e6e6;
+    color: #d8e4ff;
     font-size: 16px;
     font-family: 'Nunito', sans-serif;
     border-radius: 4px;
@@ -147,7 +104,7 @@
 
 .search-box:focus {
     outline: none;
-    border: 2px solid #2a78c6;
+    border: 2px solid #6d5cff;
 }
 
 .search-suggestions {
@@ -186,7 +143,7 @@
 }
 
 .search-suggestion:hover .suggestion-title {
-    color: #2a78c6;
+    color: #6d5cff;
 }
 
 .search-suggestion:last-child {
@@ -195,7 +152,7 @@
 
 .suggestion-category {
     font-size: 12px;
-    color: #2a78c6;
+    color: #6d5cff;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: normal;
 }
@@ -204,7 +161,7 @@
     font-size: 14px;
     margin-top: 2px;
     font-family: 'Nunito', sans-serif;
-    color: #cccccc;
+    color: #ffffff;
     transition: color 0.2s ease;
 }
 
@@ -263,11 +220,12 @@
             height: 100%;
             width: auto;
             object-fit: contain;
+            image-rendering: auto;
         }
 
         .nav-tabs {
     background: rgba(51, 51, 51, 1.0);
-    border-bottom: 2px solid #4a4a4a;
+    border-bottom: 2px solid #1a1a1a;
     backdrop-filter: blur(10px);
     position: relative;
 }
@@ -295,8 +253,8 @@
 }
 
 .nav-button {
-    background: #2a78c6;
-    border: 2px solid #004694;
+    background: #6d5cff;
+    border: 2px solid #4a39c9;
     border-bottom: none;
     margin-right: 2px;
     cursor: pointer;
@@ -304,10 +262,10 @@
     color: white;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: 6000;
-    text-shadow: 2px 2px 0px rgba(0,60,138,0.8);
+    text-shadow: 2px 2px 0px rgba(56, 40, 144,0.8);
     box-shadow:
-        inset 2px 2px 0 #3e8cda,
-        inset -2px -2px 0 #1b69b7;
+        inset 2px 2px 0 #8b7dff,
+        inset -2px -2px 0 #5d4ae8;
     text-decoration: none;
     flex-shrink: 0;
     display: flex;
@@ -326,11 +284,11 @@
 }
 
 .nav-button:hover {
-    background: #1b69b7;
+    background: #5d4ae8;
 }
 
 .nav-button.active {
-    background: #1b69b7;
+    background: #5d4ae8;
 }
 
 .nav-button.hidden {
@@ -341,7 +299,7 @@
     width: 16px;
     height: 16px;
     image-rendering: auto;
-    border: 1px solid #0a4694;
+    border: 1px solid #3d2ca8;
 }
 
 .nav-button.nav-arrow img {
@@ -362,7 +320,7 @@
 .nav-button-icon {
     width: 23px !important;
     height: 23px !important;
-    border: 2px solid #0a4694 !important;
+    border: 2px solid #3d2ca8 !important;
     image-rendering: -moz-crisp-edges !important;
     image-rendering: -webkit-crisp-edges !important;
     image-rendering: pixelated !important;
@@ -379,7 +337,7 @@
         width: 25px;
         height: 25px;
         image-rendering: auto;
-        border: 2px solid #0a4694;
+        border: 2px solid #3d2ca8;
     }
 
     .nav-button-text {
@@ -390,7 +348,7 @@
         display: block;
         width: 20px;
         height: 20px;
-        border: 1px solid #0a4694;
+        border: 1px solid #3d2ca8;
     }
 
     .nav-button.nav-arrow img {
@@ -420,7 +378,7 @@
         .page-title {
             font-size: 28px;
             margin-bottom: 25px;
-            color: #2a78c6;
+            color: #6d5cff;
             border-bottom: 2px solid #4a4a4a;
             padding-bottom: 15px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
@@ -431,7 +389,7 @@
     width: 120px;
     height: auto;
     float: left;
-    margin-right: 10px;
+    margin-right: 15px;
     margin-bottom: 5px;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
@@ -458,7 +416,7 @@
             justify-content: flex-end;
             position: relative;
             overflow: hidden;
-            background: #666;
+            background: #626b96;
         }
 
         .featured-card img {
@@ -471,6 +429,7 @@
             object-position: center;
             object-fit: cover;
             object-position: center;
+            image-rendering: auto;
         }
 
         .featured-card::before {
@@ -496,13 +455,23 @@
         }
 
         .card-content {
-            color: #e6e6e6;
+            color: #d8e4ff;
             font-size: 14px;
             font-family: 'Nunito', sans-serif;
             position: relative;
             z-index: 2;
             padding: 0 25px 25px 25px;
             line-height: 1.6;
+        }
+
+        .card-content a {
+            color: #6d5cff;
+            transition: color 0.2s ease;
+            text-decoration: none;
+        }
+        .card-content a:hover {
+            color: #8b7dff;
+            text-decoration: underline;
         }
 
         .category-grid {
@@ -610,25 +579,6 @@
     image-rendering: optimize-contrast;
     object-fit: contain;
     object-position: center;
-}
-
-.category-item.mobs-button img {
-    image-rendering: -moz-crisp-edges;
-            image-rendering: -webkit-crisp-edges;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-}
-.category-item.history-button img {
-    image-rendering: -moz-crisp-edges;
-            image-rendering: -webkit-crisp-edges;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-}
-.category-item.advancement-button img {
-    image-rendering: -moz-crisp-edges;
-            image-rendering: -webkit-crisp-edges;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
 }
 
         .category-button-section {
@@ -790,7 +740,7 @@
     position: relative;
     z-index: 2;
     font-size: 18px;
-    color: #2a78c6;
+    color: #6d5cff;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: normal;
     text-shadow: none;
@@ -1113,7 +1063,7 @@ version-item-image-container {
 
 .version-item-name {
     font-size: 12px;
-    color: #ffffff;
+    color: #eef4ff;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: normal;
     position: relative;
@@ -1172,7 +1122,7 @@ version-item-image-container {
 
         .sidebar-title {
             font-size: 16px;
-            color: #2a78c6;
+            color: #6d5cff;
             margin-bottom: 20px;
             padding-bottom: 12px;
             border-bottom: 1px solid #4a4a4a;
@@ -1192,21 +1142,25 @@ version-item-image-container {
         }
 
         .sidebar-list a {
-            color: #a0a0a0;
+            color: #9ea8d4;
             text-decoration: none;
             font-family: 'Nunito', sans-serif;
         }
 
         .sidebar-list a:hover {
-            color: #2a78c6;
+            color: #6d5cff;
         }
 
         .stats {
-            background: linear-gradient(135deg, #2a78c6, #1b539d);
+            background: linear-gradient(135deg, #6d5cff, #37278f);
             border-radius: 0;
             padding: 20px;
             text-align: center;
             color: white;
+        }
+
+        .stats img {
+            filter: brightness(1.2);
         }
 
         .stat-number {
@@ -1265,7 +1219,7 @@ version-item-image-container {
 
         .creator-name {
             font-size: 14px;
-            color: #2a78c6;
+            color: #6d5cff;
             margin-bottom: 12px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1279,7 +1233,7 @@ version-item-image-container {
 
         .creator-link {
             background: rgba(26, 26, 26, 0.6);
-            color: #2a78c6;
+            color: #6d5cff;
             text-decoration: none;
             padding: 6px 12px;
             border-radius: 0;
@@ -1299,7 +1253,7 @@ version-item-image-container {
         }
 
         .about-section h2 {
-            color: #2a78c6;
+            color: #6d5cff;
             margin-bottom: 20px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1307,7 +1261,7 @@ version-item-image-container {
         }
 
         .about-section p {
-            color: #cccccc;
+            color: #ffffff;
             line-height: 1.6;
             font-family: 'Nunito', sans-serif;
             font-size: 16px;
@@ -1315,7 +1269,7 @@ version-item-image-container {
         }
 
         h2 {
-            color: #2a78c6;
+            color: #6d5cff;
             margin-bottom: 20px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1523,6 +1477,7 @@ version-item-image-container {
     .versions-header-text {
         font-size: 17px;
     }
+
     .nav-button-icon {
         display: block;
         width: 20px;
@@ -1631,12 +1586,12 @@ a {
 <div class="header">
     <div class="header-content">
         <div class="logo">
-            <a href="https://potatowolfie.github.io/silly_goose">
-                <img src="Silly_Goose/assets/wiki/silly_goose_wiki.png" alt="Silly Goose Wiki">
+            <a href="https://potatowolfie.github.io/corrupted_bubblez">
+                <img src="Corrupted_Bubblez/assets/wiki/cbubz_wiki.png" alt="Corrupted Bubblez Wiki">
             </a>
         </div>
         <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search Silly Goose Wiki" id="searchInput" autocomplete="off">
+            <input type="text" class="search-box" placeholder="Search Corrupted Bubblez Wiki" id="searchInput" autocomplete="off">
             <div class="search-suggestions" id="searchSuggestions"></div>
         </div>
     </div>
@@ -1649,95 +1604,91 @@ a {
 
 <div class="main-container">
     <div class="content">
-        <h1 class="page-title">Welcome to The Silly Goose Wiki!</h1>
+        <h1 class="page-title">Welcome to The Corrupted Bubblez Wiki!</h1>
 
         <div class="featured-section">
             <div class="featured-grid">
                 <div class="featured-card">
-                    <img src="Silly_Goose/assets/silly_goose/news/news1.png" alt="News">
-                    <div class="card-title">Geese!</div>
+                    <img src="Corrupted_Bubblez/assets/wiki/news/news1.png" alt="News">
+                    <div class="card-title">Trailer release</div>
                     <div class="card-content">
-                        Look at how silly they are! These are the sole purpose of the mod. If they aren't here,
-                        the mod isn't here. What makes them unique from any other mob? Well, dear reader, they
-                        can do a move called the honk-and-run™, or a hit-and-run. Every now and then, a goose
-                        may come up to you, the player, and hit it once, then run away! Don't take this action
-                        to heart, for the other geese put him up to it. It was a bet.
+                        This trailer had two endings: Ending A featured a fake advertisement meant to make you go to a website to "unlock" the second ending.
+                        Ending B was released publicly after the initial release of Ending A, and the trailer concludes normally without any advert.<br>
+                        <a href="https://youtu.be/J9IHTIMw9-E">Ending A</a><br><a href="https://youtu.be/e1eRan7zYmE">Ending B</a>
                     </div>
                 </div>
 
                 <div class="featured-card">
-                    <img src="Silly_Goose/assets/silly_goose/news/news2.png" alt="News">
-                    <div class="card-title">HONK HONK</div>
+                    <img src="Corrupted_Bubblez/assets/wiki/news/news2.png" alt="News">
+                    <div class="card-title">Bubbles</div>
                     <div class="card-content">
-                        HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK
-                        HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK
-                        HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK
-                        (press G to honk)
+                        Press B for a bubble :D
                     </div>
                 </div>
             </div>
         </div>
 
-        <h2>Mod Categories</h2>
+        <h2>Categories</h2>
         <div class="category-grid">
-            <a href="Silly_Goose/mobs.html" class="category-item mobs-button">
+            <a href="Corrupted_Bubblez/characters.html" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
                 <div class="category-top-highlight"></div>
                 <div class="category-image-container">
-                    <img src="Silly_Goose/assets/buttons/mobs_button.png" alt="Mobs">
+                    <img src="Corrupted_Bubblez/assets/wiki/buttons/characters_button.png" alt="Characters">
                 </div>
                 <div class="category-image-section"></div>
                 <div class="category-button-section">
-                    <div class="category-name">Mobs</div>
+                    <div class="category-name">Characters</div>
                 </div>
                 <div class="category-dark-strip"></div>
                 <div class="category-bottom-outline"></div>
                 <div class="category-shadow"></div>
             </a>
 
-            <a href="Silly_Goose/items.html" class="category-item">
+            <a href="Corrupted_Bubblez/objects.html" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
                 <div class="category-top-highlight"></div>
                 <div class="category-image-container">
-                    <img src="Silly_Goose/assets/buttons/items_button.png" alt="Items">
+                    <img src="Corrupted_Bubblez/assets/wiki/buttons/objects_button.png" alt="Objects">
                 </div>
                 <div class="category-image-section"></div>
                 <div class="category-button-section">
-                    <div class="category-name">Items</div>
+                    <div class="category-name">Objects</div>
                 </div>
                 <div class="category-dark-strip"></div>
                 <div class="category-bottom-outline"></div>
                 <div class="category-shadow"></div>
             </a>
 
-            <a href="Silly_Goose/advancements.html" class="category-item">
+            <a href="Corrupted_Bubblez/easter_eggs.html" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
                 <div class="category-top-highlight"></div>
                 <div class="category-image-container">
-                    <img src="Silly_Goose/assets/buttons/advancements_button.png" alt="Advancements">
+                    <img src="Corrupted_Bubblez/assets/wiki/buttons/easter_eggs_button.png" alt="Easter Eggs">
                 </div>
                 <div class="category-image-section"></div>
                 <div class="category-button-section">
-                    <div class="category-name">Advancements</div>
+                    <div class="category-name">Easter Eggs</div>
                 </div>
                 <div class="category-dark-strip"></div>
                 <div class="category-bottom-outline"></div>
                 <div class="category-shadow"></div>
             </a>
 
-            <a href="Silly_Goose/history.html" class="category-item history-button">
+
+            <a href="Corrupted_Bubblez/history.html" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
                 <div class="category-top-highlight"></div>
                 <div class="category-image-container">
-                    <img src="Silly_Goose/assets/buttons/history_button.png" alt="History">
+                    <img src="Corrupted_Bubblez/assets/wiki/buttons/history_button.png" alt="History">
                 </div>
                 <div class="category-image-section"></div>
                 <div class="category-button-section">
@@ -1749,100 +1700,21 @@ a {
             </a>
         </div>
 
-        <div class="latest-versions">
-            <div class="versions-header" onclick="toggleVersions()">
-                <div class="versions-inset-shadow"></div>
-                <div class="versions-header-text">Latest Versions</div>
-                <div class="versions-header-arrow">
-                    <img src="assets/wiki/buttons/dropdown_arrow.png" alt="Dropdown Arrow">
-                </div>
-            </div>
-            <div class="versions-grid" id="versions-grid">
-                <div class="versions-content">
-                    <a href="https://modrinth.com/mod/silly-goose" class="version-item" target="_blank">
-                        <div class="version-item-top-outline"></div>
-                        <div class="version-item-left-outline"></div>
-                        <div class="version-item-right-outline"></div>
-                        <div class="version-item-top-highlight"></div>
-
-                        <div class="version-item-image-container">
-                            <img src="assets/wiki/buttons/modrinth_button.png" alt="Modrinth">
-                        </div>
-                        <div class="version-item-image-section"></div>
-
-                        <div class="version-item-button-section">
-                            <div class="version-item-name">Modrinth</div>
-                        </div>
-
-                        <div class="version-item-dark-strip"></div>
-                        <div class="version-item-bottom-outline"></div>
-                        <div class="version-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.curseforge.com/minecraft/mc-mods/silly-goose" class="version-item" target="_blank">
-                        <div class="version-item-top-outline"></div>
-                        <div class="version-item-left-outline"></div>
-                        <div class="version-item-right-outline"></div>
-                        <div class="version-item-top-highlight"></div>
-
-                        <div class="version-item-image-container">
-                            <img src="assets/wiki/buttons/curseforge_button.png" alt="Curseforge">
-                        </div>
-                        <div class="version-item-image-section"></div>
-
-                        <div class="version-item-button-section">
-                            <div class="version-item-name">Curseforge</div>
-                        </div>
-
-                        <div class="version-item-dark-strip"></div>
-                        <div class="version-item-bottom-outline"></div>
-                        <div class="version-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.planetminecraft.com/mod/silly-goose-6790025/" class="version-item" target="_blank">
-                        <div class="version-item-top-outline"></div>
-                        <div class="version-item-left-outline"></div>
-                        <div class="version-item-right-outline"></div>
-                        <div class="version-item-top-highlight"></div>
-
-                        <div class="version-item-image-container">
-                            <img src="assets/wiki/buttons/planet_minecraft_button.png" alt="Planet Minecraft">
-                        </div>
-                        <div class="version-item-image-section"></div>
-
-                        <div class="version-item-button-section">
-                            <div class="version-item-name">Planet Minecraft</div>
-                        </div>
-
-                        <div class="version-item-dark-strip"></div>
-                        <div class="version-item-bottom-outline"></div>
-                        <div class="version-item-shadow"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <!-- DROPDOWN HERE IF I EVER FIND USE FOR IT -->
 
         <div class="about-section">
             <div class="about-section">
                 <div class="wiki-boxes">
                     <div class="wiki-box">
-                        <h2>about the Mod</h2>
+                        <h2>about Corrupted Bubblez</h2>
                         <p>
-                            Geese have been labeled “silly” ever since the 15th century, often used as a metaphor for foolish or absurd behavior.
-                            The saying that resulted from this, “Silly goose,” has consequently been passed down from generation to generation until
-                            eventually reaching modern day. Today, we even have entire games dedicated to geese, such as Duck, Duck, Goose or
-                            Untitled Goose Game. And now, you can finally find these extraordinarily silly geese in Minecraft.
-                        </p>
-                        <p>
-                        You can now find geese across your Minecraft worlds spawning near bodies of water. You can find three types of geese,
-                            Temperate (Regular), Cold, and Warm. They spawn in coordinate to temperate, warm, or cold biomes. Every few minutes,
-                            if you happen to be near a goose, they might conduct a hit-and-run on you. That's just rumor though.
+                            <strong>Corrupted Bubblez</strong> is a story-driven short animation following two unlikely companions searching for a rumored-to-exist MacGuffin.
                         </p>
                         <div class="wiki-button">
                             <div class="wiki-button-left-outline"></div>
                             <div class="wiki-button-right-outline"></div>
                             <div class="wiki-button-section">
-                                <div class="wiki-button-name">Get Silly Goose</div>
+                                <div class="wiki-button-name">Watch the Trailer</div>
                             </div>
                             <div class="wiki-button-dark-strip"></div>
                             <div class="wiki-button-bottom-outline"></div>
@@ -1852,11 +1724,10 @@ a {
 
                     <div class="wiki-box">
                         <h2>Featured article</h2>
-                        <img src="Silly_Goose/assets/buttons/items_button.png" alt="White Egg" class="wiki-box-image">
+                        <img src="Corrupted_Bubblez/assets/wiki/buttons/bubblez_head_left.png" alt="IMAGE HERE" class="wiki-box-image">
                         <p>
-                            The <strong>White Egg</strong> is an egg, similar to the one chickens spontaneously drop, that you can throw for
-                            a chance to spawn a baby goose. There are three types of these eggs: White Egg (Temperate), Big White Egg (Cold), and Small White Egg (Warm).
-                            It is visually larger than a regular chicken egg, even the small egg. Geese drop these eggs every 5-10 minutes.
+                            <strong>Bubblez</strong> is an adaptive individual who often finds himself in situations beyond his understanding,
+                            yet he manages to push through them through sheer will and humor.
                         </p>
                         <div class="wiki-button">
                             <div class="wiki-button-left-outline"></div>
@@ -1990,7 +1861,7 @@ a {
 
                 .wiki-button-name {
                     font-size: 15px;
-                    color: #ffffff;
+                    color: #eef4ff;
                     font-family: 'Minecraft Ten', 'Inter', sans-serif;
                     font-weight: normal;
                     position: relative;
@@ -2062,10 +1933,10 @@ a {
 
                     button.addEventListener('click', function() {
                         const buttonText = this.querySelector('.wiki-button-name').textContent;
-                        if (buttonText === 'Get Web') {
-                            window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
+                        if (buttonText === 'Watch the Trailer') {
+                            window.open('https://youtu.be/e1eRan7zYmE', '_blank');
                         } else if (buttonText === 'Read More') {
-                            window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
+                            window.open('https://potatowolfie.github.io/Corrupted_Bubblez/characters.html#Bubblez', '_blank');
                         }
                     });
                 });
@@ -2089,19 +1960,19 @@ a {
 
     <div class="sidebar">
         <div class="sidebar-section stats">
-            <div class="stat-number" id="downloadCount">---</div>
-            <div class="stat-label">Downloads</div>
+            <div class="stat-number" id="stat">705</div>
+            <div class="stat-label">Bubbles</div>
             <div style="margin: 15px 0;">•</div>
-            <div class="stat-number">12</div>
-            <div class="stat-label">Articles</div>
+            <div class="stat-number">4</div>
+            <div class="stat-label">Entries</div>
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-title">Did you know...</div>
             <ul class="sidebar-list">
-                <li>...the idea for this mod was made 9 months before work on it started?</li>
-                <li>...that neither of the creators of this mod knew much about geese before this mod?</li>
-                <li>...that the idea of this mod came from a suspicious video from the official Minecraft channel?</li>
+                <li>...that this project originated from a joke?</li>
+                <li>...that I have no idea how to make a short film?</li>
+                <li>...Bubblez’s real name is John Tired? (As far as he knows)</li>
             </ul>
         </div>
 
@@ -2121,12 +1992,13 @@ a {
                     </div>
                 </div>
                 <div class="creator">
-                    <div class="creator-name">Demidiant</div>
+                    <div class="creator-name">Bubblez705</div>
                     <div class="creator-links">
-                        <a href="https://www.youtube.com/@DemidiantTheBuilder" class="creator-link" target="_blank">YouTube</a>
-                        <a href="https://www.planetminecraft.com/member/demidiant_/" class="creator-link" target="_blank">Planet Minecraft</a>
-                        <a href="https://modrinth.com/user/Demidiant" class="creator-link" target="_blank">Modrinth</a>
-                        <a href="https://github.com/Demidiant" class="creator-link" target="_blank">Github</a>
+                        <a href="https://www.youtube.com/channel/UCPFKxsYRFFQw0uq3A8WdIzw" class="creator-link" target="_blank">YouTube</a>
+                        <a href="https://www.twitch.tv/bubblez705" class="creator-link" target="_blank">Twitch</a>
+                        <a href="https://sketchfab.com/Bubblez705" class="creator-link" target="_blank">Sketchfab</a>
+                        <a href="https://www.planetminecraft.com/member/bubblez705/" class="creator-link" target="_blank">Planet Minecraft</a>
+                        <a href="https://modrinth.com/user/bubblez705" class="creator-link" target="_blank">Modrinth</a>
                     </div>
                 </div>
             </div>
@@ -2135,12 +2007,11 @@ a {
         <div class="sidebar-section minecraft">
             <div class="sidebar-title">Legal Notice</div>
             <ul class="sidebar-list">
-                <li>Silly Goose is an unofficial Minecraft mod and is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft in any way. Minecraft is a sandbox video game developed by Mojang Studios that allows players to explore, build, and survive in a block-based world.</li>
+                <li>Corrupted Bubblez is an unofficial Minecraft animation and is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft in any way. Minecraft is a sandbox video game developed by Mojang Studios that allows players to explore, build, and survive in a block-based world.</li>
             </ul>
         </div>
     </div>
 </div>
-
 <script>
     let targetRotation = 0;
     let currentRotation = 0;
@@ -2150,18 +2021,39 @@ a {
     let searchData = {};
     let allSearchItems = [];
 
+    const searchDataFiles = [
+        'search-data-cbubz.json'
+    ];
+
     async function loadSearchData() {
         try {
-            const response = await fetch('Silly_Goose/search-data-silly-goose.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            const allData = [];
+            const cacheBuster = new Date().getTime();
+
+            for (const file of searchDataFiles) {
+                try {
+                    const response = await fetch(`${file}?v=${cacheBuster}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const items = Object.values(data).flat();
+                        allData.push(...items);
+                        console.log(`Loaded search data from ${file}`);
+                    }
+                } catch (error) {
+                    console.warn(`Could not load ${file}:`, error);
+                }
             }
-            searchData = await response.json();
-            allSearchItems = Object.values(searchData).flat();
-            console.log('Search data loaded successfully');
+
+            allSearchItems = allData;
+            console.log(`Total search items loaded: ${allSearchItems.length}`);
         } catch (error) {
             console.error('Error loading search data:', error);
-            searchData = {};
             allSearchItems = [];
         }
     }
@@ -2298,11 +2190,34 @@ a {
         }
     }
 
+    document.querySelectorAll('.wiki-button').forEach(button => {
+        button.addEventListener('mousedown', function() {
+            this.classList.add('pressed');
+        });
+
+        button.addEventListener('mouseup', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.classList.remove('pressed');
+        });
+
+        button.addEventListener('click', function() {
+            const buttonText = this.querySelector('.wiki-button-name').textContent;
+            if (buttonText === 'Watch the Trailer') {
+                window.open('https://youtu.be/e1eRan7zYmE', '_blank');
+            } else if (buttonText === 'Read More') {
+                window.open('https://potatowolfie.github.io/Corrupted_Bubblez/characters.html#Bubblez', '_blank');
+            }
+        });
+    });
+
     const navTabs = [
         { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
         { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-        { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png', active: true },
-        { text: 'Corrupted Bubz', href: 'corrupted_bubblez.html', icon: 'assets/buttons/corrupted_bubblez_mini.png' },
+        { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png' },
+        { text: 'Corrupted Bubz', href: 'corrupted_bubblez.html', icon: 'assets/buttons/corrupted_bubblez_mini.png', active: true },
         { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
     ];
 
@@ -2410,210 +2325,19 @@ a {
         });
     }
 
-    async function fetchDownloadCount() {
-        try {
-            let modrinthDownloads = 0;
-            let curseforgeDownloads = 0;
-
-            try {
-                const modrinthResponse = await fetch('https://api.modrinth.com/v2/project/silly-goose', {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache'
-                    }
-                });
-
-                if (modrinthResponse.ok) {
-                    const modrinthData = await modrinthResponse.json();
-                    modrinthDownloads = modrinthData.downloads || 0;
-                    console.log('Modrinth downloads:', modrinthDownloads);
-                }
-            } catch (error) {
-                console.warn('Could not fetch Modrinth downloads:', error);
-            }
-
-            try {
-                const curseforgeProjectId = '1392561';
-                const cfResponse = await fetch(
-                    `https://api.cfwidget.com/minecraft/mc-mods/${curseforgeProjectId}`
-                );
-
-                if (cfResponse.ok) {
-                    const cfData = await cfResponse.json();
-                    curseforgeDownloads = cfData.downloads?.total || 0;
-                    console.log('CurseForge downloads:', curseforgeDownloads);
-                }
-            } catch (error) {
-                console.warn('Could not fetch CurseForge downloads:', error);
-            }
-
-            const totalDownloads = modrinthDownloads + curseforgeDownloads;
-
-            console.log('Total downloads:', totalDownloads);
-
-            updateDownloadCounter(totalDownloads, modrinthDownloads, curseforgeDownloads);
-
-        } catch (error) {
-            console.error('Error fetching download count:', error);
-            updateDownloadCounter(null);
-        }
-    }
-
-    function updateDownloadCounter(total, modrinth, curseforge) {
-        const countElement = document.getElementById('downloadCount');
-
-        if (!countElement) return;
-
-        if (total !== null) {
-            countElement.innerHTML = formatNumber(total);
-            countElement.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
-
-            const label = countElement.nextElementSibling;
-            if (label && label.classList.contains('stat-label')) {
-                label.textContent = 'Total Downloads';
-            }
-        } else {
-            countElement.innerHTML = '---';
-        }
-    }
-
-    function initDownloadCounter() {
-        const countElement = document.getElementById('downloadCount');
-        if (countElement) {
-            countElement.innerHTML = '---';
-        }
-    }
-
-    function formatNumber(num) {
-        if (num >= 1000000) {
-            return (num / 1000000).toFixed(1) + 'M';
-        } else if (num >= 1000) {
-            return (num / 1000).toFixed(1) + 'K';
-        }
-        return num.toLocaleString();
-    }
-
-    const honkSounds = [
-        'Silly_Goose/assets/sounds/goose_attack.ogg',
-        'Silly_Goose/assets/sounds/goose_death_1.ogg',
-        'Silly_Goose/assets/sounds/goose_death_2.ogg',
-        'Silly_Goose/assets/sounds/goose_honk_1.ogg',
-        'Silly_Goose/assets/sounds/goose_honk_2.ogg',
-        'Silly_Goose/assets/sounds/goose_honk_3.ogg',
-        'Silly_Goose/assets/sounds/goose_hurt_1.ogg',
-        'Silly_Goose/assets/sounds/goose_hurt_2.ogg'
-    ];
-
-    const preloadedHonks = honkSounds.map(src => {
-        const audio = new Audio(src);
-        audio.preload = 'auto';
-        return audio;
-    });
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let honkCount = 0;
-    let isRaining = false;
-    let rainTimer = null;
-    let rainEndTime = 0;
-
-    document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    function createHonkText() {
-        const honkText = document.createElement('div');
-        honkText.className = 'honk-text';
-        honkText.textContent = 'HONK!';
-        honkText.style.left = mouseX + 'px';
-        honkText.style.top = mouseY + 'px';
-        honkText.style.transform = 'translate(-100%, -100%)';
-
-        document.body.appendChild(honkText);
-
-        setTimeout(() => {
-            honkText.remove();
-        }, 1000);
-    }
-
-    function createGeraldRain() {
-        const gerald = document.createElement('img');
-        gerald.src = 'Silly_Goose/assets/wiki/gerald.png';
-        gerald.className = 'gerald-rain';
-        gerald.style.left = Math.random() * window.innerWidth + 'px';
-        gerald.style.top = '-200px';
-        gerald.style.animationDuration = (2 + Math.random() * 3) + 's';
-
-        document.body.appendChild(gerald);
-
-        setTimeout(() => {
-            gerald.remove();
-        }, 5000);
-    }
-
-    function startGeraldRain() {
-        if (isRaining) return;
-
-        isRaining = true;
-        rainEndTime = Date.now() + 12000;
-
-        const rainInterval = setInterval(() => {
-            if (Date.now() >= rainEndTime) {
-                clearInterval(rainInterval);
-                isRaining = false;
-                return;
-            }
-            createGeraldRain();
-        }, 100);
-
-        rainTimer = rainInterval;
-    }
-
-    function playRandomHonk() {
-        const randomIndex = Math.floor(Math.random() * preloadedHonks.length);
-        const honk = preloadedHonks[randomIndex].cloneNode();
-        honk.volume = 0.5;
-        honk.play().catch(err => console.log('Honk playback failed:', err));
-
-        createHonkText();
-
-        honkCount++;
-
-        if (isRaining) {
-            rainEndTime += 100;
-        }
-
-        if (honkCount >= 50 && !isRaining) {
-            honkCount = 0;
-            startGeraldRain();
-        }
-    }
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key.toLowerCase() === 'g' &&
-            !e.target.matches('input, textarea, [contenteditable="true"]')) {
-            playRandomHonk();
-        }
-    });
-
     document.addEventListener('DOMContentLoaded', async function() {
-    initDownloadCounter();
 
     await loadSearchData();
     initializeSearch();
+
     renderNavigation();
 
     const articleCount = await countArticles();
     updateArticleCounter(articleCount);
 
-    fetchDownloadCount();
-
-    setInterval(fetchDownloadCount, 5 * 60 * 1000);
-
-    window.addEventListener('resize', function() {
-        renderNavigation();
-    });
+        window.addEventListener('resize', function() {
+            renderNavigation();
+        });
 
         document.querySelectorAll('.category-item').forEach(item => {
             item.addEventListener('mousedown', function() {
@@ -2644,10 +2368,10 @@ a {
 
             button.addEventListener('click', function() {
                 const buttonText = this.querySelector('.wiki-button-name').textContent;
-                if (buttonText === 'Get Silly Goose') {
-                    window.open('https://www.curseforge.com/minecraft/mc-mods/silly-goose', '_blank');
+                if (buttonText === 'Watch the Trailer') {
+                    window.open('https://youtu.be/e1eRan7zYmE', '_blank');
                 } else if (buttonText === 'Read More') {
-                    window.open('https://potatowolfie.github.io/Silly_Goose/items/white_egg.html', '_blank');
+                    window.open('https://potatowolfie.github.io/Corrupted_Bubblez/characters.html#Bubblez', '_blank');
                 }
             });
         });
@@ -2671,14 +2395,14 @@ a {
     if (allSearchItems && allSearchItems.length > 0) {
         return allSearchItems.length;
     }
-    return 12;
+    return 0;
 }
 
 function updateArticleCounter(count) {
     const articleElements = document.querySelectorAll('.stat-label');
 
     articleElements.forEach(label => {
-        if (label.textContent === 'Articles') {
+        if (label.textContent === 'Entries') {
             const statNumber = label.previousElementSibling;
             if (statNumber && statNumber.classList.contains('stat-number')) {
                 statNumber.textContent = count;
@@ -2687,25 +2411,229 @@ function updateArticleCounter(count) {
     });
 }
 
-    async function countArticles() {
-    if (allSearchItems && allSearchItems.length > 0) {
-        return allSearchItems.length;
+(function() {
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.zIndex = '9999';
+    canvas.style.pointerEvents = 'none';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
-    return 12;
-}
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-function updateArticleCounter(count) {
-    const articleElements = document.querySelectorAll('.stat-label');
+    const CORRUPTION_CHANCE = 0.03;
+    const POP_CHANCE = 0.05;
 
-    articleElements.forEach(label => {
-        if (label.textContent === 'Articles') {
-            const statNumber = label.previousElementSibling;
-            if (statNumber && statNumber.classList.contains('stat-number')) {
-                statNumber.textContent = count;
+    const assets = {
+        normal: new Image(),
+        corrupted: new Image(),
+        popFrames: [new Image(), new Image(), new Image(), new Image(), new Image()],
+        corruptedPopFrames: [new Image(), new Image(), new Image(), new Image(), new Image()]
+    };
+
+    assets.normal.src = 'Corrupted_Bubblez/assets/wiki/bubble.png';
+    assets.corrupted.src = 'Corrupted_Bubblez/assets/wiki/corrupted_bubble.png';
+
+    for (let i = 0; i < 5; i++) {
+        assets.popFrames[i].src = `Corrupted_Bubblez/assets/wiki/bubble_${i + 1}.png`;
+    }
+
+    for (let i = 0; i < 5; i++) {
+        assets.corruptedPopFrames[i].src = `Corrupted_Bubblez/assets/wiki/corrupted_bubble_${i + 1}.png`;
+    }
+
+    let mouseX = -1000;
+    let mouseY = -1000;
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    const bubbles = [];
+    const mouseRadius = 30;
+
+    class Bubble {
+        constructor(x, y) {
+            this.radius = Math.random() * 15 + 15;
+            this.x = x;
+            this.y = y;
+            this.vx = (Math.random() - 0.5) * 4;
+            this.vy = (Math.random() - 0.5) * 4 - 2;
+            this.wobbleSpeed = Math.random() * 0.04 + 0.02;
+            this.wobbleCount = Math.random() * 100;
+            this.wobbleAmount = Math.random() * 0.4 + 0.2;
+            this.isCorrupted = Math.random() < CORRUPTION_CHANCE;
+            this.isPopping = false;
+            this.popTicks = 0;
+            this.isDead = false;
+            this.hasBeenHit = false;
+        }
+
+        update() {
+            if (this.isPopping) {
+                this.popTicks++;
+                if (this.popTicks >= 15) {
+                    this.isDead = true;
+                }
+                return;
+            }
+
+            this.vy -= 0.06;
+            if (this.vy < -2.5) this.vy = -2.5;
+
+            this.wobbleCount += this.wobbleSpeed;
+            this.vx += Math.sin(this.wobbleCount) * this.wobbleAmount * 0.1;
+
+            this.vx *= 0.97;
+            this.vy *= 0.97;
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            const dx = this.x - mouseX;
+            const dy = this.y - mouseY;
+            const distance = Math.hypot(dx, dy);
+            const minDist = this.radius + mouseRadius;
+
+            if (distance < minDist) {
+                if (!this.hasBeenHit) {
+                    this.hasBeenHit = true;
+                    if (Math.random() < POP_CHANCE) {
+                        this.isPopping = true;
+                        return;
+                    }
+                }
+
+                const angle = Math.atan2(dy, dx);
+                const force = (minDist - distance) * 0.18;
+                this.vx += Math.cos(angle) * force;
+                this.vy += Math.sin(angle) * force;
+            } else {
+                this.hasBeenHit = false;
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+
+            if (this.isPopping) {
+                let frameIndex = Math.floor(this.popTicks / 3);
+                if (frameIndex > 4) frameIndex = 4;
+
+                let progress = this.popTicks / 15;
+                let scale = 1 + (2.28 - 1) * progress;
+                let currentRadius = this.radius * scale;
+
+                const popImg = this.isCorrupted ? assets.corruptedPopFrames[frameIndex] : assets.popFrames[frameIndex];
+                if (popImg.complete && popImg.naturalWidth !== 0) {
+                    ctx.drawImage(popImg, -currentRadius, -currentRadius, currentRadius * 2, currentRadius * 2);
+                }
+            } else {
+                const activeImg = this.isCorrupted ? assets.corrupted : assets.normal;
+
+                if (activeImg.complete && activeImg.naturalWidth !== 0) {
+                    ctx.drawImage(activeImg, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.isCorrupted ? 'rgba(231, 76, 60, 0.3)' : 'rgba(109, 92, 255, 0.25)';
+                    ctx.strokeStyle = this.isCorrupted ? 'rgba(231, 76, 60, 0.8)' : 'rgba(255, 255, 255, 0.7)';
+                    ctx.lineWidth = 1.5;
+                    ctx.fill();
+                    ctx.stroke();
+                }
+            }
+            ctx.restore();
+        }
+    }
+
+    function resolveCollisions() {
+        for (let i = 0; i < bubbles.length; i++) {
+            for (let j = i + 1; j < bubbles.length; j++) {
+                const b1 = bubbles[i];
+                const b2 = bubbles[j];
+
+                if (b1.isPopping || b2.isPopping) continue;
+
+                const dx = b2.x - b1.x;
+                const dy = b2.y - b1.y;
+                const distance = Math.hypot(dx, dy);
+                const minDist = b1.radius + b2.radius;
+
+                if (distance < minDist) {
+                    if (distance === 0) continue;
+
+                    const angle = Math.atan2(dy, dx);
+                    const overlap = minDist - distance;
+
+                    b1.x -= Math.cos(angle) * overlap * 0.5;
+                    b1.y -= Math.sin(angle) * overlap * 0.5;
+                    b2.x += Math.cos(angle) * overlap * 0.5;
+                    b2.y += Math.sin(angle) * overlap * 0.5;
+
+                    const nx = dx / distance;
+                    const ny = dy / distance;
+                    const kx = b1.vx - b2.vx;
+                    const ky = b1.vy - b2.vy;
+                    const p = 2 * (nx * kx + ny * ky) / 2;
+
+                    b1.vx -= p * nx * 0.85;
+                    b1.vy -= p * ny * 0.85;
+                    b2.vx += p * nx * 0.85;
+                    b2.vy += p * ny * 0.85;
+                }
+            }
+        }
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'b') {
+            const count = Math.floor(Math.random() * 3) + 2;
+            for (let i = 0; i < count; i++) {
+                if (mouseX >= 0 && mouseY >= 0 && mouseX <= canvas.width && mouseY <= canvas.height) {
+                    bubbles.push(new Bubble(mouseX, mouseY));
+                }
             }
         }
     });
-}
+
+    function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        resolveCollisions();
+
+        for (let i = bubbles.length - 1; i >= 0; i--) {
+            const b = bubbles[i];
+            b.update();
+            b.draw();
+
+            if (
+                b.isDead ||
+                b.y < -b.radius ||
+                b.x < -b.radius ||
+                b.x > canvas.width + b.radius ||
+                b.y > canvas.height + b.radius
+            ) {
+                bubbles.splice(i, 1);
+            }
+        }
+
+        requestAnimationFrame(loop);
+    }
+
+    requestAnimationFrame(loop);
+})();
 </script>
 </body>
 </html>

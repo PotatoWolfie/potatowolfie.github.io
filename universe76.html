@@ -59,6 +59,24 @@
             line-height: 1.6;
         }
 
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+            border: 2px solid #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #48494a;
+            border: 2px solid #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a5b5c;
+        }
+
         .header {
             background: rgba(45, 45, 45, 1.0);
             border-bottom: 3px solid #4a4a4a;
@@ -649,6 +667,7 @@
         { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
         { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
         { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png' },
+        { text: 'Corrupted Bubz', href: 'corrupted_bubblez.html', icon: 'assets/buttons/corrupted_bubblez_mini.png' },
         { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png', active: true }
     ];
 
@@ -756,13 +775,11 @@
         });
     }
 
-    // DOWNLOAD COUNTER - Combines Modrinth + CurseForge
     async function fetchDownloadCount() {
         try {
             let modrinthDownloads = 0;
             let curseforgeDownloads = 0;
 
-            // Fetch from Modrinth API (Public, no key needed)
             try {
                 const modrinthResponse = await fetch('https://api.modrinth.com/v2/project/universe-76', {
                     cache: 'no-store',
@@ -780,7 +797,6 @@
                 console.warn('Could not fetch Modrinth downloads:', error);
             }
 
-            // Fetch from CurseForge using CFWidget (no API key needed!)
             try {
                 const curseforgeProjectId = '940093';
                 const cfResponse = await fetch(
@@ -796,12 +812,10 @@
                 console.warn('Could not fetch CurseForge downloads:', error);
             }
 
-            // Calculate total
             const totalDownloads = modrinthDownloads + curseforgeDownloads;
 
             console.log('Total downloads:', totalDownloads);
 
-            // Update the UI
             updateDownloadCounter(totalDownloads, modrinthDownloads, curseforgeDownloads);
 
         } catch (error) {
@@ -816,13 +830,10 @@
         if (!countElement) return;
 
         if (total !== null) {
-            // Display the formatted number
             countElement.innerHTML = formatNumber(total);
 
-            // Add tooltip showing breakdown
             countElement.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
 
-            // Update the label
             const label = countElement.nextElementSibling;
             if (label && label.classList.contains('stat-label')) {
                 label.textContent = 'Total Downloads';
