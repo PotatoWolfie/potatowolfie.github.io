@@ -2060,21 +2060,19 @@ a {
                             I, <strong>PotatoWolfie</strong>, am a Minecraft creator and mod developer who enjoys
                             making vanilla friendly mods, but I like to experiment with some mods that go beyond what
                             vanilla would add. I work as hard as I can to make quality mods (disregarding Universe 76) that aren't
-                            unbearable to play. I work with creators like <strong>Demidiant</strong>, who I have led projects with
+                            unbearable to play. I also create animations! The quality of these, however, are questionable, for I am still
+                            learning! I work with creators like <strong>Demidiant</strong> and <strong>Bubblez705</strong>, who I have led projects with
                             in the past. Have a good day, reader!
                         </p>
                     </div>
 
                     <div class="wiki-box">
                         <h2>Latest Project</h2>
-                        <img src="EANDW/minecraft_earth_and_water.png" alt="E&W Wiki" class="wiki-box-image">
+                        <img src="Corrupted_Bubblez/assets/wiki/corrupted_bubblez_logo.png" alt="E&W Wiki" class="wiki-box-image">
                         <p>
-                            My latest mod, <strong>Earth & Water</strong>, adds the remaining elemental blazes: The Bore and the Brine!
-                            Both mobs have unique functions and abilities, and they even come with their own individual structures. Tricky
-                            Trials (1.21) added the Trial Spawner, so we expanded that with the Reinforced Spawner. The Reinforced Spawner
-                            is similar to the Trial Spawner, except it has infinite waves. However, you can turn it on and off with the
-                            Reinforced Key. You can find these keys in chests.
-
+                            My latest project is an animation titled <i>Corrupted Bubblez</i>. It follows two unlikely companions searching for a rumored-to-exist MacGuffin.
+                            As of now, only 2 trailers have been released. Corrupted Bubblez is still in early phases of development, so there is a likelihood that other
+                            projects will release before this story reaches the public.
                         </p>
                         <div class="wiki-button">
                             <div class="wiki-button-left-outline"></div>
@@ -2239,19 +2237,32 @@ function navigateToPage(page) {
     window.location.href = page;
 }
 
-const navTabs = [
-    { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png', active: true },
-    { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-    { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png' },
-    { text: 'Bubblez', href: 'corrupted_bubblez.html', icon: 'assets/buttons/corrupted_bubblez_mini.png' },
-    { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
-];
-
+let dynamicNavTabs = [];
 let currentPage = 0;
+
+async function loadNavigationTabs() {
+    try {
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`navtabs.json?v=${cacheBuster}`, {
+            cache: 'no-store',
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+            }
+        });
+
+        if (response.ok) {
+            dynamicNavTabs = await response.json();
+            renderNavigation();
+            console.log('Successfully loaded paginated tabs from navtabs.json');
+        }
+    } catch (error) {
+        console.error('Error loading navigation tabs:', error);
+    }
+}
 
 function getButtonWidth() {
     let availableWidth;
-
     if (window.innerWidth <= 768) {
         const mainContainer = document.querySelector('.main-container');
         const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
@@ -2266,22 +2277,22 @@ function getButtonWidth() {
 
 function renderNavigation() {
     const wrapper = document.getElementById('navWrapper');
+    if (!wrapper) return;
+
     const buttonWidth = getButtonWidth();
     const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
 
-    wrapper.innerHTML = '';
+    const currentFilename = window.location.pathname.split('/').pop() || 'index.html';
 
+    wrapper.innerHTML = '';
     let buttons = [];
 
-    if (navTabs.length <= buttonsPerPage) {
-        buttons = navTabs.map(tab => ({
-            type: 'tab',
-            data: tab
-        }));
+    if (dynamicNavTabs.length <= buttonsPerPage) {
+        buttons = dynamicNavTabs.map(tab => ({ type: 'tab', data: tab }));
     } else {
         if (currentPage === 0) {
-            for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
-                buttons.push({ type: 'tab', data: navTabs[i] });
+            for (let i = 0; i < buttonsPerPage - 1 && i < dynamicNavTabs.length; i++) {
+                buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
             }
             buttons.push({ type: 'next' });
         } else {
@@ -2289,25 +2300,25 @@ function renderNavigation() {
             const otherPageTabs = buttonsPerPage - 2;
             const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
 
-            const remainingTabs = navTabs.length - startIndex;
+            const remainingTabs = dynamicNavTabs.length - startIndex;
             const isLastPage = remainingTabs <= buttonsPerPage - 1;
 
             if (isLastPage) {
                 buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < navTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: navTabs[i] });
+                for (let i = startIndex; i < dynamicNavTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
                 }
             } else {
                 buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: navTabs[i] });
+                for (let i = startIndex; i < startIndex + otherPageTabs && i < dynamicNavTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
                 }
                 buttons.push({ type: 'next' });
             }
         }
     }
 
-    buttons.forEach((button, index) => {
+    buttons.forEach(button => {
         const btn = document.createElement('a');
         btn.className = 'nav-button';
         btn.style.width = buttonWidth + 'px';
@@ -2337,17 +2348,26 @@ function renderNavigation() {
                 renderNavigation();
             };
         } else {
-            btn.href = button.data.href;
+            btn.href = button.data.html_name;
             btn.innerHTML = `
-                <span class="nav-button-text">${button.data.text}</span>
-                <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
+                <span class="nav-button-text">${button.data.name}</span>
+                <img src="${button.data.logo}" alt="${button.data.name}" class="nav-button-icon">
             `;
-            if (button.data.active) {
+            if (button.data.html_name === currentFilename) {
                 btn.classList.add('active');
             }
         }
-
         wrapper.appendChild(btn);
+    });
+
+    initializeNavButtonEffects();
+}
+
+function initializeNavButtonEffects() {
+    document.querySelectorAll('.nav-button').forEach(button => {
+        button.onmousedown = function() { this.classList.add('pressed'); };
+        button.onmouseup = function() { this.classList.remove('pressed'); };
+        button.onmouseleave = function() { this.classList.remove('pressed'); };
     });
 }
 
@@ -2427,12 +2447,15 @@ function togglePlatforms() {
 document.addEventListener('DOMContentLoaded', async function() {
     await loadSearchData();
     initializeSearch();
-    renderNavigation();
     fetchTotalDownloads();
     setInterval(fetchTotalDownloads, 5 * 60 * 1000);
 
+    loadNavigationTabs();
+
     window.addEventListener('resize', function() {
-        renderNavigation();
+        if(dynamicNavTabs.length > 0) {
+            renderNavigation();
+        }
     });
 
     document.querySelectorAll('.category-item').forEach(item => {
@@ -2467,7 +2490,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (buttonText === 'View Mods') {
                 window.open('https://www.curseforge.com/members/potatowolfie/projects', '_blank');
             } else if (buttonText === 'Learn More') {
-                window.open('https://earth-and-water.github.io/', '_blank');
+                window.open('https://potatowolfie.github.io/corrupted_bubblez.html', '_blank');
             }
         });
     });
