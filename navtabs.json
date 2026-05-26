@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Home",
+    "logo": "assets/buttons/cut_stone_mini.png",
+    "html_name": "index.html"
+  },
+  {
+    "name": "Web",
+    "logo": "assets/buttons/web_mini.png",
+    "html_name": "web.html"
+  },
+  {
+    "name": "Silly Goose",
+    "logo": "assets/buttons/silly_goose_mini.png",
+    "html_name": "silly_goose.html"
+  },
+  {
+    "name": "Bubblez",
+    "logo": "assets/buttons/corrupted_bubblez_mini.png",
+    "html_name": "corrupted_bubblez.html"
+  },{
+    "name": "Universe 76",
+    "logo": "assets/buttons/universe_76_mini.png",
+    "html_name": "universe76.html"
+  }
+]

@@ -2298,117 +2298,139 @@ a {
         }
     }
 
-    const navTabs = [
-        { text: 'Home', href: 'index.html', icon: 'assets/buttons/cut_stone_mini.png' },
-        { text: 'Web', href: 'web.html', icon: 'assets/buttons/web_mini.png' },
-        { text: 'Silly Goose', href: 'silly_goose.html', icon: 'assets/buttons/silly_goose_mini.png', active: true },
-        { text: 'Bubblez', href: 'corrupted_bubblez.html', icon: 'assets/buttons/corrupted_bubblez_mini.png' },
-        { text: 'Universe 76', href: 'universe76.html', icon: 'assets/buttons/universe_76_mini.png' }
-    ];
+let dynamicNavTabs = [];
+let currentPage = 0;
 
-    let currentPage = 0;
+async function loadNavigationTabs() {
+    try {
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`navtabs.json?v=${cacheBuster}`, {
+            cache: 'no-store',
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+            }
+        });
 
-    function getButtonWidth() {
-        let availableWidth;
-
-        if (window.innerWidth <= 768) {
-            const mainContainer = document.querySelector('.main-container');
-            const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
-            const totalMargins = 5 * 2;
-            return (containerWidth - totalMargins) / 6;
-        } else {
-            availableWidth = window.innerWidth - 40;
-            const totalMargins = 7 * 2;
-            return (availableWidth - totalMargins) / 8;
+        if (response.ok) {
+            dynamicNavTabs = await response.json();
+            renderNavigation(); // Draw the UI once data is loaded
+            console.log('Successfully loaded paginated tabs from navtabs.json');
         }
+    } catch (error) {
+        console.error('Error loading navigation tabs:', error);
     }
+}
 
-    function renderNavigation() {
-        const wrapper = document.getElementById('navWrapper');
-        const buttonWidth = getButtonWidth();
-        const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+function getButtonWidth() {
+    let availableWidth;
+    if (window.innerWidth <= 768) {
+        const mainContainer = document.querySelector('.main-container');
+        const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
+        const totalMargins = 5 * 2;
+        return (containerWidth - totalMargins) / 6;
+    } else {
+        availableWidth = window.innerWidth - 40;
+        const totalMargins = 7 * 2;
+        return (availableWidth - totalMargins) / 8;
+    }
+}
 
-        wrapper.innerHTML = '';
+function renderNavigation() {
+    const wrapper = document.getElementById('navWrapper');
+    if (!wrapper) return;
 
-        let buttons = [];
+    const buttonWidth = getButtonWidth();
+    const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
 
-        if (navTabs.length <= buttonsPerPage) {
-            buttons = navTabs.map(tab => ({
-                type: 'tab',
-                data: tab
-            }));
+    const currentFilename = window.location.pathname.split('/').pop() || 'index.html';
+
+    wrapper.innerHTML = '';
+    let buttons = [];
+
+    if (dynamicNavTabs.length <= buttonsPerPage) {
+        buttons = dynamicNavTabs.map(tab => ({ type: 'tab', data: tab }));
+    } else {
+        if (currentPage === 0) {
+            for (let i = 0; i < buttonsPerPage - 1 && i < dynamicNavTabs.length; i++) {
+                buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
+            }
+            buttons.push({ type: 'next' });
         } else {
-            if (currentPage === 0) {
-                for (let i = 0; i < buttonsPerPage - 1 && i < navTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: navTabs[i] });
+            const firstPageTabs = buttonsPerPage - 1;
+            const otherPageTabs = buttonsPerPage - 2;
+            const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
+
+            const remainingTabs = dynamicNavTabs.length - startIndex;
+            const isLastPage = remainingTabs <= buttonsPerPage - 1;
+
+            if (isLastPage) {
+                buttons.push({ type: 'prev' });
+                for (let i = startIndex; i < dynamicNavTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
+                }
+            } else {
+                buttons.push({ type: 'prev' });
+                for (let i = startIndex; i < startIndex + otherPageTabs && i < dynamicNavTabs.length; i++) {
+                    buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
                 }
                 buttons.push({ type: 'next' });
-            } else {
-                const firstPageTabs = buttonsPerPage - 1;
-                const otherPageTabs = buttonsPerPage - 2;
-                const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
-
-                const remainingTabs = navTabs.length - startIndex;
-                const isLastPage = remainingTabs <= buttonsPerPage - 1;
-
-                if (isLastPage) {
-                    buttons.push({ type: 'prev' });
-                    for (let i = startIndex; i < navTabs.length; i++) {
-                        buttons.push({ type: 'tab', data: navTabs[i] });
-                    }
-                } else {
-                    buttons.push({ type: 'prev' });
-                    for (let i = startIndex; i < startIndex + otherPageTabs && i < navTabs.length; i++) {
-                        buttons.push({ type: 'tab', data: navTabs[i] });
-                    }
-                    buttons.push({ type: 'next' });
-                }
             }
         }
-
-        buttons.forEach((button, index) => {
-            const btn = document.createElement('a');
-            btn.className = 'nav-button';
-            btn.style.width = buttonWidth + 'px';
-
-            if (button.type === 'prev') {
-                btn.classList.add('nav-arrow');
-                btn.innerHTML = `
-                    <span class="nav-button-text">Previous</span>
-                    <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
-                `;
-                btn.onclick = (e) => {
-                    e.preventDefault();
-                    if (currentPage > 0) {
-                        currentPage--;
-                        renderNavigation();
-                    }
-                };
-            } else if (button.type === 'next') {
-                btn.classList.add('nav-arrow');
-                btn.innerHTML = `
-                    <span class="nav-button-text">Next</span>
-                    <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
-                `;
-                btn.onclick = (e) => {
-                    e.preventDefault();
-                    currentPage++;
-                    renderNavigation();
-                };
-            } else {
-                btn.href = button.data.href;
-                btn.innerHTML = `
-                    <span class="nav-button-text">${button.data.text}</span>
-                    <img src="${button.data.icon}" alt="${button.data.text}" class="nav-button-icon">
-                `;
-                if (button.data.active) {
-                    btn.classList.add('active');
-                }
-            }
-
-            wrapper.appendChild(btn);
-        });
     }
+
+    buttons.forEach(button => {
+        const btn = document.createElement('a');
+        btn.className = 'nav-button';
+        btn.style.width = buttonWidth + 'px';
+
+        if (button.type === 'prev') {
+            btn.classList.add('nav-arrow');
+            btn.innerHTML = `
+                <span class="nav-button-text">Previous</span>
+                <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
+            `;
+            btn.onclick = (e) => {
+                e.preventDefault();
+                if (currentPage > 0) {
+                    currentPage--;
+                    renderNavigation();
+                }
+            };
+        } else if (button.type === 'next') {
+            btn.classList.add('nav-arrow');
+            btn.innerHTML = `
+                <span class="nav-button-text">Next</span>
+                <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
+            `;
+            btn.onclick = (e) => {
+                e.preventDefault();
+                currentPage++;
+                renderNavigation();
+            };
+        } else {
+            btn.href = button.data.html_name;
+            btn.innerHTML = `
+                <span class="nav-button-text">${button.data.name}</span>
+                <img src="${button.data.logo}" alt="${button.data.name}" class="nav-button-icon">
+            `;
+            if (button.data.html_name === currentFilename) {
+                btn.classList.add('active');
+            }
+        }
+        wrapper.appendChild(btn);
+    });
+
+    initializeNavButtonEffects();
+}
+
+function initializeNavButtonEffects() {
+    document.querySelectorAll('.nav-button').forEach(button => {
+        button.onmousedown = function() { this.classList.add('pressed'); };
+        button.onmouseup = function() { this.classList.remove('pressed'); };
+        button.onmouseleave = function() { this.classList.remove('pressed'); };
+    });
+}
 
     async function fetchDownloadCount() {
         try {
@@ -2602,7 +2624,13 @@ a {
 
     await loadSearchData();
     initializeSearch();
-    renderNavigation();
+    loadNavigationTabs();
+
+    window.addEventListener('resize', function() {
+        if (dynamicNavTabs.length > 0) {
+            renderNavigation();
+        }
+    });
 
     const articleCount = await countArticles();
     updateArticleCounter(articleCount);
