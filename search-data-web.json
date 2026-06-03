@@ -2,7 +2,7 @@
     "Mobs": [
         { "title": "Mob", "page": "Web/mobs.html", "category": "Category" },
         { "title": "Spider", "page": "Web/mobs/spider.html", "category": "Mobs" },
-        { "title": "Baby Spider", "page": "Web/mobs/spiderling.html", "category": "Mobs" },
+        { "title": "Spiderling", "page": "Web/mobs/spiderling.html", "category": "Mobs" },
         { "title": "Cave Spider", "page": "Web/mobs/cave_spider.html", "category": "Mobs" }
     ],
     "Blocks": [
