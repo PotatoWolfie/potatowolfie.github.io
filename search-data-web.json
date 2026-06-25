@@ -10,6 +10,7 @@
         { "title": "Spider Egg", "page": "Web/blocks/spider_egg.html", "category": "Blocks" },
         { "title": "Spider Egg Shells", "page": "Web/blocks/spider_egg_shells.html", "category": "Blocks" },
         { "title": "Spider Moss", "page": "Web/blocks/spider_moss.html", "category": "Blocks" },
+        { "title": "Spider Moss Carpet", "page": "Web/blocks/spider_moss_carpet.html", "category": "Blocks" },
         { "title": "Spider Web", "page": "Web/blocks/spider_web.html", "category": "Blocks" }
     ],
     "Biomes": [
