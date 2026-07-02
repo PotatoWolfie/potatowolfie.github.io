@@ -3,6 +3,7 @@
         { "title": "Home", "page": "index.html", "category": "Home" },
         { "title": "Web", "page": "web.html", "category": "Mods" },
         { "title": "Silly Goose", "page": "silly_goose.html", "category": "Mods" },
+        { "title": "Arlo the Little Guy", "page": "arlo-the-little-guy.html", "category": "Mods" },
         { "title": "Universe 76", "page": "universe76.html", "category": "Mods" }
     ],
     "Animations": [
