@@ -18,7 +18,13 @@
     "name": "Bubblez",
     "logo": "assets/buttons/corrupted_bubblez_mini.png",
     "html_name": "corrupted_bubblez.html"
-  },{
+  },
+  {
+    "name": "Arlo",
+    "logo": "assets/buttons/arlo_mini.png",
+    "html_name": "arlo-the-little-guy.html"
+  },
+  {
     "name": "Universe 76",
     "logo": "assets/buttons/universe_76_mini.png",
     "html_name": "universe76.html"
