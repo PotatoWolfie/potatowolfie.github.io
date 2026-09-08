@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://potatowolfie.github.io/web">
-	<meta property="og:title" content="Web Wiki">
-	<meta property="og:description" content="The Web Wiki is the Wiki for the Minecraft mod, Web! All information you could possibly need is probably here!">
-	<meta property="og:image" content="https://potatowolfie.github.io/assets/web/wiki/web_wiki.png">
-	<meta property="og:image:width" content="1200">
-	<meta property="og:image:height" content="630">
-	<meta property="og:site_name" content="Web Wiki">
-	<meta name="theme-color" content="#8b4513">
-	<meta property="og:locale" content="en_US">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:url" content="https://potatowolfie.github.io/web">
-	<meta name="twitter:title" content="Web Wiki">
-	<meta name="twitter:description" content="The Web Wiki is the Wiki for the Minecraft mod, Web! All information you could possibly need is probably here!">
-	<meta name="twitter:image" content="https://potatowolfie.github.io/assets/web/wiki/web_wiki.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://potatowolfie.github.io/web">
+    <meta property="og:title" content="Web Wiki">
+    <meta property="og:description" content="The Web Wiki is the Wiki for the Minecraft mod, Web! All information you could possibly need is probably here!">
+    <meta property="og:image" content="https://potatowolfie.github.io/assets/web/wiki/web_wiki.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Web Wiki">
+    <meta name="theme-color" content="#8b4513">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://potatowolfie.github.io/web">
+    <meta name="twitter:title" content="Web Wiki">
+    <meta name="twitter:description" content="The Web Wiki is the Wiki for the Minecraft mod, Web! All information you could possibly need is probably here!">
+    <meta name="twitter:image" content="https://potatowolfie.github.io/assets/web/wiki/web_wiki.png">
     <title>Web Wiki</title>
     <link rel="icon" type="image/x-icon" href="web_wiki_favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -327,6 +327,12 @@
     image-rendering: crisp-edges !important;
 }
 
+.nav-button.nav-arrow .nav-button-icon {
+    border: none !important;
+    width: auto !important;
+    height: 23px !important;
+}
+
 @media (max-width: 768px) {
     .nav-button {
         padding: 10px 4px;
@@ -353,7 +359,7 @@
 
     .nav-button.nav-arrow img {
     border: none;
-    width: 35px
+    width: 35px;
 }
 }
 
@@ -1474,6 +1480,12 @@ version-item-image-container {
         border: 1px solid #0a4694;
         margin-right: 0;
     }
+
+    .nav-button.nav-arrow .nav-button-icon {
+        border: none !important;
+        width: auto !important;
+        height: auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2266,6 +2278,17 @@ a {
 let dynamicNavTabs = [];
 let currentPage = 0;
 
+function findCurrentPageForFilename(filename, buttonsPerPage) {
+    const index = dynamicNavTabs.findIndex(tab => tab.html_name === filename);
+    if (index === -1 || dynamicNavTabs.length <= buttonsPerPage) return 0;
+
+    const firstPageTabs = buttonsPerPage - 1;
+    if (index < firstPageTabs) return 0;
+
+    const otherPageTabs = buttonsPerPage - 2;
+    return 1 + Math.floor((index - firstPageTabs) / otherPageTabs);
+}
+
 async function loadNavigationTabs() {
     try {
         const cacheBuster = new Date().getTime();
@@ -2279,6 +2302,11 @@ async function loadNavigationTabs() {
 
         if (response.ok) {
             dynamicNavTabs = await response.json();
+
+            const currentFilename = window.location.pathname.split('/').pop() || 'index.html';
+            const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+            currentPage = findCurrentPageForFilename(currentFilename, buttonsPerPage);
+
             renderNavigation();
             console.log('Successfully loaded paginated tabs from navtabs.json');
         }

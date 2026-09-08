@@ -327,6 +327,13 @@
     image-rendering: crisp-edges !important;
 }
 
+.nav-button.nav-arrow .nav-button-icon {
+    border: none !important;
+    width: auto !important;
+    height: 23px !important;
+}
+
+
 @media (max-width: 768px) {
     .nav-button {
         padding: 10px 4px;
@@ -349,6 +356,12 @@
         width: 20px;
         height: 20px;
         border: 1px solid #3d2ca8;
+    }
+
+    .nav-button.nav-arrow .nav-button-icon {
+        border: none !important;
+        width: auto !important;
+        height: auto;
     }
 
     .nav-button.nav-arrow img {
@@ -2216,6 +2229,17 @@ a {
 let dynamicNavTabs = [];
 let currentPage = 0;
 
+function findCurrentPageForFilename(filename, buttonsPerPage) {
+    const index = dynamicNavTabs.findIndex(tab => tab.html_name === filename);
+    if (index === -1 || dynamicNavTabs.length <= buttonsPerPage) return 0;
+
+    const firstPageTabs = buttonsPerPage - 1;
+    if (index < firstPageTabs) return 0;
+
+    const otherPageTabs = buttonsPerPage - 2;
+    return 1 + Math.floor((index - firstPageTabs) / otherPageTabs);
+}
+
 async function loadNavigationTabs() {
     try {
         const cacheBuster = new Date().getTime();
@@ -2229,6 +2253,11 @@ async function loadNavigationTabs() {
 
         if (response.ok) {
             dynamicNavTabs = await response.json();
+
+            const currentFilename = window.location.pathname.split('/').pop() || 'index.html';
+            const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
+            currentPage = findCurrentPageForFilename(currentFilename, buttonsPerPage);
+
             renderNavigation();
             console.log('Successfully loaded paginated tabs from navtabs.json');
         }
