@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://potatowolfie.github.io">
+    <meta property="og:title" content="404">
+    <meta property="og:description" content="All of the official wiki pages for PotatoWolfie mods are here!">
+    <meta property="og:image" content="/assets/wiki/earth_water_wiki.png">
+    <meta property="og:site_name" content="PotatoWolfie">
+    <meta name="theme-color" content="#3453df">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://earth-and-water.github.io">
+    <meta name="twitter:title" content="404">
+    <meta name="twitter:description" content="All of the official wiki pages for PotatoWolfie mods are here!">
+    <meta name="twitter:image" content="/assets/wiki/earth_water_wiki.png">
+    <title>404</title>
+    <link rel="icon" type="image/x-icon" href="/goggles.ico" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('assets/fonts/minecraft.woff2') format('woff2'),
+                 url('assets/fonts/minecraft.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        img {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        body {
+            font-family: 'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-image: url('/assets/home/background.png');
+            background-color: #2d2d2d;
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: top left;
+            color: #e6e6e6;
+            line-height: 1.4;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; border: 2px solid #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #48494a; border: 2px solid #1a1a1a; }
+        ::-webkit-scrollbar-thumb:hover { background: #5a5b5c; }
+
+        .header {
+            background: rgba(45, 45, 45, 1.0);
+            border-bottom: 3px solid #4a4a4a;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 95vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo { height: 60px; width: auto; }
+        .logo img { height: 100%; width: auto; object-fit: contain; }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            background: #3a3a3a;
+            border: none;
+            color: #e6e6e6;
+            font-size: 16px;
+            font-family: 'Nunito', sans-serif;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border: 2px solid #3453df;
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #2e2e2e;
+            border: 2px solid #1a1a1a;
+            border-top: none;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 99999;
+            display: none;
+            box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #242424, 0 4px 8px rgba(0,0,0,0.3);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .search-suggestion {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #3a3a3a;
+            color: #cccccc;
+            min-height: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-suggestion:last-child { border-bottom: none; }
+        .search-suggestion:hover .suggestion-title { color: #3453df; }
+
+        .suggestion-category {
+            font-size: 12px;
+            color: #3453df;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            margin-top: 2px;
+            font-family: 'Nunito', sans-serif;
+            color: #cccccc;
+            transition: color 0.2s ease;
+        }
+
+        .search-suggestions::-webkit-scrollbar { width: 8px; }
+        .search-suggestions::-webkit-scrollbar-track { background: #242424; }
+        .search-suggestions::-webkit-scrollbar-thumb { background: #4f5a75; border-radius: 4px; }
+        .search-suggestions::-webkit-scrollbar-thumb:hover { background: #5a6580; }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: calc(100vh - 170px);
+        }
+
+        .content {
+            background: #262626;
+            padding: 25px;
+            overflow-y: auto;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #3453df;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 15px;
+            font-family: 'Minecraft Ten', 'Inter', sans-serif;
+            font-weight: normal;
+        }
+
+        .feature-list {
+            background: #2e2e2e;
+            border-left: 4px solid #3453df;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .feature-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .feature-list li {
+            margin-bottom: 8px;
+            color: #cccccc;
+        }
+
+        a {
+            color: #3453df;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #4065ec;
+            text-decoration: underline;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 992px) {
+            .header-content { flex-direction: column; gap: 15px; padding: 15px; }
+            .search-container { margin: 0; max-width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .header-content { padding: 10px; gap: 10px; }
+            .logo { height: 50px; }
+            .main-container {
+                max-width: 95vw;
+                padding: 15px;
+            }
+            .content { padding: 20px; }
+            .page-title { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io">
+                <img src="/assets/home/logo.png" alt="PotatoWolfie">
+            </a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search a Wiki" id="searchInput" autocomplete="off">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content">
+        <h1 id="404" class="page-title">404</h1>
+        <p>You're either encountering this page because you typed some nonsense into your search bar, or you clicked a link that does not yet exist.</p>
+        <p>You have a few options on what to do next:</p>
+
+        <div class="feature-list">
+            <ul>
+                <li>Stay here, enjoy the nothing.</li>
+                <li>Go to the <a href="index.html">home page</a>.</li>
+                <li>Find a different page.</li>
+                <li><a href="builder.html">Create a page</a> and send a pull request for it to be added. (WIP)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    let allSearchItems = [];
+
+    const searchDataFiles = [
+        'search-data-web.json',
+        'Silly_Goose/search-data-silly-goose.json',
+        'search-data-cbubz.json',
+        'search-data-mods.json'
+    ];
+
+    async function loadSearchData() {
+        try {
+            const allData = [];
+            const cacheBuster = new Date().getTime();
+
+            const modNameMap = {
+                'search-data-web.json': 'Web',
+                'search-data-cbubz.json': 'Corrupted Bubblez',
+                'Silly_Goose/search-data-silly-goose.json': 'Silly Goose'
+            };
+
+            for (const file of searchDataFiles) {
+                try {
+                    const response = await fetch(`${file}?v=${cacheBuster}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const items = Object.values(data).flat();
+
+                        const modName = modNameMap[file] || '';
+                        items.forEach(item => {
+                            item.modName = modName;
+                        });
+
+                        allData.push(...items);
+                    }
+                } catch (error) {
+                    console.warn(`Could not load ${file}:`, error);
+                }
+            }
+
+            allSearchItems = allData;
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            allSearchItems = [];
+        }
+    }
+
+    function initializeSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+
+        if (!searchInput || !searchSuggestions) return;
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+
+            if (query.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = allSearchItems.filter(item =>
+                item.title.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            ).slice(0, 8);
+
+            if (matches.length > 0) {
+                searchSuggestions.innerHTML = matches.map(item => `
+                    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                        <div class="suggestion-category">${item.modName ? item.modName + ':' : ''}${item.category}</div>
+                        <div class="suggestion-title">${item.title}</div>
+                    </div>
+                `).join('');
+                searchSuggestions.style.display = 'block';
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase().trim();
+                const firstMatch = allSearchItems.find(item =>
+                    item.title.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query)
+                );
+                if (firstMatch) {
+                    navigateToPage(firstMatch.page);
+                }
+            }
+        });
+    }
+
+    function navigateToPage(page) {
+        window.location.href = page;
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        await loadSearchData();
+        initializeSearch();
+    });
+</script>
+</body>
+</html>
