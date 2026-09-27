@@ -1,6 +1,6 @@
 {
     "Items": [
-        { "title": "Quivers", "page": "/Dems_Quivers/Quivers/", "category": "Category" },
+        { "title": "Quivers", "page": "/Dems_Quivers/Quivers/", "category": "Items" },
         { "title": "Frozen Arrow", "page": "/Dems_Quivers/Arrows/", "category": "Items" },
         { "title": "Ominous Arrow", "page": "/Dems_Quivers/Arrows/", "category": "Items" }
     ],
