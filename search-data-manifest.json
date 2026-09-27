@@ -1,0 +1,18 @@
+{
+  "searchDataFiles": [
+    { "path": "search-data-mods.json" },
+    { "path": "search-data-web.json", "modName": "Web" },
+    { "path": "Silly_Goose/search-data-silly-goose.json", "modName": "Silly Goose" },
+    { "path": "search-data-cbubz.json", "modName": "Corrupted Bubblez" },
+    { "path": "search-data-dems-quivers.json", "modName": "Dem's Quivers" }
+  ],
+  "curseforgeProjectIds": [
+    "1334244",
+    "1392561",
+    "940093",
+    "1263951",
+    "1687942",
+    "1448777"
+  ],
+  "otherProjectsCount": 2
+}

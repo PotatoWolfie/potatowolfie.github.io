@@ -2078,18 +2078,16 @@ a {
 
                     <div class="wiki-box">
                         <h2>Latest Project</h2>
-                        <img src="Arlo_The_Little_Guy/assets/arlo_the_little_guy.png" alt="E&W Wiki" class="wiki-box-image">
+                        <img src="assets/quivers/wiki/quivers_wiki.png" alt="E&W Wiki" class="wiki-box-image">
                         <p>
-                            My latest project is a mod titled, "Arlo the Little Guy." This is a joke mod following a mini cactus that can wear hats. The latest update
-                            added the Arlrooms dimension. Similarly to the famous Backrooms, the Arlrooms are an infinitely generating set of rooms and hallways.
-                            You'll find hats, cassette tapes, batteries, and more lovely loot inside the chests. Arlo will be watching your every step whilst in his
-                            rooms.
+                            My latest project is a mod titled, "Dem's Quivers" It is a smaller quality of life mod that adds back the quiver to Minecraft!
+                            It also adds two arrows, the Frozen and Ominous arrows.
                         </p>
                         <div class="wiki-button">
                             <div class="wiki-button-left-outline"></div>
                             <div class="wiki-button-right-outline"></div>
                             <div class="wiki-button-section">
-                                <div class="wiki-button-name">Watch the Trailer</div>
+                                <div class="wiki-button-name">Play today</div>
                             </div>
                             <div class="wiki-button-dark-strip"></div>
                             <div class="wiki-button-bottom-outline"></div>
@@ -2137,40 +2135,97 @@ a {
 let searchData = {};
 let allSearchItems = [];
 
-const searchDataFiles = [
-    'search-data-mods.json',
-    'search-data-web.json',
-    'Silly_Goose/search-data-silly-goose.json',
-    'search-data-cbubz.json',
-    'search-data-dems-quivers.json'
+const searchDataFilesFallback = [
+    { path: 'search-data-mods.json' },
+    { path: 'search-data-web.json', modName: 'Web' },
+    { path: 'Silly_Goose/search-data-silly-goose.json', modName: 'Silly Goose' },
+    { path: 'search-data-cbubz.json', modName: 'Corrupted Bubblez' },
+    { path: 'search-data-dems-quivers.json', modName: "Dem's Quivers" }
 ];
+
+const curseforgeProjectIdsFallback = [
+    '1334244',
+    '1392561',
+    '940093',
+    '1263951',
+    '1687942',
+    '1448777'
+];
+
+const otherProjectsCountFallback = 2;
+
+function noCacheFetchOptions() {
+    return {
+        cache: 'no-store',
+        headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+        }
+    };
+}
+
+let siteManifestPromise = null;
+
+async function getSiteManifest() {
+    if (siteManifestPromise) return siteManifestPromise;
+
+    siteManifestPromise = (async () => {
+        const cacheBuster = new Date().getTime();
+        try {
+            const response = await fetch(`search-data-manifest.json?v=${cacheBuster}`, noCacheFetchOptions());
+            if (response.ok) {
+                const manifest = await response.json();
+                console.log('Loaded site manifest');
+                return manifest;
+            }
+        } catch (error) {
+            console.warn('Could not load search-data-manifest.json, using fallback values:', error);
+        }
+        return null;
+    })();
+
+    return siteManifestPromise;
+}
+
+async function getSearchDataFileList() {
+    const manifest = await getSiteManifest();
+    if (manifest && Array.isArray(manifest.searchDataFiles) && manifest.searchDataFiles.length > 0) {
+        return manifest.searchDataFiles;
+    }
+    return searchDataFilesFallback;
+}
+
+async function getCurseforgeProjectIds() {
+    const manifest = await getSiteManifest();
+    if (manifest && Array.isArray(manifest.curseforgeProjectIds) && manifest.curseforgeProjectIds.length > 0) {
+        return manifest.curseforgeProjectIds;
+    }
+    return curseforgeProjectIdsFallback;
+}
+
+async function getOtherProjectsCount() {
+    const manifest = await getSiteManifest();
+    if (manifest && typeof manifest.otherProjectsCount === 'number') {
+        return manifest.otherProjectsCount;
+    }
+    return otherProjectsCountFallback;
+}
 
 async function loadSearchData() {
     try {
         const allData = [];
         const cacheBuster = new Date().getTime();
+        const fileList = await getSearchDataFileList();
 
-        const modNameMap = {
-            'search-data-web.json': 'Web',
-            'search-data-cbubz.json': 'Corrupted Bubblez',
-            'Silly_Goose/search-data-silly-goose.json': 'Silly Goose',
-            'search-data-dems-quivers.json': 'Dem\'s Quivers'
-        };
-
-        for (const file of searchDataFiles) {
+        for (const entry of fileList) {
+            const file = entry.path;
             try {
-                const response = await fetch(`${file}?v=${cacheBuster}`, {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
-                    }
-                });
+                const response = await fetch(`${file}?v=${cacheBuster}`, noCacheFetchOptions());
                 if (response.ok) {
                     const data = await response.json();
                     const items = Object.values(data).flat();
 
-                    const modName = modNameMap[file] || '';
+                    const modName = entry.modName || '';
                     items.forEach(item => {
                         item.modName = modName;
                     });
@@ -2360,8 +2415,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             const buttonText = this.querySelector('.wiki-button-name').textContent;
             if (buttonText === 'View Mods') {
                 window.open('https://www.curseforge.com/members/potatowolfie/projects', '_blank');
-            } else if (buttonText === 'Watch the Trailer') {
-                window.open('https://youtu.be/850zeH8UeS0', '_blank');
+            } else if (buttonText === 'Play today') {
+                window.open('https://www.curseforge.com/minecraft/mc-mods/dems-quivers', '_blank');
             }
         });
     });
@@ -2413,14 +2468,7 @@ async function fetchTotalDownloads() {
             console.warn('Could not fetch Modrinth downloads:', error);
         }
 
-        const curseforgeProjectIds = [
-            '1334244',
-            '1392561',
-            '940093',
-            '1263951',
-            '1687942',
-            '1448777'
-        ];
+        const curseforgeProjectIds = await getCurseforgeProjectIds();
 
         try {
             const cfPromises = curseforgeProjectIds.map(id =>
@@ -2472,17 +2520,16 @@ function updateTotalDownloads(total, modrinth, curseforge) {
     });
 }
 
-const OTHER_PROJECTS = 2;
-
-function updateTotalMods(count) {
+async function updateTotalMods(count) {
     const statsElements = document.querySelectorAll('.stat-label');
+    const otherProjects = await getOtherProjectsCount();
 
     statsElements.forEach(label => {
         if (label.textContent === 'Active Mods' || label.textContent === 'Total Mods' || label.textContent === 'Total Projects') {
             const statNumber = label.previousElementSibling;
             if (statNumber && statNumber.classList.contains('stat-number')) {
                 if (count !== null && count > 0) {
-                    const PROJECT_COUNT = count + OTHER_PROJECTS;
+                    const PROJECT_COUNT = count + otherProjects;
                     statNumber.textContent = PROJECT_COUNT;
                     label.textContent = 'Total Projects';
                 } else {
