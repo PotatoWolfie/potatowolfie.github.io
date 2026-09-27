@@ -8,8 +8,8 @@
     <meta property="og:title" content="Dem's Quivers Wiki">
     <meta property="og:description" content="The Dem's Quivers Wiki is the Wiki for the Minecraft mod, Dem's Quivers! All information you could possibly need is probably here!">
     <meta property="og:image" content="https://potatowolfie.github.io/assets/quivers/wiki/quivers_wiki.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:width" content="3222">
+    <meta property="og:image:height" content="1116">
     <meta property="og:site_name" content="Dem's Quivers Wiki">
     <meta name="theme-color" content="#b72d37">
     <meta property="og:locale" content="en_US">
@@ -1630,7 +1630,7 @@ a {
 
         <h2>Mod Categories</h2>
         <div class="category-grid">
-            <a href="quivers.html" class="category-item">
+            <a href="Quivers/" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
@@ -1647,7 +1647,7 @@ a {
                 <div class="category-shadow"></div>
             </a>
 
-            <a href="arrows.html" class="category-item">
+            <a href="Arrows/" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
@@ -1664,7 +1664,7 @@ a {
                 <div class="category-shadow"></div>
             </a>
 
-            <a href="effects.html" class="category-item">
+            <a href="Effects/" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
@@ -1682,7 +1682,7 @@ a {
             </a>
 
 
-            <a href="history.html" class="category-item">
+            <a href="History/" class="category-item">
                 <div class="category-top-outline"></div>
                 <div class="category-left-outline"></div>
                 <div class="category-right-outline"></div>
@@ -2029,22 +2029,11 @@ a {
     </div>
 
     <div class="sidebar">
-        <div class="sidebar-section">
-            <div class="sidebar-title">IMPORTaNT NOTICE</div>
-            <ul class="sidebar-list">
-                <div class="creator-name">THIS MOD WIKI IS NOT COMPLETE</div>
-                <li>There are multiple wiki pages that are currently missing. No articles currently exist. We apologize for the
-                    inconvenience of anyone trying to use the wiki. You can ask any questions about the mod you may have on the GitHub:
-                </li>
-                <li><a href="https://github.com/PotatoWolfie/dems-quivers" target="_blank">Dem's Quivers Github</a></li>
-            </ul>
-        </div>
-
         <div class="sidebar-section stats">
             <div class="stat-number" id="downloadCount">---</div>
             <div class="stat-label">Downloads</div>
             <div style="margin: 15px 0;">•</div>
-            <div class="stat-number">0</div>
+            <div class="stat-number">5</div>
             <div class="stat-label">Entries</div>
         </div>
 
@@ -2102,7 +2091,7 @@ a {
     let allSearchItems = [];
 
     const searchDataFiles = [
-        '/search-data-quivers.json'
+        '/search-data-dems-quivers.json'
     ];
 
     async function loadSearchData() {
@@ -2441,7 +2430,7 @@ a {
     if (allSearchItems && allSearchItems.length > 0) {
         return allSearchItems.length;
     }
-    return 0;
+    return 5;
 }
 
 function updateArticleCounter(count) {

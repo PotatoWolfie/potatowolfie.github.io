@@ -2138,10 +2138,11 @@ let searchData = {};
 let allSearchItems = [];
 
 const searchDataFiles = [
+    'search-data-mods.json',
     'search-data-web.json',
     'Silly_Goose/search-data-silly-goose.json',
     'search-data-cbubz.json',
-    'search-data-mods.json'
+    'search-data-dems-quivers.json'
 ];
 
 async function loadSearchData() {
@@ -2152,7 +2153,8 @@ async function loadSearchData() {
         const modNameMap = {
             'search-data-web.json': 'Web',
             'search-data-cbubz.json': 'Corrupted Bubblez',
-            'Silly_Goose/search-data-silly-goose.json': 'Silly Goose'
+            'Silly_Goose/search-data-silly-goose.json': 'Silly Goose',
+            'search-data-dems-quivers.json': 'Dem\'s Quivers'
         };
 
         for (const file of searchDataFiles) {

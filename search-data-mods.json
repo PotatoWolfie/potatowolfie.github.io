@@ -1,13 +1,13 @@
 {
     "Mods": [
-        { "title": "Home", "page": "index.html", "category": "Home" },
-        { "title": "Web", "page": "web.html", "category": "Mods" },
-        { "title": "Silly Goose", "page": "silly_goose.html", "category": "Mods" },
-        { "title": "Arlo the Little Guy", "page": "arlo-the-little-guy.html", "category": "Mods" },
-        { "title": "Universe 76", "page": "universe76.html", "category": "Mods" }
+        { "title": "Web", "page": "Web/", "category": "Mods" },
+        { "title": "Silly Goose", "page": "Silly_Goose/", "category": "Mods" },
+        { "title": "Arlo the Little Guy", "page": "Arlo_The_Little_Guy/", "category": "Mods" },
+        { "title": "Dem's Quivers", "page": "Dems_Quivers/", "category": "Mods" },
+        { "title": "Universe 76", "page": "Universe76/", "category": "Mods" }
     ],
     "Animations": [
-        { "title": "Corrupted Bubblez", "page": "corrupted_bubblez.html", "category": "Animations" }
+        { "title": "Corrupted Bubblez", "page": "Corrupted_Bubblez/", "category": "Animations" }
     ],
     "Tools": [
         { "title": "Armor Trim Model Maker", "page": "armor_trim_model_maker.html", "category": "Modding Tools" },

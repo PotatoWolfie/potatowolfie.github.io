@@ -1,0 +1,15 @@
+{
+    "Items": [
+        { "title": "Quivers", "page": "/Dems_Quivers/Quivers/", "category": "Category" },
+        { "title": "Frozen Arrow", "page": "/Dems_Quivers/Arrows/", "category": "Items" },
+        { "title": "Ominous Arrow", "page": "/Dems_Quivers/Arrows/", "category": "Items" }
+    ],
+    "Effects": [
+        { "title": "Effects", "page": "/Dems_Quivers/Effects/", "category": "Category" },
+        { "title": "Freezing", "page": "/Dems_Quivers/Effects/", "category": "Effects" },
+        { "title": "Raging", "page": "/Dems_Quivers/Effects/", "category": "Effects" }
+    ],
+    "History": [
+        { "title": "History", "page": "/Dems_Quivers/History/", "category": "Category" }
+    ]
+}
