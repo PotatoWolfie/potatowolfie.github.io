@@ -77,6 +77,8 @@ function renderNavigation() {
     const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
 
     const currentKey = getPageKey(window.location.pathname);
+    const knownKeys = dynamicNavTabs.map(tab => getPageKey(tab.html_name));
+    const isUnrecognizedPage = !knownKeys.includes(currentKey);
 
     wrapper.innerHTML = '';
     let buttons = [];
@@ -147,7 +149,10 @@ function renderNavigation() {
                 <span class="nav-button-text">${button.data.name}</span>
                 <img src="${button.data.logo}" alt="${button.data.name}" class="nav-button-icon">
             `;
-            if (getPageKey(button.data.html_name) === currentKey) {
+            const tabKey = getPageKey(button.data.html_name);
+            const isExactMatch = tabKey === currentKey;
+            const isHomeFallback = tabKey === '' && isUnrecognizedPage;
+            if (isExactMatch || isHomeFallback) {
                 btn.classList.add('active');
             }
         }

@@ -124,15 +124,15 @@
           {
             "type": "random_hat_change",
             "images": [
-              "Arlo_The_Little_Guy/little_ad/desperado/bowler.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/cowboy.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/tricorn.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/straw_hat.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/top_hat.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/bucket.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/cactus_flower.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/sun_hat.png",
-              "Arlo_The_Little_Guy/little_ad/desperado/crown.png"
+              "Arlos_Little_Ad/little_ad/desperado/bowler.png",
+              "Arlos_Little_Ad/little_ad/desperado/cowboy.png",
+              "Arlos_Little_Ad/little_ad/desperado/tricorn.png",
+              "Arlos_Little_Ad/little_ad/desperado/straw_hat.png",
+              "Arlos_Little_Ad/little_ad/desperado/top_hat.png",
+              "Arlos_Little_Ad/little_ad/desperado/bucket.png",
+              "Arlos_Little_Ad/little_ad/desperado/cactus_flower.png",
+              "Arlos_Little_Ad/little_ad/desperado/sun_hat.png",
+              "Arlos_Little_Ad/little_ad/desperado/crown.png"
             ]
           },
           {

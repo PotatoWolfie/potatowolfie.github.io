@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://potatowolfie.github.io">
-    <meta property="og:title" content="PW Wiki Homepage">
-    <meta property="og:description" content="All of the official wiki pages for PotatoWolfie mods are here!">
-    <meta property="og:image" content="https://potatowolfie.github.io/assets/home/logo.png">
+    <meta property="og:url" content="https://potatowolfie.github.io/web">
+    <meta property="og:title" content="Web Wiki">
+    <meta property="og:description" content="The Web Wiki is the Wiki for the Minecraft mod, Web! All information you could possibly need is probably here!">
+    <meta property="og:image" content="https://potatowolfie.github.io/assets/web/wiki/web_wiki.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="PotatoWolfie">
-    <meta name="theme-color" content="#3453df">
+    <meta property="og:site_name" content="Web Wiki">
+    <meta name="theme-color" content="#8b4513">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://potatowolfie.github.io">
-    <meta name="twitter:title" content="PW Wiki Homepage">
-    <meta property="og:description" content="All of the official wiki pages for PotatoWolfie mods are here!">
-    <meta name="twitter:image" content="https://potatowolfie.github.io/assets/home/logo.png">
-    <title>PW Wiki Homepage</title>
-    <link rel="icon" type="image/x-icon" href="goggles.ico">
+    <meta name="twitter:url" content="https://potatowolfie.github.io/web">
+    <meta name="twitter:title" content="Web Wiki">
+    <meta name="twitter:description" content="The Web Wiki is the Wiki for the Minecraft mod, Web! All information you could possibly need is probably here!">
+    <meta name="twitter:image" content="https://potatowolfie.github.io/assets/web/wiki/web_wiki.png">
+    <title>Web Wiki</title>
+    <link rel="icon" type="image/x-icon" href="../web_wiki_favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -27,8 +27,8 @@
     <style>
         @font-face {
     	font-family: 'Minecraft Ten';
-    	src: url('assets/fonts/minecraft.woff2') format('woff2'),
-         url('assets/fonts/minecraft.woff') format('woff');
+    	src: url('/assets/fonts/minecraft.woff2') format('woff2'),
+         url('/assets/fonts/minecraft.woff') format('woff');
     	font-weight: normal;
     	font-style: normal;
     	font-display: swap;
@@ -55,7 +55,7 @@
 
         body {
             font-family: 'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-image: url('assets/home/background.png');
+            background-image: url('/assets/web/wiki/background.png');
             background-color: #2d2d2d;
             background-size: auto;
             background-repeat: repeat;
@@ -66,7 +66,7 @@
             overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar {
+                ::-webkit-scrollbar {
             width: 12px;
         }
 
@@ -105,7 +105,7 @@
 
 .search-box:focus {
     outline: none;
-    border: 2px solid #3453df;
+    border: 2px solid #8b4513;
 }
 
 .search-suggestions {
@@ -144,7 +144,7 @@
 }
 
 .search-suggestion:hover .suggestion-title {
-    color: #3453df;
+    color: #8b4513;
 }
 
 .search-suggestion:last-child {
@@ -153,7 +153,7 @@
 
 .suggestion-category {
     font-size: 12px;
-    color: #3453df;
+    color: #8b4513;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: normal;
 }
@@ -191,10 +191,6 @@
 @media (max-width: 768px) {
     .search-box {
         font-size: 16px;
-    }
-
-    .category-item .category-name {
-        font-size: 11px;
     }
 }
 
@@ -257,8 +253,8 @@
 }
 
 .nav-button {
-    background: #3453df;
-    border: 2px solid #3949aa;
+    background: #8b4513;
+    border: 2px solid #654321;
     border-bottom: none;
     margin-right: 2px;
     cursor: pointer;
@@ -266,10 +262,10 @@
     color: white;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: 6000;
-    text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
+    text-shadow: 2px 2px 0px rgba(101,67,33,0.8);
     box-shadow:
-        inset 2px 2px 0 #5d86fb,
-        inset -2px -2px 0 #4465ea;
+        inset 2px 2px 0 #b4703b,
+        inset -2px -2px 0 #a65b31;
     text-decoration: none;
     flex-shrink: 0;
     display: flex;
@@ -288,11 +284,11 @@
 }
 
 .nav-button:hover {
-    background: #3949aa;
+    background: #7e3f0f;
 }
 
 .nav-button.active {
-    background: #3949aa;
+    background: #7e3f0f;
 }
 
 .nav-button.hidden {
@@ -303,12 +299,12 @@
     width: 16px;
     height: 16px;
     image-rendering: auto;
-    border: 1px solid #2c3d99;
+    border: 1px solid #5a3410;
 }
 
 .nav-button.nav-arrow img {
     border: none;
-    width: 35px
+    width: 28px
 }
 
 .nav-button-text {
@@ -324,7 +320,7 @@
 .nav-button-icon {
     width: 23px !important;
     height: 23px !important;
-    border: 2px solid #2c3d99 !important;
+    border: 2px solid #5a3410 !important;
     image-rendering: -moz-crisp-edges !important;
     image-rendering: -webkit-crisp-edges !important;
     image-rendering: pixelated !important;
@@ -337,7 +333,6 @@
     height: 23px !important;
 }
 
-
 @media (max-width: 768px) {
     .nav-button {
         padding: 10px 4px;
@@ -348,7 +343,7 @@
         width: 25px;
         height: 25px;
         image-rendering: auto;
-        border: 2px solid #2c3d99;
+        border: 2px solid #5a3410;
     }
 
     .nav-button-text {
@@ -359,14 +354,13 @@
         display: block;
         width: 20px;
         height: 20px;
-        border: 1px solid #2c3d99;
+        border: 1px solid #5a3410;
     }
 
-    .nav-button.nav-arrow .nav-button-icon {
-        border: none !important;
-        width: auto !important;
-        height: auto;
-    }
+    .nav-button.nav-arrow img {
+    border: none;
+    width: 35px;
+}
 }
 
         .main-container {
@@ -390,7 +384,7 @@
         .page-title {
             font-size: 28px;
             margin-bottom: 25px;
-            color: #3453df;
+            color: #8b4513;
             border-bottom: 2px solid #4a4a4a;
             padding-bottom: 15px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
@@ -398,11 +392,11 @@
         }
 
         .wiki-box-image {
-    width: 160px;
+    width: 120px;
     height: auto;
     float: left;
     margin-right: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
@@ -477,7 +471,7 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin: 25px 0;
             width: 100%;
@@ -487,8 +481,8 @@
         .category-item {
             cursor: pointer;
             aspect-ratio: 1;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -573,8 +567,8 @@
         }
 
         .category-item img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     image-rendering: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimize-contrast;
@@ -631,7 +625,7 @@
         }
 
         .category-name {
-            font-size: 14px;
+            font-size: 12px;
             color: #ffffff;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -682,7 +676,7 @@
             background: #323333;
         }
 
-        .social-platforms {
+        .latest-versions {
     margin-top: 35px;
     background: #2e2e2e;
     border: 2px solid #1a1a1a;
@@ -696,12 +690,12 @@
     -moz-user-select: none;
 }
 
-.social-platforms a,
-.social-platforms .platform-item-name {
+.latest-versions a,
+.latest-versions .version-item-name {
     user-select: text;
 }
 
-.social-platforms::before {
+.latest-versions::before {
     content: '';
     position: absolute;
     top: 0px;
@@ -715,7 +709,7 @@
     transition: all 0.3s ease;
 }
 
-        .platforms-header {
+        .versions-header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -729,34 +723,34 @@
     padding-bottom: 20px;
 }
 
-.social-platforms.expanded {
+.latest-versions.expanded {
     border: 2px solid #1a1a1a;
 }
 
-        .platforms-header {
+        .versions-header {
     border-bottom: 2px solid #1a1a1a;
 }
 
-        .platforms-header-text {
+        .versions-header-text {
     position: relative;
     z-index: 2;
     font-size: 18px;
-    color: #3453df;
+    color: #8b4513;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
     font-weight: normal;
     text-shadow: none;
     margin-bottom: 8px;
 }
 
-.platforms-header-text,
-.platforms-header-arrow {
+.versions-header-text,
+.versions-header-arrow {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     -moz-user-select: none;
 }
 
-        .platforms-grid {
+        .versions-grid {
     position: relative;
     max-height: 0;
     overflow: hidden;
@@ -769,7 +763,7 @@
     transform: translateY(0);
 }
 
-.platforms-grid-border {
+.versions-grid-border {
     position: absolute;
     bottom: -1px;
     left: 0;
@@ -781,7 +775,7 @@
     transition: transform 0.3s ease;
 }
 
-.platforms-inset-shadow {
+.versions-inset-shadow {
     position: absolute;
     top: 0;
     left: 0;
@@ -794,7 +788,7 @@
     z-index: 1;
 }
 
-.platforms-grid::before {
+.versions-grid::before {
     content: '';
     position: absolute;
     top: 0px;
@@ -807,11 +801,11 @@
     pointer-events: none;
 }
 
-.platforms-grid.open {
+.versions-grid.open {
     max-height: none;
 }
 
-        .platforms-content {
+        .versions-content {
     position: relative;
     z-index: 1;
     padding: 20px;
@@ -824,7 +818,7 @@
     border: 0px solid #1a1a1a;
 }
 
-.platforms-content::before {
+.versions-content::before {
     content: '';
     position: absolute;
     top: 0px;
@@ -837,7 +831,7 @@
     pointer-events: none;
 }
 
-        .platform-item {
+        .version-item {
     cursor: pointer;
     aspect-ratio: 1;
     width: 250px;
@@ -853,7 +847,7 @@
     transition: transform 0.2s ease;
 }
 
-platform-item-image-container {
+version-item-image-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -866,7 +860,7 @@ platform-item-image-container {
     height: 80px;
     margin-top: -10px;
 }
-.platform-item-top-outline {
+.version-item-top-outline {
     position: absolute;
     top: 0;
     left: 0;
@@ -876,7 +870,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-left-outline {
+.version-item-left-outline {
     position: absolute;
     top: 0;
     left: 0;
@@ -886,7 +880,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-right-outline {
+.version-item-right-outline {
     position: absolute;
     top: 0;
     right: 0;
@@ -896,7 +890,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-top-highlight {
+.version-item-top-highlight {
     position: absolute;
     top: 4px;
     left: 4px;
@@ -906,7 +900,7 @@ platform-item-image-container {
     z-index: 4;
 }
 
-.platform-item-image-container {
+.version-item-image-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -920,7 +914,7 @@ platform-item-image-container {
     margin-top: -20px;
 }
 
-.platform-item-image-section {
+.version-item-image-section {
     flex: 2;
     position: relative;
     background: #3e414a;
@@ -932,7 +926,7 @@ platform-item-image-container {
     display: block;
 }
 
-.platform-item-image-section {
+.version-item-image-section {
     flex: 2;
     position: relative;
     background: #3e414a;
@@ -944,7 +938,7 @@ platform-item-image-container {
     display: block;
 }
 
-.platform-item-button-section {
+.version-item-button-section {
     flex: 0.6;
     background: #48494a;
     position: relative;
@@ -961,7 +955,7 @@ platform-item-image-container {
     border-top: 4px solid #1e1e1e;
 }
 
-.platform-item-dark-strip {
+.version-item-dark-strip {
     flex: 0.2;
     background: #3b3c3c;
     position: relative;
@@ -971,7 +965,7 @@ platform-item-image-container {
     margin-top: 0;
 }
 
-.platform-item-bottom-outline {
+.version-item-bottom-outline {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -981,7 +975,7 @@ platform-item-image-container {
     z-index: 5;
 }
 
-.platform-item-shadow {
+.version-item-shadow {
     position: absolute;
     bottom: -6px;
     left: 0;
@@ -992,45 +986,45 @@ platform-item-image-container {
     transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-.platform-item:hover {
+.version-item:hover {
 }
 
-.platform-item.pressed .platform-item-image-section {
+.version-item.pressed .version-item-image-section {
     transform: scaleY(1.058);
     transform-origin: top;
 }
 
-.platform-item.pressed .platform-item-button-section {
+.version-item.pressed .version-item-button-section {
     transform: translateY(6px);
 }
 
-.platform-item.pressed .platform-item-dark-strip {
-    transform: translateY(6px);
-    opacity: 0;
-}
-
-.platform-item.pressed .platform-item-shadow {
+.version-item.pressed .version-item-dark-strip {
     transform: translateY(6px);
     opacity: 0;
 }
 
-.platform-item:hover .platform-item-image-section {
+.version-item.pressed .version-item-shadow {
+    transform: translateY(6px);
+    opacity: 0;
+}
+
+.version-item:hover .version-item-image-section {
     background: #4b4e56;
 }
 
-.platform-item:hover .platform-item-top-highlight {
+.version-item:hover .version-item-top-highlight {
     background: #39424a;
 }
 
-.platform-item:hover .platform-item-image-section::after {
+.version-item:hover .version-item-image-section::after {
     background: #565960;
 }
 
-.platform-item:hover .platform-item-button-section {
+.version-item:hover .version-item-button-section {
     background: #414242;
 }
 
-	    .platform-item-image-section::after {
+	    .version-item-image-section::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -1040,11 +1034,11 @@ platform-item-image-container {
     background: #565960;
 }
 
-.platform-item:hover .platform-item-dark-strip {
+.version-item:hover .version-item-dark-strip {
     background: #323333;
 }
 
-        .platform-item img {
+        .version-item img {
     width: 75px;
     height: 75px;
     image-rendering: auto;
@@ -1056,13 +1050,13 @@ platform-item-image-container {
     z-index: 11;
 }
 
-	    .platform-item-image-section {
+	    .version-item-image-section {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.platform-item-name {
+.version-item-name {
     font-size: 12px;
     color: #ffffff;
     font-family: 'Minecraft Ten', 'Inter', sans-serif;
@@ -1073,7 +1067,7 @@ platform-item-image-container {
     text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
 }
 
-.platforms-header {
+.versions-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1081,7 +1075,7 @@ platform-item-image-container {
     position: relative;
 }
 
-.platforms-header-arrow {
+.versions-header-arrow {
     width: 15px;
     height: 15px;
     margin-left: 10px;
@@ -1092,15 +1086,15 @@ platform-item-image-container {
     transform: rotate(0deg);
 }
 
-.platforms-header-arrow.rotated {
+.versions-header-arrow.rotated {
     transform: rotate(180deg);
 }
 
-.platforms-header-arrow.spinback-clockwise {
+.versions-header-arrow.spinback-clockwise {
     transform: rotate(360deg);
 }
 
-.platforms-header-arrow.spinback-counter {
+.versions-header-arrow.spinback-counter {
     transform: rotate(-360deg);
 }
 
@@ -1123,7 +1117,7 @@ platform-item-image-container {
 
         .sidebar-title {
             font-size: 16px;
-            color: #3453df;
+            color: #8b4513;
             margin-bottom: 20px;
             padding-bottom: 12px;
             border-bottom: 1px solid #4a4a4a;
@@ -1149,15 +1143,19 @@ platform-item-image-container {
         }
 
         .sidebar-list a:hover {
-            color: #3453df;
+            color: #8b4513;
         }
 
         .stats {
-            background: linear-gradient(135deg, #3453df, #5e26c0);
+            background: linear-gradient(135deg, #8b4513, #622b0a);
             border-radius: 0;
             padding: 20px;
             text-align: center;
             color: white;
+        }
+
+        .stats img {
+            filter: brightness(1.2);
         }
 
         .stat-number {
@@ -1216,7 +1214,7 @@ platform-item-image-container {
 
         .creator-name {
             font-size: 14px;
-            color: #3453df;
+            color: #8b4513;
             margin-bottom: 12px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1230,7 +1228,7 @@ platform-item-image-container {
 
         .creator-link {
             background: rgba(26, 26, 26, 0.6);
-            color: #3453df;
+            color: #8b4513;
             text-decoration: none;
             padding: 6px 12px;
             border-radius: 0;
@@ -1250,7 +1248,7 @@ platform-item-image-container {
         }
 
         .about-section h2 {
-            color: #3453df;
+            color: #8b4513;
             margin-bottom: 20px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1266,7 +1264,7 @@ platform-item-image-container {
         }
 
         h2 {
-            color: #3453df;
+            color: #8b4513;
             margin-bottom: 20px;
             font-family: 'Minecraft Ten', 'Inter', sans-serif;
             font-weight: normal;
@@ -1293,18 +1291,18 @@ platform-item-image-container {
     }
 
     .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 15px;
     }
 
     .category-item {
-        width: 180px;
-        height: 180px;
+        width: 140px;
+        height: 140px;
     }
 
     .category-item img {
-        width: 90px;
-        height: 90px;
+        width: 70px;
+        height: 70px;
     }
 }
 
@@ -1340,31 +1338,31 @@ platform-item-image-container {
     }
 
     .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 15px;
     }
 
     .category-item {
-        width: 160px;
-        height: 160px;
+        width: 130px;
+        height: 130px;
     }
 
     .category-item img {
-        width: 80px;
-        height: 80px;
+        width: 65px;
+        height: 65px;
     }
 
-    .platforms-content {
+    .versions-content {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
 
-    .platform-item {
+    .version-item {
         width: 200px;
         height: 130px;
     }
 
-    .platform-item img {
+    .version-item img {
         width: 60px;
         height: 60px;
     }
@@ -1443,35 +1441,35 @@ platform-item-image-container {
         font-size: 14px;
     }
 
-    .platforms-content {
+    .versions-content {
         grid-template-columns: 1fr;
         gap: 15px;
         justify-items: center;
     }
 
-    .platform-item {
+    .version-item {
         width: 280px;
         height: 180px;
     }
 
-    .platform-item img {
+    .version-item img {
         width: 90px;
         height: 90px;
     }
 
-    .platform-item-name {
+    .version-item-name {
         font-size: 14px;
     }
 
-    .social-platforms {
+    .latest-versions {
         margin-top: 25px;
     }
 
-    .platforms-header {
+    .versions-header {
         padding: 15px;
     }
 
-    .platforms-header-text {
+    .versions-header-text {
         font-size: 17px;
     }
 
@@ -1481,6 +1479,12 @@ platform-item-image-container {
         height: 20px;
         border: 1px solid #0a4694;
         margin-right: 0;
+    }
+
+    .nav-button.nav-arrow .nav-button-icon {
+        border: none !important;
+        width: auto !important;
+        height: auto;
     }
 }
 
@@ -1522,7 +1526,7 @@ platform-item-image-container {
     }
 
     .category-name {
-        font-size: 12px;
+        font-size: 9px;
     }
 
 	.category-item {
@@ -1543,12 +1547,12 @@ a {
     color: inherit !important;
 }
 
-    .platform-item {
+    .version-item {
         width: 250px;
         height: 160px;
     }
 
-    .platform-item img {
+    .version-item img {
         width: 80px;
         height: 80px;
     }
@@ -1566,33 +1570,6 @@ a {
     }
 }
 
-@media (min-width: 769px) {
-    .category-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin: 25px 0;
-        width: 100%;
-        justify-items: center;
-    }
-
-    .category-item-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
-    .category-section-title {
-        font-size: 16px;
-        color: #3453df;
-        margin-bottom: 15px;
-        font-family: 'Minecraft Ten', 'Inter', sans-serif;
-        font-weight: normal;
-        text-align: center;
-        width: 100%;
-    }
-}
-
 @media (max-width: 768px) {
   .search-container {
     flex: unset;
@@ -1604,6 +1581,241 @@ a {
     width: 100%;
   }
 }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="https://potatowolfie.github.io/web">
+                <img src="../assets/web/wiki/web_wiki.png" alt="Web Wiki">
+            </a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search Web Wiki" id="searchInput" autocomplete="off">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+</div>
+
+<div class="nav-tabs">
+    <div class="nav-scroll-wrapper" id="navWrapper">
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content">
+        <h1 class="page-title">Welcome to The Web Wiki!</h1>
+
+        <div class="featured-section">
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <img src="../assets/web/wiki/news/news1.png" alt="News">
+                    <div class="card-title">Webs</div>
+                    <div class="card-content">
+                        Spiders, when fighting, can shoot webs at you. When these webs land on you, they prevent you from moving for two seconds, before releasing you. In this time, all spiders in the area come and feast on you. This applies to any other creature that happens to get in a web.
+                    </div>
+                </div>
+
+                <div class="featured-card">
+                    <img src="../assets/web/wiki/news/news3.png" alt="News">
+                    <div class="card-title"></div>
+                    <div class="card-content">
+                        1.0.4 is getting backported all the way back to 1.20! I have received many requests to do this, but now that there is a stable version of Web, it is the perfect time to make a batch of backports. Web will still receive content updates, but the backports may take longer to be made.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Mod Categories</h2>
+        <div class="category-grid">
+            <a href="mobs.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="../assets/web/wiki/buttons/mobs_button.png" alt="Mobs">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Mobs</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+            <a href="blocks.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="../assets/web/wiki/buttons/blocks_button.png" alt="Blocks">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Blocks</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+            <a href="biomes.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="../assets/web/wiki/buttons/biomes_button.png" alt="Biomes">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">Biomes</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+
+
+            <a href="history.html" class="category-item">
+                <div class="category-top-outline"></div>
+                <div class="category-left-outline"></div>
+                <div class="category-right-outline"></div>
+                <div class="category-top-highlight"></div>
+                <div class="category-image-container">
+                    <img src="../assets/web/wiki/buttons/history_button.png" alt="History">
+                </div>
+                <div class="category-image-section"></div>
+                <div class="category-button-section">
+                    <div class="category-name">History</div>
+                </div>
+                <div class="category-dark-strip"></div>
+                <div class="category-bottom-outline"></div>
+                <div class="category-shadow"></div>
+            </a>
+        </div>
+
+        <div class="latest-versions">
+            <div class="versions-header" onclick="toggleVersions()">
+                <div class="versions-inset-shadow"></div>
+                <div class="versions-header-text">Latest Versions</div>
+                <div class="versions-header-arrow">
+                    <img src="../assets/wiki/buttons/dropdown_arrow.png" alt="Dropdown Arrow">
+                </div>
+            </div>
+            <div class="versions-grid" id="versions-grid">
+                <div class="versions-content">
+                    <a href="https://modrinth.com/mod/webs" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="../assets/wiki/buttons/modrinth_button.png" alt="Modrinth">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Modrinth</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+
+                    <a href="https://www.curseforge.com/minecraft/mc-mods/web" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="../assets/wiki/buttons/curseforge_button.png" alt="Curseforge">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Curseforge</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+
+                    <a href="https://www.planetminecraft.com/mod/web-fabric-1-21-6-8" class="version-item" target="_blank">
+                        <div class="version-item-top-outline"></div>
+                        <div class="version-item-left-outline"></div>
+                        <div class="version-item-right-outline"></div>
+                        <div class="version-item-top-highlight"></div>
+
+                        <div class="version-item-image-container">
+                            <img src="../assets/wiki/buttons/planet_minecraft_button.png" alt="Planet Minecraft">
+                        </div>
+                        <div class="version-item-image-section"></div>
+
+                        <div class="version-item-button-section">
+                            <div class="version-item-name">Planet Minecraft</div>
+                        </div>
+
+                        <div class="version-item-dark-strip"></div>
+                        <div class="version-item-bottom-outline"></div>
+                        <div class="version-item-shadow"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <div class="about-section">
+                <div class="wiki-boxes">
+                    <div class="wiki-box">
+                        <h2>about the Mod</h2>
+                        <p>
+                            <strong>Web</strong> is a mod that expands on spiders by giving them new behaviors and animations. Spiders can now shoot webs to trap players, and spiderlings will hatch from eggs found in Spider Egg Clusters underground. Their attacks and style are inspired by the way <em>Minecraft Dungeons</em> implemented spiders
+                        </p>
+                        <p>
+                            In addition to their new mechanics, spiders can be found near <strong>Spider Eggs</strong> in caves . These eggs will eventually break on their own, releasing spiderlings that are smaller and faster, but have less health.
+                        </p>
+                        <div class="wiki-button">
+                            <div class="wiki-button-left-outline"></div>
+                            <div class="wiki-button-right-outline"></div>
+                            <div class="wiki-button-section">
+                                <div class="wiki-button-name">Get Web</div>
+                            </div>
+                            <div class="wiki-button-dark-strip"></div>
+                            <div class="wiki-button-bottom-outline"></div>
+                            <div class="wiki-button-shadow"></div>
+                        </div>
+                    </div>
+
+                    <div class="wiki-box">
+                        <h2>Featured article</h2>
+                        <img src="assets/blocks/spider_web_ground-1-0-2.png" alt="Spider Web" class="wiki-box-image">
+                        <p>
+                            The <strong>Spider Web</strong> is a block that can be used as an item. When placed on the ground, you can create a spider web similar to what a spider shoots at you. Except this one has cobweb physics. If you hang the spider web from a ceiling, you can get hanging webs, which you can climb. If you throw the spider web, you can throw it exactly how a spider shoots one. You can shoot it at mobs or players to get them stuck for two seconds. Spiders in the nearby area will also take note and attack.
+                        </p>
+                        <div class="wiki-button">
+                            <div class="wiki-button-left-outline"></div>
+                            <div class="wiki-button-right-outline"></div>
+                            <div class="wiki-button-section">
+                                <div class="wiki-button-name">Read More</div>
+                            </div>
+                            <div class="wiki-button-dark-strip"></div>
+                            <div class="wiki-button-bottom-outline"></div>
+                            <div class="wiki-button-shadow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
 
                 .wiki-boxes {
                     display: flex;
@@ -1775,571 +1987,270 @@ a {
                         font-size: 15px;
                     }
                 }
-    </style>
-</head>
-<body>
-<div class="header">
-    <div class="header-content">
-        <div class="logo">
-            <a href="https://potatowolfie.github.io">
-                <img src="assets/home/logo.png" alt="PotatoWolfie">
-            </a>
-        </div>
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search a Wiki" id="searchInput" autocomplete="off">
-            <div class="search-suggestions" id="searchSuggestions"></div>
-        </div>
-    </div>
-</div>
+            </style>
 
-<div class="nav-tabs">
-    <div class="nav-scroll-wrapper" id="navWrapper">
-    </div>
-</div>
+            <script>
+                document.querySelectorAll('.wiki-button').forEach(button => {
+                    button.addEventListener('mousedown', function() {
+                        this.classList.add('pressed');
+                    });
 
-<div class="main-container">
-    <div class="content">
-        <h1 class="page-title">Homepage</h1>
+                    button.addEventListener('mouseup', function() {
+                        this.classList.remove('pressed');
+                    });
 
-        <div class="featured-section">
-            <div class="featured-grid">
-                <div class="featured-card">
-                    <img src="EANDW/temp_keyart.png" alt="E&W">
-                    <div class="card-title">Earth & Water</div>
-                    <div class="card-content">
-                        Earth & Water is a mod that expands on elemental mobs. Minecraft has the Blaze and Breeze,
-                        which fills in half the elemental mobs. E&W adds the other two elemental mobs, the Bore and Brine!
-                        These two mobs come with their own blocks and structures that fit them respectively.
-                    </div>
-                </div>
+                    button.addEventListener('mouseleave', function() {
+                        this.classList.remove('pressed');
+                    });
 
-                <div class="featured-card">
-                    <img src="assets/home/news/arlo_1.png" alt="Web">
-                    <div class="card-title">Arlo the Little Guy</div>
-                    <div class="card-content">
-                        Do you like cacti? Do you like hats? Do you like the idea of a cactus WITH a hat? And more importantly,
-                        are you the type of person to smelt a small little cactus for a measly green dye? If you answered the first
-                        three questions with a yes, then this mod is for you! If you said yes to the fourth question..
-                        I wouldn't recommend downloading this mod. Arlo would be very disappointed in you.
-                    </div>
-                </div>
-            </div>
-        </div>
+                    button.addEventListener('click', function() {
+                        const buttonText = this.querySelector('.wiki-button-name').textContent;
+                        if (buttonText === 'Get Web') {
+                            window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
+                        } else if (buttonText === 'Read More') {
+                            window.open('https://potatowolfie.github.io/Web/blocks/spider_web.html', '_blank');
+                        }
+                    });
+                });
 
-        <div class="category-grid">
-            <div class="category-item-wrapper">
-                <h2 class="category-section-title">Modder's Tools</h2>
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <a href="armor_trim_model_maker.html" class="category-item">
-                        <div class="category-top-outline"></div>
-                        <div class="category-left-outline"></div>
-                        <div class="category-right-outline"></div>
-                        <div class="category-top-highlight"></div>
-                        <div class="category-image-container">
-                            <img src="assets/helper_tools/buttons/trim_item_models_button.png" alt="Trim Model Maker">
-                        </div>
-                        <div class="category-image-section"></div>
-                        <div class="category-button-section">
-                            <div class="category-name">armor Trim Items</div>
-                        </div>
-                        <div class="category-dark-strip"></div>
-                        <div class="category-bottom-outline"></div>
-                        <div class="category-shadow"></div>
-                    </a>
+                document.querySelectorAll('.version-item').forEach(item => {
+                    item.addEventListener('mousedown', function() {
+                        this.classList.add('pressed');
+                    });
 
-                    <a href="texture_viewer.html" class="category-item">
-                        <div class="category-top-outline"></div>
-                        <div class="category-left-outline"></div>
-                        <div class="category-right-outline"></div>
-                        <div class="category-top-highlight"></div>
-                        <div class="category-image-container">
-                            <img src="assets/helper_tools/buttons/texture_viewer_button.png" alt="Texture Viewer">
-                        </div>
-                        <div class="category-image-section"></div>
-                        <div class="category-button-section">
-                            <div class="category-name">Texture Viewer</div>
-                        </div>
-                        <div class="category-dark-strip"></div>
-                        <div class="category-bottom-outline"></div>
-                        <div class="category-shadow"></div>
-                    </a>
-                </div>
-            </div>
+                    item.addEventListener('mouseup', function() {
+                        this.classList.remove('pressed');
+                    });
 
-            <div class="category-item-wrapper">
-                <h2 class="category-section-title">Other Mods</h2>
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <a href="https://earth-and-water.github.io" class="category-item">
-                        <div class="category-top-outline"></div>
-                        <div class="category-left-outline"></div>
-                        <div class="category-right-outline"></div>
-                        <div class="category-top-highlight"></div>
-                        <div class="category-image-container">
-                            <img src="EANDW/eandw_button.png" alt="E&W">
-                        </div>
-                        <div class="category-image-section"></div>
-                        <div class="category-button-section">
-                            <div class="category-name">Earth & Water</div>
-                        </div>
-                        <div class="category-dark-strip"></div>
-                        <div class="category-bottom-outline"></div>
-                        <div class="category-shadow"></div>
-                    </a>
-
-                    <a href="arlos-little-ad.html" class="category-item">
-                        <div class="category-top-outline"></div>
-                        <div class="category-left-outline"></div>
-                        <div class="category-right-outline"></div>
-                        <div class="category-top-highlight"></div>
-                        <div class="category-image-container">
-                            <img src="Arlo_The_Little_Guy/little_ad/icons/bowler_hat.png" alt="Bowler Hat">
-                        </div>
-                        <div class="category-image-section"></div>
-                        <div class="category-button-section">
-                            <div class="category-name">Arlo's Little Ad</div>
-                        </div>
-                        <div class="category-dark-strip"></div>
-                        <div class="category-bottom-outline"></div>
-                        <div class="category-shadow"></div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="category-item-wrapper">
-                <h2 class="category-section-title">Website Tools</h2>
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <a href="html_theme_editor.html" class="category-item">
-                        <div class="category-top-outline"></div>
-                        <div class="category-left-outline"></div>
-                        <div class="category-right-outline"></div>
-                        <div class="category-top-highlight"></div>
-                        <div class="category-image-container">
-                            <img src="assets/helper_tools/buttons/html_theme_editor_button.png" alt="HTML Theme Editor">
-                        </div>
-                        <div class="category-image-section"></div>
-                        <div class="category-button-section">
-                            <div class="category-name">HTML Theme Editor</div>
-                        </div>
-                        <div class="category-dark-strip"></div>
-                        <div class="category-bottom-outline"></div>
-                        <div class="category-shadow"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="social-platforms">
-            <div class="platforms-header" onclick="togglePlatforms()">
-                <div class="platforms-inset-shadow"></div>
-                <div class="platforms-header-text">Platforms</div>
-                <div class="platforms-header-arrow">
-                    <img src="assets/wiki/buttons/dropdown_arrow.png" alt="Dropdown Arrow">
-                </div>
-            </div>
-            <div class="platforms-grid" id="platforms-grid">
-                <div class="platforms-content">
-                    <a href="https://www.youtube.com/@PotatoWolfie" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/home/buttons/youtube_button.png" alt="YouTube">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">YouTube</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.twitch.tv/potatowolfie64" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/home/buttons/twitch_button.png" alt="Twitch">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Twitch</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://github.com/PotatoWolfie" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/home/buttons/github_button.png" alt="GitHub">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">GitHub</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.planetminecraft.com/member/potatowolfie/" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/wiki/buttons/planet_minecraft_button.png" alt="Planet Minecraft">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Planet Minecraft</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://modrinth.com/user/PotatoWolfie" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/wiki/buttons/modrinth_button.png" alt="Modrinth">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Modrinth</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-
-                    <a href="https://www.curseforge.com/members/potatowolfie/projects" class="platform-item" target="_blank">
-                        <div class="platform-item-top-outline"></div>
-                        <div class="platform-item-left-outline"></div>
-                        <div class="platform-item-right-outline"></div>
-                        <div class="platform-item-top-highlight"></div>
-
-                        <div class="platform-item-image-container">
-                            <img src="assets/wiki/buttons/curseforge_button.png" alt="Curseforge">
-                        </div>
-                        <div class="platform-item-image-section"></div>
-
-                        <div class="platform-item-button-section">
-                            <div class="platform-item-name">Curseforge</div>
-                        </div>
-
-                        <div class="platform-item-dark-strip"></div>
-                        <div class="platform-item-bottom-outline"></div>
-                        <div class="platform-item-shadow"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="about-section">
-            <div class="about-section">
-                <div class="wiki-boxes">
-                    <div class="wiki-box">
-                        <h2>About PotatoWolfie</h2>
-                        <p>
-                            I, <strong>PotatoWolfie</strong>, am a Minecraft creator and mod developer who enjoys
-                            making vanilla friendly mods, but I like to experiment with some mods that go beyond what
-                            vanilla would add. I work as hard as I can to make quality mods (disregarding Universe 76) that aren't
-                            unbearable to play. I also create animations! The quality of these, however, are questionable, for I am still
-                            learning! I work with creators like <strong>Demidiant</strong> and <strong>Bubblez705</strong>, who I have led projects with
-                            in the past. Have a good day, reader!
-                        </p>
-                    </div>
-
-                    <div class="wiki-box">
-                        <h2>Latest Project</h2>
-                        <img src="Arlo_The_Little_Guy/assets/arlo_the_little_guy.png" alt="E&W Wiki" class="wiki-box-image">
-                        <p>
-                            My latest project is a mod titled, "Arlo the Little Guy." This is a joke mod following a mini cactus that can wear hats. The latest update
-                            added the Arlrooms dimension. Similarly to the famous Backrooms, the Arlrooms are an infinitely generating set of rooms and hallways.
-                            You'll find hats, cassette tapes, batteries, and more lovely loot inside the chests. Arlo will be watching your every step whilst in his
-                            rooms.
-                        </p>
-                        <div class="wiki-button">
-                            <div class="wiki-button-left-outline"></div>
-                            <div class="wiki-button-right-outline"></div>
-                            <div class="wiki-button-section">
-                                <div class="wiki-button-name">Watch the Trailer</div>
-                            </div>
-                            <div class="wiki-button-dark-strip"></div>
-                            <div class="wiki-button-bottom-outline"></div>
-                            <div class="wiki-button-shadow"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    item.addEventListener('mouseleave', function() {
+                        this.classList.remove('pressed');
+                    });
+                });
+            </script>
         </div>
     </div>
 
     <div class="sidebar">
         <div class="sidebar-section stats">
-            <div class="stat-number">---</div>
-            <div class="stat-label">Total Projects</div>
+            <div class="stat-number" id="downloadCount">---</div>
+            <div class="stat-label">Downloads</div>
             <div style="margin: 15px 0;">•</div>
-            <div class="stat-number">---</div>
-            <div class="stat-label">Mod Downloads</div>
+            <div class="stat-number">13</div>
+            <div class="stat-label">Articles</div>
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-title">Did you know...</div>
             <ul class="sidebar-list">
-                <li>...that I started modding using Mcreator?</li>
-                <li>...Universe 76 was inspired by a YouTube video asking what happened to deleted Minecraft worlds?</li>
-                <li>...that despite the name, my favorite animal is actually the duck?</li>
+                <li>...that the motivation for completing Web was the idea of arachnophobes playing it?</li>
+                <li>...Spiderlings originally weren't going to be added because of a coding issue?</li>
+                <li>...the countdown of Spider Eggs hatching only goes down when a player is within 50 blocks of it?</li>
             </ul>
+        </div>
+
+        <div class="sidebar-section creators-section">
+            <div class="creators-content">
+                <div class="sidebar-title">Creator</div>
+
+                <div class="creator">
+                    <div class="creator-name">PotatoWolfie</div>
+                    <div class="creator-links">
+                        <a href="https://www.youtube.com/@PotatoWolfie" class="creator-link" target="_blank">YouTube</a>
+                        <a href="https://www.twitch.tv/potatowolfie64" class="creator-link" target="_blank">Twitch</a>
+                        <a href="https://www.planetminecraft.com/member/potatowolfie/" class="creator-link" target="_blank">Planet Minecraft</a>
+                        <a href="https://www.curseforge.com/members/potatowolfie/projects" class="creator-link" target="_blank">CurseForge</a>
+                        <a href="https://modrinth.com/user/PotatoWolfie" class="creator-link" target="_blank">Modrinth</a>
+                        <a href="https://github.com/PotatoWolfie" class="creator-link" target="_blank">Github</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="sidebar-section minecraft">
             <div class="sidebar-title">Legal Notice</div>
             <ul class="sidebar-list">
-                <li>All mods made by me are unofficial Minecraft modifications and are not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft in any way. Minecraft is a sandbox video game developed by Mojang Studios.</li>
+                <li>Web is an unofficial Minecraft mod and is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft in any way. Minecraft is a sandbox video game developed by Mojang Studios that allows players to explore, build, and survive in a block-based world.</li>
             </ul>
         </div>
     </div>
 </div>
-
 <script>
     let targetRotation = 0;
     let currentRotation = 0;
     let isArrowAnimating = false;
     let isDropdownAnimating = false;
 
-let searchData = {};
-let allSearchItems = [];
+    let searchData = {};
+    let allSearchItems = [];
 
-const searchDataFiles = [
-    'search-data-web.json',
-    'Silly_Goose/search-data-silly-goose.json',
-    'search-data-cbubz.json',
-    'search-data-mods.json'
-];
+    const searchDataFiles = [
+        '/search-data-web.json'
+    ];
 
-async function loadSearchData() {
-    try {
-        const allData = [];
-        const cacheBuster = new Date().getTime();
+    async function loadSearchData() {
+        try {
+            const allData = [];
+            const cacheBuster = new Date().getTime();
 
-        const modNameMap = {
-            'search-data-web.json': 'Web',
-            'search-data-cbubz.json': 'Corrupted Bubblez',
-            'Silly_Goose/search-data-silly-goose.json': 'Silly Goose'
-        };
-
-        for (const file of searchDataFiles) {
-            try {
-                const response = await fetch(`${file}?v=${cacheBuster}`, {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
-                    }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    const items = Object.values(data).flat();
-
-                    const modName = modNameMap[file] || '';
-                    items.forEach(item => {
-                        item.modName = modName;
+            for (const file of searchDataFiles) {
+                try {
+                    const response = await fetch(`${file}?v=${cacheBuster}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
                     });
-
-                    allData.push(...items);
-                    console.log(`Loaded search data from ${file}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        const items = Object.values(data).flat();
+                        allData.push(...items);
+                        console.log(`Loaded search data from ${file}`);
+                    }
+                } catch (error) {
+                    console.warn(`Could not load ${file}:`, error);
                 }
-            } catch (error) {
-                console.warn(`Could not load ${file}:`, error);
             }
+
+            allSearchItems = allData;
+            console.log(`Total search items loaded: ${allSearchItems.length}`);
+        } catch (error) {
+            console.error('Error loading search data:', error);
+            allSearchItems = [];
         }
-
-        allSearchItems = allData;
-        console.log(`Total search items loaded: ${allSearchItems.length}`);
-    } catch (error) {
-        console.error('Error loading search data:', error);
-        allSearchItems = [];
-    }
-}
-
-function initializeSearch() {
-    const searchInput = document.getElementById('searchInput');
-    const searchSuggestions = document.getElementById('searchSuggestions');
-
-    if (!searchInput || !searchSuggestions) {
-        console.error('Search elements not found');
-        return;
     }
 
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
+    function initializeSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
 
-        if (query.length === 0) {
-            searchSuggestions.style.display = 'none';
+        if (!searchInput || !searchSuggestions) {
+            console.error('Search elements not found');
             return;
         }
 
-        const matches = allSearchItems.filter(item =>
-            item.title.toLowerCase().includes(query) ||
-            item.category.toLowerCase().includes(query)
-        ).slice(0, 8);
-
-        if (matches.length > 0) {
-            searchSuggestions.innerHTML = matches.map(item => `
-    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
-        <div class="suggestion-category">${item.modName ? item.modName + ':' : ''}${item.category}</div>
-        <div class="suggestion-title">${item.title}</div>
-    </div>
-`).join('');
-            searchSuggestions.style.display = 'block';
-        } else {
-            searchSuggestions.style.display = 'none';
-        }
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.search-container')) {
-            searchSuggestions.style.display = 'none';
-        }
-    });
-
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
+        searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
-            const firstMatch = allSearchItems.find(item =>
+
+            if (query.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = allSearchItems.filter(item =>
                 item.title.toLowerCase().includes(query) ||
                 item.category.toLowerCase().includes(query)
-            );
-            if (firstMatch) {
-                navigateToPage(firstMatch.page);
+            ).slice(0, 8);
+
+            if (matches.length > 0) {
+                searchSuggestions.innerHTML = matches.map(item => `
+                    <div class="search-suggestion" onclick="navigateToPage('${item.page}')">
+                        <div class="suggestion-category">${item.category}</div>
+                        <div class="suggestion-title">${item.title}</div>
+                    </div>
+                `).join('');
+                searchSuggestions.style.display = 'block';
+            } else {
+                searchSuggestions.style.display = 'none';
             }
-        }
-    });
-}
+        });
 
-function navigateToPage(page) {
-    window.location.href = page;
-}
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
 
-function updateArrow() {
-    if (currentRotation === targetRotation || isArrowAnimating) return;
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase().trim();
+                const firstMatch = allSearchItems.find(item =>
+                    item.title.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query)
+                );
+                if (firstMatch) {
+                    navigateToPage(firstMatch.page);
+                }
+            }
+        });
+    }
 
-    const arrow = document.querySelector('.platforms-header-arrow');
-    isArrowAnimating = true;
+    function navigateToPage(page) {
+        window.location.href = page;
+    }
 
-    let nextRotation = currentRotation + 180;
+    function updateArrow() {
+        if (currentRotation === targetRotation || isArrowAnimating) return;
 
-    arrow.style.transform = `rotate(${nextRotation}deg)`;
+        const arrow = document.querySelector('.versions-header-arrow');
+        isArrowAnimating = true;
 
-    arrow.addEventListener('transitionend', function handler(e) {
-        if (e.propertyName !== 'transform') return;
+        let nextRotation = currentRotation + 180;
 
-        arrow.removeEventListener('transitionend', handler);
+        arrow.style.transform = `rotate(${nextRotation}deg)`;
 
-        currentRotation = nextRotation;
+        arrow.addEventListener('transitionend', function handler(e) {
+            if (e.propertyName !== 'transform') return;
 
-        if (currentRotation >= 360) {
-            arrow.style.transition = 'none';
-            currentRotation -= 360;
-            targetRotation -= 360;
-            arrow.style.transform = `rotate(${currentRotation}deg)`;
+            arrow.removeEventListener('transitionend', handler);
 
-            void arrow.offsetWidth;
-            arrow.style.transition = 'transform 0.4s ease';
-        }
+            currentRotation = nextRotation;
 
-        isArrowAnimating = false;
+            if (currentRotation >= 360) {
+                arrow.style.transition = 'none';
+                currentRotation -= 360;
+                targetRotation -= 360;
+                arrow.style.transform = `rotate(${currentRotation}deg)`;
 
-        setTimeout(updateArrow, 10);
-    });
-}
+                void arrow.offsetWidth;
+                arrow.style.transition = 'transform 0.4s ease';
+            }
 
-function togglePlatforms() {
-    const grid = document.getElementById('platforms-grid');
-    const container = document.querySelector('.social-platforms');
+            isArrowAnimating = false;
 
-    if (isDropdownAnimating) return;
+            setTimeout(updateArrow, 10);
+        });
+    }
 
-    isDropdownAnimating = true;
+    function toggleVersions() {
+        const grid = document.getElementById('versions-grid');
+        const container = document.querySelector('.latest-versions');
 
-    if (grid.classList.contains('open')) {
-        const fullHeight = grid.scrollHeight + 'px';
-        grid.style.maxHeight = fullHeight;
-        requestAnimationFrame(() => {
+        if (isDropdownAnimating) return;
+
+        isDropdownAnimating = true;
+
+        if (grid.classList.contains('open')) {
+            const fullHeight = grid.scrollHeight + 'px';
+            grid.style.maxHeight = fullHeight;
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = '0px';
+            });
+        } else {
+            grid.classList.add('open');
             grid.style.maxHeight = '0px';
-        });
-    } else {
-        grid.classList.add('open');
-        grid.style.maxHeight = '0px';
-        requestAnimationFrame(() => {
-            grid.style.maxHeight = grid.scrollHeight + 'px';
-        });
-    }
-
-    grid.addEventListener('transitionend', function handler() {
-        grid.removeEventListener('transitionend', handler);
-
-        if (grid.style.maxHeight === '0px') {
-            grid.classList.remove('open');
+            requestAnimationFrame(() => {
+                grid.style.maxHeight = grid.scrollHeight + 'px';
+            });
         }
 
-        isDropdownAnimating = false;
-    });
+        grid.addEventListener('transitionend', function handler() {
+            grid.removeEventListener('transitionend', handler);
 
-    container.classList.toggle('expanded');
+            if (grid.style.maxHeight === '0px') {
+                grid.classList.remove('open');
+            }
 
-    targetRotation += 180;
-    if (!isArrowAnimating) {
-        updateArrow();
+            isDropdownAnimating = false;
+        });
+
+        container.classList.toggle('expanded');
+
+        targetRotation += 180;
+        if (!isArrowAnimating) {
+            updateArrow();
+        }
     }
-}
-
-document.addEventListener('DOMContentLoaded', async function() {
-    await loadSearchData();
-    initializeSearch();
-    fetchTotalDownloads();
-    setInterval(fetchTotalDownloads, 5 * 60 * 1000);
-
-    document.querySelectorAll('.category-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
 
     document.querySelectorAll('.wiki-button').forEach(button => {
         button.addEventListener('mousedown', function() {
@@ -2356,171 +2267,177 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         button.addEventListener('click', function() {
             const buttonText = this.querySelector('.wiki-button-name').textContent;
-            if (buttonText === 'View Mods') {
-                window.open('https://www.curseforge.com/members/potatowolfie/projects', '_blank');
-            } else if (buttonText === 'Watch the Trailer') {
-                window.open('https://youtu.be/850zeH8UeS0', '_blank');
+            if (buttonText === 'Get Web') {
+                window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
+            } else if (buttonText === 'Read More') {
+                window.open('https://potatowolfie.github.io/Web/blocks/spider_web.html', '_blank');
             }
         });
     });
 
-    document.querySelectorAll('.platform-item').forEach(item => {
-        item.addEventListener('mousedown', function() {
-            this.classList.add('pressed');
-        });
-
-        item.addEventListener('mouseup', function() {
-            this.classList.remove('pressed');
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('pressed');
-        });
-    });
-});
-
-async function fetchTotalDownloads() {
-    try {
-        let totalModrinth = 0;
-        let totalCurseForge = 0;
-        let totalMods = 0;
-
+    async function fetchDownloadCount() {
         try {
-            const modrinthResponse = await fetch('https://api.modrinth.com/v2/user/PotatoWolfie', {
-                cache: 'no-store',
-                headers: { 'Cache-Control': 'no-cache' }
-            });
+            let modrinthDownloads = 0;
+            let curseforgeDownloads = 0;
 
-            if (modrinthResponse.ok) {
-                const userData = await modrinthResponse.json();
-
-                const projectsResponse = await fetch(`https://api.modrinth.com/v2/user/${userData.id}/projects`, {
+            try {
+                const modrinthResponse = await fetch('https://api.modrinth.com/v2/project/webs', {
                     cache: 'no-store',
-                    headers: { 'Cache-Control': 'no-cache' }
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
                 });
 
-                if (projectsResponse.ok) {
-                    const projects = await projectsResponse.json();
-                    totalModrinth = projects.reduce((sum, project) => sum + (project.downloads || 0), 0);
-                    totalMods = projects.length;
-                    console.log('Modrinth total downloads:', totalModrinth);
-                    console.log('Total mods:', totalMods);
+                if (modrinthResponse.ok) {
+                    const modrinthData = await modrinthResponse.json();
+                    modrinthDownloads = modrinthData.downloads || 0;
+                    console.log('Modrinth downloads:', modrinthDownloads);
                 }
-            }
-        } catch (error) {
-            console.warn('Could not fetch Modrinth downloads:', error);
-        }
-
-        const curseforgeProjectIds = [
-            '1334244',
-            '1392561',
-            '940093',
-            '1263951',
-            '1687942',
-            '1448777'
-        ];
-
-        try {
-            const cfPromises = curseforgeProjectIds.map(id =>
-                fetch(`https://api.cfwidget.com/minecraft/mc-mods/${id}`)
-            );
-
-            const results = await Promise.all(cfPromises);
-
-            for (const response of results) {
-                if (response.ok) {
-                    const data = await response.json();
-                    totalCurseForge += data.downloads?.total || 0;
-                }
+            } catch (error) {
+                console.warn('Could not fetch Modrinth downloads:', error);
             }
 
-            console.log('CurseForge total downloads:', totalCurseForge);
+            try {
+                const curseforgeProjectId = '1334244';
+                const cfResponse = await fetch(
+                    `https://api.cfwidget.com/minecraft/mc-mods/${curseforgeProjectId}`
+                );
+
+                if (cfResponse.ok) {
+                    const cfData = await cfResponse.json();
+                    curseforgeDownloads = cfData.downloads?.total || 0;
+                    console.log('CurseForge downloads:', curseforgeDownloads);
+                }
+            } catch (error) {
+                console.warn('Could not fetch CurseForge downloads:', error);
+            }
+            const totalDownloads = modrinthDownloads + curseforgeDownloads;
+            console.log('Total downloads:', totalDownloads);
+            updateDownloadCounter(totalDownloads, modrinthDownloads, curseforgeDownloads);
+
         } catch (error) {
-            console.warn('Could not fetch CurseForge downloads:', error);
+            console.error('Error fetching download count:', error);
+            updateDownloadCounter(null);
         }
-
-        const grandTotal = totalModrinth + totalCurseForge;
-
-        console.log('Grand Total:', grandTotal);
-
-        updateTotalDownloads(grandTotal, totalModrinth, totalCurseForge);
-        updateTotalMods(totalMods);
-
-    } catch (error) {
-        console.error('Error fetching total downloads:', error);
-        updateTotalDownloads(null);
     }
+
+    function updateDownloadCounter(total, modrinth, curseforge) {
+        const countElement = document.getElementById('downloadCount');
+
+        if (!countElement) return;
+
+        if (total !== null) {
+            countElement.innerHTML = formatNumber(total);
+            countElement.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
+            const label = countElement.nextElementSibling;
+            if (label && label.classList.contains('stat-label')) {
+                label.textContent = 'Total Downloads';
+            }
+        } else {
+            countElement.innerHTML = '---';
+        }
+    }
+
+    function initDownloadCounter() {
+        const countElement = document.getElementById('downloadCount');
+        if (countElement) {
+            countElement.innerHTML = '---';
+        }
+    }
+
+    function formatNumber(num) {
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        }
+        return num.toLocaleString();
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+    initDownloadCounter();
+    await loadSearchData();
+    initializeSearch();
+
+    const articleCount = await countArticles();
+    updateArticleCounter(articleCount);
+
+    fetchDownloadCount();
+
+    setInterval(fetchDownloadCount, 5 * 60 * 1000);
+
+
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            item.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+        });
+
+        document.querySelectorAll('.wiki-button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            button.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+
+            button.addEventListener('click', function() {
+                const buttonText = this.querySelector('.wiki-button-name').textContent;
+                if (buttonText === 'Get Web') {
+                    window.open('https://www.curseforge.com/minecraft/mc-mods/web', '_blank');
+                } else if (buttonText === 'Read More') {
+                    window.open('https://potatowolfie.github.io/Web/blocks/spider_web.html', '_blank');
+                }
+            });
+        });
+
+        document.querySelectorAll('.version-item').forEach(item => {
+            item.addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+
+            item.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+            });
+        });
+    });
+
+    async function countArticles() {
+    if (allSearchItems && allSearchItems.length > 0) {
+        return allSearchItems.length;
+    }
+    return 13;
 }
 
-function updateTotalDownloads(total, modrinth, curseforge) {
-    const statsElements = document.querySelectorAll('.stat-label');
+function updateArticleCounter(count) {
+    const articleElements = document.querySelectorAll('.stat-label');
 
-    statsElements.forEach(label => {
-        if (label.textContent === 'Mod Downloads') {
+    articleElements.forEach(label => {
+        if (label.textContent === 'Articles') {
             const statNumber = label.previousElementSibling;
             if (statNumber && statNumber.classList.contains('stat-number')) {
-                if (total !== null) {
-                    statNumber.textContent = formatNumber(total);
-                    statNumber.title = `Modrinth: ${formatNumber(modrinth)}\nCurseForge: ${formatNumber(curseforge)}`;
-                } else {
-                    statNumber.textContent = '---';
-                }
+                statNumber.textContent = count;
             }
         }
     });
 }
-
-const OTHER_PROJECTS = 2;
-
-function updateTotalMods(count) {
-    const statsElements = document.querySelectorAll('.stat-label');
-
-    statsElements.forEach(label => {
-        if (label.textContent === 'Active Mods' || label.textContent === 'Total Mods' || label.textContent === 'Total Projects') {
-            const statNumber = label.previousElementSibling;
-            if (statNumber && statNumber.classList.contains('stat-number')) {
-                if (count !== null && count > 0) {
-                    const PROJECT_COUNT = count + OTHER_PROJECTS;
-                    statNumber.textContent = PROJECT_COUNT;
-                    label.textContent = 'Total Projects';
-                } else {
-                    statNumber.textContent = '---';
-                }
-            }
-        }
-    });
-}
-
-function formatNumber(num) {
-    if (num >= 1000000) {
-        return (num / 1000000).toFixed(1) + 'M';
-    } else if (num >= 1000) {
-        return (num / 1000).toFixed(1) + 'K';
-    }
-    return num.toLocaleString();
-}
-
-function formatNumber(num) {
-    if (num >= 1000000) {
-        return (num / 1000000).toFixed(1) + 'M';
-    } else if (num >= 1000) {
-        return (num / 1000).toFixed(1) + 'K';
-    }
-    return num.toLocaleString();
-}
-
-document.querySelectorAll('.category-item').forEach(button => {
-    button.addEventListener('mousedown', () => {
-        button.classList.add('pressed');
-    });
-
-    button.addEventListener('mouseup', () => {
-        button.classList.remove('pressed');
-    });
-    button.addEventListener('mouseleave', () => {
-        button.classList.remove('pressed');
-    });
-});
 </script>
 <script src="/assets/js/navtabs.js"></script>
 </body>
