@@ -1,32 +1,37 @@
 [
   {
     "name": "Home",
-    "logo": "assets/buttons/cut_stone_mini.png",
-    "html_name": "index.html"
+    "logo": "/assets/buttons/cut_stone_mini.png",
+    "html_name": "/"
   },
   {
     "name": "Web",
-    "logo": "assets/buttons/web_mini.png",
-    "html_name": "web.html"
+    "logo": "/assets/buttons/web_mini.png",
+    "html_name": "/Web/"
   },
   {
     "name": "Silly Goose",
-    "logo": "assets/buttons/silly_goose_mini.png",
-    "html_name": "silly_goose.html"
+    "logo": "/assets/buttons/silly_goose_mini.png",
+    "html_name": "/Silly_Goose/"
+  },
+  {
+    "name": "Dem's Quivers",
+    "logo": "/assets/buttons/dems_quivers_mini.png",
+    "html_name": "/Dems_Quivers/"
   },
   {
     "name": "Bubblez",
-    "logo": "assets/buttons/corrupted_bubblez_mini.png",
-    "html_name": "corrupted_bubblez.html"
+    "logo": "/assets/buttons/corrupted_bubblez_mini.png",
+    "html_name": "/Corrupted_Bubblez/"
   },
   {
     "name": "Arlo",
-    "logo": "assets/buttons/arlo_mini.png",
-    "html_name": "arlo-the-little-guy.html"
+    "logo": "/assets/buttons/arlo_mini.png",
+    "html_name": "/Arlo_The_Little_Guy/"
   },
   {
     "name": "Universe 76",
-    "logo": "assets/buttons/universe_76_mini.png",
-    "html_name": "universe76.html"
+    "logo": "/assets/buttons/universe_76_mini.png",
+    "html_name": "/Universe76/"
   }
 ]

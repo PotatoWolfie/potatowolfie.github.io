@@ -4,23 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Universe 76 Wiki</title>
-    <link rel="icon" type="image/x-icon" href="un76fav.ico">
+    <link rel="icon" type="image/x-icon" href="../un76fav.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,500,600,700,800,900" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <style>
         @font-face {
             font-family: 'Minecraft';
-            src: url('assets/font/minecraft.woff2') format('woff2'),
-                 url('assets/font/minecraft.woff') format('woff');
+            src: url('/assets/font/minecraft.woff2') format('woff2'),
+                 url('/assets/font/minecraft.woff') format('woff');
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'Minecraft Ten';
-            src: url('assets/fonts/minecraft.woff2') format('woff2'),
-                 url('assets/fonts/minecraft.woff') format('woff');
+            src: url('/assets/fonts/minecraft.woff2') format('woff2'),
+                 url('/assets/fonts/minecraft.woff') format('woff');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -48,7 +48,7 @@
         }
 
         body {
-            background: url('Universe76/wiki/background.png');
+            background: url('/Universe76/wiki/background.png');
             background-color: #2d2d2d;
             background-repeat: repeat;
             background-position: top left;
@@ -334,7 +334,7 @@
 
         .nav-button {
             background: #6348d4;
-            border: 2px solid #4a39b3;
+            border: 2px solid #4736ad;
             border-bottom: none;
             margin-right: 2px;
             cursor: pointer;
@@ -344,8 +344,8 @@
             font-weight: 6000;
             text-shadow: 2px 2px 0px rgba(52,63,156,0.8);
             box-shadow:
-                inset 2px 2px 0 #7354e3,
-                inset -2px -2px 0 #5640c5;
+                inset 2px 2px 0 #946cf2,
+                inset -2px -2px 0 #8055e6;
             text-decoration: none;
             flex-shrink: 0;
             display: flex;
@@ -625,7 +625,7 @@
     <div class="header-content">
         <div class="logo">
             <a href="https://potatowolfie.github.io">
-                <img src="Universe76/wiki/un76_wiki.png" alt="Universe 76 Wiki">
+                <img src="wiki/un76_wiki.png" alt="Universe 76 Wiki">
             </a>
         </div>
     </div>
@@ -641,7 +641,7 @@
         <h1 class="page-title">Universe 76</h1>
 
         <div class="content-section">
-            <img src="Universe76/wiki/nothing_to_see_here.png" alt="Nothing to see here" class="biome-image">
+            <img src="wiki/nothing_to_see_here.png" alt="Nothing to see here" class="biome-image">
             <div class="biome-text">Universe 76 at the current moment is not being worked on.
                 It is intended in the future that this project is completely remade.</div>
         </div>
@@ -661,7 +661,7 @@
 
     async function loadSearchData() {
         try {
-            const response = await fetch('search-data-mods.json');
+            const response = await fetch('/search-data-mods.json');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -674,156 +674,6 @@
             allSearchItems = [];
         }
     }
-
-let dynamicNavTabs = [];
-let currentPage = 0;
-
-function findCurrentPageForFilename(filename, buttonsPerPage) {
-    const index = dynamicNavTabs.findIndex(tab => tab.html_name === filename);
-    if (index === -1 || dynamicNavTabs.length <= buttonsPerPage) return 0;
-
-    const firstPageTabs = buttonsPerPage - 1;
-    if (index < firstPageTabs) return 0;
-
-    const otherPageTabs = buttonsPerPage - 2;
-    return 1 + Math.floor((index - firstPageTabs) / otherPageTabs);
-}
-
-async function loadNavigationTabs() {
-    try {
-        const cacheBuster = new Date().getTime();
-        const response = await fetch(`navtabs.json?v=${cacheBuster}`, {
-            cache: 'no-store',
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache'
-            }
-        });
-
-        if (response.ok) {
-            dynamicNavTabs = await response.json();
-
-            const currentFilename = window.location.pathname.split('/').pop() || 'index.html';
-            const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
-            currentPage = findCurrentPageForFilename(currentFilename, buttonsPerPage);
-
-            renderNavigation();
-            console.log('Successfully loaded paginated tabs from navtabs.json');
-        }
-    } catch (error) {
-        console.error('Error loading navigation tabs:', error);
-    }
-}
-
-function getButtonWidth() {
-    let availableWidth;
-    if (window.innerWidth <= 768) {
-        const mainContainer = document.querySelector('.main-container');
-        const containerWidth = mainContainer ? mainContainer.offsetWidth : window.innerWidth - 30;
-        const totalMargins = 5 * 2;
-        return (containerWidth - totalMargins) / 6;
-    } else {
-        availableWidth = window.innerWidth - 40;
-        const totalMargins = 7 * 2;
-        return (availableWidth - totalMargins) / 8;
-    }
-}
-
-function renderNavigation() {
-    const wrapper = document.getElementById('navWrapper');
-    if (!wrapper) return;
-
-    const buttonWidth = getButtonWidth();
-    const buttonsPerPage = window.innerWidth <= 768 ? 6 : 8;
-
-    const currentFilename = window.location.pathname.split('/').pop() || 'index.html';
-
-    wrapper.innerHTML = '';
-    let buttons = [];
-
-    if (dynamicNavTabs.length <= buttonsPerPage) {
-        buttons = dynamicNavTabs.map(tab => ({ type: 'tab', data: tab }));
-    } else {
-        if (currentPage === 0) {
-            for (let i = 0; i < buttonsPerPage - 1 && i < dynamicNavTabs.length; i++) {
-                buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
-            }
-            buttons.push({ type: 'next' });
-        } else {
-            const firstPageTabs = buttonsPerPage - 1;
-            const otherPageTabs = buttonsPerPage - 2;
-            const startIndex = firstPageTabs + (currentPage - 1) * otherPageTabs;
-
-            const remainingTabs = dynamicNavTabs.length - startIndex;
-            const isLastPage = remainingTabs <= buttonsPerPage - 1;
-
-            if (isLastPage) {
-                buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < dynamicNavTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
-                }
-            } else {
-                buttons.push({ type: 'prev' });
-                for (let i = startIndex; i < startIndex + otherPageTabs && i < dynamicNavTabs.length; i++) {
-                    buttons.push({ type: 'tab', data: dynamicNavTabs[i] });
-                }
-                buttons.push({ type: 'next' });
-            }
-        }
-    }
-
-    buttons.forEach(button => {
-        const btn = document.createElement('a');
-        btn.className = 'nav-button';
-        btn.style.width = buttonWidth + 'px';
-
-        if (button.type === 'prev') {
-            btn.classList.add('nav-arrow');
-            btn.innerHTML = `
-                <span class="nav-button-text">Previous</span>
-                <img src="assets/buttons/next_arrow.png" alt="←" style="transform: scaleX(-1);" class="nav-button-icon">
-            `;
-            btn.onclick = (e) => {
-                e.preventDefault();
-                if (currentPage > 0) {
-                    currentPage--;
-                    renderNavigation();
-                }
-            };
-        } else if (button.type === 'next') {
-            btn.classList.add('nav-arrow');
-            btn.innerHTML = `
-                <span class="nav-button-text">Next</span>
-                <img src="assets/buttons/next_arrow.png" alt="→" class="nav-button-icon">
-            `;
-            btn.onclick = (e) => {
-                e.preventDefault();
-                currentPage++;
-                renderNavigation();
-            };
-        } else {
-            btn.href = button.data.html_name;
-            btn.innerHTML = `
-                <span class="nav-button-text">${button.data.name}</span>
-                <img src="${button.data.logo}" alt="${button.data.name}" class="nav-button-icon">
-            `;
-            if (button.data.html_name === currentFilename) {
-                btn.classList.add('active');
-            }
-        }
-        wrapper.appendChild(btn);
-    });
-
-    initializeNavButtonEffects();
-}
-
-function initializeNavButtonEffects() {
-    document.querySelectorAll('.nav-button').forEach(button => {
-        button.onmousedown = function() { this.classList.add('pressed'); };
-        button.onmouseup = function() { this.classList.remove('pressed'); };
-        button.onmouseleave = function() { this.classList.remove('pressed'); };
-    });
-}
 
     async function fetchDownloadCount() {
         try {
@@ -904,18 +754,10 @@ function initializeNavButtonEffects() {
 
     document.addEventListener('DOMContentLoaded', async function() {
         await loadSearchData();
-        loadNavigationTabs();
-
-        window.addEventListener('resize', function() {
-        if (dynamicNavTabs.length > 0) {
-            renderNavigation();
-        }
-    });
-
         fetchDownloadCount();
         setInterval(fetchDownloadCount, 5 * 60 * 1000);
-
     });
 </script>
+<script src="/assets/js/navtabs.js"></script>
 </body>
 </html>
