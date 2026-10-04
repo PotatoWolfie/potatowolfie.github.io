@@ -268,8 +268,6 @@
         .texture-card-preview {
             width: 100%;
             aspect-ratio: 1;
-            background: repeating-conic-gradient(#2a2a2a 0% 25%, #1a1a1a 0% 50%) 50% / 10px 10px;
-            border: 1px solid #2a2a2a;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -281,6 +279,10 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            image-rendering: pixelated;
+            background: repeating-conic-gradient(#2a2a2a 0% 25%, #1a1a1a 0% 50%) 50% / 10px 10px;
+            border: 1px solid #2a2a2a;
+            box-sizing: border-box;
         }
 
         .texture-card.selected .texture-card-preview {
@@ -1403,19 +1405,20 @@
         const frameCount = isAnimated ? height / width : 1;
 
         const frames = [];
-        const frameSize = width;
+        const frameW = width;
+        const frameH = isAnimated ? width : height;
 
         for (let i = 0; i < frameCount; i++) {
             const frameCanvas = document.createElement('canvas');
-            frameCanvas.width = frameSize;
-            frameCanvas.height = frameSize;
+            frameCanvas.width = frameW;
+            frameCanvas.height = frameH;
             const frameCtx = frameCanvas.getContext('2d');
             frameCtx.imageSmoothingEnabled = false;
-            frameCtx.drawImage(img, 0, i * frameSize, frameSize, frameSize, 0, 0, frameSize, frameSize);
+            frameCtx.drawImage(img, 0, i * frameH, frameW, frameH, 0, 0, frameW, frameH);
             frames.push({
                 canvas: frameCanvas,
-                width: frameSize,
-                height: frameSize,
+                width: frameW,
+                height: frameH,
                 isCustom: false,
                 originalSourceIndex: i
             });
@@ -1428,8 +1431,8 @@
             isAnimated: isAnimated,
             originalWidth: width,
             originalHeight: height,
-            frameWidth: width,
-            frameHeight: width,
+            frameWidth: frameW,
+            frameHeight: frameH,
             mcmetaSettings: {
                 frametime: 8,
                 fps: 2.5,
@@ -2820,9 +2823,8 @@
         const group = textureGroups[groupIndex];
         const state = slotStates[currentGifSlot];
 
-        const defaultSize = group.frames[0].width * 8;
-        document.getElementById('gifWidth').value = defaultSize;
-        document.getElementById('gifHeight').value = defaultSize;
+        document.getElementById('gifWidth').value = group.frames[0].width;
+        document.getElementById('gifHeight').value = group.frames[0].height;
 
         document.getElementById('gifModal').classList.add('active');
         document.getElementById('gifPreview').style.display = 'none';
