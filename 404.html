@@ -205,32 +205,6 @@
             color: #cccccc;
         }
 
-        .return-button {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 10px 18px;
-            background: #3453df;
-            color: #ffffff;
-            border-radius: 4px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            transition: background-color 0.2s ease;
-        }
-
-        .return-button:hover {
-            background: #4065ec;
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .return-button:focus-visible {
-            outline: 2px solid #ffffff;
-            outline-offset: 2px;
-        }
-
         a {
             color: #3453df;
             text-decoration: none;
@@ -293,11 +267,6 @@
                 <li><a href="https://potatowolfie.github.io/builder">Create a page</a> and send a pull request for it to be added. (WIP)</li>
             </ul>
         </div>
-
-        <a id="returnButton" class="return-button" href="#">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span id="returnLabel">Return to previous page?</span>
-        </a>
     </div>
 </div>
 
@@ -410,45 +379,7 @@
         window.location.href = page;
     }
 
-    async function setupReturnButton() {
-        const button = document.getElementById('returnButton');
-        const label = document.getElementById('returnLabel');
-        const referrer = document.referrer;
-
-        if (!referrer) return;
-
-        let referrerUrl;
-        try {
-            referrerUrl = new URL(referrer);
-        } catch (e) {
-            return;
-        }
-
-        if (referrerUrl.href === window.location.href) return;
-
-        button.href = referrerUrl.href;
-        button.style.display = 'inline-flex';
-
-        if (referrerUrl.origin !== window.location.origin) return;
-
-        try {
-            const response = await fetch(referrerUrl.href);
-            if (!response.ok) return;
-
-            const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
-            const ogTitle = doc.querySelector('meta[property="og:title"]');
-            const title = (ogTitle && ogTitle.content.trim()) || doc.title.trim();
-
-            if (title) {
-                label.textContent = `Return to ${title}?`;
-            }
-        } catch (error) {
-            console.warn('Could not read the previous page title:', error);
-        }
-    }
-
     document.addEventListener('DOMContentLoaded', async function() {
-        setupReturnButton();
         await loadSearchData();
         initializeSearch();
     });
