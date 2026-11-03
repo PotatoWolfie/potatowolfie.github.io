@@ -2021,8 +2021,8 @@ Draw(block.fit.x, block.fit.y, block.w, block.h);
         growNode: function(w, h) {
             var canGrowDown = (w <= this.root.w);
             var canGrowRight = (h <= this.root.h);
-            var shouldGrowRight = canGrowRight && (this.root.h >= (this.root.w + w)); // attempt to keep square-ish by growing right when height is much greater than width
-            var shouldGrowDown = canGrowDown && (this.root.w >= (this.root.h + h)); // attempt to keep square-ish by growing down  when width  is much greater than height
+            var shouldGrowRight = canGrowRight && (this.root.h >= (this.root.w + w));
+            var shouldGrowDown = canGrowDown && (this.root.w >= (this.root.h + h));
             if (shouldGrowRight)
                 return this.growRight(w, h);
             else if (shouldGrowDown)
@@ -2032,7 +2032,7 @@ Draw(block.fit.x, block.fit.y, block.w, block.h);
             else if (canGrowDown)
                 return this.growDown(w, h);
             else
-                return null; // need to ensure sensible root starting size to avoid this happening
+                return null;
         },
         growRight: function(w, h) {
             this.root = {
@@ -2472,6 +2472,14 @@ Draw(block.fit.x, block.fit.y, block.w, block.h);
             const arrayBuffer = await file.arrayBuffer();
             const parser = new NBTParser(arrayBuffer);
             nbtData = parser.parse();
+            if (Array.isArray(nbtData.palette)) {
+                nbtData.palette = nbtData.palette.map(p => {
+                    if (!p) return p;
+                    if (p.Name === undefined && p.id !== undefined) p.Name = p.id;
+                    if (p.Properties === undefined && p.properties !== undefined) p.Properties = p.properties;
+                    return p;
+                });
+            }
             // console.log('Parsed NBT data:', JSON.stringify(nbtData, null, 2));
             const blockCount = (nbtData.blocks || []).filter(b => {
                 const state = (nbtData.palette || [])[b.state || 0];
@@ -3827,12 +3835,12 @@ width: 120px;
         const meshes = [];
 
         const axes = [
-            { dim: 0, u: 1, v: 2, normal: [1, 0, 0], face: 'east', oppFace: 'west' },   // +X
-            { dim: 0, u: 1, v: 2, normal: [-1, 0, 0], face: 'west', oppFace: 'east' },  // -X
-            { dim: 1, u: 0, v: 2, normal: [0, 1, 0], face: 'up', oppFace: 'down' },     // +Y
-            { dim: 1, u: 0, v: 2, normal: [0, -1, 0], face: 'down', oppFace: 'up' },    // -Y
-            { dim: 2, u: 0, v: 1, normal: [0, 0, 1], face: 'south', oppFace: 'north' }, // +Z
-            { dim: 2, u: 0, v: 1, normal: [0, 0, -1], face: 'north', oppFace: 'south' } // -Z
+            { dim: 0, u: 1, v: 2, normal: [1, 0, 0], face: 'east', oppFace: 'west' },
+            { dim: 0, u: 1, v: 2, normal: [-1, 0, 0], face: 'west', oppFace: 'east' },
+            { dim: 1, u: 0, v: 2, normal: [0, 1, 0], face: 'up', oppFace: 'down' },
+            { dim: 1, u: 0, v: 2, normal: [0, -1, 0], face: 'down', oppFace: 'up' },
+            { dim: 2, u: 0, v: 1, normal: [0, 0, 1], face: 'south', oppFace: 'north' },
+            { dim: 2, u: 0, v: 1, normal: [0, 0, -1], face: 'north', oppFace: 'south' }
         ];
 
         for (const axis of axes) {
