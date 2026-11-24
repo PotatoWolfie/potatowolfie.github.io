@@ -4,6 +4,7 @@
     { "path": "search-data-web.json", "modName": "Web" },
     { "path": "Silly_Goose/search-data-silly-goose.json", "modName": "Silly Goose" },
     { "path": "search-data-cbubz.json", "modName": "Corrupted Bubblez" },
+    { "path": "Arlo_The_Little_Guy/search-data-arlo.json", "modName": "Arlo the Little Guy" },
     { "path": "search-data-dems-quivers.json", "modName": "Dem's Quivers" }
   ],
   "curseforgeProjectIds": [
@@ -14,5 +15,5 @@
     "1687942",
     "1448777"
   ],
-  "otherProjectsCount": 2
+  "otherProjectsCount": 1
 }
